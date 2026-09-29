@@ -269,11 +269,11 @@
       border-radius: 8px;
     }
 
-    /* FIXED COLON ALIGNMENT & MULTI-LINE INDENT */
+    /* STRICT SINGLE-LINE LABEL & PERFECT COLON ALIGNMENT */
     .donor-detail-list {
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 7px;
       font-size: 0.84rem;
       color: var(--slate-600);
       margin-bottom: 14px;
@@ -286,15 +286,16 @@
     }
 
     .detail-label {
-      min-width: 106px;
-      max-width: 106px;
+      min-width: 142px;
+      max-width: 142px;
       font-weight: 700;
       color: var(--slate-800);
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding-right: 8px;
+      padding-right: 10px;
       flex-shrink: 0;
+      white-space: nowrap; /* Ensures label never breaks to 2 lines */
     }
 
     .detail-val {
@@ -432,7 +433,7 @@
       <div class="nav-btn-row">
         <a href="index.html" class="btn-chip">← হোম পেজ</a>
         <a href="register.html" class="btn-chip">+ ডোনার নিবন্ধন</a>
-        <a href="developer.html" class="btn-chip">👨‍💻 ডেভেলপার</a>
+        <a href="developer.html" class="btn-chip">👨‍‍💻 ডেভেলপার</a>
       </div>
 
       <p class="brand-slogan">"অচেনা কাউকে বাঁচার আশা দিয়ে, লিখে যাও এক নিঃস্বার্থ জীবনী।"</p>
@@ -588,13 +589,13 @@
         if (nextDate && !isEligible) {
           nextDateHtml = 
             '<div class="detail-item">' +
-              '<span class="detail-label">🗓️ পরবর্তী রক্তদান<span>:</span></span>' +
+              '<span class="detail-label"><span>🗓️ পরবর্তী রক্তদান</span><span>:</span></span>' +
               '<span class="detail-val"><span class="badge-next">' + nextDate + ' (থেকে সম্ভাব্য)</span></span>' +
             '</div>';
         } else if (isEligible && d.last_donation && d.last_donation !== "তথ্য নেই") {
           nextDateHtml = 
             '<div class="detail-item">' +
-              '<span class="detail-label">🗓️ পরবর্তী রক্তদান<span>:</span></span>' +
+              '<span class="detail-label"><span>🗓️ পরবর্তী রক্তদান</span><span>:</span></span>' +
               '<span class="detail-val" style="color:var(--success); font-weight:700;">✅ যেকোনো সময় সক্ষম</span>' +
             '</div>';
         }
@@ -613,19 +614,19 @@
             '</div>' +
             '<div class="donor-detail-list">' +
               '<div class="detail-item">' +
-                '<span class="detail-label">📞 মোবাইল<span>:</span></span>' +
+                '<span class="detail-label"><span>📞 মোবাইল</span><span>:</span></span>' +
                 '<span class="detail-val">' + (d.phone || "--") + '</span>' +
               '</div>' +
               '<div class="detail-item">' +
-                '<span class="detail-label">📍 ঠিকানা/হল<span>:</span></span>' +
+                '<span class="detail-label"><span>📍 ঠিকানা/হল</span><span>:</span></span>' +
                 '<span class="detail-val">' + mainLoc + '</span>' +
               '</div>' +
               '<div class="detail-item">' +
-                '<span class="detail-label">🗓️ সর্বশেষ রক্তদান<span>:</span></span>' +
+                '<span class="detail-label"><span>🗓️️ সর্বশেষ রক্তদান</span><span>:</span></span>' +
                 '<span class="detail-val">' + (d.last_donation || "তথ্য নেই") + '</span>' +
               '</div>' +
               '<div class="detail-item">' +
-                '<span class="detail-label">⚡ স্ট্যাটাস<span>:</span></span>' +
+                '<span class="detail-label"><span>⚡ স্ট্যাটাস</span><span>:</span></span>' +
                 '<span class="detail-val">' + statusBadge + '</span>' +
               '</div>' +
               nextDateHtml +
