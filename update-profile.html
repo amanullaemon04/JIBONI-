@@ -2,7 +2,7 @@
 <html lang="bn">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, interactive-widget=resizes-content" />
   <title>তথ্য আপডেট - JIBONI</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Hind+Siliguri:wght@500;600;700&display=swap');
@@ -13,6 +13,10 @@
       --primary-light: #fee2e2;
       --success: #15803d;
       --success-light: #dcfce7;
+      --warning: #b45309;
+      --warning-light: #fef3c7;
+      --info: #0284c7;
+      --info-light: #e0f2fe;
       --slate-50: #f8fafc;
       --slate-100: #f1f5f9;
       --slate-200: #e2e8f0;
@@ -27,6 +31,7 @@
       padding: 0;
       box-sizing: border-box;
       font-family: 'Hind Siliguri', 'Plus Jakarta Sans', sans-serif;
+      -webkit-tap-highlight-color: transparent;
     }
 
     body {
@@ -51,7 +56,7 @@
     }
 
     .brand-row {
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
 
     .brand-logo {
@@ -80,7 +85,7 @@
       justify-content: center;
       align-items: center;
       gap: 8px;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
       flex-wrap: wrap;
     }
 
@@ -96,7 +101,7 @@
       border: 1px solid var(--slate-200);
       background: var(--slate-100);
       color: var(--slate-600);
-      transition: all 0.2s ease;
+      cursor: pointer;
     }
 
     .btn-chip-red {
@@ -108,7 +113,6 @@
     .brand-slogan {
       font-size: 0.74rem;
       color: var(--slate-600);
-      margin-top: 4px;
       font-style: italic;
     }
 
@@ -158,23 +162,34 @@
     }
 
     .text-input,
-    .select-input {
+    .custom-select-trigger {
       width: 100%;
       height: 44px;
-      padding: 0 12px;
+      padding: 0 14px;
       background: #ffffff;
       border: 1px solid var(--slate-200);
       border-radius: 10px;
       font-size: 0.88rem;
       color: var(--slate-800);
       outline: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      user-select: none;
       transition: all 0.2s;
     }
 
     .text-input:focus,
-    .select-input:focus {
+    .custom-select-trigger:focus,
+    .custom-select-trigger.active {
       border-color: var(--primary);
       box-shadow: 0 0 0 2px rgba(220, 38, 38, 0.1);
+    }
+
+    .select-arrow {
+      font-size: 0.72rem;
+      color: var(--slate-400);
     }
 
     .btn-submit {
@@ -187,8 +202,7 @@
       font-size: 0.92rem;
       font-weight: 700;
       cursor: pointer;
-      margin-top: 6px;
-      transition: background 0.2s ease;
+      margin-top: 8px;
       box-shadow: 0 2px 8px rgba(220, 38, 38, 0.25);
     }
 
@@ -198,7 +212,7 @@
 
     .forgot-link-wrap {
       text-align: right;
-      margin-top: -6px;
+      margin-top: -4px;
       margin-bottom: 14px;
     }
 
@@ -206,7 +220,7 @@
       font-size: 0.78rem;
       color: var(--primary);
       text-decoration: none;
-      font-weight: 600;
+      font-weight: 700;
       cursor: pointer;
     }
 
@@ -220,18 +234,224 @@
       display: none;
     }
 
-    .modal-backdrop {
+    /* CUSTOM BOTTOM-SHEET MODALS */
+    .custom-modal-backdrop {
       position: fixed;
       inset: 0;
-      background: rgba(15, 23, 42, 0.6);
+      background: rgba(15, 23, 42, 0.55);
       backdrop-filter: blur(4px);
+      z-index: 2000;
       display: none;
+      align-items: flex-end;
       justify-content: center;
-      align-items: center;
-      z-index: 1000;
-      padding: 16px;
+      overscroll-behavior: contain;
     }
 
+    .custom-modal-sheet {
+      background: #ffffff;
+      width: 100%;
+      max-width: 480px;
+      border-top-left-radius: 20px;
+      border-top-right-radius: 20px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.15);
+      animation: slideUp 0.22s ease-out;
+      overflow: hidden;
+      padding: 16px 16px 20px;
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(100%); }
+      to { transform: translateY(0); }
+    }
+
+    .modal-sheet-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .modal-sheet-title {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--slate-900);
+    }
+
+    .modal-sheet-close {
+      background: var(--slate-100);
+      border: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      font-size: 1.1rem;
+      cursor: pointer;
+      color: var(--slate-600);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-item-btn {
+      width: 100%;
+      text-align: left;
+      padding: 12px 14px;
+      border-radius: 10px;
+      border: 1px solid var(--slate-200);
+      background: #ffffff;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--slate-800);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      transition: all 0.15s;
+    }
+
+    .modal-item-btn:hover,
+    .modal-item-btn.selected {
+      background: var(--primary-light);
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    /* DEMO 1: SIGNATURE JIBONI CALENDAR STYLING */
+    .calendar-month-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 6px 10px;
+      background: var(--slate-50);
+      border-radius: 10px;
+      margin-bottom: 12px;
+      font-weight: 800;
+      color: var(--slate-900);
+      font-size: 0.95rem;
+    }
+
+    .cal-nav-btn {
+      background: #ffffff;
+      border: 1px solid var(--slate-200);
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--slate-800);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .cal-weekdays-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      text-align: center;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--slate-400);
+      margin-bottom: 8px;
+    }
+
+    .cal-days-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 4px;
+      text-align: center;
+      margin-bottom: 14px;
+    }
+
+    .cal-day-cell {
+      height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--slate-800);
+      border-radius: 50%;
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.15s;
+    }
+
+    .cal-day-cell:hover {
+      background: var(--slate-100);
+    }
+
+    .cal-day-cell.empty {
+      cursor: default;
+      pointer-events: none;
+    }
+
+    .cal-day-cell.today {
+      border: 1.5px solid var(--primary);
+      color: var(--primary);
+    }
+
+    .cal-day-cell.selected {
+      background: var(--primary) !important;
+      color: #ffffff !important;
+      box-shadow: 0 2px 8px rgba(220, 38, 38, 0.3);
+    }
+
+    .cal-actions-row {
+      display: flex;
+      gap: 10px;
+      border-top: 1px solid var(--slate-100);
+      padding-top: 12px;
+    }
+
+    .cal-action-btn {
+      flex: 1;
+      height: 38px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      border: 1px solid var(--slate-200);
+      background: #ffffff;
+      color: var(--slate-600);
+    }
+
+    .cal-confirm-btn {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+    }
+
+    /* Site Footer */
+    .site-footer {
+      background: #ffffff;
+      border-top: 1px solid var(--slate-200);
+      padding: 12px 16px 16px;
+      text-align: center;
+      margin-top: auto;
+      width: 100%;
+    }
+
+    .footer-disclaimer {
+      font-size: 0.72rem;
+      color: var(--slate-600);
+      margin-bottom: 3px;
+    }
+
+    .footer-credit {
+      font-size: 0.75rem;
+      color: var(--slate-800);
+    }
+
+    .footer-credit a {
+      color: var(--primary);
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    /* Modal for PIN Reset */
     .modal-box {
       background: #ffffff;
       border-radius: 16px;
@@ -240,26 +460,6 @@
       width: 100%;
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
       text-align: center;
-    }
-
-    .site-footer {
-      background: #ffffff;
-      border-top: 1px solid var(--slate-200);
-      padding: 14px 16px;
-      text-align: center;
-      margin-top: auto;
-      width: 100%;
-    }
-
-    .footer-copy {
-      font-size: 0.75rem;
-      color: var(--slate-600);
-    }
-
-    .footer-copy a {
-      color: var(--primary);
-      font-weight: 700;
-      text-decoration: none;
     }
   </style>
 </head>
@@ -277,7 +477,7 @@
       <div class="nav-btn-row">
         <a href="index.html" class="btn-chip">← হোম পেজ</a>
         <a href="register.html" class="btn-chip btn-chip-red">+ ডোনার নিবন্ধন</a>
-        <a href="developer.html" class="btn-chip">👨‍‍💻 ডেভেলপার</a>
+        <a href="developer.html" class="btn-chip">👨‍💻 ডেভেলপার</a>
       </div>
 
       <p class="brand-slogan">"অচেনা কাউকে বাঁচার আশা দিয়ে, লিখে যাও এক নিঃস্বার্থ জীবনী।"</p>
@@ -289,12 +489,11 @@
       <h1 class="page-title">রক্তদাতার তথ্য আপডেট</h1>
       <p class="page-subtitle">আপনার নিবন্ধিত মোবাইল নম্বর ও পিন দিয়ে প্রোফাইল হালনাগাদ করুন</p>
 
-      <!-- Semantic form to trigger browser password save -->
+      <!-- VERIFY / LOGIN FORM -->
       <form id="verifyDonorForm" onsubmit="verifyDonorLogin(event)" action="javascript:void(0);">
         <div class="input-group">
           <label class="field-label" for="authPhone">নিবন্ধিত মোবাইল নম্বর: *</label>
-          <!-- Using name="username" and autocomplete="username" makes it recognizable to Password Managers -->
-          <input type="tel" id="authPhone" name="username" class="text-input" placeholder="01XXXXXXXXX" autocomplete="username" required />
+          <input type="tel" id="authPhone" name="username" class="text-input" placeholder="01XXXXXXXXX" autocomplete="username tel" required />
         </div>
 
         <div class="input-group">
@@ -309,7 +508,8 @@
         <button type="submit" class="btn-submit" id="verifyBtn">প্রোফাইল লোড করুন</button>
       </form>
 
-      <form id="editProfileForm" style="display: none; margin-top: 10px;">
+      <!-- EDIT PROFILE FORM (LOADED AFTER SUCCESSFUL AUTH) -->
+      <form id="editProfileForm" style="display: none; margin-top: 10px;" onsubmit="saveProfileChanges(event)">
         <hr style="border: 0; border-top: 1px dashed var(--slate-200); margin: 16px 0;" />
 
         <div class="input-group">
@@ -319,7 +519,7 @@
 
         <div class="input-group">
           <label class="field-label" for="editBloodGroup">রক্তের গ্রুপ:</label>
-          <input type="text" id="editBloodGroup" class="text-input" readonly style="background: var(--slate-100); color: var(--slate-600);" />
+          <input type="text" id="editBloodGroup" class="text-input" readonly style="background: var(--slate-100); color: var(--slate-600); font-weight:700;" />
         </div>
 
         <div class="input-group">
@@ -332,17 +532,24 @@
           <input type="text" id="editHall" class="text-input" />
         </div>
 
+        <!-- DEMO 1: CUSTOM JIBONI CALENDAR TRIGGER -->
         <div class="input-group">
-          <label class="field-label" for="editLastDonation">সর্বশেষ রক্তদানের তারিখ:</label>
-          <input type="date" id="editLastDonation" class="text-input" />
+          <label class="field-label">সর্বশেষ রক্তদানের তারিখ:</label>
+          <div class="custom-select-trigger" id="lastDonationTrigger" onclick="openCalendarPicker()">
+            <span id="lastDonationDisplay" style="color: var(--slate-800); font-weight:600;">তথ্য নেই</span>
+            <span class="select-arrow">📅</span>
+          </div>
+          <input type="hidden" id="editLastDonation" value="" />
         </div>
 
+        <!-- CUSTOM AVAILABILITY SELECTOR TRIGGER (NO NATIVE POPUP) -->
         <div class="input-group">
-          <label class="field-label" for="editAvailability">রক্তদানের প্রাপ্যতা (Availability):</label>
-          <select id="editAvailability" class="select-input">
-            <option value="true">✅ আমি রক্তদানে প্রস্তুত (Available)</option>
-            <option value="false">❌ সাময়িকভাবে অনুপলব্ধ (Unavailable)</option>
-          </select>
+          <label class="field-label">রক্তদানের প্রাপ্যতা (Availability):</label>
+          <div class="custom-select-trigger" id="availTrigger" onclick="openAvailPicker()">
+            <span id="availDisplay" style="font-weight: 700;">✅ আমি রক্তদানে প্রস্তুত (Available)</span>
+            <span class="select-arrow">▼</span>
+          </div>
+          <input type="hidden" id="editAvailability" value="true" />
         </div>
 
         <button type="submit" class="btn-submit" id="saveProfileBtn">পরিবর্তন সেভ করুন</button>
@@ -352,8 +559,59 @@
     </div>
   </main>
 
+  <!-- CUSTOM BOTTOM-SHEET MODAL: AVAILABILITY PICKER -->
+  <div id="availPickerModal" class="custom-modal-backdrop" onclick="closeAvailPickerOnBackdrop(event)">
+    <div class="custom-modal-sheet">
+      <div class="modal-sheet-header">
+        <h3 class="modal-sheet-title">রক্তদানের প্রাপ্যতা নির্বাচন করুন</h3>
+        <button type="button" class="modal-sheet-close" onclick="closeAvailPicker()">✕</button>
+      </div>
+      <div>
+        <button type="button" id="optAvailTrue" class="modal-item-btn" onclick="selectAvailability('true')">
+          <span>✅ আমি রক্তদানে প্রস্তুত (Available)</span>
+          <span id="chkAvailTrue" style="display:none;">✓</span>
+        </button>
+        <button type="button" id="optAvailFalse" class="modal-item-btn" onclick="selectAvailability('false')">
+          <span>❌ সাময়িকভাবে অনুপলব্ধ (Unavailable)</span>
+          <span id="chkAvailFalse" style="display:none;">✓</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- DEMO 1: SIGNATURE JIBONI BOTTOM-SHEET CALENDAR MODAL -->
+  <div id="customCalendarModal" class="custom-modal-backdrop" onclick="closeCalendarOnBackdrop(event)">
+    <div class="custom-modal-sheet">
+      <div class="modal-sheet-header">
+        <h3 class="modal-sheet-title">সর্বশেষ রক্তদানের তারিখ নির্বাচন</h3>
+        <button type="button" class="modal-sheet-close" onclick="closeCalendarPicker()">✕</button>
+      </div>
+
+      <!-- Month Navigation -->
+      <div class="calendar-month-nav">
+        <button type="button" class="cal-nav-btn" onclick="changeCalMonth(-1)">❮</button>
+        <span id="calMonthYearLabel">সেপ্টেম্বর ২০২৬</span>
+        <button type="button" class="cal-nav-btn" onclick="changeCalMonth(1)">❯</button>
+      </div>
+
+      <!-- Weekday Labels -->
+      <div class="cal-weekdays-grid">
+        <div>রবি</div><div>সোম</div><div>মঙ্গল</div><div>বুধ</div><div>বৃহ</div><div>শুক্র</div><div>শনি</div>
+      </div>
+
+      <!-- Days Grid -->
+      <div class="cal-days-grid" id="calDaysGrid"></div>
+
+      <!-- Actions -->
+      <div class="cal-actions-row">
+        <button type="button" class="cal-action-btn" onclick="clearSelectedDate()">মুছে ফেলুন</button>
+        <button type="button" class="cal-action-btn cal-confirm-btn" onclick="confirmCalendarDate()">নিশ্চিত করুন</button>
+      </div>
+    </div>
+  </div>
+
   <!-- PIN RESET MODAL -->
-  <div id="resetPinModal" class="modal-backdrop">
+  <div id="resetPinModal" class="custom-modal-backdrop" style="align-items: center;">
     <div class="modal-box">
       <h3 style="font-size: 1.15rem; font-weight: 800; color: var(--slate-900); margin-bottom: 4px;">পিন রিসেট করুন</h3>
       <p style="font-size: 0.8rem; color: var(--slate-600); margin-bottom: 16px;">নিবন্ধনে ব্যবহৃত মোবাইল নম্বর ও জন্ম তারিখ দিন।</p>
@@ -382,32 +640,43 @@
   </div>
 
   <footer class="site-footer">
-    <p class="footer-copy">JIBONI — প্রতিটি ফোঁটা রক্তে বাঁচে একটি প্রাণ</p>
-    <p class="footer-copy">Designed & Developed by <a href="developer.html">Amanulla Emon</a></p>
+    <p class="footer-disclaimer">Use donor information responsibly. Confirm availability before contacting.</p>
+    <p class="footer-credit">Designed & Developed by <a href="developer.html">Amanulla Emon</a></p>
   </footer>
 
   <script>
     let activeDonorIndex = -1;
     let donorsList = [];
 
+    // Calendar state
+    let calViewDate = new Date();
+    let tempSelectedDateStr = "";
+
+    const banglaMonths = [
+      "জানুয়ারি", "ফেব্রুয়ারি", "মার্চ", "এপ্রিল", "মে", "জুন",
+      "জুলাই", "আগস্ট", "সেপ্টেম্বর", "অক্টোবর", "নভেম্বর", "ডিসেম্বর"
+    ];
+
+    function toBanglaDigits(str) {
+      const bn = ["০", "১", "২", "৩", "৪", "৫", "৬", "৭", "৮", "৯"];
+      return String(str).replace(/[0-9]/g, function(d) { return bn[d]; });
+    }
+
     function getDonors() {
       var stored = localStorage.getItem("jiboni_donors_cache") || localStorage.getItem("donors");
       return stored ? JSON.parse(stored) : [];
     }
 
-    // 🩸 4 MONTHS (120 DAYS) REST PERIOD CALCULATION
     function checkEligibility(lastDonationDateStr) {
       if (!lastDonationDateStr || lastDonationDateStr === "তথ্য নেই") return true;
       var lastDate = new Date(lastDonationDateStr);
       var today = new Date();
       var diffDays = (today - lastDate) / (1000 * 60 * 60 * 24);
-      return diffDays >= 120;
+      return diffDays >= 120; // 4-month logic
     }
 
-    // Login Authentication Function
     function verifyDonorLogin(e) {
       if (e) e.preventDefault();
-      
       var phone = document.getElementById("authPhone").value.trim();
       var pin = document.getElementById("authPin").value.trim();
       var alertBox = document.getElementById("updateAlert");
@@ -419,21 +688,24 @@
 
       if (activeDonorIndex !== -1) {
         var donor = donorsList[activeDonorIndex];
-        
-        // Hide Login Form, Show Edit Form
         alertBox.style.display = "none";
         document.getElementById("verifyDonorForm").style.display = "none";
         document.getElementById("editProfileForm").style.display = "block";
 
-        // Populate existing data
         document.getElementById("editName").value = donor.name || "";
         document.getElementById("editBloodGroup").value = donor.blood_group || donor.bloodGroup || "";
         document.getElementById("editDistrict").value = donor.district || "";
         document.getElementById("editHall").value = donor.hall || "";
-        document.getElementById("editLastDonation").value = donor.last_donation || "";
-        document.getElementById("editAvailability").value = donor.is_available ? "true" : "false";
 
-        // 🔥 Trigger Browser Password Save Prompt
+        // Set Last Donation
+        var lastDateVal = donor.last_donation && donor.last_donation !== "তথ্য নেই" ? donor.last_donation : "";
+        document.getElementById("editLastDonation").value = lastDateVal;
+        document.getElementById("lastDonationDisplay").innerText = lastDateVal || "তথ্য নেই";
+
+        // Set Availability
+        selectAvailability(donor.is_available ? "true" : "false");
+
+        // Browser Credential Save trigger
         if (window.PasswordCredential && navigator.credentials) {
           try {
             var cred = new PasswordCredential({
@@ -444,9 +716,7 @@
             navigator.credentials.store(cred).catch(function(err) {});
           } catch(e) {}
         }
-
       } else {
-        // Handle Wrong Login
         alertBox.style.display = "block";
         alertBox.style.background = "#fee2e2";
         alertBox.style.color = "#b91c1c";
@@ -454,9 +724,155 @@
       }
     }
 
-    // Save Updated Data Function
-    document.getElementById("editProfileForm").addEventListener("submit", function(e) {
-      e.preventDefault();
+    // ==========================================
+    // 📅 DEMO 1: CALENDAR BOTTOM SHEET LOGIC
+    // ==========================================
+    function openCalendarPicker() {
+      var currentVal = document.getElementById("editLastDonation").value;
+      if (currentVal && !isNaN(new Date(currentVal).getTime())) {
+        calViewDate = new Date(currentVal);
+        tempSelectedDateStr = currentVal;
+      } else {
+        calViewDate = new Date();
+        tempSelectedDateStr = "";
+      }
+
+      renderCalendarGrid();
+      document.getElementById("customCalendarModal").style.display = "flex";
+    }
+
+    function closeCalendarPicker() {
+      document.getElementById("customCalendarModal").style.display = "none";
+    }
+
+    function closeCalendarOnBackdrop(e) {
+      if (e.target.id === "customCalendarModal") {
+        closeCalendarPicker();
+      }
+    }
+
+    function changeCalMonth(delta) {
+      calViewDate.setMonth(calViewDate.getMonth() + delta);
+      renderCalendarGrid();
+    }
+
+    function renderCalendarGrid() {
+      var year = calViewDate.getFullYear();
+      var month = calViewDate.getMonth();
+
+      // Month Year Label
+      document.getElementById("calMonthYearLabel").innerText = banglaMonths[month] + " " + toBanglaDigits(year);
+
+      var grid = document.getElementById("calDaysGrid");
+      grid.innerHTML = "";
+
+      var firstDay = new Date(year, month, 1).getDay();
+      var daysInMonth = new Date(year, month + 1, 0).getDate();
+
+      // Empty spaces before first day
+      for (var i = 0; i < firstDay; i++) {
+        var blank = document.createElement("div");
+        blank.className = "cal-day-cell empty";
+        grid.appendChild(blank);
+      }
+
+      var today = new Date();
+      var todayFormatted = today.getFullYear() + "-" + String(today.getMonth() + 1).padStart(2, '0') + "-" + String(today.getDate()).padStart(2, '0');
+
+      for (var day = 1; day <= daysInMonth; day++) {
+        var dayStr = String(day).padStart(2, '0');
+        var monthStr = String(month + 1).padStart(2, '0');
+        var fullDateStr = year + "-" + monthStr + "-" + dayStr;
+
+        var cell = document.createElement("div");
+        cell.className = "cal-day-cell";
+        cell.innerText = toBanglaDigits(day);
+
+        if (fullDateStr === todayFormatted) {
+          cell.classList.add("today");
+        }
+
+        if (fullDateStr === tempSelectedDateStr) {
+          cell.classList.add("selected");
+        }
+
+        (function(dStr) {
+          cell.onclick = function() {
+            tempSelectedDateStr = dStr;
+            renderCalendarGrid();
+          };
+        })(fullDateStr);
+
+        grid.appendChild(cell);
+      }
+    }
+
+    function clearSelectedDate() {
+      tempSelectedDateStr = "";
+      confirmCalendarDate();
+    }
+
+    function confirmCalendarDate() {
+      document.getElementById("editLastDonation").value = tempSelectedDateStr;
+      document.getElementById("lastDonationDisplay").innerText = tempSelectedDateStr || "তথ্য নেই";
+      closeCalendarPicker();
+    }
+
+    // ==========================================
+    // ⚡ CUSTOM AVAILABILITY BOTTOM SHEET LOGIC
+    // ==========================================
+    function openAvailPicker() {
+      var currentVal = document.getElementById("editAvailability").value;
+      updateAvailModalSelection(currentVal);
+      document.getElementById("availPickerModal").style.display = "flex";
+    }
+
+    function closeAvailPicker() {
+      document.getElementById("availPickerModal").style.display = "none";
+    }
+
+    function closeAvailPickerOnBackdrop(e) {
+      if (e.target.id === "availPickerModal") {
+        closeAvailPicker();
+      }
+    }
+
+    function selectAvailability(val) {
+      document.getElementById("editAvailability").value = val;
+      var display = document.getElementById("availDisplay");
+
+      if (val === "true") {
+        display.innerHTML = '<span style="color:var(--success);">✅ আমি রক্তদানে প্রস্তুত (Available)</span>';
+      } else {
+        display.innerHTML = '<span style="color:var(--warning);">❌ সাময়িকভাবে অনুপলব্ধ (Unavailable)</span>';
+      }
+
+      updateAvailModalSelection(val);
+      closeAvailPicker();
+    }
+
+    function updateAvailModalSelection(val) {
+      var btnTrue = document.getElementById("optAvailTrue");
+      var btnFalse = document.getElementById("optAvailFalse");
+      var chkTrue = document.getElementById("chkAvailTrue");
+      var chkFalse = document.getElementById("chkAvailFalse");
+
+      if (val === "true") {
+        btnTrue.className = "modal-item-btn selected";
+        btnFalse.className = "modal-item-btn";
+        chkTrue.style.display = "inline";
+        chkFalse.style.display = "none";
+      } else {
+        btnTrue.className = "modal-item-btn";
+        btnFalse.className = "modal-item-btn selected";
+        chkTrue.style.display = "none";
+        chkFalse.style.display = "inline";
+      }
+    }
+
+    // Save Profile Changes
+    function saveProfileChanges(e) {
+      if (e) e.preventDefault();
       var alertBox = document.getElementById("updateAlert");
 
       if (activeDonorIndex !== -1 && donorsList[activeDonorIndex]) {
@@ -475,7 +891,7 @@
         donorsList[activeDonorIndex].name = document.getElementById("editName").value.trim();
         donorsList[activeDonorIndex].district = document.getElementById("editDistrict").value.trim();
         donorsList[activeDonorIndex].hall = document.getElementById("editHall").value.trim();
-        donorsList[activeDonorIndex].last_donation = newLastDonation;
+        donorsList[activeDonorIndex].last_donation = newLastDonation || "তথ্য নেই";
         donorsList[activeDonorIndex].is_available = selectedAvail;
 
         // Synchronize both cache storage keys
@@ -487,9 +903,9 @@
         alertBox.style.color = "#15803d";
         alertBox.innerText = "আপনার তথ্য সফলভাবে হালনাগাদ করা হয়েছে!";
       }
-    });
+    }
 
-    // Modal Functions
+    // PIN Reset Modal Logic
     function openResetPinModal() {
       document.getElementById("resetPinModal").style.display = "flex";
       document.getElementById("resetAlert").style.display = "none";
