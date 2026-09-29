@@ -4,69 +4,333 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>মতামত ও ফিডব্যাক - JIBONI</title>
-  <link rel="stylesheet" href="style.css" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Hind+Siliguri:wght@500;600;700&display=swap');
+
+    :root {
+      --primary: #dc2626;
+      --primary-hover: #b91c1c;
+      --primary-light: #fee2e2;
+      --slate-50: #f8fafc;
+      --slate-100: #f1f5f9;
+      --slate-200: #e2e8f0;
+      --slate-400: #94a3b8;
+      --slate-600: #475569;
+      --slate-800: #1e293b;
+      --slate-900: #0f172a;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Hind Siliguri', 'Plus Jakarta Sans', sans-serif;
+    }
+
+    body {
+      background-color: var(--slate-50);
+      color: var(--slate-800);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background-image: none !important;
+    }
+
+    /* Header */
+    .site-header {
+      background: #ffffff;
+      padding: 14px 16px 12px;
+      border-bottom: 1px solid var(--slate-200);
+      text-align: center;
+      width: 100%;
+    }
+
+    .header-inner {
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    .brand-row {
+      margin-bottom: 10px;
+    }
+
+    .brand-logo {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      text-decoration: none;
+    }
+
+    .blood-drop {
+      font-size: 1.5rem;
+      line-height: 1;
+    }
+
+    .brand-name {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: var(--primary);
+      letter-spacing: 0.5px;
+      line-height: 1;
+    }
+
+    .nav-btn-row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+    }
+
+    .btn-chip {
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      border: 1px solid var(--slate-200);
+      background: var(--slate-100);
+      color: var(--slate-600);
+      transition: all 0.2s ease;
+    }
+
+    .brand-slogan {
+      font-size: 0.74rem;
+      color: var(--slate-600);
+      margin-top: 4px;
+      font-style: italic;
+    }
+
+    /* Main Form Area */
+    .main-wrapper {
+      flex: 1;
+      max-width: 480px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 18px 14px 40px;
+    }
+
+    .feedback-card {
+      background: #ffffff;
+      border: 1px solid var(--slate-200);
+      border-radius: 14px;
+      padding: 22px 18px;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.03);
+    }
+
+    .page-title {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--slate-900);
+      margin-bottom: 4px;
+      text-align: center;
+    }
+
+    .page-subtitle {
+      font-size: 0.84rem;
+      color: var(--slate-600);
+      margin-bottom: 20px;
+      text-align: center;
+      line-height: 1.4;
+    }
+
+    .form-group {
+      margin-bottom: 14px;
+      text-align: left;
+    }
+
+    .field-label {
+      display: block;
+      font-size: 0.84rem;
+      font-weight: 700;
+      color: var(--slate-800);
+      margin-bottom: 6px;
+    }
+
+    .text-input,
+    .textarea-input {
+      width: 100%;
+      padding: 10px 14px;
+      background: #ffffff;
+      border: 1px solid var(--slate-200);
+      border-radius: 10px;
+      font-size: 0.88rem;
+      color: var(--slate-800);
+      outline: none;
+      transition: all 0.2s;
+    }
+
+    .text-input {
+      height: 44px;
+    }
+
+    .textarea-input {
+      min-height: 110px;
+      resize: vertical;
+    }
+
+    .text-input:focus,
+    .textarea-input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(220, 38, 38, 0.1);
+    }
+
+    .btn-submit {
+      width: 100%;
+      height: 44px;
+      background: var(--primary);
+      color: #ffffff;
+      border: none;
+      border-radius: 10px;
+      font-size: 0.92rem;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 6px;
+      transition: background 0.2s ease;
+      box-shadow: 0 2px 8px rgba(220, 38, 38, 0.25);
+    }
+
+    .btn-submit:active {
+      background: var(--primary-hover);
+    }
+
+    .status-alert {
+      margin-top: 14px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      font-size: 0.84rem;
+      font-weight: 700;
+      text-align: center;
+      display: none;
+    }
+
+    /* Footer */
+    .site-footer {
+      background: #ffffff;
+      border-top: 1px solid var(--slate-200);
+      padding: 14px 16px;
+      text-align: center;
+      margin-top: auto;
+      width: 100%;
+    }
+
+    .footer-copy {
+      font-size: 0.75rem;
+      color: var(--slate-600);
+    }
+
+    .footer-copy a {
+      color: var(--primary);
+      font-weight: 700;
+      text-decoration: none;
+    }
+  </style>
 </head>
 <body>
 
-  <!-- Header -->
-  <header class="header">
-    <div class="header-container">
-      <div class="header-main-row">
-        <a href="index.html" class="logo">
-          <span class="logo-drop">🩸</span>
-          <span class="logo-text">JIBONI</span>
+  <!-- Top Header -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="brand-row">
+        <a href="index.html" class="brand-logo">
+          <span class="blood-drop">🩸</span>
+          <span class="brand-name">JIBONI</span>
         </a>
       </div>
 
-      <div class="header-nav-row">
-        <a href="index.html" class="nav-chip">← হোম পেজ</a>
-        <a href="guidelines.html" class="nav-chip">📖 নির্দেশিকা</a>
-        <a href="developer.html" class="nav-chip">👨‍💻 ডেভেলপার</a>
+      <div class="nav-btn-row">
+        <a href="index.html" class="btn-chip">← হোম পেজ</a>
+        <a href="guidelines.html" class="btn-chip">📖 নির্দেশিকা</a>
+        <a href="developer.html" class="btn-chip">👨‍💻 ডেভেলপার</a>
       </div>
 
-      <div class="header-slogan-wrap">
-        <p class="header-slogan">"অচেনা কাউকে বাঁচার আশা দিয়ে, লিখে যাও এক নিঃস্বার্থ জীবনী।"</p>
-      </div>
+      <p class="brand-slogan">"অচেনা কাউকে বাঁচার আশা দিয়ে, লিখে যাও এক নিঃস্বার্থ জীবনী।"</p>
     </div>
   </header>
 
-  <!-- Feedback Container -->
-  <main class="container">
-    <div class="card">
-      <h1 class="card-title">আপনার মূল্যবান মতামত</h1>
-      <p class="card-subtitle">JIBONI প্ল্যাটফর্মকে আরও উন্নত করতে আপনার পরামর্শ লিখুন</p>
+  <!-- Main Container -->
+  <main class="main-wrapper">
+    <div class="feedback-card">
+      <h1 class="page-title">আপনার মূল্যবান মতামত</h1>
+      <p class="page-subtitle">JIBONI প্ল্যাটফর্মকে আরও উন্নত করতে আপনার পরামর্শ বা অভিজ্ঞতা জানান</p>
 
-      <form id="feedbackForm" class="auth-form">
+      <form id="feedbackForm">
         <div class="form-group">
-          <label for="fbName">আপনার নাম:</label>
-          <input type="text" id="fbName" placeholder="নাম লিখুন (ঐচ্ছিক)" class="form-control" />
+          <label class="field-label" for="fbName">আপনার নাম (ঐচ্ছিক):</label>
+          <input type="text" id="fbName" class="text-input" placeholder="নাম লিখুন" />
         </div>
 
         <div class="form-group">
-          <label for="fbContact">মোবাইল বা ইমেইল:</label>
-          <input type="text" id="fbContact" placeholder="যোগাযোগের নম্বর/ইমেইল (ঐচ্ছিক)" class="form-control" />
+          <label class="field-label" for="fbContact">মোবাইল বা ইমেইল (ঐচ্ছিক):</label>
+          <input type="text" id="fbContact" class="text-input" placeholder="যোগাযোগের নম্বর/ইমেইল" />
         </div>
 
         <div class="form-group">
-          <label for="fbMessage">বার্তা বা পরামর্শ: *</label>
-          <textarea id="fbMessage" rows="5" required placeholder="আপনার মতামত বিস্তারিত লিখুন..." class="form-control" style="resize: vertical;"></textarea>
+          <label class="field-label" for="fbMessage">বার্তা বা পরামর্শ: *</label>
+          <textarea id="fbMessage" class="textarea-input" required placeholder="আপনার মতামত বিস্তারিত লিখুন..."></textarea>
         </div>
 
-        <button type="submit" class="btn btn-primary" id="fbSubmitBtn">ফিডব্যাক পাঠান</button>
+        <button type="submit" class="btn-submit" id="fbBtn">ফিডব্যাক পাঠান</button>
       </form>
 
-      <div id="fbStatus" class="status-msg" style="display:none;"></div>
+      <div id="fbAlert" class="status-alert"></div>
     </div>
   </main>
 
   <!-- Footer -->
-  <footer class="footer">
-    <div class="footer-container">
-      <p class="footer-notice">JIBONI — রক্তদানে সচেতনতা আমাদের লক্ষ্য</p>
-      <p class="footer-credit">Designed & Developed by <a href="developer.html">Amanulla Emon</a></p>
-    </div>
+  <footer class="site-footer">
+    <p class="footer-copy">JIBONI — রক্তদানে সচেতনতা আমাদের লক্ষ্য</p>
+    <p class="footer-copy">Designed & Developed by <a href="developer.html">Amanulla Emon</a></p>
   </footer>
 
-  <script src="app.js"></script>
+  <script>
+    document.getElementById("feedbackForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const btn = document.getElementById("fbBtn");
+      const alertBox = document.getElementById("fbAlert");
+
+      const name = document.getElementById("fbName").value.trim();
+      const contact = document.getElementById("fbContact").value.trim();
+      const message = document.getElementById("fbMessage").value.trim();
+
+      if (!message) return;
+
+      btn.disabled = true;
+      btn.innerText = "পাঠানো হচ্ছে...";
+
+      try {
+        const feedbackEntry = {
+          name: name || "নাম প্রকাশে অনিচ্ছুক",
+          contact: contact || "তথ্য নেই",
+          message: message,
+          date: new Date().toISOString()
+        };
+
+        const existing = JSON.parse(localStorage.getItem("jiboni_feedbacks") || "[]");
+        existing.unshift(feedbackEntry);
+        localStorage.setItem("jiboni_feedbacks", JSON.stringify(existing));
+
+        alertBox.style.display = "block";
+        alertBox.style.background = "#dcfce7";
+        alertBox.style.color = "#15803d";
+        alertBox.innerText = "ধন্যবাদ! আপনার মূল্যবান মতামত সফলভাবে গ্রহণ করা হয়েছে।";
+
+        document.getElementById("feedbackForm").reset();
+      } catch (err) {
+        alertBox.style.display = "block";
+        alertBox.style.background = "#fee2e2";
+        alertBox.style.color = "#b91c1c";
+        alertBox.innerText = "মতামত পাঠাতে সমস্যা হয়েছে, অনুগ্রহ করে পুনরায় চেষ্টা করুন।";
+      } finally {
+        btn.disabled = false;
+        btn.innerText = "ফিডব্যাক পাঠান";
+      }
+    });
+  </script>
 </body>
 </html>
