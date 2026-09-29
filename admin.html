@@ -15,6 +15,8 @@
       --success-light: #dcfce7;
       --warning: #b45309;
       --warning-light: #fef3c7;
+      --info: #0284c7;
+      --info-light: #e0f2fe;
       --slate-50: #f8fafc;
       --slate-100: #f1f5f9;
       --slate-200: #e2e8f0;
@@ -201,10 +203,6 @@
       padding: 4px 0;
     }
 
-    .forgot-link:hover {
-      text-decoration: underline;
-    }
-
     .admin-profile-strip {
       background: #ffffff;
       border: 1px solid var(--slate-200);
@@ -321,6 +319,7 @@
       display: flex;
       align-items: center;
       gap: 6px;
+      line-height: 1.4;
     }
 
     .status-chip {
@@ -341,6 +340,18 @@
     .status-resting {
       background: var(--warning-light);
       color: var(--warning);
+    }
+
+    .next-date-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: var(--info);
+      background: var(--info-light);
+      padding: 2px 8px;
+      border-radius: 6px;
     }
 
     .card-footer-actions {
@@ -491,7 +502,7 @@
           💬 মতামত <span class="pill-count" id="countFeedback">0</span>
         </button>
         <button type="button" id="tabBtnSubadmins" class="pill-btn" onclick="setDashboardTab('subadmins')" style="display:none;">
-          🛡️ সাব-অ্যাডমিন
+          🛡️️ সাব-অ্যাডমিন
         </button>
       </div>
 
@@ -648,6 +659,20 @@
       return diffDays >= 120;
     }
 
+    // 🗓️ CALCULATE NEXT ELIGIBLE DONATION DATE (EXACTLY 4 MONTHS / 120 DAYS FROM LAST DONATION)
+    function calculateNextEligibleDate(lastDonationDateStr) {
+      if (!lastDonationDateStr || lastDonationDateStr === "তথ্য নেই") return null;
+      var d = new Date(lastDonationDateStr);
+      if (isNaN(d.getTime())) return null;
+
+      // Add 4 calendar months
+      d.setMonth(d.getMonth() + 4);
+      var yyyy = d.getFullYear();
+      var mm = String(d.getMonth() + 1).padStart(2, '0');
+      var dd = String(d.getDate()).padStart(2, '0');
+      return yyyy + "-" + mm + "-" + dd;
+    }
+
     function loadDonors() {
       var stored = localStorage.getItem("jiboni_donors_cache") || localStorage.getItem("donors");
       localDonors = stored ? JSON.parse(stored) : [];
@@ -738,10 +763,19 @@
       list.forEach(function(donor) {
         var actualIdx = localDonors.indexOf(donor);
         var isEligible = checkDonationEligibility(donor.last_donation);
+        var nextDate = calculateNextEligibleDate(donor.last_donation);
         
         var statusText = donor.is_available ? '● প্রস্তুত (Available)' : '○ অনুপলব্ধ (Resting)';
         if (!isEligible && !donor.is_available) {
           statusText = '⏳ বিরতি কালীন (4-Month Rest)';
+        }
+
+        // Potential Next Eligible Donation Date Line
+        var nextDateHtml = '';
+        if (nextDate && !isEligible) {
+          nextDateHtml = '<div class="detail-item">🗓️ <strong>পরবর্তী রক্তদান:</strong> <span class="next-date-badge">' + nextDate + ' (থেকে সম্ভাব্য)</span></div>';
+        } else if (isEligible && donor.last_donation && donor.last_donation !== "তথ্য নেই") {
+          nextDateHtml = '<div class="detail-item">🗓️ <strong>পরবর্তী রক্তদান:</strong> <span style="font-weight:700; color:var(--success);">✅ যেকোনো সময় সক্ষম</span></div>';
         }
 
         var card = document.createElement("div");
@@ -758,6 +792,7 @@
             '<div class="detail-item">⚡ <strong>স্ট্যাটাস:</strong> ' +
               '<span class="status-chip ' + (donor.is_available ? 'status-ready' : 'status-resting') + '">' + statusText + '</span>' +
             '</div>' +
+            nextDateHtml +
           '</div>' +
           '<div class="card-footer-actions">' +
             '<button type="button" class="card-btn ' + (donor.is_verified ? 'btn-verify-success' : 'btn-verify-warn') + '" onclick="toggleDonorVerify(' + actualIdx + ')">' +
