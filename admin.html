@@ -193,6 +193,11 @@
       text-decoration: none;
       font-weight: 600;
       cursor: pointer;
+      display: inline-block;
+    }
+
+    .forgot-link:hover {
+      text-decoration: underline;
     }
 
     /* Modal Styles */
@@ -465,7 +470,7 @@
       <form id="loginForm">
         <div class="input-field">
           <label class="field-label" for="loginEmail">ইমেইল অ্যাড্রেস</label>
-          <input type="email" id="loginEmail" class="custom-input" placeholder="amanullaemon04@gmail.com" required />
+          <input type="email" id="loginEmail" class="custom-input" placeholder="jiboni@gmail.com" required />
         </div>
 
         <div class="input-field">
@@ -474,7 +479,7 @@
         </div>
 
         <div class="forgot-link-wrap">
-          <span class="forgot-link" onclick="openForgotModal()">পাসওয়ার্ড ভুলে গেছেন? (Forgot Password)</span>
+          <span class="forgot-link" id="forgotPassBtn">পাসওয়ার্ড ভুলে গেছেন? (Forgot Password)</span>
         </div>
 
         <button type="submit" class="btn-primary">লগইন করুন</button>
@@ -508,7 +513,7 @@
           💬 মতামত <span class="pill-count" id="countFeedback">0</span>
         </button>
         <button type="button" class="pill-btn" onclick="setDashboardTab('subadmins')">
-          🛡️️ সাব-অ্যাডমিন
+          🛡️ সাব-অ্যাডমিন
         </button>
       </div>
 
@@ -545,7 +550,7 @@
 
   </main>
 
-  <!-- PASSWORD CHANGE MODAL -->
+  <!-- PASSWORD CHANGE MODAL (Super & Sub-admin both can change own password) -->
   <div id="changePassModal" class="modal-backdrop">
     <div class="modal-box">
       <h3 style="font-size: 1.15rem; font-weight: 800; color: var(--slate-900); margin-bottom: 4px;">পাসওয়ার্ড পরিবর্তন করুন</h3>
@@ -553,7 +558,7 @@
       
       <form id="changePassForm">
         <div class="input-field">
-          <input type="password" id="newSecretPassword" class="custom-input" placeholder="নতুন পাসওয়ার্ড লিখুন" required minlength="6" />
+          <input type="password" id="newSecretPassword" class="custom-input" placeholder="নতুন পাসওয়ার্ড লিখুন" required minlength="4" />
         </div>
         <button type="submit" class="btn-primary" style="height: 40px; margin-bottom: 8px;">পাসওয়ার্ড আপডেট করুন</button>
         <button type="button" onclick="closeChangePassModal()" class="btn-header btn-back" style="width: 100%; height: 38px; cursor: pointer;">বাতিল করুন</button>
@@ -586,11 +591,10 @@
 
   <script>
     // =========================================================================
-    // ⚙️ SUPER ADMIN CONFIGURATION
-    // Eikhane tomar pochonder permanent password likhe nite paro:
+    // ⚙️ SUPER ADMIN DEFAULT CONFIGURATION
     // =========================================================================
     const SUPER_ADMIN_EMAIL = "amanullaemon04@gmail.com";
-    const SUPER_ADMIN_DEFAULT_PASS = "Emon@2026"; // <-- Eikhane tomar pochonder password set korte paro!
+    const SUPER_ADMIN_DEFAULT_PASS = "superadmin123";
 
     let activeTab = "all";
     let loggedInUser = null;
@@ -608,6 +612,21 @@
     }
 
     document.addEventListener("DOMContentLoaded", () => {
+      // Ensure input is empty with placeholder
+      const emailInput = document.getElementById("loginEmail");
+      if (emailInput) {
+        emailInput.value = "";
+      }
+
+      // Safe trigger for Forgot Password button
+      const forgotBtn = document.getElementById("forgotPassBtn");
+      if (forgotBtn) {
+        forgotBtn.onclick = function() {
+          openForgotModal();
+        };
+      }
+
+      // Check current session
       const activeSession = sessionStorage.getItem("jiboni_session_user");
       if (activeSession) {
         loggedInUser = JSON.parse(activeSession);
@@ -615,6 +634,7 @@
       }
     });
 
+    // Login Form Submit
     document.getElementById("loginForm").addEventListener("submit", (e) => {
       e.preventDefault();
       const mail = document.getElementById("loginEmail").value.trim().toLowerCase();
@@ -651,10 +671,11 @@
       window.location.reload();
     }
 
-    /* Change Password Modal for Logged in Admin */
+    /* Change Password Modal for Active Logged-in Admin */
     function openChangePassModal() {
       document.getElementById("changePassModal").style.display = "flex";
       document.getElementById("changePassMsg").style.display = "none";
+      document.getElementById("newSecretPassword").value = "";
     }
 
     function closeChangePassModal() {
@@ -667,15 +688,4 @@
       if (!newPass) return;
 
       const admins = fetchAdminsData();
-      const found = admins.find(a => a.email.toLowerCase() === loggedInUser.email.toLowerCase());
-
-      if (found) {
-        found.pass = newPass;
-        loggedInUser.pass = newPass;
-        localStorage.setItem("jiboni_admin_accounts", JSON.stringify(admins));
-        sessionStorage.setItem("jiboni_session_user", JSON.stringify(loggedInUser));
-
-        const msg = document.getElementById("changePassMsg");
-        msg.style.display = "block";
-        msg.style.color = "var(--success)";
-        msg.innerText = "আপনার পাসওয়ার্ড সফলভাবে আপডেট করা হয়েছ
+      const
