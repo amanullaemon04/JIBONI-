@@ -2,37 +2,46 @@
 <html lang="bn">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, interactive-widget=resizes-content" />
   <title>নতুন রক্তদাতা নিবন্ধন - JIBONI</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Hind+Siliguri:wght@500;600;700&display=swap');
+
+    :root {
+      --primary: #dc2626;
+      --primary-hover: #b91c1c;
+      --primary-light: #fee2e2;
+      --success: #15803d;
+      --success-light: #dcfce7;
+      --slate-50: #f8fafc;
+      --slate-100: #f1f5f9;
+      --slate-200: #e2e8f0;
+      --slate-400: #94a3b8;
+      --slate-600: #475569;
+      --slate-800: #1e293b;
+      --slate-900: #0f172a;
+    }
 
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: 'Hind Siliguri', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-family: 'Hind Siliguri', 'Plus Jakarta Sans', sans-serif;
+      -webkit-tap-highlight-color: transparent;
     }
 
     body {
-      background-color: #f8fafc;
-      color: #1e293b;
+      background: var(--slate-50);
+      color: var(--slate-800);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      background-image: none !important;
     }
 
-    body::before, body::after {
-      display: none !important;
-      content: none !important;
-    }
-
-    /* Top Header */
     .site-header {
       background: #ffffff;
       padding: 14px 16px 12px;
-      border-bottom: 1px solid #e2e8f0;
+      border-bottom: 1px solid var(--slate-200);
       text-align: center;
       width: 100%;
     }
@@ -43,7 +52,7 @@
     }
 
     .brand-row {
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
 
     .brand-logo {
@@ -62,7 +71,7 @@
     .brand-name {
       font-size: 1.6rem;
       font-weight: 800;
-      color: #dc2626;
+      color: var(--primary);
       letter-spacing: 0.5px;
       line-height: 1;
     }
@@ -72,7 +81,7 @@
       justify-content: center;
       align-items: center;
       gap: 8px;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
       flex-wrap: wrap;
     }
 
@@ -85,129 +94,127 @@
       display: inline-flex;
       align-items: center;
       gap: 4px;
-      border: 1px solid transparent;
-      transition: all 0.2s ease;
-    }
-
-    .btn-chip-red {
-      background: #dc2626;
-      color: #ffffff !important;
-    }
-
-    .btn-chip-blue {
-      background: #eff6ff;
-      color: #1d4ed8 !important;
-      border-color: #bfdbfe;
-    }
-
-    .btn-chip-gray {
-      background: #f1f5f9;
-      color: #475569 !important;
-      border-color: #cbd5e1;
+      border: 1px solid var(--slate-200);
+      background: var(--slate-100);
+      color: var(--slate-600);
+      cursor: pointer;
     }
 
     .brand-slogan {
       font-size: 0.74rem;
-      color: #475569;
-      margin-top: 4px;
+      color: var(--slate-600);
       font-style: italic;
     }
 
-    /* Main Container & Registration Card */
-    .main-wrapper {
+    .app-main {
       flex: 1;
       max-width: 480px;
       width: 100%;
       margin: 0 auto;
-      padding: 16px 14px 40px;
+      padding: 16px 14px 30px;
     }
 
-    .register-card {
+    .form-card {
       background: #ffffff;
-      border: 1px solid #e2e8f0;
-      border-radius: 12px;
-      padding: 22px 18px;
+      border: 1px solid var(--slate-200);
+      border-radius: 14px;
+      padding: 20px 16px;
       box-shadow: 0 4px 14px rgba(0, 0, 0, 0.03);
     }
 
     .page-title {
-      font-size: 1.38rem;
+      font-size: 1.3rem;
       font-weight: 800;
-      color: #0f172a;
+      color: var(--slate-900);
       margin-bottom: 4px;
       text-align: center;
     }
 
     .page-subtitle {
-      font-size: 0.84rem;
-      color: #64748b;
-      margin-bottom: 20px;
+      font-size: 0.82rem;
+      color: var(--slate-600);
+      margin-bottom: 18px;
       text-align: center;
-      line-height: 1.4;
     }
 
-    /* Form Fields */
     .input-group {
-      margin-bottom: 14px;
+      margin-bottom: 13px;
       text-align: left;
     }
 
     .field-label {
       display: block;
-      font-size: 0.84rem;
+      font-size: 0.82rem;
       font-weight: 700;
-      color: #1e293b;
+      color: var(--slate-800);
       margin-bottom: 5px;
     }
 
-    .field-hint {
-      display: block;
-      font-size: 0.73rem;
-      color: #b91c1c;
-      font-weight: 600;
-      margin-top: 3px;
-    }
-
     .text-input,
-    .select-input {
+    .custom-select-trigger {
       width: 100%;
-      height: 44px;
+      height: 42px;
       padding: 0 12px;
       background: #ffffff;
-      border: 1px solid #cbd5e1;
-      border-radius: 8px;
+      border: 1px solid var(--slate-200);
+      border-radius: 10px;
       font-size: 0.88rem;
-      color: #1e293b;
+      color: var(--slate-800);
       outline: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      user-select: none;
       transition: all 0.2s;
     }
 
     .text-input:focus,
-    .select-input:focus {
-      border-color: #dc2626;
+    .custom-select-trigger:focus {
+      border-color: var(--primary);
       box-shadow: 0 0 0 2px rgba(220, 38, 38, 0.1);
+    }
+
+    .field-hint {
+      font-size: 0.74rem;
+      color: var(--primary);
+      margin-top: 4px;
+      line-height: 1.3;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .field-hint-sub {
+      font-size: 0.73rem;
+      color: var(--slate-400);
+      margin-top: 4px;
+    }
+
+    .select-arrow {
+      font-size: 0.7rem;
+      color: var(--slate-400);
     }
 
     .btn-submit {
       width: 100%;
       height: 44px;
-      background: #dc2626;
+      background: var(--primary);
       color: #ffffff;
       border: none;
-      border-radius: 8px;
-      font-size: 0.92rem;
+      border-radius: 10px;
+      font-size: 0.94rem;
       font-weight: 700;
       cursor: pointer;
       margin-top: 8px;
-      transition: opacity 0.2s ease;
       box-shadow: 0 2px 8px rgba(220, 38, 38, 0.25);
     }
 
     .btn-submit:active {
-      opacity: 0.85;
+      background: var(--primary-hover);
     }
 
-    .status-alert {
+    .alert-box {
       margin-top: 14px;
       padding: 10px 12px;
       border-radius: 8px;
@@ -217,23 +224,138 @@
       display: none;
     }
 
-    /* Footer */
+    /* KEYBOARD-SAFE CUSTOM PICKER MODAL */
+    .custom-modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.55);
+      backdrop-filter: blur(4px);
+      z-index: 2000;
+      display: none;
+      align-items: flex-end;
+      justify-content: center;
+      overscroll-behavior: contain;
+    }
+
+    .custom-modal-sheet {
+      background: #ffffff;
+      width: 100%;
+      max-width: 480px;
+      height: 82vh;
+      height: 82dvh;
+      border-top-left-radius: 20px;
+      border-top-right-radius: 20px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.15);
+      animation: slideUp 0.22s ease-out;
+      overflow: hidden;
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(100%); }
+      to { transform: translateY(0); }
+    }
+
+    .modal-fixed-top {
+      padding: 16px 16px 10px;
+      background: #ffffff;
+      border-bottom: 1px solid var(--slate-100);
+      flex-shrink: 0;
+    }
+
+    .modal-sheet-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .modal-sheet-title {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--slate-900);
+    }
+
+    .modal-sheet-close {
+      background: var(--slate-100);
+      border: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      font-size: 1.1rem;
+      cursor: pointer;
+      color: var(--slate-600);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-sheet-list {
+      overflow-y: auto;
+      flex: 1;
+      padding: 10px 16px 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .modal-item-btn {
+      width: 100%;
+      text-align: left;
+      padding: 11px 14px;
+      border-radius: 10px;
+      border: 1px solid var(--slate-200);
+      background: #ffffff;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--slate-800);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.15s;
+    }
+
+    .modal-item-btn:hover,
+    .modal-item-btn.selected {
+      background: var(--primary-light);
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .modal-group-title {
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: var(--slate-400);
+      padding: 10px 4px 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
     .site-footer {
       background: #ffffff;
-      border-top: 1px solid #e2e8f0;
-      padding: 14px 16px;
+      border-top: 1px solid var(--slate-200);
+      padding: 12px 16px 16px;
       text-align: center;
       margin-top: auto;
       width: 100%;
     }
 
-    .footer-copy {
-      font-size: 0.75rem;
-      color: #334155;
+    .footer-disclaimer {
+      font-size: 0.72rem;
+      color: var(--slate-600);
+      margin-bottom: 3px;
     }
 
-    .footer-copy a {
-      color: #dc2626;
+    .footer-credit {
+      font-size: 0.75rem;
+      color: var(--slate-800);
+    }
+
+    .footer-credit a {
+      color: var(--primary);
       font-weight: 700;
       text-decoration: none;
     }
@@ -241,7 +363,6 @@
 </head>
 <body>
 
-  <!-- Top Header -->
   <header class="site-header">
     <div class="header-inner">
       <div class="brand-row">
@@ -252,218 +373,520 @@
       </div>
 
       <div class="nav-btn-row">
-        <a href="index.html" class="btn-chip btn-chip-gray">← হোম পেজ</a>
-        <a href="update-profile.html" class="btn-chip btn-chip-blue">✏️ তথ্য আপডেট</a>
-        <a href="developer.html" class="btn-chip btn-chip-gray">👨‍💻 ডেভেলপার</a>
+        <a href="index.html" class="btn-chip">← হোম পেজ</a>
+        <a href="update-profile.html" class="btn-chip">✏️ তথ্য আপডেট</a>
+        <a href="developer.html" class="btn-chip">👨‍💻 ডেভেলপার</a>
       </div>
 
       <p class="brand-slogan">"অচেনা কাউকে বাঁচার আশা দিয়ে, লিখে যাও এক নিঃস্বার্থ জীবনী।"</p>
     </div>
   </header>
 
-  <!-- Main Container -->
-  <main class="main-wrapper">
-    <div class="register-card">
+  <main class="app-main">
+    <div class="form-card">
       <h1 class="page-title">নতুন রক্তদাতা নিবন্ধন</h1>
-      <p class="page-subtitle">আপনার মূল্যবান রক্তদানের তথ্য দিয়ে জীবন বাঁচাতে এগিয়ে আসুন</p>
+      <p class="page-subtitle">সঠিক তথ্য দিয়ে জীবন বাঁচানোর এই মহৎ উদ্যোগে যুক্ত হোন</p>
 
-      <form id="donorRegisterForm">
+      <form id="registerForm" onsubmit="handleRegistration(event)" action="javascript:void(0);">
         
-        <!-- 1. Full Name -->
+        <!-- পুরো নাম -->
         <div class="input-group">
           <label class="field-label" for="regName">পূর্ণ নাম (Full Name): *</label>
-          <input type="text" id="regName" class="text-input" required placeholder="আপনার নাম লিখুন" />
+          <input type="text" id="regName" class="text-input" placeholder="আপনার নাম লিখুন" required />
         </div>
 
-        <!-- 2. Blood Group -->
+        <!-- রক্তের গ্রুপ (কাস্টম মোডাল বাটন) -->
         <div class="input-group">
-          <label class="field-label" for="regBloodGroup">রক্তের গ্রুপ (Blood Group): *</label>
-          <select id="regBloodGroup" class="select-input" required>
-            <option value="">রক্তের গ্রুপ নির্বাচন করুন</option>
-            <option value="A+">A+</option>
-            <option value="A-">A-</option>
-            <option value="B+">B+</option>
-            <option value="B-">B-</option>
-            <option value="AB+">AB+</option>
-            <option value="AB-">AB-</option>
-            <option value="O+">O+</option>
-            <option value="O-">O-</option>
-          </select>
+          <label class="field-label">রক্তের গ্রুপ (Blood Group): *</label>
+          <div class="custom-select-trigger" id="bloodTrigger" onclick="openPicker('blood')">
+            <span id="bloodDisplay" style="color: var(--slate-400);">রক্তের গ্রুপ নির্বাচন করুন</span>
+            <span class="select-arrow">▼</span>
+          </div>
+          <input type="hidden" id="regBlood" value="" required />
         </div>
 
-        <!-- 3. Phone Number -->
+        <!-- মোবাইল নম্বর -->
         <div class="input-group">
           <label class="field-label" for="regPhone">মোবাইল নম্বর (Phone Number): *</label>
-          <input type="tel" id="regPhone" class="text-input" required placeholder="01XXXXXXXXX" pattern="[0-9]{11}" />
+          <input type="tel" id="regPhone" name="username" class="text-input" placeholder="01XXXXXXXXX" autocomplete="username tel" required />
         </div>
 
-        <!-- 4. Date of Birth (PIN / Passkey Reset Security Key) -->
+        <!-- জন্ম তারিখ -->
         <div class="input-group">
           <label class="field-label" for="regDob">জন্ম তারিখ (Date of Birth): *</label>
           <input type="date" id="regDob" class="text-input" required />
-          <span class="field-hint">🔒 পাসকি বা পিন ভুলে গেলে এই জন্ম তারিখ দিয়ে পিন রিসেট করতে পারবেন।</span>
+          <p class="field-hint">🔒 পাসকি বা পিন ভুলে গেলে এই জন্ম তারিখ দিয়ে পিন রিসেট করতে পারবেন।</p>
         </div>
 
-        <!-- 5. District (64 Districts) -->
+        <!-- জেলা / শহর (কাস্টম মোডাল বাটন) -->
         <div class="input-group">
-          <label class="field-label" for="regDistrict">জেলা / শহর (District): *</label>
-          <select id="regDistrict" class="select-input" required>
-            <option value="">জেলা নির্বাচন করুন</option>
-            <option value="Bagerhat">বাগেরহাট (Bagerhat)</option>
-            <option value="Bandarban">বান্দরবান (Bandarban)</option>
-            <option value="Barguna">বরগুনা (Barguna)</option>
-            <option value="Barishal">বরিশাল (Barishal)</option>
-            <option value="Bhola">ভোলা (Bhola)</option>
-            <option value="Bogura">বগুড়া (Bogura)</option>
-            <option value="Brahmanbaria">ব্রাহ্মণবাড়িয়া (Brahmanbaria)</option>
-            <option value="Chandpur">চাঁদপুর (Chandpur)</option>
-            <option value="Chattogram">চট্টগ্রাম (Chattogram)</option>
-            <option value="Chuadanga">চুয়াডাঙ্গা (Chuadanga)</option>
-            <option value="Cox's Bazar">কক্সবাজার (Cox's Bazar)</option>
-            <option value="Cumilla">কুমিল্লা (Cumilla)</option>
-            <option value="Dhaka">ঢাকা (Dhaka)</option>
-            <option value="Dinajpur">দিনাজপুর (Dinajpur)</option>
-            <option value="Faridpur">ফরিদপুর (Faridpur)</option>
-            <option value="Feni">ফেনী (Feni)</option>
-            <option value="Gaibandha">গাইবান্ধা (Gaibandha)</option>
-            <option value="Gazipur">গাজীপুর (Gazipur)</option>
-            <option value="Gopalganj">গোপালগঞ্জ (Gopalganj)</option>
-            <option value="Habiganj">হবিগঞ্জ (Habiganj)</option>
-            <option value="Jamalpur">জামালপুর (Jamalpur)</option>
-            <option value="Jashore">যশোর (Jashore)</option>
-            <option value="Jhalokati">ঝালকাঠি (Jhalokati)</option>
-            <option value="Jhenaidah">ঝিনাইদহ (Jhenaidah)</option>
-            <option value="Joypurhat">জয়পুরহাট (Joypurhat)</option>
-            <option value="Khagrachhari">খাগড়াছড়ি (Khagrachhari)</option>
-            <option value="Khulna">খুলনা (Khulna)</option>
-            <option value="Kishoreganj">কিশোরগঞ্জ (Kishoreganj)</option>
-            <option value="Kurigram">কুড়িগ্রাম (Kurigram)</option>
-            <option value="Kushtia">কুষ্টিয়া (Kushtia)</option>
-            <option value="Lakshmipur">লক্ষ্মীপুর (Lakshmipur)</option>
-            <option value="Lalmonirhat">লালমনিরহাট (Lalmonirhat)</option>
-            <option value="Madaripur">মাদারীপুর (Madaripur)</option>
-            <option value="Magura">মাগুরা (Magura)</option>
-            <option value="Manikganj">মানিকগঞ্জ (Manikganj)</option>
-            <option value="Meherpur">মেহেরপুর (Meherpur)</option>
-            <option value="Moulvibazar">মৌলভীবাজার (Moulvibazar)</option>
-            <option value="Munshiganj">মুন্সীগঞ্জ (Munshiganj)</option>
-            <option value="Mymensingh">ময়মনসিংহ (Mymensingh)</option>
-            <option value="Naogaon">নওগাঁ (Naogaon)</option>
-            <option value="Narail">নড়াইল (Narail)</option>
-            <option value="Narayanganj">নারায়ণগঞ্জ (Narayanganj)</option>
-            <option value="Narsingdi">নরসিংদী (Narsingdi)</option>
-            <option value="Natore">নাটোর (Natore)</option>
-            <option value="Netrokona">নেত্রকোণা (Netrokona)</option>
-            <option value="Nilphamari">নীলফামারী (Nilphamari)</option>
-            <option value="Noakhali">নোয়াখালী (Noakhali)</option>
-            <option value="Pabna">পাবনা (Pabna)</option>
-            <option value="Panchagarh">পঞ্চগড় (Panchagarh)</option>
-            <option value="Patuakhali">পটুয়াখালী (Patuakhali)</option>
-            <option value="Pirojpur">পিরোজপুর (Pirojpur)</option>
-            <option value="Rajbari">রাজবাড়ী (Rajbari)</option>
-            <option value="Rajshahi">রাজশাহী (Rajshahi)</option>
-            <option value="Rangamati">রাঙ্গামাটি (Rangamati)</option>
-            <option value="Rangpur">রংপুর (Rangpur)</option>
-            <option value="Satkhira">সাতক্ষীরা (Satkhira)</option>
-            <option value="Shariatpur">শরীয়তপুর (Shariatpur)</option>
-            <option value="Sherpur">শেরপুর (Sherpur)</option>
-            <option value="Sirajganj">সিরাজগঞ্জ (Sirajganj)</option>
-            <option value="Sunamganj">সুনামগঞ্জ (Sunamganj)</option>
-            <option value="Sylhet">সিলেট (Sylhet)</option>
-            <option value="Tangail">টাঙ্গাইল (Tangail)</option>
-            <option value="Thakurgaon">ঠাকুরগাঁও (Thakurgaon)</option>
-          </select>
+          <label class="field-label">জেলা / শহর (District): *</label>
+          <div class="custom-select-trigger" id="districtTrigger" onclick="openPicker('district')">
+            <span id="districtDisplay" style="color: var(--slate-400);">জেলা নির্বাচন করুন</span>
+            <span class="select-arrow">▼</span>
+          </div>
+          <input type="hidden" id="regDistrict" value="" required />
         </div>
 
-        <!-- 6. Specific Location / Hall -->
+        <!-- উপজেলা / থানা (কাস্টম মোডাল বাটন) -->
+        <div class="input-group">
+          <label class="field-label">উপজেলা / থানা (Upazila / Thana): *</label>
+          <div class="custom-select-trigger" id="upazilaTrigger" onclick="openPicker('upazila')">
+            <span id="upazilaDisplay" style="color: var(--slate-400);">উপজেলা / থানা নির্বাচন করুন</span>
+            <span class="select-arrow">▼</span>
+          </div>
+          <input type="hidden" id="regUpazila" value="" required />
+        </div>
+
+        <!-- হল / বর্তমান ঠিকানা -->
         <div class="input-group">
           <label class="field-label" for="regHall">হল / বর্তমান ঠিকানা (Hall / Address):</label>
           <input type="text" id="regHall" class="text-input" placeholder="উদাঃ শহীদ সার্জেন্ট জহুরুল হক হল" />
         </div>
 
-        <!-- 7. Last Donation Date -->
+        <!-- সর্বশেষ রক্তদানের তারিখ -->
         <div class="input-group">
           <label class="field-label" for="regLastDonation">সর্বশেষ রক্তদানের তারিখ (যদি থাকে):</label>
           <input type="date" id="regLastDonation" class="text-input" />
         </div>
 
-        <!-- 8. 4-Digit Secret PIN -->
+        <!-- ৪ ডিজিট সিক্রেট পিন -->
         <div class="input-group">
           <label class="field-label" for="regPin">৪ ডিজিট সিক্রেট পিন (Secret PIN): *</label>
-          <input type="password" id="regPin" class="text-input" required maxlength="4" pattern="[0-9]{4}" placeholder="****" />
-          <span class="field-hint" style="color: #64748b;">পরবর্তীতে নিজের তথ্য ও স্ট্যাটাস আপডেট করার জন্য এই পিন লাগবে।</span>
+          <input type="password" id="regPin" name="password" class="text-input" placeholder="****" maxlength="4" autocomplete="new-password" required />
+          <p class="field-hint-sub">পরবর্তীতে নিজের তথ্য ও স্ট্যাটাস আপডেট করার জন্য এই পিন লাগবে।</p>
         </div>
 
-        <button type="submit" class="btn-submit" id="submitBtn">নিবন্ধন সম্পন্ন করুন</button>
+        <button type="submit" class="btn-submit" id="submitRegBtn">নিবন্ধন সম্পন্ন করুন</button>
       </form>
 
-      <div id="statusAlert" class="status-alert"></div>
+      <div id="regAlert" class="alert-box"></div>
     </div>
   </main>
 
-  <!-- Footer -->
+  <!-- KEYBOARD-SAFE CUSTOM PICKER MODAL -->
+  <div id="customPickerModal" class="custom-modal-backdrop" onclick="closePickerOnBackdrop(event)">
+    <div class="custom-modal-sheet" id="modalSheetContent">
+      <div class="modal-fixed-top">
+        <div class="modal-sheet-header">
+          <h3 class="modal-sheet-title" id="modalTitle">নির্বাচন করুন</h3>
+          <button type="button" class="modal-sheet-close" onclick="closePicker()">✕</button>
+        </div>
+        <div class="modal-sheet-search" id="modalSearchWrap">
+          <input type="text" id="modalSearchInput" class="text-input" placeholder="এখানে খুঁজুন..." onkeyup="filterModalItems()" autocomplete="off" />
+        </div>
+      </div>
+      <div class="modal-sheet-list" id="modalListContainer"></div>
+    </div>
+  </div>
+
   <footer class="site-footer">
-    <p class="footer-copy">JIBONI — রক্তদানে সচেতনতা আমাদের লক্ষ্য</p>
-    <p class="footer-copy">Designed & Developed by <a href="developer.html">Amanulla Emon</a></p>
+    <p class="footer-disclaimer">JIBONI — রক্তদানে সচেতনতা আমাদের লক্ষ্য</p>
+    <p class="footer-credit">Designed & Developed by <a href="developer.html">Amanulla Emon</a></p>
   </footer>
 
-  <script src="script.js"></script>
-  <script src="app.js"></script>
   <script>
-    document.getElementById("donorRegisterForm").addEventListener("submit", async function(e) {
-      e.preventDefault();
-      const btn = document.getElementById("submitBtn");
-      const alertBox = document.getElementById("statusAlert");
+    var currentPickerMode = "";
+    var bloodGroupsList = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
 
-      btn.disabled = true;
-      btn.innerText = "নিবন্ধন প্রক্রিয়াকরণ হচ্ছে...";
-      alertBox.style.display = "none";
+    var districtsList = [
+      { category: "ঢাকা বিভাগ", name: "Dhaka", label: "ঢাকা (Dhaka)" },
+      { category: "ঢাকা বিভাগ", name: "Gazipur", label: "গাজীপুর (Gazipur)" },
+      { category: "ঢাকা বিভাগ", name: "Narayanganj", label: "নারায়ণগঞ্জ (Narayanganj)" },
+      { category: "ঢাকা বিভাগ", name: "Tangail", label: "টাঙ্গাইল (Tangail)" },
+      { category: "ঢাকা বিভাগ", name: "Kishoreganj", label: "কিশোরগঞ্জ (Kishoreganj)" },
+      { category: "ঢাকা বিভাগ", name: "Manikganj", label: "মানিকগঞ্জ (Manikganj)" },
+      { category: "ঢাকা বিভাগ", name: "Munshiganj", label: "মুন্সীগঞ্জ (Munshiganj)" },
+      { category: "ঢাকা বিভাগ", name: "Narsingdi", label: "নরসিংদী (Narsingdi)" },
+      { category: "ঢাকা বিভাগ", name: "Faridpur", label: "ফরিদপুর (Faridpur)" },
+      { category: "ঢাকা বিভাগ", name: "Gopalganj", label: "গোপালগঞ্জ (Gopalganj)" },
+      { category: "ঢাকা বিভাগ", name: "Madaripur", label: "মাদারীপুর (Madaripur)" },
+      { category: "ঢাকা বিভাগ", name: "Rajbari", label: "রাজবাড়ী (Rajbari)" },
+      { category: "ঢাকা বিভাগ", name: "Shariatpur", label: "শরীয়তপুর (Shariatpur)" },
 
-      const donorPayload = {
-        name: document.getElementById("regName").value.trim(),
-        blood_group: document.getElementById("regBloodGroup").value,
-        phone: document.getElementById("regPhone").value.trim(),
-        dob: document.getElementById("regDob").value,
-        district: document.getElementById("regDistrict").value,
-        hall: document.getElementById("regHall").value.trim(),
-        last_donation: document.getElementById("regLastDonation").value || null,
-        pin: document.getElementById("regPin").value.trim(),
-        is_available: true,
-        created_at: new Date().toISOString()
-      };
+      { category: "চট্টগ্রাম বিভাগ", name: "Chattogram", label: "চট্টগ্রাম (Chattogram)" },
+      { category: "চট্টগ্রাম বিভাগ", name: "Cox's Bazar", label: "কক্সবাজার (Cox's Bazar)" },
+      { category: "চট্টগ্রাম বিভাগ", name: "Cumilla", label: "কুমিল্লা (Cumilla)" },
+      { category: "চট্টগ্রাম বিভাগ", name: "Feni", label: "ফেনী (Feni)" },
+      { category: "চট্টগ্রাম বিভাগ", name: "Brahmanbaria", label: "ব্রাহ্মণবাড়িয়া (Brahmanbaria)" },
+      { category: "চট্টগ্রাম বিভাগ", name: "Noakhali", label: "নোয়াখালী (Noakhali)" },
+      { category: "চট্টগ্রাম বিভাগ", name: "Chandpur", label: "চাঁদপুর (Chandpur)" },
+      { category: "চট্টগ্রাম বিভাগ", name: "Lakshmipur", label: "লক্ষ্মীপুর (Lakshmipur)" },
+      { category: "চট্টগ্রাম বিভাগ", name: "Bandarban", label: "বান্দরবান (Bandarban)" },
+      { category: "চট্টগ্রাম বিভাগ", name: "Khagrachhari", label: "খাগড়াছড়ি (Khagrachhari)" },
+      { category: "চট্টগ্রাম বিভাগ", name: "Rangamati", label: "রাঙ্গামাটি (Rangamati)" },
 
-      try {
-        // Jodi Supabase configuration window-te thake
-        if (window.supabase) {
-          const { error } = await window.supabase.from('donors').insert([donorPayload]);
-          if (error) throw error;
-        } else if (window.registerDonorToDB) {
-          await window.registerDonorToDB(donorPayload);
-        } else {
-          // LocalStorage fallback cache
-          const existing = JSON.parse(localStorage.getItem('jiboni_donors_cache') || '[]');
-          existing.push(donorPayload);
-          localStorage.setItem('jiboni_donors_cache', JSON.stringify(existing));
+      { category: "রাজশাহী বিভাগ", name: "Rajshahi", label: "রাজশাহী (Rajshahi)" },
+      { category: "Bogura", name: "Bogura", label: "বগুড়া (Bogura)" },
+      { category: "রাজশাহী বিভাগ", name: "Pabna", label: "পাবনা (Pabna)" },
+      { category: "রাজশাহী বিভাগ", name: "Sirajganj", label: "সিরাজগঞ্জ (Sirajganj)" },
+      { category: "রাজশাহী বিভাগ", name: "Naogaon", label: "নওগাঁ (Naogaon)" },
+      { category: "রাজশাহী বিভাগ", name: "Natore", label: "নাটোর (Natore)" },
+      { category: "রাজশাহী বিভাগ", name: "Chapai Nawabganj", label: "চাঁপাইনবাবগঞ্জ (Chapai Nawabganj)" },
+      { category: "রাজশাহী বিভাগ", name: "Joypurhat", label: "জয়পুরহাট (Joypurhat)" },
+
+      { category: "খুলনা বিভাগ", name: "Khulna", label: "খুলনা (Khulna)" },
+      { category: "খুলনা বিভাগ", name: "Jashore", label: "যশোর (Jashore)" },
+      { category: "খুলনা বিভাগ", name: "Kushtia", label: "কুষ্টিয়া (Kushtia)" },
+      { category: "খুলনা বিভাগ", name: "Satkhira", label: "সাতক্ষীরা (Satkhira)" },
+      { category: "খুলনা বিভাগ", name: "Bagerhat", label: "বাগেরহাট (Bagerhat)" },
+      { category: "খুলনা বিভাগ", name: "Jhenaidah", label: "ঝিনাইদহ (Jhenaidah)" },
+      { category: "খুলনা বিভাগ", name: "Chuadanga", label: "চুয়াডাঙ্গা (Chuadanga)" },
+      { category: "খুলনা বিভাগ", name: "Magura", label: "মাগুরা (Magura)" },
+      { category: "খুলনা বিভাগ", name: "Meherpur", label: "মেহেরপুর (Meherpur)" },
+      { category: "খুলনা বিভাগ", name: "Narail", label: "নড়াইল (Narail)" },
+
+      { category: "বরিশাল বিভাগ", name: "Barishal", label: "বরিশাল (Barishal)" },
+      { category: "বরিশাল বিভাগ", name: "Bhola", label: "ভোলা (Bhola)" },
+      { category: "বরিশাল বিভাগ", name: "Patuakhali", label: "পটুয়াখালী (Patuakhali)" },
+      { category: "বরিশাল বিভাগ", name: "Pirojpur", label: "পিরোজপুর (Pirojpur)" },
+      { category: "বরিশাল বিভাগ", name: "Barguna", label: "বরগুনা (Barguna)" },
+      { category: "বরিশাল বিভাগ", name: "Jhalokati", label: "ঝালকাঠি (Jhalokati)" },
+
+      { category: "সিলেট বিভাগ", name: "Sylhet", label: "সিলেট (Sylhet)" },
+      { category: "সিলেট বিভাগ", name: "Moulvibazar", label: "মৌলভীবাজার (Moulvibazar)" },
+      { category: "সিলেট বিভাগ", name: "Habiganj", label: "হবিগঞ্জ (Habiganj)" },
+      { category: "সিলেট বিভাগ", name: "Sunamganj", label: "সুনামগঞ্জ (Sunamganj)" },
+
+      { category: "রংপুর বিভাগ", name: "Rangpur", label: "রংপুর (Rangpur)" },
+      { category: "রংপুর বিভাগ", name: "Dinajpur", label: "দিনাজপুর (Dinajpur)" },
+      { category: "রংপুর বিভাগ", name: "Nilphamari", label: "নীলফামারী (Nilphamari)" },
+      { category: "রংপুর বিভাগ", name: "Kurigram", label: "কুড়িগ্রাম (Kurigram)" },
+      { category: "রংপুর বিভাগ", name: "Gaibandha", label: "গাইবান্ধা (Gaibandha)" },
+      { category: "রংপুর বিভাগ", name: "Lalmonirhat", label: "লালমনিরহাট (Lalmonirhat)" },
+      { category: "রংপুর বিভাগ", name: "Panchagarh", label: "পঞ্চগড় (Panchagarh)" },
+      { category: "রংপুর বিভাগ", name: "Thakurgaon", label: "ঠাকুরগাঁও (Thakurgaon)" },
+
+      { category: "ময়মনসিংহ বিভাগ", name: "Mymensingh", label: "ময়মনসিংহ (Mymensingh)" },
+      { category: "ময়মনসিংহ বিভাগ", name: "Jamalpur", label: "জামালপুর (Jamalpur)" },
+      { category: "ময়মনসিংহ বিভাগ", name: "Netrokona", label: "নেত্রকোণা (Netrokona)" },
+      { category: "ময়মনসিংহ বিভাগ", name: "Sherpur", label: "শেরপুর (Sherpur)" }
+    ];
+
+    var upazilaDatabase = {
+      "Dhaka": ["ধানমন্ডি (Dhanmondi)", "মিরপুর (Mirpur)", "গুলশান (Gulshan)", "উত্তরা (Uttara)", "মোহাম্মদপুর (Mohammadpur)", "শাহবাগ / ঢাবি (Shahbagh / DU)", "মতিঝিল (Motijheel)", "পল্টন (Paltan)", "তেজগাঁও (Tejgaon)", "সাভার (Savar)", "ধামরাই (Dhamrai)", "কেরানীগঞ্জ (Keraniganj)", "নবাবগঞ্জ (Nawabganj)", "দোহার (Dohar)"],
+      "Gazipur": ["গাজীপুর সদর (Sadar)", "টঙ্গী (Tongi)", "কালিয়াকৈর (Kaliakair)", "শ্রীপুর (Sreepur)", "কাপাসিয়া (Kapasia)", "কালীগঞ্জ (Kaliganj)"],
+      "Narayanganj": ["নারায়ণগঞ্জ সদর (Sadar)", "সোনারগাঁও (Sonargaon)", "রূপগঞ্জ (Rupganj)", "আড়াইহাজার (Araihazar)", "বন্দর (Bandar)"],
+      "Tangail": ["টাঙ্গাইল সদর (Sadar)", "মির্জাপুর (Mirzapur)", "ঘাটাইল (Ghatail)", "মধুপুর (Madhupur)", "কালিহাতী (Kalihati)", "গোপালপুর (Gopalpur)", "সখিপুর (Sakhipur)", "নাগরপুর (Nagarpur)", "দেলদুয়ার (Delduar)", "ভূঞাপুর (Bhuapur)", "বাসাইল (Basail)", "ধনবাড়ী (Dhanbari)"],
+      "Kishoreganj": ["কিশোরগঞ্জ সদর (Sadar)", "ভৈরব (Bhairab)", "বাজিতপুর (Bajitpur)", "কটিয়াদী (Katiadi)", "করিমগঞ্জ (Karimganj)", "নিকলী (Nikli)", "কুলিয়ারচর (Kuliarchar)", "হোসেনপুর (Hossainpur)", "ইটনা (Itna)", "মিঠামইন (Mithamain)", "অষ্টগ্রাম (Austagram)", "পাকুন্দিয়া (Pakundia)", "তাড়াইল (Tarail)"],
+      "Manikganj": ["মানিকগঞ্জ সদর (Sadar)", "সিংগাইর (Singair)", "শিবালয় (Shibalaya)", "সাটুরিয়া (Saturia)", "হরিরামপুর (Harirampur)", "ঘিওর (Ghior)", "দৌলতপুর (Daulatpur)"],
+      "Munshiganj": ["মুন্সীগঞ্জ সদর (Sadar)", "শ্রীনগর (Sreenagar)", "সিরাজদিখান (Sirajdikhan)", "লৌহজং (Lohajang)", "গজারিয়া (Gazaria)", "টংগিবাড়ী (Tongibari)"],
+      "Narsingdi": ["নরসিংদী সদর (Sadar)", "রায়পুরা (Raipura)", "শিবপুর (Shibpur)", "বেলাবো (Belabo)", "মনোহরদী (Monohardi)", "পলাশ (Palash)"],
+      "Faridpur": ["ফরিদপুর সদর (Sadar)", "বোয়ালমারী (Boalmari)", "ভাঙ্গা (Bhanga)", "মধুখালী (Madhukhali)", "নগরকান্দা (Nagarkanda)", "আলফাডাঙ্গা (Alfadanga)", "সদরপুর (Sadarpur)", "চরভদ্রাসন (Charbhadrasan)", "সালথা (Saltha)"],
+      "Gopalganj": ["গোপালগঞ্জ সদর (Sadar)", "টুঙ্গিপাড়া (Tungipara)", "কোটালীপাড়া (Kotalipara)", "কাশিয়ানী (Kashiani)", "মুকসুদপুর (Muksudpur)"],
+      "Madaripur": ["মাদারীপুর সদর (Sadar)", "শিবচর (Sibchar)", "কালকিনি (Kalkini)", "রাজৈর (Rajoir)", "ডাসার (Dasar)"],
+      "Rajbari": ["রাজবাড়ী সদর (Sadar)", "পাংশা (Pangsha)", "কালুখালী (Kalukhali)", "বালিয়াকান্দি (Baliakandi)", "গোয়ালন্দ (Goalanda)"],
+      "Shariatpur": ["শরীয়তপুর সদর (Sadar)", "জাজিরা (Zajira)", "নড়িয়া (Naria)", "ভেদরগঞ্জ (Bhedarganj)", "ডামুড্যা (Damudya)", "গোসাইরহাট (Gosairhat)"],
+      "Chattogram": ["কোতোয়ালী (Kotwali)", "পাঁচলাইশ (Panchlaish)", "খুলশী (Khulshi)", "পাহাড়তলী (Pahartali)", "হালিশহর (Halishahar)", "পতেঙ্গা (Patenga)", "হাটহাজারী (Hathazari)", "রাউজান (Raozan)", "ফটিকছড়ি (Fatikchhari)", "বোয়ালখালী (Boalkhali)", "পটিয়া (Patiya)", "আনোয়ারা (Anwara)", "সীতাকুণ্ড (Sitakunda)", "মীরসরাই (Mirsarai)", "চন্দনাইশ (Chandanpukur)", "সাতকানিয়া (Satkania)", "লোহাগাড়া (Lohagara)", "বাঁশখালী (Banshkhali)", "সন্দ্বীপ (Sandwip)"],
+      "Cox's Bazar": ["কক্সবাজার সদর (Sadar)", "উখিয়া (Ukhiya)", "টেকনাফ (Teknaf)", "রামু (Ramu)", "চকরিয়া (Chakaria)", "মহেশখালী (Maheshkhali)", "পেকুয়া (Pekua)", "কুতুবদিয়া (Kutubdia)"],
+      "Cumilla": ["কুমিল্লা আদর্শ সদর (Adarsha Sadar)", "লাকসাম (Laksam)", "দেবীদ্বার (Debidwar)", "দাউদকান্দি (Daudkandi)", "চান্দিনা (Chandina)", "মুরাদনগর (Muradnagar)", "চৌদ্দগ্রাম (Chauddagram)", "বরুড়া (Barura)", "বুড়িচং (Burichang)", "ব্রাহ্মণপাড়া (Brahmanpara)", "হোমনা (Homna)", "মেঘনা (Meghna)", "তিতাস (Titas)", "মনোহরগঞ্জ (Monoharganj)"],
+      "Feni": ["ফেনী সদর (Sadar)", "দাগনভূঞা (Daganbhuiyan)", "সোনাগাজী (Sonagazi)", "ছাগলনাইয়া (Chhagalnaiya)", "পরশুরাম (Parshuram)", "ফুলগাজী (Fulgazi)"],
+      "Brahmanbaria": ["ব্রাহ্মণবাড়িয়া সদর (Sadar)", "আশুগঞ্জ (Ashuganj)", "সরাইল (Sarail)", "কসবা (Kasba)", "নবীনগর (Nabinagar)", "আখাউড়া (Akhaura)", "নাসিরনগর (Nasirnagar)", "বাঞ্ছারামপুর (Bancharampur)", "বিজয়নগর (Bijoynagar)"],
+      "Noakhali": ["নোয়াখালী সদর / সুধারাম (Sadar)", "বেগমগঞ্জ (Begumganj)", "চাটখিল (Chatkhil)", "কোম্পানীগঞ্জ (Companiganj)", "হাতিয়া (Hatiya)", "সেনবাগ (Senbagh)", "সোনাইমুড়ী (Sonaimuri)", "সুবর্ণচর (Subarnachar)", "কবিরহাট (Kabirhat)"],
+      "Chandpur": ["চাঁদপুর সদর (Sadar)", "হাজীগঞ্জ (Hajiganj)", "শাহরাস্তি (Shahrasti)", "মতলব উত্তর (Matlab North)", "মতলব দক্ষিণ (Matlab South)", "ফরিদগঞ্জ (Faridganj)", "কচুয়া (Kachua)", "হাইমচর (Haimchar)"],
+      "Lakshmipur": ["লক্ষ্মীপুর সদর (Sadar)", "রায়পুর (Raipur)", "রামগঞ্জ (Ramganj)", "রামগতি (Ramgati)", "কমলনগর (Kamalnagar)"],
+      "Bandarban": ["বান্দরবান সদর (Sadar)", "রুমা (Ruma)", "থানচি (Thanchi)", "রোয়াংছড়ি (Rowangchhari)", "লামা (Lama)", "আলীকদম (Alikadam)", "নাইক্ষ্যংছড়ি (Naikhongchhari)"],
+      "Khagrachhari": ["খাগড়াছড়ি সদর (Sadar)", "দীঘিনালা (Dighinala)", "পানছড়ি (Panchhari)", "মহালছড়ি (Mahalchhari)", "মাটিরাঙ্গা (Matiranga)", "মানিকছড়ি (Manikchhari)", "রামগড় (Ramgarh)", "লক্ষ্মীছড়ি (Lakshmichhari)", "গুইমারা (Guimara)"],
+      "Rangamati": ["রাঙ্গামাটি সদর (Sadar)", "কাপ্তাই (Kaptai)", "বাঘাইছড়ি (Baghaichhari)", "বরকল (Barkal)", "লংগদু (Langadu)", "নানিয়ারচর (Naniarchar)", "জুরাইছড়ি (Juraichhari)", "কাউখালী (Kawkhali)", "বিলাইছড়ি (Bilaichhari)", "রাজস্থলী (Rajasthali)"],
+      "Rajshahi": ["বোয়ালিয়া (Boalia)", "রাজপাড়া (Rajpara)", "মতিহার (Motihar)", "শাহ মখদুম (Shah Makhdum)", "পবা (Paba)", "গোদাগাড়ী (Godagari)", "তানোর (Tanor)", "বাগমারা (Bagmara)", "পুঠিয়া (Puthia)", "চারঘাট (Charghat)", "বাঘা (Bagha)", "মোহনপুর (Mohanpur)", "দুর্গাপুর (Durgapur)"],
+      "Bogura": ["বগুড়া সদর (Sadar)", "শেরপুর (Sherpur)", "শিবগঞ্জ (Shibganj)", "ধুনট (Dhunat)", "গাবতলী (Gabtali)", "কাহালু (Kahalu)", "নন্দীগ্রাম (Nandigram)", "সারিয়াকান্দি (Sariakandi)", "সোনাতলা (Sonatala)", "দুপচাঁচিয়া (Dupchanchia)", "আদমদীঘি (Adamdighi)", "শাজাহানপুর (Shajahanpur)"],
+      "Pabna": ["পাবনা সদর (Sadar)", "ঈশ্বরদী (Ishwardi)", "সাঁথিয়া (Santhia)", "সুজানগর (Sujanagar)", "বেড়া (Bera)", "চাটমোহর (Chatmohar)", "ফরিদপুর (Faridpur)", "ভাঙ্গুড়া (Bhangura)", "আটঘরিয়া (Atgharia)"],
+      "Sirajganj": ["সিরাজগঞ্জ সদর (Sadar)", "উল্লাপাড়া (Ullapara)", "শাহজাদপুর (Shahjadpur)", "বেলকুচি (Belkuchi)", "রায়গঞ্জ (Raiganj)", "তাড়াশ (Tarash)", "কামারখন্দ (Kamarkhanda)", "কাজীপুর (Kazipur)", "চৌহালী (Chauhali)"],
+      "Naogaon": ["নওগাঁ সদর (Sadar)", "পত্নীতলা (Patnitala)", "ধামইরহাট (Dhamoirhat)", "মহাদেবপুর (Mohadevpur)", "পোরশা (Porsha)", "সাপাহার (Sapahar)", "বদলগাছী (Badalgachhi)", "মান্দা (Manda)", "আত্রাই (Atrai)", "রাণীনগর (Raninagar)", "নিয়ামতপুর (Niamatpur)"],
+      "Natore": ["নাটোর সদর (Sadar)", "সিংড়া (Singra)", "বড়াইগ্রাম (Baraigram)", "গুরুদাসপুর (Gurudaspur)", "লালপুর (Lalpur)", "বাগাতিপাড়া (Bagatipara)", "নলডাঙ্গা (Naldanga)"],
+      "Chapai Nawabganj": ["চাঁপাইনবাবগঞ্জ সদর (Sadar)", "শিবগঞ্জ (Shibganj)", "গোমস্তাপুর (Gomastapur)", "নাচোল (Nachole)", "ভোলাহাট (Bholahat)"],
+      "Joypurhat": ["জয়পুরহাট সদর (Sadar)", "পাঁচবিবি (Panchbibi)", "কালাই (Kalai)", "ক্ষেতলাল (Khetlal)", "আক্কেলপুর (Akkelpur)"],
+      "Khulna": ["খুলনা সদর (Sadar)", "সোনাডাঙ্গা (Sonadanga)", "খালিশপুর (Khalishpur)", "দৌলতপুর (Daulatpur)", "খানজাহান আলী (Khan Jahan Ali)", "ডুমুরিয়া (Dumuria)", "ফুলতলা (Phultala)", "রূপসা (Rupsha)", "তেরখাদা (Terokhada)", "দিঘলিয়া (Dighalia)", "পাইকগাছা (Paikgachha)", "কয়রা (Koyra)", "বটিয়াঘাটা (Batiaghata)", "দাকোপ (Dacope)"],
+      "Jashore": ["যশোর সদর (Sadar)", "ঝিকরগাছা (Jhikargachha)", "মণিরামপুর (Manirampur)", "কেশবপুর (Keshabpur)", "শার্শা (Sharsha)", "চৌগাছা (Chowgachha)", "বাঘারপাড়া (Bagherpara)", "অভয়নগর / নওয়াপাড়া (Abhaynagar / Noapara)"],
+      "Kushtia": ["কুষ্টিয়া সদর (Sadar)", "কুমারখালী (Kumarkhali)", "মিরপুর (Mirpur)", "ভেড়ামারা (Bheramara)", "দৌলতপুর (Daulatpur)", "খোকসা (Khoksa)"],
+      "Satkhira": ["সাতক্ষীরা সদর (Sadar)", "কলারোয়া (Kalaroa)", "তালা (Tala)", "কালীগঞ্জ (Kaliganj)", "শ্যামনগর (Shyamnagar)", "আশাশুনি (Assasuni)", "দেবহাটা (Debhata)"],
+      "Bagerhat": ["বাগেরহাট সদর (Sadar)", "মোংলা (Mongla)", "ফকিরহাট (Fakirhat)", "রামপাল (Rampal)", "কচুয়া (Kachua)", "মোল্লাহাট (Mollahat)", "চিতলমারী (Chitalmari)", "মোরেলগঞ্জ (Morrelganj)", "শরণখোলা (Sarankhola)"],
+      "Jhenaidah": ["ঝিনাইদহ সদর (Sadar)", "শৈলকুপা (Shailkupa)", "হরিণাকুণ্ডু (Harinakundu)", "কালীগঞ্জ (Kaliganj)", "কোটচাঁদপুর (Kotchandpur)", "মহেশপুর (Maheshpur)"],
+      "Chuadanga": ["চুয়াডাঙ্গা সদর (Sadar)", "আলমডাঙ্গা (Alamdanga)", "দামুড়হুদা (Damurhuda)", "জীবননগর (Jibannagar)"],
+      "Magura": ["মাগুরা সদর (Sadar)", "শ্রীপুর (Sreepur)", "শালিখা (Shalikha)", "মহম্মদপুর (Mohammadpur)"],
+      "Meherpur": ["মেহেরপুর সদর (Sadar)", "গাংনী (Gangni)", "মুজিবনগর (Mujibnagar)"],
+      "Narail": ["নড়াইল সদর (Sadar)", "লোহাগড়া (Lohagara)", "কালিয়া (Kalia)"],
+      "Barishal": ["বরিশাল সদর / কোতোয়ালী (Sadar)", "বাকেরগঞ্জ (Bakerganj)", "বাবুগঞ্জ (Babuganj)", "উজিরপুর (Wazirpur)", "গৌরনদী (Gournadi)", "আগৈলঝাড়া (Agailjhara)", "বানারীপাড়া (Banaripara)", "মুলাদী (Muladi)", "মেহেন্দীগঞ্জ (Mehendiganj)", "হিজলা (Hizla)"],
+      "Bhola": ["ভোলা সদর (Sadar)", "বোরহানউদ্দিন (Borhanuddin)", "দৌলতখান (Daulatkhan)", "লালমোহন (Lalmohan)", "চরফ্যাশন (Char Fasson)", "তজুমদ্দিন (Tazumuddin)", "মনপুরা (Monpura)"],
+      "Patuakhali": ["পটুয়াখালী সদর (Sadar)", "বাউফল (Bauphal)", "গলাচিপা (Galachipa)", "কলাপাড়া / কুয়াকাটা (Kalapara)", "দশমিনা (Dashmina)", "মির্জাগঞ্জ (Mirzaganj)", "দুমকি (Dumki)", "রাঙ্গাবালী (Rangabali)"],
+      "Pirojpur": ["পিরোজপুর সদর (Sadar)", "ভাণ্ডারিয়া (Bhandaria)", "মঠবাড়িয়া (Mathbaria)", "নাজিরপুর (Nazirpur)", "নেছারাবাদ / স্বরূপকাঠি (Nesarabad)", "কাউখালী (Kawkhali)", "ইন্দুরকানী / জিয়ানগর (Indurkani)"],
+      "Barguna": ["বরগুনা সদর (Sadar)", "আমতলী (Amtali)", "পাথরঘাটা (Patharghata)", "বেতাগী (Betagi)", "বামনা (Bamna)", "তালতলী (Taltali)"],
+      "Jhalokati": ["ঝালকাঠি সদর (Sadar)", "নলছিটি (Nalchhiti)", "রাজাপুর (Rajapur)", "কাঠালিয়া (Kathalia)"],
+      "Sylhet": ["সিলেট সদর / কোতোয়ালী (Sadar)", "দক্ষিণ সুরমা (South Surma)", "গোলাপগঞ্জ (Golapganj)", "বিয়ানীবাজার (Beanibazar)", "বিশ্বনাথ (Biswanath)", "জৈন্তাপুর (Jaintiapur)", "জকিগঞ্জ (Zakiganj)", "কানাইঘাট (Kanaighat)", "গোয়াইনঘাট (Gowainghat)", "কোম্পানীগঞ্জ (Companiganj)", "ফেঞ্চুগঞ্জ (Fenchuganj)", "বালাগঞ্জ (Balaganj)", "ওসমানীনগর (Osmani Nagar)"],
+      "Moulvibazar": ["মৌলভীবাজার সদর (Sadar)", "শ্রীমঙ্গল (Sreemangal)", "কমলগঞ্জ (Kamalganj)", "কুলাউড়া (Kulaura)", "বড়লেখা (Barlekha)", "রাজনগর (Rajnagar)", "জুড়ী (Juri)"],
+      "Habiganj": ["হবিগঞ্জ সদর (Sadar)", "মাধবপুর (Madhabpur)", "চুনারুঘাট (Chunarughat)", "বাহুবল (Bahubal)", "নবীগঞ্জ (Nabiganj)", "বানিয়াচং (Baniachong)", "লাখাই (Lakhai)", "আজমিরীগঞ্জ (Ajmiriganj)", "শায়স্তাগঞ্জ (Shayestaganj)"],
+      "Sunamganj": ["সুনামগঞ্জ সদর (Sadar)", "জগন্নাথপুর (Jagannathpur)", "ছাতক (Chhatak)", "তাহিরপুর (Tahirpur)", "দেরাই (Derai)", "শাল্লা (Shalla)", "ধর্মপাশা (Dharmapasha)", "জামালগঞ্জ (Jamalganj)", "দোয়ারাবাজার (Dowarabazar)", "বিশ্বম্ভরপুর (Bishwamvarpur)", "শান্তিগঞ্জ (Shantiganj)"],
+      "Rangpur": ["রংপুর সদর / কোতোয়ালী (Sadar)", "বদরগঞ্জ (Badarganj)", "পীরগঞ্জ (Pirganj)", "পীরগাছা (Pirgachha)", "মিঠাপুকুর (Mithapukur)", "গঙ্গাচড়া (Gangachhara)", "কাউনিয়া (Kaunia)", "তারাগঞ্জ (Taraganj)"],
+      "Dinajpur": ["দিনাজপুর সদর (Sadar)", "বিরামপুর (Birampur)", "ফুলবাড়ী (Fulbari)", "বীরগঞ্জ (Birganj)", "বোচাগঞ্জ (Bochaganj)", "কাহারোল (Kaharole)", "চিরিরবন্দর (Chirirbandar)", "পার্বতীপুর (Parbatipur)", "নবাবগঞ্জ (Nawabganj)", "ঘোড়াঘাট (Ghoraghat)", "হাকিমপুর / হিলি (Hakimpur)", "খানসামা (Khansama)", "বিরল (Birol)"],
+      "Nilphamari": ["নীলফামারী সদর (Nilphamari Sadar)", "সৈয়দপুর (Saidpur)", "জলঢাকা (Jaldhaka)", "ডোমার (Domar)", "ডিমলা (Dimla)", "কিশোরগঞ্জ (Kishoreganj)"],
+      "Kurigram": ["কুড়িগ্রাম সদর (Sadar)", "উলিপুর (Ulipur)", "নাগেশ্বরী (Nageshwari)", "ভুরুঙ্গামারী (Bhurungamari)", "চিলমারী (Chilmari)", "ফুলবাড়ী (Fulbari)", "রৌমারী (Roumari)", "রাজিবপুর (Rajibpur)", "রাজারহাট (Rajarhat)"],
+      "Gaibandha": ["গাইবান্ধা সদর (Sadar)", "গোবিন্দগঞ্জ (Gobindaganj)", "পলাশবাড়ী (Palashbari)", "সুন্দরগঞ্জ (Sundarganj)", "সাদুল্লাপুর (Sadullapur)", "সাঘাটা (Saghata)", "ফুলছড়ি (Fulchhari)"],
+      "Lalmonirhat": ["লালমনিরহাট সদর (Sadar)", "হাতীবান্ধা (Hatibandha)", "পাটগ্রাম (Patgram)", "কালীগঞ্জ (Kaliganj)", "আদিতমারী (Aditmari)"],
+      "Panchagarh": ["পঞ্চগড় সদর (Sadar)", "তেঁতুলিয়া (Tetulia)", "বোদা (Boda)", "দেবীগঞ্জ (Debiganj)", "আটোয়ারী (Atwari)"],
+      "Thakurgaon": ["ঠাকুরগাঁও সদর (Sadar)", "পীরগঞ্জ (Pirganj)", "বালিয়াডাঙ্গী (Baliadangi)", "রানীশংকৈল (Ranisankail)", "হরিপুর (Haripur)"],
+      "Mymensingh": ["ময়মনসিংহ সদর / কোতোয়ালী (Sadar)", "মুক্তাগাছা (Muktagachha)", "ত্রিশাল (Trishal)", "ভালুকা (Bhaluka)", "ফুলবাড়িয়া (Fulbaria)", "গফরগাঁও (Gafargaon)", "ঈশ্বরগঞ্জ (Ishwarganj)", "নান্দাইল (Nandail)", "হালুয়াঘাট (Haluaghat)", "ধোবাউড়া (Dhobaura)", "ফুলপুর (Fulpur)", "তারাকান্দা (Tarakanda)", "গৌরীপুর (Gouripur)"],
+      "Jamalpur": ["জামালপুর সদর (Sadar)", "সরিষাবাড়ী (Sarishabari)", "মেলান্দহ (Melandaha)", "ইসলামপুর (Islampur)", "দেওয়ানগঞ্জ (Dewanganj)", "মাদারগঞ্জ (Madarganj)", "বকশীগঞ্জ (Bakshiganj)"],
+      "Netrokona": ["নেত্রকোণা সদর (Sadar)", "কেন্দুয়া (Kendua)", "মদন (Madan)", "মোহনগঞ্জ (Mohanganj)", "খালিয়াজুড়ী (Khaliajuri)", "দুর্গাপুর (Durgapur)", "কলমাকান্দা (Kalmakanda)", "পূর্বধলা (Purbadhala)", "বারহাট্টা (Barhatta)", "আটপাড়া (Atpara)"],
+      "Sherpur": ["শেরপুর সদর (Sadar)", "নকলা (Nakla)", "নালিতাবাড়ী (Nalitabari)", "শ্রীবরদী (Sreebardi)", "ঝিনাইগাতী (Jhenaigati)"]
+    };
+
+    function openPicker(mode) {
+      currentPickerMode = mode;
+      var modal = document.getElementById("customPickerModal");
+      var title = document.getElementById("modalTitle");
+      var searchWrap = document.getElementById("modalSearchWrap");
+      var searchInput = document.getElementById("modalSearchInput");
+      var listContainer = document.getElementById("modalListContainer");
+
+      modal.style.display = "flex";
+      searchInput.value = "";
+      listContainer.innerHTML = "";
+
+      if (mode === "blood") {
+        title.innerText = "রক্তের গ্রুপ নির্বাচন করুন";
+        searchWrap.style.display = "none";
+        var curBlood = document.getElementById("regBlood").value;
+
+        bloodGroupsList.forEach(function(bg) {
+          var btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "modal-item-btn" + (curBlood === bg ? " selected" : "");
+          btn.innerHTML = "<span>" + bg + "</span>" + (curBlood === bg ? "<span>✓</span>" : "");
+          btn.onclick = function() { selectBlood(bg); };
+          listContainer.appendChild(btn);
+        });
+      } else if (mode === "district") {
+        title.innerText = "জেলা নির্বাচন করুন";
+        searchWrap.style.display = "block";
+        searchInput.placeholder = "জেলা খুঁজুন (e.g. ঢাকা, Dhaka)...";
+        renderDistrictModalList("");
+      } else if (mode === "upazila") {
+        var curDist = document.getElementById("regDistrict").value;
+        if (!curDist) {
+          alert("অনুগ্রহ করে প্রথমে জেলা নির্বাচন করুন!");
+          closePicker();
+          return;
         }
 
-        alertBox.style.display = "block";
-        alertBox.style.background = "#dcfce7";
-        alertBox.style.color = "#15803d";
-        alertBox.innerText = "অভিনন্দন! আপনার ডোনার নিবন্ধন সফল হয়েছে।";
-        document.getElementById("donorRegisterForm").reset();
+        title.innerText = "উপজেলা / থানা নির্বাচন করুন";
+        searchWrap.style.display = "block";
+        searchInput.placeholder = "উপজেলা / থানা খুঁজুন...";
+        renderUpazilaModalList("");
+      }
 
-      } catch (err) {
-        console.error("Registration error:", err);
+      if (mode !== "blood") {
+        setTimeout(function() {
+          searchInput.focus();
+        }, 80);
+      }
+    }
+
+    function renderDistrictModalList(filterQuery) {
+      var listContainer = document.getElementById("modalListContainer");
+      listContainer.innerHTML = "";
+      var curDist = document.getElementById("regDistrict").value;
+      var q = filterQuery.toLowerCase().trim();
+
+      var currentCat = "";
+      districtsList.forEach(function(item) {
+        if (q && !item.name.toLowerCase().includes(q) && !item.label.toLowerCase().includes(q)) {
+          return;
+        }
+
+        if (!q && item.category !== currentCat) {
+          currentCat = item.category;
+          var groupHeader = document.createElement("div");
+          groupHeader.className = "modal-group-title";
+          groupHeader.innerText = currentCat;
+          listContainer.appendChild(groupHeader);
+        }
+
+        var btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "modal-item-btn" + (curDist.toLowerCase() === item.name.toLowerCase() ? " selected" : "");
+        btn.innerHTML = "<span>" + item.label + "</span>" + (curDist.toLowerCase() === item.name.toLowerCase() ? "<span>✓</span>" : "");
+        btn.onclick = function() { selectDistrict(item.name, item.label); };
+        listContainer.appendChild(btn);
+      });
+
+      if (listContainer.children.length === 0) {
+        listContainer.innerHTML = '<div style="text-align:center; padding:30px; color:var(--slate-400);">কোনো জেলা খুঁজে পাওয়া যায়নি</div>';
+      }
+    }
+
+    function renderUpazilaModalList(filterQuery) {
+      var listContainer = document.getElementById("modalListContainer");
+      listContainer.innerHTML = "";
+      var curDist = document.getElementById("regDistrict").value;
+      var curUpz = document.getElementById("regUpazila").value;
+      var q = filterQuery.toLowerCase().trim();
+
+      var list = upazilaDatabase[curDist] || [];
+      list.forEach(function(u) {
+        if (q && !u.toLowerCase().includes(q)) return;
+
+        var btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "modal-item-btn" + (curUpz === u ? " selected" : "");
+        btn.innerHTML = "<span>" + u + "</span>" + (curUpz === u ? "<span>✓</span>" : "");
+        btn.onclick = function() { selectUpazila(u, u); };
+        listContainer.appendChild(btn);
+      });
+
+      if (listContainer.children.length === 0 && q) {
+        var emptyNotice = document.createElement("div");
+        emptyNotice.style.cssText = "text-align:center; padding:20px; color:var(--slate-400);";
+        emptyNotice.innerText = "কোনো উপজেলা খুঁজে পাওয়া যায়নি";
+        listContainer.appendChild(emptyNotice);
+      }
+    }
+
+    function filterModalItems() {
+      var q = document.getElementById("modalSearchInput").value;
+      if (currentPickerMode === "district") {
+        renderDistrictModalList(q);
+      } else if (currentPickerMode === "upazila") {
+        renderUpazilaModalList(q);
+      }
+    }
+
+    function selectBlood(bg) {
+      document.getElementById("regBlood").value = bg;
+      var display = document.getElementById("bloodDisplay");
+      display.innerText = bg;
+      display.style.color = "var(--slate-900)";
+      display.style.fontWeight = "700";
+      closePicker();
+    }
+
+    function selectDistrict(name, label) {
+      document.getElementById("regDistrict").value = name;
+      var display = document.getElementById("districtDisplay");
+      display.innerText = label;
+      display.style.color = "var(--slate-900)";
+      display.style.fontWeight = "700";
+
+      // Reset Upazila
+      document.getElementById("regUpazila").value = "";
+      var upzDisplay = document.getElementById("upazilaDisplay");
+      upzDisplay.innerText = "উপজেলা / থানা নির্বাচন করুন";
+      upzDisplay.style.color = "var(--slate-400)";
+      upzDisplay.style.fontWeight = "normal";
+
+      closePicker();
+    }
+
+    function selectUpazila(val, label) {
+      document.getElementById("regUpazila").value = val;
+      var display = document.getElementById("upazilaDisplay");
+      display.innerText = label;
+      display.style.color = "var(--slate-900)";
+      display.style.fontWeight = "700";
+      closePicker();
+    }
+
+    function closePicker() {
+      document.getElementById("customPickerModal").style.display = "none";
+      if (document.activeElement) document.activeElement.blur();
+    }
+
+    function closePickerOnBackdrop(e) {
+      if (e.target.id === "customPickerModal") {
+        closePicker();
+      }
+    }
+
+    function checkDonationEligibility(lastDonationDateStr) {
+      if (!lastDonationDateStr || lastDonationDateStr === "তথ্য নেই") return true;
+      var lastDate = new Date(lastDonationDateStr);
+      var today = new Date();
+      var diffDays = (today - lastDate) / (1000 * 60 * 60 * 24);
+      return diffDays >= 120; // 4 months
+    }
+
+    function handleRegistration(e) {
+      if (e) e.preventDefault();
+      var alertBox = document.getElementById("regAlert");
+
+      var name = document.getElementById("regName").value.trim();
+      var blood = document.getElementById("regBlood").value.trim();
+      var phone = document.getElementById("regPhone").value.trim();
+      var dob = document.getElementById("regDob").value;
+      var district = document.getElementById("regDistrict").value.trim();
+      var upazila = document.getElementById("regUpazila").value.trim();
+      var hall = document.getElementById("regHall").value.trim();
+      var lastDonation = document.getElementById("regLastDonation").value;
+      var pin = document.getElementById("regPin").value.trim();
+
+      if (!name || !blood || !phone || !dob || !district || !upazila || !pin) {
         alertBox.style.display = "block";
         alertBox.style.background = "#fee2e2";
         alertBox.style.color = "#b91c1c";
-        alertBox.innerText = "নিবন্ধনে সমস্যা হয়েছে! দয়া করে তথ্য পুনরায় যাচাই করে চেষ্টা করুন।";
-      } finally {
-        btn.disabled = false;
-        btn.innerText = "নিবন্ধন সম্পন্ন করুন";
+        alertBox.innerText = "অনুগ্রহ করে সকল আবশ্যকীয় তথ্য (*) পূরণ করুন!";
+        return;
       }
-    });
+
+      if (pin.length !== 4 || isNaN(pin)) {
+        alertBox.style.display = "block";
+        alertBox.style.background = "#fee2e2";
+        alertBox.style.color = "#b91c1c";
+        alertBox.innerText = "সিক্রেট পিন অবশ্যই ৪ সংখ্যার হতে হবে!";
+        return;
+      }
+
+      var donors = JSON.parse(localStorage.getItem("jiboni_donors_cache") || localStorage.getItem("donors") || "[]");
+
+      if (donors.some(function(d) { return d.phone === phone; })) {
+        alertBox.style.display = "block";
+        alertBox.style.background = "#fee2e2";
+        alertBox.style.color = "#b91c1c";
+        alertBox.innerText = "এই মোবাইল নম্বরটি ইতোমধ্যে নিবন্ধিত!";
+        return;
+      }
+
+      var isEligible = checkDonationEligibility(lastDonation);
+
+      var newDonor = {
+        id: Date.now(),
+        name: name,
+        blood_group: blood,
+        bloodGroup: blood,
+        phone: phone,
+        dob: dob,
+        district: district,
+        upazila: upazila,
+        hall: hall,
+        last_donation: lastDonation || "তথ্য নেই",
+        is_available: isEligible,
+        is_verified: true,
+        pin: pin
+      };
+
+      donors.unshift(newDonor);
+      localStorage.setItem("jiboni_donors_cache", JSON.stringify(donors));
+      localStorage.setItem("donors", JSON.stringify(donors));
+
+      // Browser Password Manager Save Prompt
+      if (window.PasswordCredential && navigator.credentials) {
+        try {
+          var cred = new PasswordCredential({
+            id: phone,
+            password: pin,
+            name: name
+          });
+          navigator.credentials.store(cred).catch(function(err) {});
+        } catch(e) {}
+      }
+
+      alertBox.style.display = "block";
+      alertBox.style.background = "#dcfce7";
+      alertBox.style.color = "#15803d";
+      alertBox.innerHTML = "🎉 অভিনন্দন! রক্তদাতা হিসেবে আপনার নিবন্ধন সফল হয়েছে।<br>হোম পেজে নিয়ে যাওয়া হচ্ছে...";
+
+      setTimeout(function() {
+        window.location.href = "index.html";
+      }, 1600);
+    }
   </script>
 </body>
-  </html>
-  
+</html>
