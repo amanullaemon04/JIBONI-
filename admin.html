@@ -3,412 +3,530 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Admin Portal - JIBONI</title>
+  <title>Admin Dashboard - JIBONI</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Hind+Siliguri:wght@500;600;700&display=swap');
+
+    :root {
+      --primary: #e11d48;
+      --primary-hover: #be123c;
+      --primary-light: #ffe4e6;
+      --success: #059669;
+      --success-light: #d1fae5;
+      --warning: #d97706;
+      --warning-light: #fef3c7;
+      --slate-50: #f8fafc;
+      --slate-100: #f1f5f9;
+      --slate-200: #e2e8f0;
+      --slate-400: #94a3b8;
+      --slate-600: #475569;
+      --slate-800: #1e293b;
+      --slate-900: #0f172a;
+    }
 
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: 'Hind Siliguri', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-family: 'Hind Siliguri', 'Plus Jakarta Sans', sans-serif;
     }
 
     body {
-      background-color: #f8fafc;
-      color: #1e293b;
+      background: #f8fafc;
+      color: var(--slate-800);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      background-image: none !important;
     }
 
-    /* Top Header */
-    .site-header {
+    /* Minimal Modern Header */
+    .app-header {
       background: #ffffff;
-      padding: 14px 16px 12px;
-      border-bottom: 1px solid #e2e8f0;
-      text-align: center;
-      width: 100%;
+      border-bottom: 1px solid var(--slate-200);
+      padding: 12px 18px;
+      position: sticky;
+      top: 0;
+      z-index: 50;
     }
 
-    .header-inner {
-      max-width: 480px;
+    .header-content {
+      max-width: 600px;
       margin: 0 auto;
-    }
-
-    .brand-row {
-      margin-bottom: 10px;
-    }
-
-    .brand-logo {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      text-decoration: none;
-    }
-
-    .blood-drop {
-      font-size: 1.5rem;
-      line-height: 1;
-    }
-
-    .brand-name {
-      font-size: 1.6rem;
-      font-weight: 800;
-      color: #dc2626;
-      letter-spacing: 0.5px;
-      line-height: 1;
-    }
-
-    .nav-btn-row {
       display: flex;
-      justify-content: center;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand-group {
+      display: flex;
       align-items: center;
       gap: 8px;
-      margin-bottom: 8px;
-      flex-wrap: wrap;
+      text-decoration: none;
     }
 
-    .btn-chip {
-      padding: 5px 12px;
-      border-radius: 20px;
-      font-size: 0.8rem;
+    .brand-icon {
+      font-size: 1.4rem;
+      line-height: 1;
+    }
+
+    .brand-title {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--primary);
+      letter-spacing: -0.5px;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-header {
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 0.78rem;
       font-weight: 700;
       text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      border: 1px solid transparent;
+      transition: all 0.2s;
     }
 
-    .btn-chip-red {
-      background: #dc2626;
-      color: #ffffff !important;
+    .btn-back {
+      background: var(--slate-100);
+      color: var(--slate-600);
+      border: 1px solid var(--slate-200);
     }
 
-    .btn-chip-gray {
-      background: #f1f5f9;
-      color: #475569 !important;
-      border-color: #cbd5e1;
+    .btn-logout {
+      background: var(--primary-light);
+      color: var(--primary);
+      border: 1px solid #fecdd3;
+      cursor: pointer;
     }
 
-    .brand-slogan {
-      font-size: 0.74rem;
-      color: #475569;
-      margin-top: 4px;
-      font-style: italic;
-    }
-
-    /* Container */
-    .admin-wrapper {
+    /* App Container */
+    .app-main {
       flex: 1;
-      max-width: 950px;
+      max-width: 600px;
       width: 100%;
       margin: 0 auto;
-      padding: 16px 14px 40px;
+      padding: 16px 14px 50px;
     }
 
-    /* Auth Box */
-    .auth-card {
+    /* Auth Screen */
+    .auth-panel {
       background: #ffffff;
-      border: 1px solid #e2e8f0;
-      border-radius: 12px;
-      padding: 24px 20px;
-      max-width: 400px;
-      margin: 30px auto;
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+      border: 1px solid var(--slate-200);
+      border-radius: 16px;
+      padding: 28px 20px;
+      margin-top: 30px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
       text-align: center;
     }
 
     .auth-title {
       font-size: 1.3rem;
       font-weight: 800;
-      color: #0f172a;
+      color: var(--slate-900);
       margin-bottom: 4px;
     }
 
     .auth-subtitle {
       font-size: 0.82rem;
-      color: #64748b;
-      margin-bottom: 18px;
-    }
-
-    .form-group {
-      text-align: left;
-      margin-bottom: 12px;
-    }
-
-    .form-label {
-      display: block;
-      font-size: 0.82rem;
-      font-weight: 700;
-      color: #334155;
-      margin-bottom: 5px;
-    }
-
-    .form-control {
-      width: 100%;
-      height: 42px;
-      padding: 0 12px;
-      border: 1px solid #cbd5e1;
-      border-radius: 8px;
-      font-size: 0.88rem;
-      outline: none;
-      transition: border-color 0.2s;
-    }
-
-    .form-control:focus {
-      border-color: #dc2626;
-    }
-
-    .btn-submit {
-      width: 100%;
-      height: 42px;
-      background: #dc2626;
-      color: #ffffff;
-      border: none;
-      border-radius: 8px;
-      font-weight: 700;
-      font-size: 0.9rem;
-      cursor: pointer;
-      margin-top: 8px;
-    }
-
-    /* Dashboard Layout */
-    .dashboard-card {
-      background: #ffffff;
-      border: 1px solid #e2e8f0;
-      border-radius: 12px;
-      padding: 20px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.03);
-    }
-
-    .dash-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-bottom: 16px;
-      padding-bottom: 12px;
-      border-bottom: 1px solid #e2e8f0;
-    }
-
-    .admin-badge {
-      display: inline-block;
-      padding: 4px 10px;
-      border-radius: 20px;
-      font-size: 0.75rem;
-      font-weight: 800;
-      background: #fee2e2;
-      color: #b91c1c;
-    }
-
-    .admin-tabs {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 16px;
-    }
-
-    .tab-btn {
-      padding: 8px 14px;
-      border-radius: 8px;
-      border: 1px solid #cbd5e1;
-      background: #f8fafc;
-      color: #334155;
-      font-size: 0.84rem;
-      font-weight: 700;
-      cursor: pointer;
-    }
-
-    .tab-btn.active {
-      background: #dc2626;
-      color: #ffffff;
-      border-color: #dc2626;
-    }
-
-    /* Tables */
-    .table-responsive {
-      width: 100%;
-      overflow-x: auto;
-      border: 1px solid #e2e8f0;
-      border-radius: 8px;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      text-align: left;
-      font-size: 0.85rem;
-      min-width: 650px;
-    }
-
-    th {
-      background: #f1f5f9;
-      color: #1e293b;
-      padding: 10px 12px;
-      font-weight: 700;
-      border-bottom: 1.5px solid #cbd5e1;
-    }
-
-    td {
-      padding: 10px 12px;
-      border-bottom: 1px solid #f1f5f9;
-      color: #334155;
-    }
-
-    /* Sub-admin Form Box */
-    .subadmin-form-box {
-      background: #f8fafc;
-      border: 1px dashed #cbd5e1;
-      border-radius: 8px;
-      padding: 16px;
+      color: var(--slate-600);
       margin-bottom: 20px;
     }
 
-    /* Footer */
-    .site-footer {
+    .input-field {
+      text-align: left;
+      margin-bottom: 14px;
+    }
+
+    .field-label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--slate-800);
+      margin-bottom: 6px;
+    }
+
+    .custom-input {
+      width: 100%;
+      height: 44px;
+      padding: 0 14px;
+      border: 1px solid var(--slate-200);
+      border-radius: 10px;
+      font-size: 0.9rem;
+      color: var(--slate-800);
+      outline: none;
+      transition: border-color 0.2s;
       background: #ffffff;
-      border-top: 1px solid #e2e8f0;
-      padding: 14px 16px;
+    }
+
+    .custom-input:focus {
+      border-color: var(--primary);
+    }
+
+    .btn-primary {
+      width: 100%;
+      height: 44px;
+      background: var(--primary);
+      color: #ffffff;
+      border: none;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .btn-primary:active {
+      background: var(--primary-hover);
+    }
+
+    /* Dashboard UI */
+    .admin-profile-strip {
+      background: #ffffff;
+      border: 1px solid var(--slate-200);
+      border-radius: 12px;
+      padding: 12px 14px;
+      margin-bottom: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .user-info {
+      font-size: 0.82rem;
+    }
+
+    .user-role-tag {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-size: 0.72rem;
+      font-weight: 800;
+      background: var(--primary-light);
+      color: var(--primary);
+      margin-right: 6px;
+    }
+
+    /* Modern Pill Nav */
+    .filter-pills-bar {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+      margin-bottom: 14px;
+      scrollbar-width: none;
+    }
+
+    .filter-pills-bar::-webkit-scrollbar {
+      display: none;
+    }
+
+    .pill-btn {
+      white-space: nowrap;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      border: 1px solid var(--slate-200);
+      background: #ffffff;
+      color: var(--slate-600);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
+      transition: all 0.2s;
+    }
+
+    .pill-btn.active {
+      background: var(--slate-900);
+      color: #ffffff;
+      border-color: var(--slate-900);
+    }
+
+    .pill-count {
+      padding: 1px 6px;
+      border-radius: 10px;
+      font-size: 0.7rem;
+      font-weight: 800;
+      background: var(--slate-100);
+      color: var(--slate-800);
+    }
+
+    .pill-btn.active .pill-count {
+      background: var(--primary);
+      color: #ffffff;
+    }
+
+    /* Search Bar */
+    .search-holder {
+      margin-bottom: 14px;
+    }
+
+    /* Donor Card Component */
+    .donor-entry-card {
+      background: #ffffff;
+      border: 1px solid var(--slate-200);
+      border-radius: 14px;
+      padding: 16px;
+      margin-bottom: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+
+    .donor-top-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .donor-full-name {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--slate-900);
+    }
+
+    .blood-tag {
+      background: #fff1f2;
+      color: var(--primary);
+      border: 1px solid #ffe4e6;
+      font-weight: 800;
+      font-size: 0.85rem;
+      padding: 2px 10px;
+      border-radius: 8px;
+    }
+
+    .donor-details-grid {
+      display: grid;
+      gap: 6px;
+      font-size: 0.82rem;
+      color: var(--slate-600);
+      margin-bottom: 12px;
+    }
+
+    .detail-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .detail-item strong {
+      color: var(--slate-800);
+    }
+
+    .status-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-size: 0.74rem;
+    }
+
+    .status-ready {
+      background: var(--success-light);
+      color: var(--success);
+    }
+
+    .status-resting {
+      background: var(--slate-100);
+      color: var(--slate-600);
+    }
+
+    /* Card Action Bar */
+    .card-footer-actions {
+      display: flex;
+      gap: 8px;
+      padding-top: 10px;
+      border-top: 1px solid var(--slate-100);
+    }
+
+    .card-btn {
+      flex: 1;
+      height: 36px;
+      border-radius: 8px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      border: 1px solid transparent;
+      transition: all 0.2s;
+    }
+
+    .btn-verify-success {
+      background: var(--success-light);
+      color: var(--success);
+      border-color: #a7f3d0;
+    }
+
+    .btn-verify-warn {
+      background: var(--warning-light);
+      color: var(--warning);
+      border-color: #fde68a;
+    }
+
+    .btn-status-toggle {
+      background: #eff6ff;
+      color: #2563eb;
+      border-color: #dbeafe;
+    }
+
+    .btn-trash {
+      background: var(--primary-light);
+      color: var(--primary);
+      border-color: #fecdd3;
+      flex: 0 0 46px;
+    }
+
+    /* Feedback Cards */
+    .feedback-bubble {
+      background: #ffffff;
+      border: 1px solid var(--slate-200);
+      border-radius: 12px;
+      padding: 14px;
+      margin-bottom: 10px;
+    }
+
+    /* Sub-admin Section */
+    .subadmin-box {
+      background: #ffffff;
+      border: 1px solid var(--slate-200);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+
+    /* Empty state */
+    .empty-state {
+      text-align: center;
+      padding: 40px 10px;
+      color: var(--slate-400);
+      font-size: 0.88rem;
+    }
+
+    /* Footer */
+    .app-footer {
+      background: #ffffff;
+      border-top: 1px solid var(--slate-200);
+      padding: 14px;
       text-align: center;
       margin-top: auto;
-      width: 100%;
-    }
-
-    .footer-copy {
-      font-size: 0.75rem;
-      color: #334155;
-    }
-
-    .footer-copy a {
-      color: #dc2626;
-      font-weight: 700;
-      text-decoration: none;
+      font-size: 0.76rem;
+      color: var(--slate-600);
     }
   </style>
 </head>
 <body>
 
-  <!-- Top Header -->
-  <header class="site-header">
-    <div class="header-inner">
-      <div class="brand-row">
-        <a href="index.html" class="brand-logo">
-          <span class="blood-drop">🩸</span>
-          <span class="brand-name">JIBONI</span>
-        </a>
-      </div>
+  <!-- Header -->
+  <header class="app-header">
+    <div class="header-content">
+      <a href="index.html" class="brand-group">
+        <span class="brand-icon">🩸</span>
+        <span class="brand-title">JIBONI</span>
+      </a>
 
-      <div class="nav-btn-row">
-        <a href="index.html" class="btn-chip btn-chip-gray">← হোম পেজ</a>
-        <a href="stats.html" class="btn-chip btn-chip-gray">📊 পরিসংখ্যান</a>
-        <a href="developer.html" class="btn-chip btn-chip-gray">👨‍💻 ডেভেলপার</a>
+      <div class="header-actions">
+        <a href="index.html" class="btn-header btn-back">হোম পেজ</a>
+        <button type="button" id="logoutBtn" onclick="processLogout()" class="btn-header btn-logout" style="display:none;">লগআউট</button>
       </div>
-
-      <p class="brand-slogan">"অচেনা কাউকে বাঁচার আশা দিয়ে, লিখে যাও এক নিঃস্বার্থ জীবনী।"</p>
     </div>
   </header>
 
-  <main class="admin-wrapper">
-    
-    <!-- 1. Email + Password Login Form -->
-    <div id="loginCard" class="auth-card">
-      <h2 class="auth-title">🔐 অ্যাডমিন লগইন</h2>
-      <p class="auth-subtitle">আপনার নির্ধারিত ইমেইল ও পাসওয়ার্ড প্রদান করুন</p>
+  <main class="app-main">
 
-      <form id="adminLoginForm">
-        <div class="form-group">
-          <label class="form-label" for="adminEmail">অ্যাডমিন ইমেইল (Email):</label>
-          <input type="email" id="adminEmail" required placeholder="admin@jiboni.org" class="form-control" />
+    <!-- LOGIN SCREEN -->
+    <div id="loginScreen" class="auth-panel">
+      <h2 class="auth-title">অ্যাডমিন প্রবেশদ্বার</h2>
+      <p class="auth-subtitle">আপনার দায়িত্বশীল অ্যাকাউন্টে লগইন করুন</p>
+
+      <form id="loginForm">
+        <div class="input-field">
+          <label class="field-label" for="loginEmail">ইমেইল অ্যাড্রেস</label>
+          <input type="email" id="loginEmail" class="custom-input" placeholder="amanullaemon04@gmail.com" required />
         </div>
 
-        <div class="form-group">
-          <label class="form-label" for="adminPassword">পাসওয়ার্ড (Password):</label>
-          <input type="password" id="adminPassword" required placeholder="••••••••" class="form-control" />
+        <div class="input-field">
+          <label class="field-label" for="loginPass">পাসওয়ার্ড</label>
+          <input type="password" id="loginPass" class="custom-input" placeholder="••••••••" required />
         </div>
 
-        <button type="submit" class="btn-submit">লগইন করুন</button>
+        <button type="submit" class="btn-primary">লগইন করুন</button>
       </form>
-      <div id="loginErrorMsg" style="display:none; color: #dc2626; font-size: 0.8rem; font-weight:700; margin-top: 10px;">ইমেইল বা পাসওয়ার্ড সঠিক নয়!</div>
+      <div id="loginError" style="display:none; color: var(--primary); font-size:0.8rem; font-weight:700; margin-top:10px;">ভুল ইমেইল বা পাসওয়ার্ড!</div>
     </div>
 
-    <!-- 2. Dashboard Area -->
-    <div id="dashboardCard" class="dashboard-card" style="display: none;">
+    <!-- MAIN DASHBOARD -->
+    <div id="dashboardScreen" style="display: none;">
       
-      <div class="dash-header">
-        <div>
-          <h2 style="font-size: 1.25rem; font-weight: 800; color: #0f172a;">JIBONI অ্যাডমিন কন্ট্রোল প্যানেল</h2>
-          <span id="userRoleBadge" class="admin-badge">Super Admin</span>
-          <span id="userEmailText" style="font-size: 0.8rem; color: #64748b; margin-left: 6px;"></span>
+      <!-- Current Admin Strip -->
+      <div class="admin-profile-strip">
+        <div class="user-info">
+          <span id="roleBadge" class="user-role-tag">Super Admin</span>
+          <span id="adminEmailDisplay" style="color: var(--slate-600); font-weight: 600;"></span>
         </div>
-        <button type="button" onclick="logoutAdmin()" class="btn-chip btn-chip-gray" style="cursor: pointer;">লগআউট</button>
+        <span style="font-size:0.75rem; color: var(--slate-400);">JIBONI Portal</span>
       </div>
 
-      <!-- Navigation Tabs -->
-      <div class="admin-tabs">
-        <button type="button" id="tabDonors" class="tab-btn active" onclick="switchTab('donors')">👥 রক্তদাতাদের তালিকা</button>
-        <button type="button" id="tabSubAdmins" class="tab-btn" onclick="switchTab('subadmins')">🛡️ সাব-অ্যাডমিন ম্যানেজমেন্ট</button>
+      <!-- Quick Filter Nav Pills -->
+      <div class="filter-pills-bar">
+        <button type="button" class="pill-btn active" onclick="setDashboardTab('all')">
+          👥 সকল রক্তদাতা <span class="pill-count" id="countAll">0</span>
+        </button>
+        <button type="button" class="pill-btn" onclick="setDashboardTab('pending')">
+          ⏳ পেন্ডিং ভেরিফিকেশন <span class="pill-count" id="countPending">0</span>
+        </button>
+        <button type="button" class="pill-btn" onclick="setDashboardTab('available')">
+          ⚡ প্রস্তুত ডোনার <span class="pill-count" id="countAvail">0</span>
+        </button>
+        <button type="button" class="pill-btn" onclick="setDashboardTab('feedback')">
+          💬 মতামত <span class="pill-count" id="countFeedback">0</span>
+        </button>
+        <button type="button" class="pill-btn" onclick="setDashboardTab('subadmins')">
+          🛡️ সাব-অ্যাডমিন
+        </button>
       </div>
 
-      <!-- TAB 1: Donors Management -->
-      <div id="sectionDonors">
-        <div style="display: flex; justify-content: space-between; gap: 10px; margin-bottom: 12px; flex-wrap: wrap;">
-          <input type="text" id="donorSearch" placeholder="নাম বা মোবাইল নম্বর দিয়ে খুঁজুন..." class="form-control" style="max-width: 320px;" onkeyup="filterDonorsTable()" />
-          <button type="button" onclick="exportDonorsCSV()" class="btn-chip btn-chip-red" style="cursor:pointer; border-radius: 8px;">📥 Export CSV</button>
-        </div>
-
-        <div class="table-responsive">
-          <table>
-            <thead>
-              <tr>
-                <th>নাম</th>
-                <th>গ্রুপ</th>
-                <th>ফোন নম্বর</th>
-                <th>জেলা</th>
-                <th>অবস্থা</th>
-                <th>অ্যাকশন</th>
-              </tr>
-            </thead>
-            <tbody id="donorsTableBody"></tbody>
-          </table>
-        </div>
+      <!-- Live Search Box -->
+      <div class="search-holder" id="searchBoxWrap">
+        <input type="text" id="liveSearchInput" class="custom-input" placeholder="নাম, জেলা, মোবাইল বা রক্তের গ্রুপ দিয়ে খুঁজুন..." onkeyup="handleLiveSearch()" />
       </div>
 
-      <!-- TAB 2: Sub-Admin Management (Super Admin Exclusive) -->
-      <div id="sectionSubAdmins" style="display: none;">
+      <!-- Donors Cards Container -->
+      <div id="donorsContainer"></div>
+
+      <!-- Feedback Section -->
+      <div id="feedbackContainer" style="display: none;"></div>
+
+      <!-- Sub-Admin Management (Super Admin Exclusive) -->
+      <div id="subAdminContainer" style="display: none;">
         
-        <div id="subAdminRestrictedMsg" style="display: none; padding: 20px; text-align: center; color: #dc2626; font-weight: 700;">
-          ⚠️ দুঃখিত, সাব-অ্যাডমিন যোগ বা মুছে ফেলার অনুমতি শুধুমাত্র Super Admin-এর রয়েছে।
+        <div id="subAdminAccessDenied" style="display:none; text-align:center; padding:30px 10px; color:var(--primary); font-weight:700;">
+          ⚠️ সাব-অ্যাডমিন সংযোজন বা অপসারণ করার ক্ষমতা শুধুমাত্র Super Admin-এর রয়েছে।
         </div>
 
-        <div id="subAdminControlPanel">
-          <div class="subadmin-form-box">
-            <h3 style="font-size: 0.95rem; font-weight: 800; color: #0f172a; margin-bottom: 10px;">➕ নতুন সাব-অ্যাডমিন যোগ করুন</h3>
-            <form id="addSubAdminForm" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px;">
-              <input type="text" id="subName" placeholder="অ্যাডমিনের নাম" class="form-control" required />
-              <input type="email" id="subEmail" placeholder="ইমেইল অ্যাড্রেস" class="form-control" required />
-              <input type="password" id="subPassword" placeholder="পাসওয়ার্ড সেট করুন" class="form-control" required />
-              <button type="submit" class="btn-submit" style="margin-top:0;">অ্যাডমিন যুক্ত করুন</button>
+        <div id="superAdminWorkArea">
+          <div class="subadmin-box">
+            <h3 style="font-size: 0.95rem; font-weight: 800; margin-bottom: 12px;">➕ নতুন সাব-অ্যাডমিন নিয়োগ</h3>
+            <form id="subAdminCreateForm" style="display:flex; flex-direction:column; gap:10px;">
+              <input type="text" id="newAdminName" class="custom-input" placeholder="অ্যাডমিনের পুরো নাম" required />
+              <input type="email" id="newAdminEmail" class="custom-input" placeholder="ইমেইল অ্যাড্রেস" required />
+              <input type="password" id="newAdminPass" class="custom-input" placeholder="পাসওয়ার্ড সেট করুন" required />
+              <button type="submit" class="btn-primary" style="height:40px;">সাব-অ্যাডমিন যোগ করুন</button>
             </form>
           </div>
 
-          <h3 style="font-size: 0.95rem; font-weight: 800; color: #0f172a; margin-bottom: 8px;">সকল নিবন্ধিত অ্যাডমিন তালিকা</h3>
-          <div class="table-responsive">
-            <table>
-              <thead>
-                <tr>
-                  <th>নাম</th>
-                  <th>ইমেইল</th>
-                  <th>রোল (Role)</th>
-                  <th>অ্যাকশন</th>
-                </tr>
-              </thead>
-              <tbody id="adminsTableBody"></tbody>
-            </table>
-          </div>
+          <h3 style="font-size: 0.9rem; font-weight: 800; margin-bottom: 8px;">নিবন্ধিত অ্যাডমিনদের তালিকা</h3>
+          <div id="adminCardsList"></div>
         </div>
 
       </div>
@@ -417,198 +535,159 @@
 
   </main>
 
-  <footer class="site-footer">
-    <p class="footer-copy">JIBONI — মানবতার সেবায় উৎসর্গীকৃত</p>
-    <p class="footer-copy">Designed & Developed by <a href="developer.html">Amanulla Emon</a></p>
+  <footer class="app-footer">
+    <p>JIBONI — মানবতার কল্যাণে নিবেদিত রক্তদাতা প্ল্যাটফর্ম</p>
+    <p style="margin-top:2px;">ডেভেলপার: <strong>Amanulla Emon</strong></p>
   </footer>
 
-  <!-- Admin System Logic -->
+  <!-- Admin Interactive Engine -->
   <script>
-    // 1. Initial Admin Database (Super Admin & Sub Admins)
     const SUPER_ADMIN_EMAIL = "amanullaemon04@gmail.com";
-    
-    function getAdminList() {
-      const stored = localStorage.getItem("jiboni_admins");
-      if (stored) return JSON.parse(stored);
-      
-      // Default initial admins
-      const initial = [
+    let activeTab = "all";
+    let loggedInUser = null;
+    let localDonors = [];
+
+    // Admins Database Controller
+    function fetchAdminsData() {
+      const saved = localStorage.getItem("jiboni_admin_accounts");
+      if (saved) return JSON.parse(saved);
+      const defaults = [
         { name: "Amanulla Emon", email: "amanullaemon04@gmail.com", pass: "superadmin123", role: "Super Admin" },
-        { name: "Support Admin", email: "admin@jiboni.org", pass: "admin123", role: "Sub Admin" }
+        { name: "Support Admin", email: "support@jiboni.org", pass: "admin123", role: "Sub Admin" }
       ];
-      localStorage.setItem("jiboni_admins", JSON.stringify(initial));
-      return initial;
+      localStorage.setItem("jiboni_admin_accounts", JSON.stringify(defaults));
+      return defaults;
     }
 
-    let currentSessionUser = null;
-    let donorsList = [];
-
-    // Check existing login
+    // Session Check
     document.addEventListener("DOMContentLoaded", () => {
-      const savedSession = sessionStorage.getItem("jiboni_active_admin");
-      if (savedSession) {
-        currentSessionUser = JSON.parse(savedSession);
-        initDashboard();
+      const activeSession = sessionStorage.getItem("jiboni_session_user");
+      if (activeSession) {
+        loggedInUser = JSON.parse(activeSession);
+        setupDashboard();
       }
     });
 
-    // Login Form Handler
-    document.getElementById("adminLoginForm").addEventListener("submit", (e) => {
+    // Login Form
+    document.getElementById("loginForm").addEventListener("submit", (e) => {
       e.preventDefault();
-      const email = document.getElementById("adminEmail").value.trim().toLowerCase();
-      const pass = document.getElementById("adminPassword").value.trim();
+      const mail = document.getElementById("loginEmail").value.trim().toLowerCase();
+      const pass = document.getElementById("loginPass").value.trim();
 
-      const admins = getAdminList();
-      const found = admins.find(a => a.email.toLowerCase() === email && a.pass === pass);
+      const allAdmins = fetchAdminsData();
+      const user = allAdmins.find(a => a.email.toLowerCase() === mail && a.pass === pass);
 
-      if (found) {
-        currentSessionUser = found;
-        sessionStorage.setItem("jiboni_active_admin", JSON.stringify(found));
-        document.getElementById("loginErrorMsg").style.display = "none";
-        initDashboard();
+      if (user) {
+        loggedInUser = user;
+        sessionStorage.setItem("jiboni_session_user", JSON.stringify(user));
+        document.getElementById("loginError").style.display = "none";
+        setupDashboard();
       } else {
-        document.getElementById("loginErrorMsg").style.display = "block";
+        document.getElementById("loginError").style.display = "block";
       }
     });
 
-    function initDashboard() {
-      document.getElementById("loginCard").style.display = "none";
-      document.getElementById("dashboardCard").style.display = "block";
+    function setupDashboard() {
+      document.getElementById("loginScreen").style.display = "none";
+      document.getElementById("dashboardScreen").style.display = "block";
+      document.getElementById("logoutBtn").style.display = "inline-flex";
 
-      document.getElementById("userEmailText").innerText = `(${currentSessionUser.email})`;
-      document.getElementById("userRoleBadge").innerText = currentSessionUser.role;
+      document.getElementById("adminEmailDisplay").innerText = loggedInUser.email;
+      document.getElementById("roleBadge").innerText = loggedInUser.role;
 
-      loadDonors();
-      renderAdminsTable();
+      pullDonors();
+      drawFeedbacks();
+      drawAdminsList();
     }
 
-    function logoutAdmin() {
-      sessionStorage.removeItem("jiboni_active_admin");
+    function processLogout() {
+      sessionStorage.removeItem("jiboni_session_user");
       window.location.reload();
     }
 
-    // Switch Tabs
-    function switchTab(tab) {
-      const isDonors = (tab === 'donors');
-      document.getElementById("tabDonors").className = isDonors ? "tab-btn active" : "tab-btn";
-      document.getElementById("tabSubAdmins").className = !isDonors ? "tab-btn active" : "tab-btn";
-      
-      document.getElementById("sectionDonors").style.display = isDonors ? "block" : "none";
-      document.getElementById("sectionSubAdmins").style.display = !isDonors ? "block" : "none";
-
-      if (!isDonors) {
-        const isSuper = (currentSessionUser.email.toLowerCase() === SUPER_ADMIN_EMAIL.toLowerCase() || currentSessionUser.role === "Super Admin");
-        document.getElementById("subAdminControlPanel").style.display = isSuper ? "block" : "none";
-        document.getElementById("subAdminRestrictedMsg").style.display = !isSuper ? "block" : "none";
-      }
-    }
-
-    // Donors Handling
-    function loadDonors() {
-      const cached = localStorage.getItem("jiboni_donors_cache") || localStorage.getItem("donors");
-      donorsList = cached ? JSON.parse(cached) : [
-        { name: "আব্দুল্লাহ আল মামুন", blood_group: "A+", phone: "01700000000", district: "ঢাকা", is_available: true },
-        { name: "তানভীর হাসান", blood_group: "O+", phone: "01800000000", district: "চট্টগ্রাম", is_available: false }
+    // Pull Donors from Cache or Mock DB
+    function pullDonors() {
+      const stored = localStorage.getItem("jiboni_donors_cache");
+      localDonors = stored ? JSON.parse(stored) : [
+        { id: 1, name: "Md. Shamsujjaman", blood_group: "A+", phone: "01331538250", district: "Dhaka", hall: "Shahid Sergeant Jahurul Haque Hall", last_donation: "তথ্য নেই", is_available: true, is_verified: false },
+        { id: 2, name: "Md Rokonujjaman Rokon", blood_group: "A+", phone: "01745416152", district: "Nilphamari", hall: "Shahid Sargent Zahurul Haque Hall", last_donation: "2025-09-18", is_available: true, is_verified: true },
+        { id: 3, name: "Arman Hossain", blood_group: "O+", phone: "01823887222", district: "Dhaka", hall: "Dhaka college", last_donation: "2026-01-24", is_available: false, is_verified: true }
       ];
-      renderDonors(donorsList);
+
+      renderInterface();
     }
 
-    function renderDonors(data) {
-      const tbody = document.getElementById("donorsTableBody");
-      tbody.innerHTML = "";
-      data.forEach((d, idx) => {
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-          <td><strong>${d.name || "অজ্ঞাত"}</strong></td>
-          <td><span style="color:#b91c1c; font-weight:800;">${d.blood_group || "--"}</span></td>
-          <td>${d.phone || "--"}</td>
-          <td>${d.district || "--"}</td>
-          <td><span style="color:${d.is_available ? '#16a34a' : '#64748b'}; font-weight:700;">${d.is_available ? 'Available' : 'Unavailable'}</span></td>
-          <td><button onclick="removeDonor(${idx})" style="background:#fee2e2; color:#b91c1c; border:none; padding:3px 8px; border-radius:4px; cursor:pointer;">মুছুন</button></td>
-        `;
-        tbody.appendChild(tr);
+    function renderInterface() {
+      updateBadges();
+      renderDonorsList(localDonors);
+    }
+
+    function updateBadges() {
+      document.getElementById("countAll").innerText = localDonors.length;
+      document.getElementById("countPending").innerText = localDonors.filter(d => !d.is_verified).length;
+      document.getElementById("countAvail").innerText = localDonors.filter(d => d.is_available).length;
+    }
+
+    // Switch Tab View
+    function setDashboardTab(tab) {
+      activeTab = tab;
+      const pills = document.querySelectorAll(".pill-btn");
+      const names = ['all', 'pending', 'available', 'feedback', 'subadmins'];
+      
+      pills.forEach((p, idx) => {
+        p.className = (names[idx] === tab) ? "pill-btn active" : "pill-btn";
       });
-    }
 
-    function removeDonor(idx) {
-      if (confirm("এই ডোনারের তথ্য মুছে ফেলতে চান?")) {
-        donorsList.splice(idx, 1);
-        localStorage.setItem("jiboni_donors_cache", JSON.stringify(donorsList));
-        renderDonors(donorsList);
+      const isDonorList = (tab === 'all' || tab === 'pending' || tab === 'available');
+      document.getElementById("searchBoxWrap").style.display = isDonorList ? "block" : "none";
+      document.getElementById("donorsContainer").style.display = isDonorList ? "block" : "none";
+      document.getElementById("feedbackContainer").style.display = (tab === 'feedback') ? "block" : "none";
+      document.getElementById("subAdminContainer").style.display = (tab === 'subadmins') ? "block" : "none";
+
+      if (isDonorList) {
+        handleLiveSearch();
+      }
+
+      if (tab === 'subadmins') {
+        const isSuper = (loggedInUser.email.toLowerCase() === SUPER_ADMIN_EMAIL.toLowerCase() || loggedInUser.role === "Super Admin");
+        document.getElementById("superAdminWorkArea").style.display = isSuper ? "block" : "none";
+        document.getElementById("subAdminAccessDenied").style.display = !isSuper ? "block" : "none";
       }
     }
 
-    function filterDonorsTable() {
-      const q = document.getElementById("donorSearch").value.toLowerCase();
-      const filtered = donorsList.filter(d => 
-        (d.name || '').toLowerCase().includes(q) || (d.phone || '').includes(q)
-      );
-      renderDonors(filtered);
+    // Search and Render
+    function handleLiveSearch() {
+      const q = (document.getElementById("liveSearchInput").value || "").toLowerCase().trim();
+
+      let subset = localDonors;
+      if (activeTab === 'pending') {
+        subset = localDonors.filter(d => !d.is_verified);
+      } else if (activeTab === 'available') {
+        subset = localDonors.filter(d => d.is_available);
+      }
+
+      if (q) {
+        subset = subset.filter(d => 
+          (d.name || "").toLowerCase().includes(q) ||
+          (d.phone || "").includes(q) ||
+          (d.district || "").toLowerCase().includes(q) ||
+          (d.hall || "").toLowerCase().includes(q) ||
+          (d.blood_group || "").toLowerCase().includes(q)
+        );
+      }
+
+      renderDonorsList(subset);
     }
 
-    function exportDonorsCSV() {
-      let csv = "Name,Blood Group,Phone,District,Available\n";
-      donorsList.forEach(d => {
-        csv += `"${d.name}","${d.blood_group}","${d.phone}","${d.district}","${d.is_available ? 'Yes' : 'No'}"\n`;
-      });
-      const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = `jiboni_donors_${new Date().toISOString().slice(0,10)}.csv`;
-      a.click();
-    }
+    function renderDonorsList(list) {
+      const wrapper = document.getElementById("donorsContainer");
+      wrapper.innerHTML = "";
 
-    // Sub-Admin Management Logic
-    function renderAdminsTable() {
-      const admins = getAdminList();
-      const tbody = document.getElementById("adminsTableBody");
-      tbody.innerHTML = "";
-
-      admins.forEach((admin, idx) => {
-        const tr = document.createElement("tr");
-        const isSuper = admin.role === "Super Admin";
-        tr.innerHTML = `
-          <td><strong>${admin.name}</strong></td>
-          <td>${admin.email}</td>
-          <td><span class="admin-badge" style="${isSuper ? '' : 'background:#e0f2fe; color:#0369a1;'}">${admin.role}</span></td>
-          <td>
-            ${isSuper ? '<span style="color:#94a3b8; font-size:0.75rem;">Default</span>' : `<button onclick="removeAdmin(${idx})" style="background:#fee2e2; color:#b91c1c; border:none; padding:3px 8px; border-radius:4px; cursor:pointer;">রিমুভ</button>`}
-          </td>
-        `;
-        tbody.appendChild(tr);
-      });
-    }
-
-    // Add Sub-Admin
-    document.getElementById("addSubAdminForm").addEventListener("submit", (e) => {
-      e.preventDefault();
-      const name = document.getElementById("subName").value.trim();
-      const email = document.getElementById("subEmail").value.trim();
-      const pass = document.getElementById("subPassword").value.trim();
-
-      const admins = getAdminList();
-      if (admins.some(a => a.email.toLowerCase() === email.toLowerCase())) {
-        alert("এই ইমেইল দিয়ে ইতোমধ্যে একজন অ্যাডমিন বিদ্যমান!");
+      if (list.length === 0) {
+        wrapper.innerHTML = `<div class="empty-state">কোনো রক্তদাতার তথ্য খুঁজে পাওয়া যায়নি।</div>`;
         return;
       }
 
-      admins.push({ name, email, pass, role: "Sub Admin" });
-      localStorage.setItem("jiboni_admins", JSON.stringify(admins));
-      
-      document.getElementById("addSubAdminForm").reset();
-      renderAdminsTable();
-      alert("নতুন সাব-অ্যাডমিন সফলভাবে যুক্ত করা হয়েছে!");
-    });
-
-    function removeAdmin(idx) {
-      const admins = getAdminList();
-      if (confirm(`আপনি কি "${admins[idx].name}"-কে অ্যাডমিন তালিকা থেকে বাদ দিতে চান?`)) {
-        admins.splice(idx, 1);
-        localStorage.setItem("jiboni_admins", JSON.stringify(admins));
-        renderAdminsTable();
-      }
-    }
-  </script>
-</body>
-</html>
+      list.forEach((donor) => {
+        const actualIdx = localDonors.indexOf(donor);
+        const card = document.create
