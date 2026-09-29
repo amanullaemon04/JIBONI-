@@ -39,7 +39,6 @@
       flex-direction: column;
     }
 
-    /* Minimal Modern Header */
     .app-header {
       background: #ffffff;
       border-bottom: 1px solid var(--slate-200);
@@ -104,7 +103,6 @@
       cursor: pointer;
     }
 
-    /* App Container */
     .app-main {
       flex: 1;
       max-width: 600px;
@@ -113,7 +111,6 @@
       padding: 16px 14px 50px;
     }
 
-    /* Auth Screen */
     .auth-panel {
       background: #ffffff;
       border: 1px solid var(--slate-200);
@@ -184,7 +181,43 @@
       background: var(--primary-hover);
     }
 
-    /* Dashboard UI */
+    .forgot-link-wrap {
+      text-align: right;
+      margin-top: -6px;
+      margin-bottom: 14px;
+    }
+
+    .forgot-link {
+      font-size: 0.78rem;
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    /* Modal Styles */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.5);
+      backdrop-filter: blur(4px);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 100;
+      padding: 16px;
+    }
+
+    .modal-box {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 24px 20px;
+      max-width: 400px;
+      width: 100%;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
     .admin-profile-strip {
       background: #ffffff;
       border: 1px solid var(--slate-200);
@@ -194,6 +227,8 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
     }
 
     .user-info {
@@ -211,7 +246,6 @@
       margin-right: 6px;
     }
 
-    /* Modern Pill Nav */
     .filter-pills-bar {
       display: flex;
       gap: 6px;
@@ -262,12 +296,10 @@
       color: #ffffff;
     }
 
-    /* Search Bar */
     .search-holder {
       margin-bottom: 14px;
     }
 
-    /* Donor Card Component */
     .donor-entry-card {
       background: #ffffff;
       border: 1px solid var(--slate-200);
@@ -275,7 +307,6 @@
       padding: 16px;
       margin-bottom: 12px;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
-      transition: transform 0.15s, box-shadow 0.15s;
     }
 
     .donor-top-meta {
@@ -315,10 +346,6 @@
       gap: 6px;
     }
 
-    .detail-item strong {
-      color: var(--slate-800);
-    }
-
     .status-chip {
       display: inline-flex;
       align-items: center;
@@ -339,7 +366,6 @@
       color: var(--slate-600);
     }
 
-    /* Card Action Bar */
     .card-footer-actions {
       display: flex;
       gap: 8px;
@@ -387,16 +413,6 @@
       flex: 0 0 46px;
     }
 
-    /* Feedback Cards */
-    .feedback-bubble {
-      background: #ffffff;
-      border: 1px solid var(--slate-200);
-      border-radius: 12px;
-      padding: 14px;
-      margin-bottom: 10px;
-    }
-
-    /* Sub-admin Section */
     .subadmin-box {
       background: #ffffff;
       border: 1px solid var(--slate-200);
@@ -405,7 +421,6 @@
       margin-bottom: 16px;
     }
 
-    /* Empty state */
     .empty-state {
       text-align: center;
       padding: 40px 10px;
@@ -413,7 +428,6 @@
       font-size: 0.88rem;
     }
 
-    /* Footer */
     .app-footer {
       background: #ffffff;
       border-top: 1px solid var(--slate-200);
@@ -427,7 +441,6 @@
 </head>
 <body>
 
-  <!-- Header -->
   <header class="app-header">
     <div class="header-content">
       <a href="index.html" class="brand-group">
@@ -460,6 +473,10 @@
           <input type="password" id="loginPass" class="custom-input" placeholder="••••••••" required />
         </div>
 
+        <div class="forgot-link-wrap">
+          <span class="forgot-link" onclick="openForgotModal()">পাসওয়ার্ড ভুলে গেছেন? (Forgot Password)</span>
+        </div>
+
         <button type="submit" class="btn-primary">লগইন করুন</button>
       </form>
       <div id="loginError" style="display:none; color: var(--primary); font-size:0.8rem; font-weight:700; margin-top:10px;">ভুল ইমেইল বা পাসওয়ার্ড!</div>
@@ -468,16 +485,15 @@
     <!-- MAIN DASHBOARD -->
     <div id="dashboardScreen" style="display: none;">
       
-      <!-- Current Admin Strip -->
+      <!-- Current Admin Profile Bar -->
       <div class="admin-profile-strip">
         <div class="user-info">
           <span id="roleBadge" class="user-role-tag">Super Admin</span>
           <span id="adminEmailDisplay" style="color: var(--slate-600); font-weight: 600;"></span>
         </div>
-        <span style="font-size:0.75rem; color: var(--slate-400);">JIBONI Portal</span>
+        <button type="button" onclick="openChangePassModal()" class="btn-header btn-back" style="cursor: pointer; font-size: 0.75rem;">🔑 পাসওয়ার্ড পরিবর্তন</button>
       </div>
 
-      <!-- Quick Filter Nav Pills -->
       <div class="filter-pills-bar">
         <button type="button" class="pill-btn active" onclick="setDashboardTab('all')">
           👥 সকল রক্তদাতা <span class="pill-count" id="countAll">0</span>
@@ -492,24 +508,19 @@
           💬 মতামত <span class="pill-count" id="countFeedback">0</span>
         </button>
         <button type="button" class="pill-btn" onclick="setDashboardTab('subadmins')">
-          🛡️ সাব-অ্যাডমিন
+          🛡️️ সাব-অ্যাডমিন
         </button>
       </div>
 
-      <!-- Live Search Box -->
       <div class="search-holder" id="searchBoxWrap">
         <input type="text" id="liveSearchInput" class="custom-input" placeholder="নাম, জেলা, মোবাইল বা রক্তের গ্রুপ দিয়ে খুঁজুন..." onkeyup="handleLiveSearch()" />
       </div>
 
-      <!-- Donors Cards Container -->
       <div id="donorsContainer"></div>
-
-      <!-- Feedback Section -->
       <div id="feedbackContainer" style="display: none;"></div>
 
-      <!-- Sub-Admin Management (Super Admin Exclusive) -->
+      <!-- Sub-Admin Tab -->
       <div id="subAdminContainer" style="display: none;">
-        
         <div id="subAdminAccessDenied" style="display:none; text-align:center; padding:30px 10px; color:var(--primary); font-weight:700;">
           ⚠️ সাব-অ্যাডমিন সংযোজন বা অপসারণ করার ক্ষমতা শুধুমাত্র Super Admin-এর রয়েছে।
         </div>
@@ -528,38 +539,74 @@
           <h3 style="font-size: 0.9rem; font-weight: 800; margin-bottom: 8px;">নিবন্ধিত অ্যাডমিনদের তালিকা</h3>
           <div id="adminCardsList"></div>
         </div>
-
       </div>
 
     </div>
 
   </main>
 
+  <!-- PASSWORD CHANGE MODAL -->
+  <div id="changePassModal" class="modal-backdrop">
+    <div class="modal-box">
+      <h3 style="font-size: 1.15rem; font-weight: 800; color: var(--slate-900); margin-bottom: 4px;">পাসওয়ার্ড পরিবর্তন করুন</h3>
+      <p style="font-size: 0.8rem; color: var(--slate-600); margin-bottom: 16px;">আপনার অ্যাকাউন্টের জন্য নতুন একটি শক্তিশালী পাসওয়ার্ড দিন।</p>
+      
+      <form id="changePassForm">
+        <div class="input-field">
+          <input type="password" id="newSecretPassword" class="custom-input" placeholder="নতুন পাসওয়ার্ড লিখুন" required minlength="6" />
+        </div>
+        <button type="submit" class="btn-primary" style="height: 40px; margin-bottom: 8px;">পাসওয়ার্ড আপডেট করুন</button>
+        <button type="button" onclick="closeChangePassModal()" class="btn-header btn-back" style="width: 100%; height: 38px; cursor: pointer;">বাতিল করুন</button>
+      </form>
+      <div id="changePassMsg" style="display:none; font-size:0.82rem; font-weight:700; margin-top:10px;"></div>
+    </div>
+  </div>
+
+  <!-- FORGOT PASSWORD MODAL -->
+  <div id="forgotPasswordModal" class="modal-backdrop">
+    <div class="modal-box">
+      <h3 style="font-size: 1.15rem; font-weight: 800; color: var(--slate-900); margin-bottom: 4px;">পাসওয়ার্ড রিসেট রিকোয়েস্ট</h3>
+      <p style="font-size: 0.8rem; color: var(--slate-600); margin-bottom: 16px;">আপনার সাব-অ্যাডমিন ইমেইল প্রদান করুন।</p>
+      
+      <form id="forgotForm">
+        <div class="input-field">
+          <input type="email" id="forgotEmail" class="custom-input" placeholder="আপনার সাব-অ্যাডমিন ইমেইল" required />
+        </div>
+        <button type="submit" class="btn-primary" style="height: 40px; margin-bottom: 8px;">রিসেট রিকোয়েস্ট পাঠান</button>
+        <button type="button" onclick="closeForgotModal()" class="btn-header btn-back" style="width: 100%; height: 38px; cursor: pointer;">বাতিল করুন</button>
+      </form>
+      <div id="forgotMsg" style="display:none; font-size:0.82rem; font-weight:700; margin-top:10px;"></div>
+    </div>
+  </div>
+
   <footer class="app-footer">
     <p>JIBONI — মানবতার কল্যাণে নিবেদিত রক্তদাতা প্ল্যাটফর্ম</p>
     <p style="margin-top:2px;">ডেভেলপার: <strong>Amanulla Emon</strong></p>
   </footer>
 
-  <!-- Admin Interactive Engine -->
   <script>
+    // =========================================================================
+    // ⚙️ SUPER ADMIN CONFIGURATION
+    // Eikhane tomar pochonder permanent password likhe nite paro:
+    // =========================================================================
     const SUPER_ADMIN_EMAIL = "amanullaemon04@gmail.com";
+    const SUPER_ADMIN_DEFAULT_PASS = "Emon@2026"; // <-- Eikhane tomar pochonder password set korte paro!
+
     let activeTab = "all";
     let loggedInUser = null;
     let localDonors = [];
 
-    // Admins Database Controller
     function fetchAdminsData() {
       const saved = localStorage.getItem("jiboni_admin_accounts");
       if (saved) return JSON.parse(saved);
       const defaults = [
-        { name: "Amanulla Emon", email: "amanullaemon04@gmail.com", pass: "superadmin123", role: "Super Admin" },
+        { name: "Amanulla Emon", email: SUPER_ADMIN_EMAIL, pass: SUPER_ADMIN_DEFAULT_PASS, role: "Super Admin" },
         { name: "Support Admin", email: "support@jiboni.org", pass: "admin123", role: "Sub Admin" }
       ];
       localStorage.setItem("jiboni_admin_accounts", JSON.stringify(defaults));
       return defaults;
     }
 
-    // Session Check
     document.addEventListener("DOMContentLoaded", () => {
       const activeSession = sessionStorage.getItem("jiboni_session_user");
       if (activeSession) {
@@ -568,7 +615,6 @@
       }
     });
 
-    // Login Form
     document.getElementById("loginForm").addEventListener("submit", (e) => {
       e.preventDefault();
       const mail = document.getElementById("loginEmail").value.trim().toLowerCase();
@@ -605,89 +651,31 @@
       window.location.reload();
     }
 
-    // Pull Donors from Cache or Mock DB
-    function pullDonors() {
-      const stored = localStorage.getItem("jiboni_donors_cache");
-      localDonors = stored ? JSON.parse(stored) : [
-        { id: 1, name: "Md. Shamsujjaman", blood_group: "A+", phone: "01331538250", district: "Dhaka", hall: "Shahid Sergeant Jahurul Haque Hall", last_donation: "তথ্য নেই", is_available: true, is_verified: false },
-        { id: 2, name: "Md Rokonujjaman Rokon", blood_group: "A+", phone: "01745416152", district: "Nilphamari", hall: "Shahid Sargent Zahurul Haque Hall", last_donation: "2025-09-18", is_available: true, is_verified: true },
-        { id: 3, name: "Arman Hossain", blood_group: "O+", phone: "01823887222", district: "Dhaka", hall: "Dhaka college", last_donation: "2026-01-24", is_available: false, is_verified: true }
-      ];
-
-      renderInterface();
+    /* Change Password Modal for Logged in Admin */
+    function openChangePassModal() {
+      document.getElementById("changePassModal").style.display = "flex";
+      document.getElementById("changePassMsg").style.display = "none";
     }
 
-    function renderInterface() {
-      updateBadges();
-      renderDonorsList(localDonors);
+    function closeChangePassModal() {
+      document.getElementById("changePassModal").style.display = "none";
     }
 
-    function updateBadges() {
-      document.getElementById("countAll").innerText = localDonors.length;
-      document.getElementById("countPending").innerText = localDonors.filter(d => !d.is_verified).length;
-      document.getElementById("countAvail").innerText = localDonors.filter(d => d.is_available).length;
-    }
+    document.getElementById("changePassForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const newPass = document.getElementById("newSecretPassword").value.trim();
+      if (!newPass) return;
 
-    // Switch Tab View
-    function setDashboardTab(tab) {
-      activeTab = tab;
-      const pills = document.querySelectorAll(".pill-btn");
-      const names = ['all', 'pending', 'available', 'feedback', 'subadmins'];
-      
-      pills.forEach((p, idx) => {
-        p.className = (names[idx] === tab) ? "pill-btn active" : "pill-btn";
-      });
+      const admins = fetchAdminsData();
+      const found = admins.find(a => a.email.toLowerCase() === loggedInUser.email.toLowerCase());
 
-      const isDonorList = (tab === 'all' || tab === 'pending' || tab === 'available');
-      document.getElementById("searchBoxWrap").style.display = isDonorList ? "block" : "none";
-      document.getElementById("donorsContainer").style.display = isDonorList ? "block" : "none";
-      document.getElementById("feedbackContainer").style.display = (tab === 'feedback') ? "block" : "none";
-      document.getElementById("subAdminContainer").style.display = (tab === 'subadmins') ? "block" : "none";
+      if (found) {
+        found.pass = newPass;
+        loggedInUser.pass = newPass;
+        localStorage.setItem("jiboni_admin_accounts", JSON.stringify(admins));
+        sessionStorage.setItem("jiboni_session_user", JSON.stringify(loggedInUser));
 
-      if (isDonorList) {
-        handleLiveSearch();
-      }
-
-      if (tab === 'subadmins') {
-        const isSuper = (loggedInUser.email.toLowerCase() === SUPER_ADMIN_EMAIL.toLowerCase() || loggedInUser.role === "Super Admin");
-        document.getElementById("superAdminWorkArea").style.display = isSuper ? "block" : "none";
-        document.getElementById("subAdminAccessDenied").style.display = !isSuper ? "block" : "none";
-      }
-    }
-
-    // Search and Render
-    function handleLiveSearch() {
-      const q = (document.getElementById("liveSearchInput").value || "").toLowerCase().trim();
-
-      let subset = localDonors;
-      if (activeTab === 'pending') {
-        subset = localDonors.filter(d => !d.is_verified);
-      } else if (activeTab === 'available') {
-        subset = localDonors.filter(d => d.is_available);
-      }
-
-      if (q) {
-        subset = subset.filter(d => 
-          (d.name || "").toLowerCase().includes(q) ||
-          (d.phone || "").includes(q) ||
-          (d.district || "").toLowerCase().includes(q) ||
-          (d.hall || "").toLowerCase().includes(q) ||
-          (d.blood_group || "").toLowerCase().includes(q)
-        );
-      }
-
-      renderDonorsList(subset);
-    }
-
-    function renderDonorsList(list) {
-      const wrapper = document.getElementById("donorsContainer");
-      wrapper.innerHTML = "";
-
-      if (list.length === 0) {
-        wrapper.innerHTML = `<div class="empty-state">কোনো রক্তদাতার তথ্য খুঁজে পাওয়া যায়নি।</div>`;
-        return;
-      }
-
-      list.forEach((donor) => {
-        const actualIdx = localDonors.indexOf(donor);
-        const card = document.create
+        const msg = document.getElementById("changePassMsg");
+        msg.style.display = "block";
+        msg.style.color = "var(--success)";
+        msg.innerText = "আপনার পাসওয়ার্ড সফলভাবে আপডেট করা হয়েছ
