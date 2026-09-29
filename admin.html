@@ -768,7 +768,7 @@
     let currentTab = "all";
     const SUPER_ADMIN_EMAIL = "amanullaemon04@gmail.com";
 
-    // EXACT DATE & TIME FORMATTER FOR FEEDBACKS
+    // EXACT LOCAL TIME FORMATTER WITH SECONDS
     function formatFeedbackDateTime(rawDate) {
       if (!rawDate) return "আজ";
       var d = new Date(rawDate);
@@ -781,10 +781,11 @@
 
       var hours = d.getHours();
       var minutes = String(d.getMinutes()).padStart(2, '0');
+      var seconds = String(d.getSeconds()).padStart(2, '0');
       var ampm = hours >= 12 ? 'PM' : 'AM';
       hours = hours % 12;
       hours = hours ? hours : 12; // 0 hour is 12 AM
-      var strTime = String(hours).padStart(2, '0') + ':' + minutes + ' ' + ampm;
+      var strTime = String(hours).padStart(2, '0') + ':' + minutes + ':' + seconds + ' ' + ampm;
 
       return yyyy + '-' + mm + '-' + dd + ', ' + strTime;
     }
@@ -1191,7 +1192,7 @@
     }
 
     // ==========================================
-    // 💬 RENDER FEEDBACKS WITH EXACT DATE & TIME
+    // 💬 RENDER FEEDBACKS WITH EXACT SECONDS & TIMEZONE FIX
     // ==========================================
     function renderFeedbacks() {
       var session = getActiveSession();
@@ -1223,7 +1224,7 @@
           '<div class="donor-admin-card">' +
             '<div class="card-top-row">' +
               '<span class="donor-card-name">👤 ' + (f.name || "অজ্ঞাত ব্যবহারকারী") + '</span>' +
-              '<span style="font-size:0.75rem; color:var(--slate-500); font-weight:700;">📅 ' + formattedTime + '</span>' +
+              '<span style="font-size:0.72rem; color:var(--slate-500); font-weight:700;">📅 ' + formattedTime + '</span>' +
             '</div>' +
             '<div class="donor-detail-list">' +
               '<div class="detail-item">' +
