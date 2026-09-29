@@ -3,44 +3,42 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>JIBONI - রক্তদাতা খুঁজুন</title>
+  <title>JIBONI - জরুরি রক্তের সন্ধান</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <!-- Header -->
-  <header class="header">
-    <div class="header-container">
-      <div class="header-main-row">
-        <a href="index.html" class="logo">
-          <span class="logo-drop">🩸</span>
-          <span class="logo-text">JIBONI</span>
+  <!-- Top Header -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="brand-row">
+        <a href="index.html" class="brand-logo">
+          <span class="blood-drop">🩸</span>
+          <span class="brand-name">JIBONI</span>
         </a>
       </div>
 
-      <div class="header-nav-row">
-        <a href="register.html" class="nav-chip">➕ ডোনার নিবন্ধন</a>
-        <a href="update-profile.html" class="nav-chip">✏️ তথ্য আপডেট</a>
-        <a href="developer.html" class="nav-chip">👨‍💻 ডেভেলপার</a>
+      <!-- Quick Action Buttons -->
+      <div class="nav-btn-row">
+        <a href="register.html" class="btn-chip btn-chip-red">+ রক্তদাতা হন</a>
+        <a href="update-profile.html" class="btn-chip btn-chip-blue">👤 প্রোফাইল</a>
+        <a href="admin.html" class="btn-chip btn-chip-gray">⚙️ Admin</a>
       </div>
 
-      <div class="header-slogan-wrap">
-        <p class="header-slogan">"অচেনা কাউকে বাঁচার আশা দিয়ে, লিখে যাও এক নিঃস্বার্থ জীবনী।"</p>
-      </div>
+      <p class="brand-slogan">"অচেনা কাউকে বাঁচার আশা দিয়ে, লিখে যাও এক নিঃস্বার্থ জীবনী।"</p>
     </div>
   </header>
 
   <!-- Main Search Container -->
-  <main class="container">
-    <div class="card">
-      <h1 class="card-title">জরুরি রক্তের সন্ধান</h1>
-      <p class="card-subtitle">নির্দিষ্ট রক্তের গ্রুপ ও জেলা নির্বাচন করে ডোনার খুঁজুন</p>
-
-      <form id="searchForm" class="filter-form">
-        <div class="form-group">
-          <label for="bloodGroup">রক্তের গ্রুপ:</label>
-          <select id="bloodGroup" name="bloodGroup" class="form-control">
-            <option value="">সকল গ্রুপ</option>
+  <main class="main-wrapper">
+    <div class="filter-card">
+      <form id="searchForm">
+        
+        <!-- Blood Group Field -->
+        <div class="input-field-group">
+          <label class="field-title" for="bloodGroup">রক্তের গ্রুপ (Blood Group)</label>
+          <select id="bloodGroup" name="bloodGroup" class="select-box">
+            <option value="">রক্তের গ্রুপ নির্বাচন করুন (Select Blood Group)</option>
             <option value="A+">A+</option>
             <option value="A-">A-</option>
             <option value="B+">B+</option>
@@ -52,31 +50,60 @@
           </select>
         </div>
 
-        <div class="form-group">
-          <label for="district">জেলা:</label>
-          <select id="district" name="district" class="form-control">
-            <option value="">সকল জেলা</option>
-            <!-- জেলা তালিকা স্ক্রিপ্ট থেকে ডায়নামিকালি লোড হবে -->
+        <!-- District Field -->
+        <div class="input-field-group">
+          <label class="field-title" for="district">জেলা / শহর (City / District)</label>
+          <select id="district" name="district" class="select-box">
+            <option value="">জেলা নির্বাচন করুন (Select District)</option>
+            <!-- জেলা তালিকা স্ক্রিপ্ট থেকে ডায়নামিকালি আসবে -->
           </select>
         </div>
 
-        <button type="submit" class="btn btn-primary" id="searchBtn">🔍 ডোনার খুঁজুন</button>
+        <!-- Specific Location / Hall Field -->
+        <div class="input-field-group">
+          <label class="field-title" for="specificLocation">নির্দিষ্ট এলাকা / হল (Specific Location)</label>
+          <input 
+            type="text" 
+            id="specificLocation" 
+            name="specificLocation" 
+            class="text-input" 
+            placeholder="e.g. Zahurul Huq Hall (ঐচ্ছিক)"
+          />
+        </div>
+
+        <!-- Availability Field -->
+        <div class="input-field-group">
+          <label class="field-title" for="availability">স্ট্যাটাস (Availability)</label>
+          <select id="availability" name="availability" class="select-box">
+            <option value="">All</option>
+            <option value="available">Available (প্রস্তুত)</option>
+            <option value="unavailable">Unavailable (অনুপলব্ধ)</option>
+          </select>
+        </div>
+
       </form>
-
-      <!-- Status Indicator / Spinner -->
-      <div id="loading" class="status-msg" style="display:none;">খোঁজা হচ্ছে... অপেক্ষা করুন।</div>
-
-      <!-- Results List -->
-      <div id="resultsList" class="results-grid"></div>
     </div>
+
+    <!-- Initial Status / Placeholder Prompt -->
+    <div id="resultsPlaceholder" class="placeholder-box">
+      <p class="placeholder-text">📍 রক্তদাতা খুঁজতে অনুগ্রহ করে রক্তের গ্রুপ ও জেলা নির্বাচন করুন।</p>
+    </div>
+
+    <!-- Search Results Dynamic List -->
+    <div id="resultsList" class="results-container"></div>
   </main>
 
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="footer-container">
-      <p class="footer-notice">JIBONI — মানবতার সেবায় উৎসর্গীকৃত</p>
-      <p class="footer-credit">Designed & Developed by <a href="developer.html">Amanulla Emon</a></p>
+  <!-- Sticky / Bottom Footer -->
+  <footer class="site-footer">
+    <div class="footer-links">
+      <a href="stats.html" class="footer-link">📊 রক্তের পরিসংখ্যান</a>
+      <span class="link-divider">•</span>
+      <a href="feedback.html" class="footer-link">💬 মতামত দিন</a>
+      <span class="link-divider">•</span>
+      <a href="guidelines.html" class="footer-link">📖 নির্দেশিকা</a>
     </div>
+    <p class="footer-warning">Use donor information responsibly. Confirm availability before contacting.</p>
+    <p class="footer-copy">Designed & Developed by <a href="developer.html">Amanulla Emon</a></p>
   </footer>
 
   <script src="script.js"></script>
