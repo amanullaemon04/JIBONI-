@@ -118,6 +118,31 @@
       padding: 16px 14px 40px;
     }
 
+    /* LOGIN CARD */
+    .login-card {
+      background: #ffffff;
+      border: 1px solid var(--slate-200);
+      border-radius: 16px;
+      padding: 24px 20px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+      margin-top: 10px;
+    }
+
+    .login-title {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--slate-900);
+      margin-bottom: 4px;
+      text-align: center;
+    }
+
+    .login-sub {
+      font-size: 0.82rem;
+      color: var(--slate-600);
+      margin-bottom: 18px;
+      text-align: center;
+    }
+
     /* Admin Info Card */
     .admin-info-card {
       background: #ffffff;
@@ -131,24 +156,39 @@
     .admin-meta-row {
       display: flex;
       align-items: center;
-      gap: 8px;
-      margin-bottom: 8px;
+      justify-content: space-between;
+      margin-bottom: 10px;
       flex-wrap: wrap;
+      gap: 8px;
     }
 
-    .badge-super-admin {
-      background: #fee2e2;
-      color: var(--primary);
+    .badge-admin-role {
       font-size: 0.76rem;
       font-weight: 800;
-      padding: 3px 8px;
+      padding: 3px 9px;
       border-radius: 6px;
+    }
+
+    .badge-super {
+      background: #fee2e2;
+      color: var(--primary);
+    }
+
+    .badge-sub {
+      background: var(--info-light);
+      color: var(--info);
     }
 
     .admin-email-text {
       font-size: 0.88rem;
       font-weight: 700;
       color: var(--slate-800);
+    }
+
+    .admin-header-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
     .change-pwd-btn {
@@ -163,6 +203,17 @@
       display: inline-flex;
       align-items: center;
       gap: 4px;
+    }
+
+    .logout-btn {
+      background: #fff1f2;
+      border: 1px solid #fecdd3;
+      border-radius: 20px;
+      padding: 4px 12px;
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: var(--primary);
+      cursor: pointer;
     }
 
     /* Tabs Row */
@@ -270,7 +321,7 @@
       border-radius: 8px;
     }
 
-    /* CLEAN COMPACT COLON ALIGNMENT */
+    /* STRICT COMPACT COLON ALIGNMENT */
     .donor-detail-list {
       display: flex;
       flex-direction: column;
@@ -424,6 +475,28 @@
       font-size: 0.86rem;
     }
 
+    /* MODAL POPUPS */
+    .custom-modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(4px);
+      z-index: 3000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .modal-box {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 22px 20px;
+      max-width: 380px;
+      width: 100%;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    }
+
     .site-footer {
       background: #ffffff;
       border-top: 1px solid var(--slate-200);
@@ -473,54 +546,104 @@
   </header>
 
   <main class="main-wrapper">
-    <!-- Admin Info Header -->
-    <div class="admin-info-card">
-      <div class="admin-meta-row">
-        <span class="badge-super-admin">Super Admin</span>
-        <span class="admin-email-text" id="adminEmailDisplay">amanullaemon04@gmail.com</span>
+
+    <!-- ADMIN LOGIN FORM (IF NOT LOGGED IN) -->
+    <div id="adminLoginSection" class="login-card" style="display: none;">
+      <h2 class="login-title">অ্যাডমিন প্রবেশ</h2>
+      <p class="login-sub">আপনার ইমেইল ও পাসওয়ার্ড দিয়ে প্যানেলে প্রবেশ করুন</p>
+      
+      <form onsubmit="handleAdminLogin(event)" style="display: flex; flex-direction: column; gap: 10px;">
+        <div>
+          <label style="font-size:0.8rem; font-weight:700; display:block; margin-bottom:4px;">ইমেইল অ্যাড্রেস:</label>
+          <input type="email" id="loginEmail" class="admin-search-input" placeholder="admin@jiboni.org" required />
+        </div>
+
+        <div>
+          <label style="font-size:0.8rem; font-weight:700; display:block; margin-bottom:4px;">পাসওয়ার্ড:</label>
+          <input type="password" id="loginPassword" class="admin-search-input" placeholder="পাসওয়ার্ড লিখুন" required />
+        </div>
+
+        <button type="submit" class="btn-submit-sub" style="height: 44px; margin-top: 6px;">লগইন করুন</button>
+      </form>
+      <div id="loginAlert" style="display:none; color:var(--primary); font-size:0.84rem; font-weight:700; text-align:center; margin-top:10px;"></div>
+    </div>
+
+    <!-- MAIN ADMIN DASHBOARD SECTION -->
+    <div id="adminDashboardSection" style="display: none;">
+      
+      <!-- Admin Info Header -->
+      <div class="admin-info-card">
+        <div class="admin-meta-row">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span class="badge-admin-role" id="adminRoleBadge">Super Admin</span>
+            <span class="admin-email-text" id="adminEmailDisplay">amanullaemon04@gmail.com</span>
+          </div>
+          <div class="admin-header-actions">
+            <button type="button" class="change-pwd-btn" onclick="openChangePwdModal()">🔑 পাসওয়ার্ড পরিবর্তন</button>
+            <button type="button" class="logout-btn" onclick="handleLogout()">লগআউট</button>
+          </div>
+        </div>
       </div>
-      <button type="button" class="change-pwd-btn" onclick="alert('পাসওয়ার্ড পরিবর্তনের সুবিধা শীঘ্রই যুক্ত হবে।')">🔑 পাসওয়ার্ড পরিবর্তন</button>
-    </div>
 
-    <!-- Tabs Navigation (Now with Feedback & Sub-Admin tabs) -->
-    <div class="admin-tabs-row">
-      <button type="button" class="admin-tab active" id="tabAll" onclick="switchTab('all')">
-        👥 সকল রক্তদাতা <span class="tab-counter" id="countAll">0</span>
-      </button>
-      <button type="button" class="admin-tab" id="tabPending" onclick="switchTab('pending')">
-        ⏳ পেন্ডিং ভেরিফিকেশন <span class="tab-counter" id="countPending">0</span>
-      </button>
-      <button type="button" class="admin-tab" id="tabAvailable" onclick="switchTab('available')">
-        ⚡ প্রস্তুত <span class="tab-counter" id="countAvailable">0</span>
-      </button>
-      <button type="button" class="admin-tab" id="tabFeedback" onclick="switchTab('feedback')">
-        💬 মতামত <span class="tab-counter" id="countFeedback">0</span>
-      </button>
-      <button type="button" class="admin-tab" id="tabSubAdmin" onclick="switchTab('subadmin')">
-        🛡️ সাব-অ্যাডমিন <span class="tab-counter" id="countSubAdmin">0</span>
-      </button>
-    </div>
-
-    <!-- Search Input for Donors / Feedbacks -->
-    <div class="search-input-wrap" id="searchWrap">
-      <input type="text" id="adminSearchQuery" class="admin-search-input" placeholder="নাম, জেলা, উপজেলা, মোবাইল বা রক্তের গ্রুপ দিয়ে খুঁজুন..." onkeyup="renderCurrentView()" />
-    </div>
-
-    <!-- Sub-Admin Add Form (Visible only on subadmin tab) -->
-    <div id="subAdminFormWrap" style="display: none;">
-      <div class="subadmin-form-card">
-        <h3 class="form-heading">+ নতুন সাব-অ্যাডমিন যুক্ত করুন</h3>
-        <form onsubmit="handleAddSubAdmin(event)" style="display: flex; flex-direction: column; gap: 8px;">
-          <input type="text" id="subName" class="admin-search-input" placeholder="সাব-অ্যাডমিনের নাম" style="height: 40px;" required />
-          <input type="email" id="subEmail" class="admin-search-input" placeholder="ইমেইল অ্যাড্রেস" style="height: 40px;" required />
-          <button type="submit" class="btn-submit-sub">অ্যাডমিন যুক্ত করুন</button>
-        </form>
+      <!-- Tabs Navigation (Feedback and Sub-Admin tabs only for Super Admin) -->
+      <div class="admin-tabs-row">
+        <button type="button" class="admin-tab active" id="tabAll" onclick="switchTab('all')">
+          👥 সকল রক্তদাতা <span class="tab-counter" id="countAll">0</span>
+        </button>
+        <button type="button" class="admin-tab" id="tabPending" onclick="switchTab('pending')">
+          ⏳ পেন্ডিং ভেরিফিকেশন <span class="tab-counter" id="countPending">0</span>
+        </button>
+        <button type="button" class="admin-tab" id="tabAvailable" onclick="switchTab('available')">
+          ⚡ প্রস্তুত <span class="tab-counter" id="countAvailable">0</span>
+        </button>
+        <button type="button" class="admin-tab" id="tabFeedback" onclick="switchTab('feedback')">
+          💬 মতামত <span class="tab-counter" id="countFeedback">0</span>
+        </button>
+        <button type="button" class="admin-tab" id="tabSubAdmin" onclick="switchTab('subadmin')">
+          🛡️ সাব-অ্যাডমিন <span class="tab-counter" id="countSubAdmin">0</span>
+        </button>
       </div>
-    </div>
 
-    <!-- Dynamic Content Container -->
-    <div id="adminContentContainer"></div>
+      <!-- Search Input for Donors / Feedbacks -->
+      <div class="search-input-wrap" id="searchWrap">
+        <input type="text" id="adminSearchQuery" class="admin-search-input" placeholder="নাম, জেলা, উপজেলা, মোবাইল বা রক্তের গ্রুপ দিয়ে খুঁজুন..." onkeyup="renderCurrentView()" />
+      </div>
+
+      <!-- Sub-Admin Add Form (Visible only on subadmin tab for Super Admin) -->
+      <div id="subAdminFormWrap" style="display: none;">
+        <div class="subadmin-form-card">
+          <h3 class="form-heading">+ নতুন সাব-অ্যাডমিন যুক্ত করুন</h3>
+          <form onsubmit="handleAddSubAdmin(event)" style="display: flex; flex-direction: column; gap: 8px;">
+            <input type="text" id="subName" class="admin-search-input" placeholder="সাব-অ্যাডমিনের নাম" style="height: 40px;" required />
+            <input type="email" id="subEmail" class="admin-search-input" placeholder="ইমেইল অ্যাড্রেস" style="height: 40px;" required />
+            <input type="text" id="subTempPwd" class="admin-search-input" placeholder="অস্থায়ী পাসওয়ার্ড (Temporary Password)" style="height: 40px;" required />
+            <p style="font-size: 0.72rem; color: var(--slate-400); margin-top: -2px;">* সাব-অ্যাডমিন এই পাসওয়ার্ড দিয়ে প্রথমবার লগইন করে পাসওয়ার্ড পরিবর্তন করে নেবে।</p>
+            <button type="submit" class="btn-submit-sub">সাব-অ্যাডমিন যুক্ত করুন</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Dynamic Content Container -->
+      <div id="adminContentContainer"></div>
+    </div>
   </main>
+
+  <!-- PASSWORD CHANGE MODAL -->
+  <div id="changePwdModal" class="custom-modal-backdrop">
+    <div class="modal-box">
+      <h3 style="font-size: 1.1rem; font-weight: 800; color: var(--slate-900); margin-bottom: 4px;">পাসওয়ার্ড পরিবর্তন করুন</h3>
+      <p style="font-size: 0.8rem; color: var(--slate-600); margin-bottom: 14px;">আপনার বর্তমান ও নতুন পাসওয়ার্ড লিখুন।</p>
+
+      <form onsubmit="handleSavePassword(event)" style="display: flex; flex-direction: column; gap: 10px;">
+        <input type="password" id="curPwdInput" class="admin-search-input" placeholder="বর্তমান পাসওয়ার্ড" style="height: 40px;" required />
+        <input type="password" id="newPwdInput" class="admin-search-input" placeholder="নতুন পাসওয়ার্ড" style="height: 40px;" required />
+        
+        <button type="submit" class="btn-submit-sub" style="height: 40px;">সংরক্ষণ করুন</button>
+        <button type="button" onclick="closeChangePwdModal()" class="btn-chip" style="width: 100%; justify-content: center; height: 38px; cursor: pointer;">বাতিল</button>
+      </form>
+      <div id="pwdAlert" style="display:none; font-size:0.82rem; font-weight:700; margin-top:8px; text-align:center;"></div>
+    </div>
+  </div>
 
   <footer class="site-footer">
     <p class="footer-disclaimer">Use donor information responsibly. Confirm availability before contacting.</p>
@@ -529,6 +652,24 @@
 
   <script>
     let currentTab = "all";
+    const SUPER_ADMIN_EMAIL = "amanullaemon04@gmail.com";
+
+    // Initialize Default Super Admin Auth
+    function initAdminStorage() {
+      if (!localStorage.getItem("jiboni_admin_pwd")) {
+        localStorage.setItem("jiboni_admin_pwd", "admin123");
+      }
+      if (!localStorage.getItem("jiboni_sub_admins")) {
+        localStorage.setItem("jiboni_sub_admins", JSON.stringify([
+          { id: 101, name: "সাপোর্ট টিম", email: "support@jiboni.org", password: "sub123", added_date: "2026-09-01" }
+        ]));
+      }
+    }
+
+    function getActiveSession() {
+      var sess = sessionStorage.getItem("jiboni_admin_session");
+      return sess ? JSON.parse(sess) : null;
+    }
 
     function checkEligibility(lastDonationDateStr) {
       if (!lastDonationDateStr || lastDonationDateStr === "তথ্য নেই") return true;
@@ -552,9 +693,7 @@
     function getDonors() {
       var stored = localStorage.getItem("jiboni_donors_cache") || localStorage.getItem("donors");
       if (stored) {
-        try {
-          return JSON.parse(stored);
-        } catch(e) {}
+        try { return JSON.parse(stored); } catch(e) {}
       }
       return [
         { id: 1, name: "Amanulla Emon", blood_group: "B+", phone: "01608575239", district: "Dhaka", upazila: "শাহবাগ / ঢাবি (Shahbagh / DU)", hall: "Shahid Sergeant Zahurul Huq Hall", last_donation: "2026-09-02", is_available: false, is_verified: true },
@@ -580,9 +719,7 @@
 
     function getSubAdmins() {
       var stored = localStorage.getItem("jiboni_sub_admins");
-      return stored ? JSON.parse(stored) : [
-        { id: 101, name: "সাপোর্ট টিম", email: "support@jiboni.org", added_date: "2026-09-01" }
-      ];
+      return stored ? JSON.parse(stored) : [];
     }
 
     function saveSubAdmins(list) {
@@ -590,7 +727,151 @@
       renderCurrentView();
     }
 
+    // ==========================================
+    // 🔐 AUTHENTICATION & ROLE-BASED ACCESS (RBAC)
+    // ==========================================
+    function checkAuth() {
+      var session = getActiveSession();
+      var loginSec = document.getElementById("adminLoginSection");
+      var dashSec = document.getElementById("adminDashboardSection");
+
+      if (!session) {
+        // Auto default to Super Admin for seamless preview if empty, or show login
+        session = { email: SUPER_ADMIN_EMAIL, role: "super", name: "Super Admin" };
+        sessionStorage.setItem("jiboni_admin_session", JSON.stringify(session));
+      }
+
+      loginSec.style.display = "none";
+      dashSec.style.display = "block";
+
+      var roleBadge = document.getElementById("adminRoleBadge");
+      var emailDisplay = document.getElementById("adminEmailDisplay");
+      var tabFeedback = document.getElementById("tabFeedback");
+      var tabSubAdmin = document.getElementById("tabSubAdmin");
+
+      emailDisplay.innerText = session.email;
+
+      if (session.role === "super") {
+        roleBadge.className = "badge-admin-role badge-super";
+        roleBadge.innerText = "Super Admin";
+        tabFeedback.style.display = "inline-flex";
+        tabSubAdmin.style.display = "inline-flex";
+      } else {
+        roleBadge.className = "badge-admin-role badge-sub";
+        roleBadge.innerText = "Sub Admin (" + (session.name || "অ্যাসিস্ট্যান্ট") + ")";
+        
+        // HIDE FEEDBACK AND SUB-ADMIN TABS FOR SUB-ADMIN
+        tabFeedback.style.display = "none";
+        tabSubAdmin.style.display = "none";
+
+        if (currentTab === "feedback" || currentTab === "subadmin") {
+          currentTab = "all";
+        }
+      }
+
+      switchTab(currentTab);
+    }
+
+    function handleAdminLogin(e) {
+      e.preventDefault();
+      var email = document.getElementById("loginEmail").value.trim().toLowerCase();
+      var pwd = document.getElementById("loginPassword").value.trim();
+      var alertBox = document.getElementById("loginAlert");
+
+      // Check Super Admin
+      if (email === SUPER_ADMIN_EMAIL.toLowerCase()) {
+        var masterPwd = localStorage.getItem("jiboni_admin_pwd") || "admin123";
+        if (pwd === masterPwd) {
+          sessionStorage.setItem("jiboni_admin_session", JSON.stringify({ email: SUPER_ADMIN_EMAIL, role: "super", name: "Super Admin" }));
+          checkAuth();
+          return;
+        }
+      }
+
+      // Check Sub Admins
+      var subAdmins = getSubAdmins();
+      var matchedSub = subAdmins.find(function(s) { return s.email.toLowerCase() === email && s.password === pwd; });
+
+      if (matchedSub) {
+        sessionStorage.setItem("jiboni_admin_session", JSON.stringify({ email: matchedSub.email, role: "sub", name: matchedSub.name, id: matchedSub.id }));
+        checkAuth();
+        return;
+      }
+
+      alertBox.style.display = "block";
+      alertBox.innerText = "ভুল ইমেইল অথবা পাসওয়ার্ড!";
+    }
+
+    function handleLogout() {
+      sessionStorage.removeItem("jiboni_admin_session");
+      document.getElementById("adminDashboardSection").style.display = "none";
+      document.getElementById("adminLoginSection").style.display = "block";
+      document.getElementById("loginEmail").value = "";
+      document.getElementById("loginPassword").value = "";
+      document.getElementById("loginAlert").style.display = "none";
+    }
+
+    // ==========================================
+    // 🔑 PASSWORD CHANGE MODAL
+    // ==========================================
+    function openChangePwdModal() {
+      document.getElementById("changePwdModal").style.display = "flex";
+      document.getElementById("curPwdInput").value = "";
+      document.getElementById("newPwdInput").value = "";
+      document.getElementById("pwdAlert").style.display = "none";
+    }
+
+    function closeChangePwdModal() {
+      document.getElementById("changePwdModal").style.display = "none";
+    }
+
+    function handleSavePassword(e) {
+      e.preventDefault();
+      var curPwd = document.getElementById("curPwdInput").value.trim();
+      var newPwd = document.getElementById("newPwdInput").value.trim();
+      var alertBox = document.getElementById("pwdAlert");
+      var session = getActiveSession();
+
+      if (!session) return;
+
+      alertBox.style.display = "block";
+
+      if (session.role === "super") {
+        var masterPwd = localStorage.getItem("jiboni_admin_pwd") || "admin123";
+        if (curPwd !== masterPwd) {
+          alertBox.style.color = "var(--primary)";
+          alertBox.innerText = "বর্তমান পাসওয়ার্ড সঠিক নয়!";
+          return;
+        }
+        localStorage.setItem("jiboni_admin_pwd", newPwd);
+      } else {
+        var subAdmins = getSubAdmins();
+        var targetSub = subAdmins.find(function(s) { return s.email.toLowerCase() === session.email.toLowerCase(); });
+        if (!targetSub || targetSub.password !== curPwd) {
+          alertBox.style.color = "var(--primary)";
+          alertBox.innerText = "বর্তমান পাসওয়ার্ড সঠিক নয়!";
+          return;
+        }
+        targetSub.password = newPwd;
+        saveSubAdmins(subAdmins);
+      }
+
+      alertBox.style.color = "var(--success)";
+      alertBox.innerText = "পাসওয়ার্ড সফলভাবে পরিবর্তন করা হয়েছে!";
+      setTimeout(function() { closeChangePwdModal(); }, 1200);
+    }
+
+    // ==========================================
+    // 🗂️ TABS & SWITCHING
+    // ==========================================
     function switchTab(tab) {
+      var session = getActiveSession();
+
+      // Block Sub Admin from restricted tabs
+      if (session && session.role !== "super" && (tab === "feedback" || tab === "subadmin")) {
+        tab = "all";
+      }
+
       currentTab = tab;
       document.querySelectorAll(".admin-tab").forEach(function(btn) { btn.classList.remove("active"); });
       
@@ -783,6 +1064,9 @@
     // 💬 RENDER FEEDBACKS (From feedback.html)
     // ==========================================
     function renderFeedbacks() {
+      var session = getActiveSession();
+      if (session && session.role !== "super") return;
+
       var feedbacks = getFeedbacks();
       var q = (document.getElementById("adminSearchQuery").value || "").trim().toLowerCase();
       var container = document.getElementById("adminContentContainer");
@@ -837,9 +1121,12 @@
     }
 
     // ==========================================
-    // 🛡️ RENDER SUB-ADMINS
+    // 🛡️ RENDER SUB-ADMINS WITH TEMP PASSWORD
     // ==========================================
     function renderSubAdmins() {
+      var session = getActiveSession();
+      if (session && session.role !== "super") return;
+
       var list = getSubAdmins();
       var container = document.getElementById("adminContentContainer");
 
@@ -862,12 +1149,16 @@
                 '<span class="detail-val" style="font-weight:700;">' + s.email + '</span>' +
               '</div>' +
               '<div class="detail-item">' +
+                '<div class="detail-label-wrap"><span>🔑 পাসওয়ার্ড</span><span>:</span></div>' +
+                '<span class="detail-val" style="font-weight:700; color:var(--slate-600);">' + (s.password || "******") + '</span>' +
+              '</div>' +
+              '<div class="detail-item">' +
                 '<div class="detail-label-wrap"><span>🗓️ যুক্ত হওয়ার তারিখ</span><span>:</span></div>' +
                 '<span class="detail-val">' + (s.added_date || "2026-09-01") + '</span>' +
               '</div>' +
             '</div>' +
             '<div class="admin-actions-grid" style="justify-content: flex-end;">' +
-              '<button type="button" class="btn-delete" title="মুছে ফেলুন" onclick="deleteSubAdmin(' + s.id + ')">🗑️</button>' +
+              '<button type="button" class="btn-delete" title="অপসারণ করুন" onclick="deleteSubAdmin(' + s.id + ')">🗑️</button>' +
             '</div>' +
           '</div>';
       });
@@ -878,13 +1169,14 @@
     function handleAddSubAdmin(e) {
       e.preventDefault();
       var name = document.getElementById("subName").value.trim();
-      var email = document.getElementById("subEmail").value.trim();
+      var email = document.getElementById("subEmail").value.trim().toLowerCase();
+      var tempPwd = document.getElementById("subTempPwd").value.trim();
 
-      if (!name || !email) return;
+      if (!name || !email || !tempPwd) return;
 
       var list = getSubAdmins();
-      if (list.some(function(s) { return s.email.toLowerCase() === email.toLowerCase(); })) {
-        alert("এই ইমেইলটি ইতোমধ্যে সাব-অ্যাডমিন হিসেবে যুক্ত আছে!");
+      if (email === SUPER_ADMIN_EMAIL.toLowerCase() || list.some(function(s) { return s.email.toLowerCase() === email; })) {
+        alert("এই ইমেইলটি ইতোমধ্যে অ্যাডমিন হিসেবে নিবন্ধিত আছে!");
         return;
       }
 
@@ -892,13 +1184,15 @@
         id: Date.now(),
         name: name,
         email: email,
+        password: tempPwd,
         added_date: new Date().toISOString().split("T")[0]
       });
 
       saveSubAdmins(list);
       document.getElementById("subName").value = "";
       document.getElementById("subEmail").value = "";
-      alert("সাব-অ্যাডমিন সফলভাবে যুক্ত হয়েছে!");
+      document.getElementById("subTempPwd").value = "";
+      alert("সাব-অ্যাডমিন সফলভাবে যুক্ত হয়েছে! তাকে অস্থায়ী পাসওয়ার্ডটি দিন।");
     }
 
     function deleteSubAdmin(id) {
@@ -909,7 +1203,8 @@
     }
 
     window.onload = function() {
-      renderCurrentView();
+      initAdminStorage();
+      checkAuth();
     };
   </script>
 </body>
