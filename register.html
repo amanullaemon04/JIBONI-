@@ -3,49 +3,283 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ডোনার নিবন্ধন - JIBONI</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>নতুন রক্তদাতা নিবন্ধন - JIBONI</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Hind Siliguri', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    body {
+      background-color: #f8fafc;
+      color: #1e293b;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background-image: none !important;
+    }
+
+    body::before, body::after {
+      display: none !important;
+      content: none !important;
+    }
+
+    /* Top Header */
+    .site-header {
+      background: #ffffff;
+      padding: 14px 16px 12px;
+      border-bottom: 1px solid #e2e8f0;
+      text-align: center;
+      width: 100%;
+    }
+
+    .header-inner {
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    .brand-row {
+      margin-bottom: 10px;
+    }
+
+    .brand-logo {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      text-decoration: none;
+    }
+
+    .blood-drop {
+      font-size: 1.5rem;
+      line-height: 1;
+    }
+
+    .brand-name {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: #dc2626;
+      letter-spacing: 0.5px;
+      line-height: 1;
+    }
+
+    .nav-btn-row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+    }
+
+    .btn-chip {
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      border: 1px solid transparent;
+      transition: all 0.2s ease;
+    }
+
+    .btn-chip-red {
+      background: #dc2626;
+      color: #ffffff !important;
+    }
+
+    .btn-chip-blue {
+      background: #eff6ff;
+      color: #1d4ed8 !important;
+      border-color: #bfdbfe;
+    }
+
+    .btn-chip-gray {
+      background: #f1f5f9;
+      color: #475569 !important;
+      border-color: #cbd5e1;
+    }
+
+    .brand-slogan {
+      font-size: 0.74rem;
+      color: #475569;
+      margin-top: 4px;
+      font-style: italic;
+    }
+
+    /* Main Container & Registration Card */
+    .main-wrapper {
+      flex: 1;
+      max-width: 480px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 16px 14px 40px;
+    }
+
+    .register-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 22px 18px;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.03);
+    }
+
+    .page-title {
+      font-size: 1.38rem;
+      font-weight: 800;
+      color: #0f172a;
+      margin-bottom: 4px;
+      text-align: center;
+    }
+
+    .page-subtitle {
+      font-size: 0.84rem;
+      color: #64748b;
+      margin-bottom: 20px;
+      text-align: center;
+      line-height: 1.4;
+    }
+
+    /* Form Fields */
+    .input-group {
+      margin-bottom: 14px;
+      text-align: left;
+    }
+
+    .field-label {
+      display: block;
+      font-size: 0.84rem;
+      font-weight: 700;
+      color: #1e293b;
+      margin-bottom: 5px;
+    }
+
+    .field-hint {
+      display: block;
+      font-size: 0.73rem;
+      color: #b91c1c;
+      font-weight: 600;
+      margin-top: 3px;
+    }
+
+    .text-input,
+    .select-input {
+      width: 100%;
+      height: 44px;
+      padding: 0 12px;
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      color: #1e293b;
+      outline: none;
+      transition: all 0.2s;
+    }
+
+    .text-input:focus,
+    .select-input:focus {
+      border-color: #dc2626;
+      box-shadow: 0 0 0 2px rgba(220, 38, 38, 0.1);
+    }
+
+    .btn-submit {
+      width: 100%;
+      height: 44px;
+      background: #dc2626;
+      color: #ffffff;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.92rem;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 8px;
+      transition: opacity 0.2s ease;
+      box-shadow: 0 2px 8px rgba(220, 38, 38, 0.25);
+    }
+
+    .btn-submit:active {
+      opacity: 0.85;
+    }
+
+    .status-alert {
+      margin-top: 14px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      font-size: 0.84rem;
+      font-weight: 700;
+      text-align: center;
+      display: none;
+    }
+
+    /* Footer */
+    .site-footer {
+      background: #ffffff;
+      border-top: 1px solid #e2e8f0;
+      padding: 14px 16px;
+      text-align: center;
+      margin-top: auto;
+      width: 100%;
+    }
+
+    .footer-copy {
+      font-size: 0.75rem;
+      color: #334155;
+    }
+
+    .footer-copy a {
+      color: #dc2626;
+      font-weight: 700;
+      text-decoration: none;
+    }
+  </style>
 </head>
 <body>
 
-  <!-- Header -->
-  <header class="header">
-    <div class="header-container">
-      <div class="header-main-row">
-        <a href="index.html" class="logo">
-          <span class="logo-drop">🩸</span>
-          <span class="logo-text">JIBONI</span>
+  <!-- Top Header -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="brand-row">
+        <a href="index.html" class="brand-logo">
+          <span class="blood-drop">🩸</span>
+          <span class="brand-name">JIBONI</span>
         </a>
       </div>
 
-      <div class="header-nav-row">
-        <a href="index.html" class="nav-chip">← হোম পেজ</a>
-        <a href="update-profile.html" class="nav-chip">✏️ তথ্য আপডেট</a>
-        <a href="developer.html" class="nav-chip">👨‍💻 ডেভেলপার</a>
+      <div class="nav-btn-row">
+        <a href="index.html" class="btn-chip btn-chip-gray">← হোম পেজ</a>
+        <a href="update-profile.html" class="btn-chip btn-chip-blue">✏️ তথ্য আপডেট</a>
+        <a href="developer.html" class="btn-chip btn-chip-gray">👨‍💻 ডেভেলপার</a>
       </div>
 
-      <div class="header-slogan-wrap">
-        <p class="header-slogan">"অচেনা কাউকে বাঁচার আশা দিয়ে, লিখে যাও এক নিঃস্বার্থ জীবনী।"</p>
-      </div>
+      <p class="brand-slogan">"অচেনা কাউকে বাঁচার আশা দিয়ে, লিখে যাও এক নিঃস্বার্থ জীবনী।"</p>
     </div>
   </header>
 
-  <!-- Registration Form Container -->
-  <main class="container">
-    <div class="card">
-      <h1 class="card-title">নতুন রক্তদাতা নিবন্ধন</h1>
-      <p class="card-subtitle">আপনার মূল্যবান রক্তদানের তথ্য দিয়ে জীবন বাঁচাতে এগিয়ে আসুন</p>
+  <!-- Main Container -->
+  <main class="main-wrapper">
+    <div class="register-card">
+      <h1 class="page-title">নতুন রক্তদাতা নিবন্ধন</h1>
+      <p class="page-subtitle">আপনার মূল্যবান রক্তদানের তথ্য দিয়ে জীবন বাঁচাতে এগিয়ে আসুন</p>
 
-      <form id="registerForm" class="auth-form">
-        <div class="form-group">
-          <label for="fullName">পূর্ণ নাম: *</label>
-          <input type="text" id="fullName" name="fullName" required placeholder="আপনার নাম লিখুন" class="form-control" />
+      <form id="donorRegisterForm">
+        
+        <!-- 1. Full Name -->
+        <div class="input-group">
+          <label class="field-label" for="regName">পূর্ণ নাম (Full Name): *</label>
+          <input type="text" id="regName" class="text-input" required placeholder="আপনার নাম লিখুন" />
         </div>
 
-        <div class="form-group">
-          <label for="bloodGroup">রক্তের গ্রুপ: *</label>
-          <select id="bloodGroup" name="bloodGroup" required class="form-control">
-            <option value="">নির্বাচন করুন</option>
+        <!-- 2. Blood Group -->
+        <div class="input-group">
+          <label class="field-label" for="regBloodGroup">রক্তের গ্রুপ (Blood Group): *</label>
+          <select id="regBloodGroup" class="select-input" required>
+            <option value="">রক্তের গ্রুপ নির্বাচন করুন</option>
             <option value="A+">A+</option>
             <option value="A-">A-</option>
             <option value="B+">B+</option>
@@ -57,48 +291,179 @@
           </select>
         </div>
 
-        <div class="form-group">
-          <label for="phone">মোবাইল নম্বর: *</label>
-          <input type="tel" id="phone" name="phone" required placeholder="01XXXXXXXXX" class="form-control" />
+        <!-- 3. Phone Number -->
+        <div class="input-group">
+          <label class="field-label" for="regPhone">মোবাইল নম্বর (Phone Number): *</label>
+          <input type="tel" id="regPhone" class="text-input" required placeholder="01XXXXXXXXX" pattern="[0-9]{11}" />
         </div>
 
-        <div class="form-group">
-          <label for="district">জেলা: *</label>
-          <select id="district" name="district" required class="form-control">
+        <!-- 4. Date of Birth (PIN / Passkey Reset Security Key) -->
+        <div class="input-group">
+          <label class="field-label" for="regDob">জন্ম তারিখ (Date of Birth): *</label>
+          <input type="date" id="regDob" class="text-input" required />
+          <span class="field-hint">🔒 পাসকি বা পিন ভুলে গেলে এই জন্ম তারিখ দিয়ে পিন রিসেট করতে পারবেন।</span>
+        </div>
+
+        <!-- 5. District (64 Districts) -->
+        <div class="input-group">
+          <label class="field-label" for="regDistrict">জেলা / শহর (District): *</label>
+          <select id="regDistrict" class="select-input" required>
             <option value="">জেলা নির্বাচন করুন</option>
+            <option value="Bagerhat">বাগেরহাট (Bagerhat)</option>
+            <option value="Bandarban">বান্দরবান (Bandarban)</option>
+            <option value="Barguna">বরগুনা (Barguna)</option>
+            <option value="Barishal">বরিশাল (Barishal)</option>
+            <option value="Bhola">ভোলা (Bhola)</option>
+            <option value="Bogura">বগুড়া (Bogura)</option>
+            <option value="Brahmanbaria">ব্রাহ্মণবাড়িয়া (Brahmanbaria)</option>
+            <option value="Chandpur">চাঁদপুর (Chandpur)</option>
+            <option value="Chattogram">চট্টগ্রাম (Chattogram)</option>
+            <option value="Chuadanga">চুয়াডাঙ্গা (Chuadanga)</option>
+            <option value="Cox's Bazar">কক্সবাজার (Cox's Bazar)</option>
+            <option value="Cumilla">কুমিল্লা (Cumilla)</option>
+            <option value="Dhaka">ঢাকা (Dhaka)</option>
+            <option value="Dinajpur">দিনাজপুর (Dinajpur)</option>
+            <option value="Faridpur">ফরিদপুর (Faridpur)</option>
+            <option value="Feni">ফেনী (Feni)</option>
+            <option value="Gaibandha">গাইবান্ধা (Gaibandha)</option>
+            <option value="Gazipur">গাজীপুর (Gazipur)</option>
+            <option value="Gopalganj">গোপালগঞ্জ (Gopalganj)</option>
+            <option value="Habiganj">হবিগঞ্জ (Habiganj)</option>
+            <option value="Jamalpur">জামালপুর (Jamalpur)</option>
+            <option value="Jashore">যশোর (Jashore)</option>
+            <option value="Jhalokati">ঝালকাঠি (Jhalokati)</option>
+            <option value="Jhenaidah">ঝিনাইদহ (Jhenaidah)</option>
+            <option value="Joypurhat">জয়পুরহাট (Joypurhat)</option>
+            <option value="Khagrachhari">খাগড়াছড়ি (Khagrachhari)</option>
+            <option value="Khulna">খুলনা (Khulna)</option>
+            <option value="Kishoreganj">কিশোরগঞ্জ (Kishoreganj)</option>
+            <option value="Kurigram">কুড়িগ্রাম (Kurigram)</option>
+            <option value="Kushtia">কুষ্টিয়া (Kushtia)</option>
+            <option value="Lakshmipur">লক্ষ্মীপুর (Lakshmipur)</option>
+            <option value="Lalmonirhat">লালমনিরহাট (Lalmonirhat)</option>
+            <option value="Madaripur">মাদারীপুর (Madaripur)</option>
+            <option value="Magura">মাগুরা (Magura)</option>
+            <option value="Manikganj">মানিকগঞ্জ (Manikganj)</option>
+            <option value="Meherpur">মেহেরপুর (Meherpur)</option>
+            <option value="Moulvibazar">মৌলভীবাজার (Moulvibazar)</option>
+            <option value="Munshiganj">মুন্সীগঞ্জ (Munshiganj)</option>
+            <option value="Mymensingh">ময়মনসিংহ (Mymensingh)</option>
+            <option value="Naogaon">নওগাঁ (Naogaon)</option>
+            <option value="Narail">নড়াইল (Narail)</option>
+            <option value="Narayanganj">নারায়ণগঞ্জ (Narayanganj)</option>
+            <option value="Narsingdi">নরসিংদী (Narsingdi)</option>
+            <option value="Natore">নাটোর (Natore)</option>
+            <option value="Netrokona">নেত্রকোণা (Netrokona)</option>
+            <option value="Nilphamari">নীলফামারী (Nilphamari)</option>
+            <option value="Noakhali">নোয়াখালী (Noakhali)</option>
+            <option value="Pabna">পাবনা (Pabna)</option>
+            <option value="Panchagarh">পঞ্চগড় (Panchagarh)</option>
+            <option value="Patuakhali">পটুয়াখালী (Patuakhali)</option>
+            <option value="Pirojpur">পিরোজপুর (Pirojpur)</option>
+            <option value="Rajbari">রাজবাড়ী (Rajbari)</option>
+            <option value="Rajshahi">রাজশাহী (Rajshahi)</option>
+            <option value="Rangamati">রাঙ্গামাটি (Rangamati)</option>
+            <option value="Rangpur">রংপুর (Rangpur)</option>
+            <option value="Satkhira">সাতক্ষীরা (Satkhira)</option>
+            <option value="Shariatpur">শরীয়তপুর (Shariatpur)</option>
+            <option value="Sherpur">শেরপুর (Sherpur)</option>
+            <option value="Sirajganj">সিরাজগঞ্জ (Sirajganj)</option>
+            <option value="Sunamganj">সুনামগঞ্জ (Sunamganj)</option>
+            <option value="Sylhet">সিলেট (Sylhet)</option>
+            <option value="Tangail">টাঙ্গাইল (Tangail)</option>
+            <option value="Thakurgaon">ঠাকুরগাঁও (Thakurgaon)</option>
           </select>
         </div>
 
-        <div class="form-group">
-          <label for="hall">হল / বর্তমান ঠিকানা:</label>
-          <input type="text" id="hall" name="hall" placeholder="উদাঃ শহীদ সার্জেন্ট জহুরুল হক হল" class="form-control" />
+        <!-- 6. Specific Location / Hall -->
+        <div class="input-group">
+          <label class="field-label" for="regHall">হল / বর্তমান ঠিকানা (Hall / Address):</label>
+          <input type="text" id="regHall" class="text-input" placeholder="উদাঃ শহীদ সার্জেন্ট জহুরুল হক হল" />
         </div>
 
-        <div class="form-group">
-          <label for="lastDonation">সর্বশেষ রক্তদানের তারিখ (যদি থাকে):</label>
-          <input type="date" id="lastDonation" name="lastDonation" class="form-control" />
+        <!-- 7. Last Donation Date -->
+        <div class="input-group">
+          <label class="field-label" for="regLastDonation">সর্বশেষ রক্তদানের তারিখ (যদি থাকে):</label>
+          <input type="date" id="regLastDonation" class="text-input" />
         </div>
 
-        <div class="form-group">
-          <label for="pin">সিক্রেট পিন (তথ্য আপডেটের জন্য ৪ ডিজিট): *</label>
-          <input type="password" id="pin" name="pin" maxlength="6" required placeholder="****" class="form-control" />
+        <!-- 8. 4-Digit Secret PIN -->
+        <div class="input-group">
+          <label class="field-label" for="regPin">৪ ডিজিট সিক্রেট পিন (Secret PIN): *</label>
+          <input type="password" id="regPin" class="text-input" required maxlength="4" pattern="[0-9]{4}" placeholder="****" />
+          <span class="field-hint" style="color: #64748b;">পরবর্তীতে নিজের তথ্য ও স্ট্যাটাস আপডেট করার জন্য এই পিন লাগবে।</span>
         </div>
 
-        <button type="submit" class="btn btn-primary" id="regBtn">নিবন্ধন সম্পন্ন করুন</button>
+        <button type="submit" class="btn-submit" id="submitBtn">নিবন্ধন সম্পন্ন করুন</button>
       </form>
 
-      <div id="regStatus" class="status-msg" style="display:none;"></div>
+      <div id="statusAlert" class="status-alert"></div>
     </div>
   </main>
 
   <!-- Footer -->
-  <footer class="footer">
-    <div class="footer-container">
-      <p class="footer-notice">JIBONI — রক্তদানে সচেতনতা আমাদের লক্ষ্য</p>
-      <p class="footer-credit">Designed & Developed by <a href="developer.html">Amanulla Emon</a></p>
-    </div>
+  <footer class="site-footer">
+    <p class="footer-copy">JIBONI — রক্তদানে সচেতনতা আমাদের লক্ষ্য</p>
+    <p class="footer-copy">Designed & Developed by <a href="developer.html">Amanulla Emon</a></p>
   </footer>
 
   <script src="script.js"></script>
+  <script src="app.js"></script>
+  <script>
+    document.getElementById("donorRegisterForm").addEventListener("submit", async function(e) {
+      e.preventDefault();
+      const btn = document.getElementById("submitBtn");
+      const alertBox = document.getElementById("statusAlert");
+
+      btn.disabled = true;
+      btn.innerText = "নিবন্ধন প্রক্রিয়াকরণ হচ্ছে...";
+      alertBox.style.display = "none";
+
+      const donorPayload = {
+        name: document.getElementById("regName").value.trim(),
+        blood_group: document.getElementById("regBloodGroup").value,
+        phone: document.getElementById("regPhone").value.trim(),
+        dob: document.getElementById("regDob").value,
+        district: document.getElementById("regDistrict").value,
+        hall: document.getElementById("regHall").value.trim(),
+        last_donation: document.getElementById("regLastDonation").value || null,
+        pin: document.getElementById("regPin").value.trim(),
+        is_available: true,
+        created_at: new Date().toISOString()
+      };
+
+      try {
+        // Jodi Supabase configuration window-te thake
+        if (window.supabase) {
+          const { error } = await window.supabase.from('donors').insert([donorPayload]);
+          if (error) throw error;
+        } else if (window.registerDonorToDB) {
+          await window.registerDonorToDB(donorPayload);
+        } else {
+          // LocalStorage fallback cache
+          const existing = JSON.parse(localStorage.getItem('jiboni_donors_cache') || '[]');
+          existing.push(donorPayload);
+          localStorage.setItem('jiboni_donors_cache', JSON.stringify(existing));
+        }
+
+        alertBox.style.display = "block";
+        alertBox.style.background = "#dcfce7";
+        alertBox.style.color = "#15803d";
+        alertBox.innerText = "অভিনন্দন! আপনার ডোনার নিবন্ধন সফল হয়েছে।";
+        document.getElementById("donorRegisterForm").reset();
+
+      } catch (err) {
+        console.error("Registration error:", err);
+        alertBox.style.display = "block";
+        alertBox.style.background = "#fee2e2";
+        alertBox.style.color = "#b91c1c";
+        alertBox.innerText = "নিবন্ধনে সমস্যা হয়েছে! দয়া করে তথ্য পুনরায় যাচাই করে চেষ্টা করুন।";
+      } finally {
+        btn.disabled = false;
+        btn.innerText = "নিবন্ধন সম্পন্ন করুন";
+      }
+    });
+  </script>
 </body>
-</html>
+  </html>
+  
