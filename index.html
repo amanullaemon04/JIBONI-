@@ -151,7 +151,8 @@
     }
 
     .select-input,
-    .text-input {
+    .text-input,
+    .custom-select-trigger {
       width: 100%;
       height: 42px;
       padding: 0 12px;
@@ -161,13 +162,25 @@
       font-size: 0.88rem;
       color: var(--slate-800);
       outline: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      user-select: none;
       transition: all 0.2s;
     }
 
     .select-input:focus,
-    .text-input:focus {
+    .text-input:focus,
+    .custom-select-trigger:focus,
+    .custom-select-trigger.active {
       border-color: var(--primary);
       box-shadow: 0 0 0 2px rgba(220, 38, 38, 0.1);
+    }
+
+    .select-arrow {
+      font-size: 0.7rem;
+      color: var(--slate-400);
     }
 
     .results-notice {
@@ -263,7 +276,110 @@
       text-decoration: none;
     }
 
-    /* Standard Classic Footer */
+    /* CUSTOM BOTTOM SHEET MODAL (REPLACES NATIVE SELECT) */
+    .custom-modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.5);
+      backdrop-filter: blur(3px);
+      z-index: 1000;
+      display: none;
+      align-items: flex-end;
+      justify-content: center;
+    }
+
+    .custom-modal-sheet {
+      background: #ffffff;
+      width: 100%;
+      max-width: 480px;
+      max-height: 80vh;
+      border-top-left-radius: 20px;
+      border-top-right-radius: 20px;
+      padding: 18px 16px 20px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.12);
+      animation: slideUp 0.25s ease-out;
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(100%); }
+      to { transform: translateY(0); }
+    }
+
+    .modal-sheet-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .modal-sheet-title {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--slate-900);
+    }
+
+    .modal-sheet-close {
+      background: var(--slate-100);
+      border: none;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      font-size: 1rem;
+      cursor: pointer;
+      color: var(--slate-600);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-sheet-search {
+      margin-bottom: 12px;
+    }
+
+    .modal-sheet-list {
+      overflow-y: auto;
+      flex: 1;
+      padding-right: 4px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .modal-item-btn {
+      width: 100%;
+      text-align: left;
+      padding: 10px 14px;
+      border-radius: 8px;
+      border: 1px solid var(--slate-200);
+      background: #ffffff;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--slate-800);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.15s;
+    }
+
+    .modal-item-btn:hover,
+    .modal-item-btn.selected {
+      background: var(--primary-light);
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .modal-group-title {
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: var(--slate-400);
+      padding: 8px 6px 2px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
     .site-footer {
       background: #ffffff;
       border-top: 1px solid var(--slate-200);
@@ -336,124 +452,35 @@
 
   <main class="app-main">
     <div class="filter-card">
+
       <!-- রক্তের গ্রুপ (বাধ্যতামূলক) -->
       <div class="input-group">
-        <label class="field-label" for="filterBlood">রক্তের গ্রুপ (Blood Group) *</label>
-        <select id="filterBlood" class="select-input" onchange="runFilter()">
-          <option value="">-- রক্তের গ্রুপ নির্বাচন করুন (বাধ্যতামূলক) --</option>
-          <option value="A+">A+</option>
-          <option value="A-">A-</option>
-          <option value="B+">B+</option>
-          <option value="B-">B-</option>
-          <option value="AB+">AB+</option>
-          <option value="AB-">AB-</option>
-          <option value="O+">O+</option>
-          <option value="O-">O-</option>
-        </select>
+        <label class="field-label">রক্তের গ্রুপ (Blood Group) *</label>
+        <div class="custom-select-trigger" id="bloodTrigger" onclick="openPicker('blood')">
+          <span id="bloodDisplay" style="color: var(--slate-400);">-- রক্তের গ্রুপ নির্বাচন করুন --</span>
+          <span class="select-arrow">▼</span>
+        </div>
+        <input type="hidden" id="filterBlood" value="" />
       </div>
 
-      <!-- ৬৪ জেলা (বাধ্যতামূলক) -->
+      <!-- ৬৪ জেলা (কাস্টম মোডাল বাটন) -->
       <div class="input-group">
-        <label class="field-label" for="filterDistrict">জেলা / শহর (District) *</label>
-        <select id="filterDistrict" class="select-input" onchange="handleDistrictChange()">
-          <option value="">-- জেলা নির্বাচন করুন (বাধ্যতামূলক) --</option>
-          <!-- ঢাকা বিভাগ -->
-          <optgroup label="ঢাকা বিভাগ">
-            <option value="Dhaka">ঢাকা (Dhaka)</option>
-            <option value="Gazipur">গাজীপুর (Gazipur)</option>
-            <option value="Narayanganj">নারায়ণগঞ্জ (Narayanganj)</option>
-            <option value="Tangail">টাঙ্গাইল (Tangail)</option>
-            <option value="Kishoreganj">কিশোরগঞ্জ (Kishoreganj)</option>
-            <option value="Manikganj">মানিকগঞ্জ (Manikganj)</option>
-            <option value="Munshiganj">মুন্সীগঞ্জ (Munshiganj)</option>
-            <option value="Narsingdi">নরসিংদী (Narsingdi)</option>
-            <option value="Faridpur">ফরিদপুর (Faridpur)</option>
-            <option value="Gopalganj">গোপালগঞ্জ (Gopalganj)</option>
-            <option value="Madaripur">মাদারীপুর (Madaripur)</option>
-            <option value="Rajbari">রাজবাড়ী (Rajbari)</option>
-            <option value="Shariatpur">শরীয়তপুর (Shariatpur)</option>
-          </optgroup>
-          <!-- চট্টগ্রাম বিভাগ -->
-          <optgroup label="চট্টগ্রাম বিভাগ">
-            <option value="Chattogram">চট্টগ্রাম (Chattogram)</option>
-            <option value="Cox's Bazar">কক্সবাজার (Cox's Bazar)</option>
-            <option value="Cumilla">কুমিল্লা (Cumilla)</option>
-            <option value="Feni">ফেনী (Feni)</option>
-            <option value="Brahmanbaria">ব্রাহ্মণবাড়িয়া (Brahmanbaria)</option>
-            <option value="Noakhali">নোয়াখালী (Noakhali)</option>
-            <option value="Chandpur">চাঁদপুর (Chandpur)</option>
-            <option value="Lakshmipur">লক্ষ্মীপুর (Lakshmipur)</option>
-            <option value="Bandarban">বান্দরবান (Bandarban)</option>
-            <option value="Khagrachhari">খাগড়াছড়ি (Khagrachhari)</option>
-            <option value="Rangamati">রাঙ্গামাটি (Rangamati)</option>
-          </optgroup>
-          <!-- রাজশাহী বিভাগ -->
-          <optgroup label="রাজশাহী বিভাগ">
-            <option value="Rajshahi">রাজশাহী (Rajshahi)</option>
-            <option value="Bogura">বগুড়া (Bogura)</option>
-            <option value="Pabna">পাবনা (Pabna)</option>
-            <option value="Sirajganj">সিরাজগঞ্জ (Sirajganj)</option>
-            <option value="Naogaon">নওগাঁ (Naogaon)</option>
-            <option value="Natore">নাটোর (Natore)</option>
-            <option value="Chapai Nawabganj">চাঁপাইনবাবগঞ্জ (Chapai Nawabganj)</option>
-            <option value="Joypurhat">জয়পুরহাট (Joypurhat)</option>
-          </optgroup>
-          <!-- খুলনা বিভাগ -->
-          <optgroup label="খুলনা বিভাগ">
-            <option value="Khulna">খুলনা (Khulna)</option>
-            <option value="Jashore">যশোর (Jashore)</option>
-            <option value="Kushtia">কুষ্টিয়া (Kushtia)</option>
-            <option value="Satkhira">সাতক্ষীরা (Satkhira)</option>
-            <option value="Bagerhat">বাগেরহাট (Bagerhat)</option>
-            <option value="Jhenaidah">ঝিনাইদহ (Jhenaidah)</option>
-            <option value="Chuadanga">চুয়াডাঙ্গা (Chuadanga)</option>
-            <option value="Magura">মাগুরা (Magura)</option>
-            <option value="Meherpur">মেহেরপুর (Meherpur)</option>
-            <option value="Narail">নড়াইল (Narail)</option>
-          </optgroup>
-          <!-- বরিশাল বিভাগ -->
-          <optgroup label="বরিশাল বিভাগ">
-            <option value="Barishal">বরিশাল (Barishal)</option>
-            <option value="Bhola">ভোলা (Bhola)</option>
-            <option value="Patuakhali">পটুয়াখালী (Patuakhali)</option>
-            <option value="Pirojpur">পিরোজপুর (Pirojpur)</option>
-            <option value="Barguna">বরগুনা (Barguna)</option>
-            <option value="Jhalokati">ঝালকাঠি (Jhalokati)</option>
-          </optgroup>
-          <!-- সিলেট বিভাগ -->
-          <optgroup label="সিলেট বিভাগ">
-            <option value="Sylhet">সিলেট (Sylhet)</option>
-            <option value="Moulvibazar">মৌলভীবাজার (Moulvibazar)</option>
-            <option value="Habiganj">হবিগঞ্জ (Habiganj)</option>
-            <option value="Sunamganj">সুনামগঞ্জ (Sunamganj)</option>
-          </optgroup>
-          <!-- রংপুর বিভাগ -->
-          <optgroup label="রংপুর বিভাগ">
-            <option value="Rangpur">রংপুর (Rangpur)</option>
-            <option value="Dinajpur">দিনাজপুর (Dinajpur)</option>
-            <option value="Nilphamari">নীলফামারী (Nilphamari)</option>
-            <option value="Kurigram">কুড়িগ্রাম (Kurigram)</option>
-            <option value="Gaibandha">গাইবান্ধা (Gaibandha)</option>
-            <option value="Lalmonirhat">লালমনিরহাট (Lalmonirhat)</option>
-            <option value="Panchagarh">পঞ্চগড় (Panchagarh)</option>
-            <option value="Thakurgaon">ঠাকুরগাঁও (Thakurgaon)</option>
-          </optgroup>
-          <!-- ময়মনসিংহ বিভাগ -->
-          <optgroup label="ময়মনসিংহ বিভাগ">
-            <option value="Mymensingh">ময়মনসিংহ (Mymensingh)</option>
-            <option value="Jamalpur">জামালপুর (Jamalpur)</option>
-            <option value="Netrokona">নেত্রকোণা (Netrokona)</option>
-            <option value="Sherpur">শেরপুর (Sherpur)</option>
-          </optgroup>
-        </select>
+        <label class="field-label">জেলা / শহর (District) *</label>
+        <div class="custom-select-trigger" id="districtTrigger" onclick="openPicker('district')">
+          <span id="districtDisplay" style="color: var(--slate-400);">-- জেলা নির্বাচন করুন --</span>
+          <span class="select-arrow">▼</span>
+        </div>
+        <input type="hidden" id="filterDistrict" value="" />
       </div>
 
       <!-- উপজেলা / থানা -->
       <div class="input-group">
-        <label class="field-label" for="filterUpazila">উপজেলা / থানা (Upazila / Thana)</label>
-        <select id="filterUpazila" class="select-input" onchange="runFilter()">
-          <option value="">সকল উপজেলা / থানা (All Upazilas)</option>
-        </select>
+        <label class="field-label">উপজেলা / থানা (Upazila / Thana)</label>
+        <div class="custom-select-trigger" id="upazilaTrigger" onclick="openPicker('upazila')">
+          <span id="upazilaDisplay" style="color: var(--slate-400);">সকল উপজেলা / থানা (All Upazilas)</span>
+          <span class="select-arrow">▼</span>
+        </div>
+        <input type="hidden" id="filterUpazila" value="" />
       </div>
 
       <!-- নির্দিষ্ট এলাকা / হল -->
@@ -481,7 +508,21 @@
     </div>
   </main>
 
-  <!-- Complete Standard Footer (Matching Badhan ZH) -->
+  <!-- CUSTOM PICKER BOTTOM-SHEET MODAL -->
+  <div id="customPickerModal" class="custom-modal-backdrop" onclick="closePickerOnBackdrop(event)">
+    <div class="custom-modal-sheet" id="modalSheetContent">
+      <div class="modal-sheet-header">
+        <h3 class="modal-sheet-title" id="modalTitle">নির্বাচন করুন</h3>
+        <button type="button" class="modal-sheet-close" onclick="closePicker()">✕</button>
+      </div>
+      <div class="modal-sheet-search" id="modalSearchWrap">
+        <input type="text" id="modalSearchInput" class="text-input" placeholder="এখানে খুঁজুন..." onkeyup="filterModalItems()" />
+      </div>
+      <div class="modal-sheet-list" id="modalListContainer"></div>
+    </div>
+  </div>
+
+  <!-- Standard Footer (Matching Badhan ZH) -->
   <footer class="site-footer">
     <div class="footer-nav">
       <a href="stats.html">📊 রক্তের পরিসংখ্যান</a>
@@ -493,6 +534,84 @@
   </footer>
 
   <script>
+    var currentPickerMode = "";
+
+    var bloodGroupsList = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
+
+    var districtsList = [
+      { category: "ঢাকা বিভাগ", name: "Dhaka", label: "ঢাকা (Dhaka)" },
+      { category: "ঢাকা বিভাগ", name: "Gazipur", label: "গাজীপুর (Gazipur)" },
+      { category: "ঢাকা বিভাগ", name: "Narayanganj", label: "নারায়ণগঞ্জ (Narayanganj)" },
+      { category: "ঢাকা বিভাগ", name: "Tangail", label: "টাঙ্গাইল (Tangail)" },
+      { category: "ঢাকা বিভাগ", name: "Kishoreganj", label: "কিশোরগঞ্জ (Kishoreganj)" },
+      { category: "ঢাকা বিভাগ", name: "Manikganj", label: "মানিকগঞ্জ (Manikganj)" },
+      { category: "ঢাকা বিভাগ", name: "Munshiganj", label: "মুন্সীগঞ্জ (Munshiganj)" },
+      { category: "ঢাকা বিভাগ", name: "Narsingdi", label: "নরসিংদী (Narsingdi)" },
+      { category: "ঢাকা বিভাগ", name: "Faridpur", label: "ফরিদপুর (Faridpur)" },
+      { category: "ঢাকা বিভাগ", name: "Gopalganj", label: "গোপালগঞ্জ (Gopalganj)" },
+      { category: "ঢাকা বিভাগ", name: "Madaripur", label: "মাদারীপুর (Madaripur)" },
+      { category: "ঢাকা বিভাগ", name: "Rajbari", label: "রাজবাড়ী (Rajbari)" },
+      { category: "ঢাকা বিভাগ", name: "Shariatpur", label: "শরীয়তপুর (Shariatpur)" },
+
+      { category: "চট্টগ্রাম বিভাগ", name: "Chattogram", label: "চট্টগ্রাম (Chattogram)" },
+      { category: "চট্টগ্রাম বিভাগ", name: "Cox's Bazar", label: "কক্সবাজার (Cox's Bazar)" },
+      { category: "চট্টগ্রাম বিভাগ", name: "Cumilla", label: "কুমিল্লা (Cumilla)" },
+      { category: "চট্টগ্রাম বিভাগ", name: "Feni", label: "ফেনী (Feni)" },
+      { category: "চট্টগ্রাম বিভাগ", name: "Brahmanbaria", label: "ব্রাহ্মণবাড়িয়া (Brahmanbaria)" },
+      { category: "চট্টগ্রাম বিভাগ", name: "Noakhali", label: "নোয়াখালী (Noakhali)" },
+      { category: "চট্টগ্রাম বিভাগ", name: "Chandpur", label: "চাঁদপুর (Chandpur)" },
+      { category: "চট্টগ্রাম বিভাগ", name: "Lakshmipur", label: "লক্ষ্মীপুর (Lakshmipur)" },
+      { category: "চট্টগ্রাম বিভাগ", name: "Bandarban", label: "বান্দরবান (Bandarban)" },
+      { category: "চট্টগ্রাম বিভাগ", name: "Khagrachhari", label: "খাগড়াছড়ি (Khagrachhari)" },
+      { category: "চট্টগ্রাম বিভাগ", name: "Rangamati", label: "রাঙ্গামাটি (Rangamati)" },
+
+      { category: "রাজশাহী বিভাগ", name: "Rajshahi", label: "রাজশাহী (Rajshahi)" },
+      { category: "রাজশাহী বিভাগ", name: "Bogura", label: "বগুড়া (Bogura)" },
+      { category: "রাজশাহী বিভাগ", name: "Pabna", label: "পাবনা (Pabna)" },
+      { category: "রাজশাহী বিভাগ", name: "Sirajganj", label: "সিরাজগঞ্জ (Sirajganj)" },
+      { category: "রাজশাহী বিভাগ", name: "Naogaon", label: "নওগাঁ (Naogaon)" },
+      { category: "রাজশাহী বিভাগ", name: "Natore", label: "নাটোর (Natore)" },
+      { category: "রাজশাহী বিভাগ", name: "Chapai Nawabganj", label: "চাঁপাইনবাবগঞ্জ (Chapai Nawabganj)" },
+      { category: "রাজশাহী বিভাগ", name: "Joypurhat", label: "জয়পুরহাট (Joypurhat)" },
+
+      { category: "খুলনা বিভাগ", name: "Khulna", label: "খুলনা (Khulna)" },
+      { category: "খুলনা বিভাগ", name: "Jashore", label: "যশোর (Jashore)" },
+      { category: "খুলনা বিভাগ", name: "Kushtia", label: "কুষ্টিয়া (Kushtia)" },
+      { category: "খুলনা বিভাগ", name: "Satkhira", label: "সাতক্ষীরা (Satkhira)" },
+      { category: "খুলনা বিভাগ", name: "Bagerhat", label: "বাগেরহাট (Bagerhat)" },
+      { category: "খুলনা বিভাগ", name: "Jhenaidah", label: "ঝিনাইদহ (Jhenaidah)" },
+      { category: "খুলনা বিভাগ", name: "Chuadanga", label: "চুয়াডাঙ্গা (Chuadanga)" },
+      { category: "খুলনা বিভাগ", name: "Magura", label: "মাগুরা (Magura)" },
+      { category: "খুলনা বিভাগ", name: "Meherpur", label: "মেহেরপুর (Meherpur)" },
+      { category: "খুলনা বিভাগ", name: "Narail", label: "নড়াইল (Narail)" },
+
+      { category: "বরিশাল বিভাগ", name: "Barishal", label: "বরিশাল (Barishal)" },
+      { category: "বরিশাল বিভাগ", name: "Bhola", label: "ভোলা (Bhola)" },
+      { category: "বরিশাল বিভাগ", name: "Patuakhali", label: "পটুয়াখালী (Patuakhali)" },
+      { category: "বরিশাল বিভাগ", name: "Pirojpur", label: "পিরোজপুর (Pirojpur)" },
+      { category: "বরিশাল বিভাগ", name: "Barguna", label: "বরগুনা (Barguna)" },
+      { category: "বরিশাল বিভাগ", name: "Jhalokati", label: "ঝালকাঠি (Jhalokati)" },
+
+      { category: "সিলেট বিভাগ", name: "Sylhet", label: "সিলেট (Sylhet)" },
+      { category: "সিলেট বিভাগ", name: "Moulvibazar", label: "মৌলভীবাজার (Moulvibazar)" },
+      { category: "সিলেট বিভাগ", name: "Habiganj", label: "হবিগঞ্জ (Habiganj)" },
+      { category: "সিলেট বিভাগ", name: "Sunamganj", label: "সুনামগঞ্জ (Sunamganj)" },
+
+      { category: "রংপুর বিভাগ", name: "Rangpur", label: "রংপুর (Rangpur)" },
+      { category: "রংপুর বিভাগ", name: "Dinajpur", label: "দিনাজপুর (Dinajpur)" },
+      { category: "রংপুর বিভাগ", name: "Nilphamari", label: "নীলফামারী (Nilphamari)" },
+      { category: "রংপুর বিভাগ", name: "Kurigram", label: "কুড়িগ্রাম (Kurigram)" },
+      { category: "রংপুর বিভাগ", name: "Gaibandha", label: "গাইবান্ধা (Gaibandha)" },
+      { category: "রংপুর বিভাগ", name: "Lalmonirhat", label: "লালমনিরহাট (Lalmonirhat)" },
+      { category: "রংপুর বিভাগ", name: "Panchagarh", label: "পঞ্চগড় (Panchagarh)" },
+      { category: "রংপুর বিভাগ", name: "Thakurgaon", label: "ঠাকুরগাঁও (Thakurgaon)" },
+
+      { category: "ময়মনসিংহ বিভাগ", name: "Mymensingh", label: "ময়মনসিংহ (Mymensingh)" },
+      { category: "ময়মনসিংহ বিভাগ", name: "Jamalpur", label: "জামালপুর (Jamalpur)" },
+      { category: "ময়মনসিংহ বিভাগ", name: "Netrokona", label: "নেত্রকোণা (Netrokona)" },
+      { category: "ময়মনসিংহ বিভাগ", name: "Sherpur", label: "শেরপুর (Sherpur)" }
+    ];
+
     var upazilaDatabase = {
       "Dhaka": ["ধানমন্ডি (Dhanmondi)", "মিরপুর (Mirpur)", "গুলশান (Gulshan)", "উত্তরা (Uttara)", "মোহাম্মদপুর (Mohammadpur)", "শাহবাগ / ঢাবি (Shahbagh / DU)", "মতিঝিল (Motijheel)", "পল্টন (Paltan)", "তেজগাঁও (Tejgaon)", "সাভার (Savar)", "ধামরাই (Dhamrai)", "কেরানীগঞ্জ (Keraniganj)", "নবাবগঞ্জ (Nawabganj)", "দোহার (Dohar)"],
       "Gazipur": ["গাজীপুর সদর (Sadar)", "টঙ্গী (Tongi)", "কালিয়াকৈর (Kaliakair)", "শ্রীপুর (Sreepur)", "কাপাসিয়া (Kapasia)", "কালীগঞ্জ (Kaliganj)"],
@@ -560,24 +679,167 @@
       "Sherpur": ["শেরপুর সদর (Sadar)", "নকলা (Nakla)", "নালিতাবাড়ী (Nalitabari)", "শ্রীবরদী (Sreebardi)", "ঝিনাইগাতী (Jhenaigati)"]
     };
 
-    function handleDistrictChange() {
-      var distSelect = document.getElementById("filterDistrict");
-      var upazilaSelect = document.getElementById("filterUpazila");
-      var selectedDist = distSelect.value;
+    function openPicker(mode) {
+      currentPickerMode = mode;
+      var modal = document.getElementById("customPickerModal");
+      var title = document.getElementById("modalTitle");
+      var searchWrap = document.getElementById("modalSearchWrap");
+      var searchInput = document.getElementById("modalSearchInput");
+      var listContainer = document.getElementById("modalListContainer");
 
-      upazilaSelect.innerHTML = '<option value="">সকল উপজেলা / থানা (All Upazilas)</option>';
+      modal.style.display = "flex";
+      searchInput.value = "";
+      listContainer.innerHTML = "";
 
-      if (selectedDist && upazilaDatabase[selectedDist]) {
-        var upazilas = upazilaDatabase[selectedDist];
-        upazilas.forEach(function(u) {
-          var opt = document.createElement("option");
-          opt.value = u;
-          opt.innerText = u;
-          upazilaSelect.appendChild(opt);
+      if (mode === "blood") {
+        title.innerText = "রক্তের গ্রুপ নির্বাচন করুন";
+        searchWrap.style.display = "none";
+        var curBlood = document.getElementById("filterBlood").value;
+
+        bloodGroupsList.forEach(function(bg) {
+          var btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "modal-item-btn" + (curBlood === bg ? " selected" : "");
+          btn.innerHTML = "<span>" + bg + "</span>" + (curBlood === bg ? "<span>✓</span>" : "");
+          btn.onclick = function() { selectBlood(bg); };
+          listContainer.appendChild(btn);
         });
-      }
+      } else if (mode === "district") {
+        title.innerText = "জেলা নির্বাচন করুন";
+        searchWrap.style.display = "block";
+        searchInput.placeholder = "জেলা খুঁজুন (e.g. ঢাকা, Dhaka)...";
+        renderDistrictModalList("");
+      } else if (mode === "upazila") {
+        var curDist = document.getElementById("filterDistrict").value;
+        if (!curDist) {
+          alert("অনুগ্রহ করে প্রথমে জেলা নির্বাচন করুন!");
+          closePicker();
+          return;
+        }
 
+        title.innerText = "উপজেলা / থানা নির্বাচন করুন";
+        searchWrap.style.display = "block";
+        searchInput.placeholder = "উপজেলা / থানা খুঁজুন...";
+        renderUpazilaModalList("");
+      }
+    }
+
+    function renderDistrictModalList(filterQuery) {
+      var listContainer = document.getElementById("modalListContainer");
+      listContainer.innerHTML = "";
+      var curDist = document.getElementById("filterDistrict").value;
+      var q = filterQuery.toLowerCase().trim();
+
+      var currentCat = "";
+      districtsList.forEach(function(item) {
+        if (q && !item.name.toLowerCase().includes(q) && !item.label.toLowerCase().includes(q)) {
+          return;
+        }
+
+        if (!q && item.category !== currentCat) {
+          currentCat = item.category;
+          var groupHeader = document.createElement("div");
+          groupHeader.className = "modal-group-title";
+          groupHeader.innerText = currentCat;
+          listContainer.appendChild(groupHeader);
+        }
+
+        var btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "modal-item-btn" + (curDist.toLowerCase() === item.name.toLowerCase() ? " selected" : "");
+        btn.innerHTML = "<span>" + item.label + "</span>" + (curDist.toLowerCase() === item.name.toLowerCase() ? "<span>✓</span>" : "");
+        btn.onclick = function() { selectDistrict(item.name, item.label); };
+        listContainer.appendChild(btn);
+      });
+
+      if (listContainer.children.length === 0) {
+        listContainer.innerHTML = '<div style="text-align:center; padding:20px; color:var(--slate-400);">কোনো জেলা খুঁজে পাওয়া যায়নি</div>';
+      }
+    }
+
+    function renderUpazilaModalList(filterQuery) {
+      var listContainer = document.getElementById("modalListContainer");
+      listContainer.innerHTML = "";
+      var curDist = document.getElementById("filterDistrict").value;
+      var curUpz = document.getElementById("filterUpazila").value;
+      var q = filterQuery.toLowerCase().trim();
+
+      // Default 'All' option
+      var allBtn = document.createElement("button");
+      allBtn.type = "button";
+      allBtn.className = "modal-item-btn" + (!curUpz ? " selected" : "");
+      allBtn.innerHTML = "<span>সকল উপজেলা / থানা (All Upazilas)</span>" + (!curUpz ? "<span>✓</span>" : "");
+      allBtn.onclick = function() { selectUpazila("", "সকল উপজেলা / থানা (All Upazilas)"); };
+      listContainer.appendChild(allBtn);
+
+      var list = upazilaDatabase[curDist] || [];
+      list.forEach(function(u) {
+        if (q && !u.toLowerCase().includes(q)) return;
+
+        var btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "modal-item-btn" + (curUpz === u ? " selected" : "");
+        btn.innerHTML = "<span>" + u + "</span>" + (curUpz === u ? "<span>✓</span>" : "");
+        btn.onclick = function() { selectUpazila(u, u); };
+        listContainer.appendChild(btn);
+      });
+    }
+
+    function filterModalItems() {
+      var q = document.getElementById("modalSearchInput").value;
+      if (currentPickerMode === "district") {
+        renderDistrictModalList(q);
+      } else if (currentPickerMode === "upazila") {
+        renderUpazilaModalList(q);
+      }
+    }
+
+    function selectBlood(bg) {
+      document.getElementById("filterBlood").value = bg;
+      var display = document.getElementById("bloodDisplay");
+      display.innerText = bg;
+      display.style.color = "var(--slate-900)";
+      display.style.fontWeight = "700";
+      closePicker();
       runFilter();
+    }
+
+    function selectDistrict(name, label) {
+      document.getElementById("filterDistrict").value = name;
+      var display = document.getElementById("districtDisplay");
+      display.innerText = label;
+      display.style.color = "var(--slate-900)";
+      display.style.fontWeight = "700";
+
+      // Reset Upazila on district change
+      document.getElementById("filterUpazila").value = "";
+      var upzDisplay = document.getElementById("upazilaDisplay");
+      upzDisplay.innerText = "সকল উপজেলা / থানা (All Upazilas)";
+      upzDisplay.style.color = "var(--slate-400)";
+      upzDisplay.style.fontWeight = "normal";
+
+      closePicker();
+      runFilter();
+    }
+
+    function selectUpazila(val, label) {
+      document.getElementById("filterUpazila").value = val;
+      var display = document.getElementById("upazilaDisplay");
+      display.innerText = label;
+      display.style.color = val ? "var(--slate-900)" : "var(--slate-400)";
+      display.style.fontWeight = val ? "700" : "normal";
+      closePicker();
+      runFilter();
+    }
+
+    function closePicker() {
+      document.getElementById("customPickerModal").style.display = "none";
+    }
+
+    function closePickerOnBackdrop(e) {
+      if (e.target.id === "customPickerModal") {
+        closePicker();
+      }
     }
 
     function checkDonationEligibility(lastDonationDateStr) {
@@ -585,7 +847,7 @@
       var lastDate = new Date(lastDonationDateStr);
       var today = new Date();
       var diffDays = (today - lastDate) / (1000 * 60 * 60 * 24);
-      return diffDays >= 120; // 4 months logic
+      return diffDays >= 120;
     }
 
     function calculateNextEligibleDate(lastDonationDateStr) {
@@ -629,7 +891,6 @@
 
       var allDonors = getDonorsData();
 
-      // Auto update availability according to 4-month rest rule
       allDonors.forEach(function(d) {
         var isEligible = checkDonationEligibility(d.last_donation);
         if (!isEligible && d.is_available && !d.manual_override) {
@@ -637,7 +898,6 @@
         }
       });
 
-      // Filter logic
       var results = allDonors.filter(function(d) {
         var dBlood = (d.blood_group || d.bloodGroup || "").toUpperCase();
         var dDistrict = (d.district || "").toLowerCase();
@@ -698,7 +958,7 @@
             '</div>' +
             '<div class="donor-meta">' +
               '<div class="meta-row">📍 <strong>ঠিকানা/হল:</strong> ' + (d.district || "--") + (d.hall ? ' (' + d.hall + ')' : '') + '</div>' +
-              '<div class="meta-row">🗓️️ <strong>সর্বশেষ রক্তদান:</strong> ' + (d.last_donation || "তথ্য নেই") + '</div>' +
+              '<div class="meta-row">🗓️ <strong>সর্বশেষ রক্তদান:</strong> ' + (d.last_donation || "তথ্য নেই") + '</div>' +
               '<div class="meta-row">⚡ <strong>স্ট্যাটাস:</strong> ' + statusChip + '</div>' +
               nextDateLine +
             '</div>' +
