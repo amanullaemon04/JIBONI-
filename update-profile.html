@@ -277,7 +277,7 @@
       <div class="nav-btn-row">
         <a href="index.html" class="btn-chip">← হোম পেজ</a>
         <a href="register.html" class="btn-chip btn-chip-red">+ ডোনার নিবন্ধন</a>
-        <a href="developer.html" class="btn-chip">👨‍💻 ডেভেলপার</a>
+        <a href="developer.html" class="btn-chip">👨‍‍💻 ডেভেলপার</a>
       </div>
 
       <p class="brand-slogan">"অচেনা কাউকে বাঁচার আশা দিয়ে, লিখে যাও এক নিঃস্বার্থ জীবনী।"</p>
@@ -289,15 +289,17 @@
       <h1 class="page-title">রক্তদাতার তথ্য আপডেট</h1>
       <p class="page-subtitle">আপনার নিবন্ধিত মোবাইল নম্বর ও পিন দিয়ে প্রোফাইল হালনাগাদ করুন</p>
 
-      <form id="verifyDonorForm">
+      <!-- Semantic form to trigger browser password save -->
+      <form id="verifyDonorForm" onsubmit="verifyDonorLogin(event)" action="javascript:void(0);">
         <div class="input-group">
           <label class="field-label" for="authPhone">নিবন্ধিত মোবাইল নম্বর: *</label>
-          <input type="tel" id="authPhone" class="text-input" placeholder="01XXXXXXXXX" required />
+          <!-- Using name="username" and autocomplete="username" makes it recognizable to Password Managers -->
+          <input type="tel" id="authPhone" name="username" class="text-input" placeholder="01XXXXXXXXX" autocomplete="username" required />
         </div>
 
         <div class="input-group">
           <label class="field-label" for="authPin">সিক্রেট পিন (৪ ডিজিট): *</label>
-          <input type="password" id="authPin" class="text-input" placeholder="****" maxlength="4" required />
+          <input type="password" id="authPin" name="password" class="text-input" placeholder="****" maxlength="4" autocomplete="current-password" required />
         </div>
 
         <div class="forgot-link-wrap">
@@ -350,6 +352,7 @@
     </div>
   </main>
 
+  <!-- PIN RESET MODAL -->
   <div id="resetPinModal" class="modal-backdrop">
     <div class="modal-box">
       <h3 style="font-size: 1.15rem; font-weight: 800; color: var(--slate-900); margin-bottom: 4px;">পিন রিসেট করুন</h3>
@@ -401,8 +404,10 @@
       return diffDays >= 120;
     }
 
-    document.getElementById("verifyDonorForm").addEventListener("submit", function(e) {
-      e.preventDefault();
+    // Login Authentication Function
+    function verifyDonorLogin(e) {
+      if (e) e.preventDefault();
+      
       var phone = document.getElementById("authPhone").value.trim();
       var pin = document.getElementById("authPin").value.trim();
       var alertBox = document.getElementById("updateAlert");
@@ -414,24 +419,42 @@
 
       if (activeDonorIndex !== -1) {
         var donor = donorsList[activeDonorIndex];
+        
+        // Hide Login Form, Show Edit Form
         alertBox.style.display = "none";
         document.getElementById("verifyDonorForm").style.display = "none";
         document.getElementById("editProfileForm").style.display = "block";
 
+        // Populate existing data
         document.getElementById("editName").value = donor.name || "";
         document.getElementById("editBloodGroup").value = donor.blood_group || donor.bloodGroup || "";
         document.getElementById("editDistrict").value = donor.district || "";
         document.getElementById("editHall").value = donor.hall || "";
         document.getElementById("editLastDonation").value = donor.last_donation || "";
         document.getElementById("editAvailability").value = donor.is_available ? "true" : "false";
+
+        // 🔥 Trigger Browser Password Save Prompt
+        if (window.PasswordCredential && navigator.credentials) {
+          try {
+            var cred = new PasswordCredential({
+              id: phone,
+              password: pin,
+              name: donor.name || "JIBONI Donor"
+            });
+            navigator.credentials.store(cred).catch(function(err) {});
+          } catch(e) {}
+        }
+
       } else {
+        // Handle Wrong Login
         alertBox.style.display = "block";
         alertBox.style.background = "#fee2e2";
         alertBox.style.color = "#b91c1c";
         alertBox.innerText = "মোবাইল নম্বর বা পিন সঠিক নয়!";
       }
-    });
+    }
 
+    // Save Updated Data Function
     document.getElementById("editProfileForm").addEventListener("submit", function(e) {
       e.preventDefault();
       var alertBox = document.getElementById("updateAlert");
@@ -466,6 +489,7 @@
       }
     });
 
+    // Modal Functions
     function openResetPinModal() {
       document.getElementById("resetPinModal").style.display = "flex";
       document.getElementById("resetAlert").style.display = "none";
