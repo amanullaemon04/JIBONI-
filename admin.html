@@ -205,7 +205,6 @@
       text-decoration: underline;
     }
 
-    /* Dashboard UI */
     .admin-profile-strip {
       background: #ffffff;
       border: 1px solid var(--slate-200);
@@ -441,26 +440,28 @@
 
   <main class="app-main">
 
-    <!-- LOGIN SCREEN -->
+    <!-- LOGIN SCREEN (Enclosed in Semantic Form for Browser Password Manager Save Prompt) -->
     <div id="loginScreen" class="auth-panel">
       <h2 class="auth-title">অ্যাডমিন প্যানেল লগইন</h2>
       <p class="auth-subtitle">আপনার অ্যাডমিন ইমেইল ও পাসওয়ার্ড প্রদান করুন</p>
 
-      <div class="input-field">
-        <label class="field-label" for="loginEmail">ইমেইল (Email)</label>
-        <input type="email" id="loginEmail" class="custom-input" placeholder="jiboni@gmail.com" />
-      </div>
+      <form id="adminAuthForm" onsubmit="handleFormSubmit(event)" method="post" action="javascript:void(0);">
+        <div class="input-field">
+          <label class="field-label" for="loginEmail">ইমেইল (Email)</label>
+          <input type="email" id="loginEmail" name="username" class="custom-input" placeholder="jiboni@gmail.com" autocomplete="username" required />
+        </div>
 
-      <div class="input-field">
-        <label class="field-label" for="loginPass">পাসওয়ার্ড (Password)</label>
-        <input type="password" id="loginPass" class="custom-input" placeholder="••••••••" />
-      </div>
+        <div class="input-field">
+          <label class="field-label" for="loginPass">পাসওয়ার্ড (Password)</label>
+          <input type="password" id="loginPass" name="password" class="custom-input" placeholder="••••••••" autocomplete="current-password" required />
+        </div>
 
-      <div class="forgot-link-wrap">
-        <a href="forgot-password.html" class="forgot-link">পাসওয়ার্ড ভুলে গেছেন? (Forgot Password)</a>
-      </div>
+        <div class="forgot-link-wrap">
+          <a href="forgot-password.html" class="forgot-link">পাসওয়ার্ড ভুলে গেছেন? (Forgot Password)</a>
+        </div>
 
-      <button type="button" class="btn-primary" onclick="executeLogin()">লগইন করুন</button>
+        <button type="submit" class="btn-primary" id="loginSubmitBtn">লগইন করুন</button>
+      </form>
       <div id="loginError" style="display:none; color: var(--primary); font-size:0.8rem; font-weight:700; margin-top:10px;">ইমেইল বা পাসওয়ার্ড সঠিক নয়!</div>
     </div>
 
@@ -475,20 +476,23 @@
         <button type="button" onclick="showChangePassPrompt()" class="btn-chip" style="cursor: pointer; font-size: 0.75rem;">🔑 পাসওয়ার্ড পরিবর্তন</button>
       </div>
 
+      <!-- Filter Pills Bar (Feedback & Subadmin hidden dynamically for Sub-Admins) -->
       <div class="filter-pills-bar">
-        <button type="button" class="pill-btn active" onclick="setDashboardTab('all')">
+        <button type="button" id="tabBtnAll" class="pill-btn active" onclick="setDashboardTab('all')">
           👥 সকল রক্তদাতা <span class="pill-count" id="countAll">0</span>
         </button>
-        <button type="button" class="pill-btn" onclick="setDashboardTab('pending')">
+        <button type="button" id="tabBtnPending" class="pill-btn" onclick="setDashboardTab('pending')">
           ⏳ পেন্ডিং ভেরিফিকেশন <span class="pill-count" id="countPending">0</span>
         </button>
-        <button type="button" class="pill-btn" onclick="setDashboardTab('available')">
+        <button type="button" id="tabBtnAvail" class="pill-btn" onclick="setDashboardTab('available')">
           ⚡ প্রস্তুত ডোনার <span class="pill-count" id="countAvail">0</span>
         </button>
-        <button type="button" class="pill-btn" onclick="setDashboardTab('feedback')">
+        
+        <!-- Only Super Admin Can See Feedback & Sub-Admins -->
+        <button type="button" id="tabBtnFeedback" class="pill-btn" onclick="setDashboardTab('feedback')" style="display:none;">
           💬 মতামত <span class="pill-count" id="countFeedback">0</span>
         </button>
-        <button type="button" class="pill-btn" onclick="setDashboardTab('subadmins')">
+        <button type="button" id="tabBtnSubadmins" class="pill-btn" onclick="setDashboardTab('subadmins')" style="display:none;">
           🛡️ সাব-অ্যাডমিন
         </button>
       </div>
@@ -498,14 +502,12 @@
       </div>
 
       <div id="donorsContainer"></div>
+
+      <!-- Feedback Container (Super Admin Only) -->
       <div id="feedbackContainer" style="display: none;"></div>
 
-      <!-- Sub-Admin Tab -->
+      <!-- Sub-Admin Tab (Super Admin Only) -->
       <div id="subAdminContainer" style="display: none;">
-        <div id="subAdminAccessDenied" style="display:none; text-align:center; padding:30px 10px; color:var(--primary); font-weight:700;">
-          ⚠️ সাব-অ্যাডমিন সংযোজন বা অপসারণ করার ক্ষমতা শুধুমাত্র Super Admin-এর রয়েছে।
-        </div>
-
         <div id="superAdminWorkArea">
           <div class="subadmin-box">
             <h3 style="font-size: 0.95rem; font-weight: 800; margin-bottom: 12px;">➕ নতুন সাব-অ্যাডমিন নিয়োগ</h3>
@@ -540,6 +542,12 @@
     var loggedInUser = null;
     var localDonors = [];
 
+    // Triggered on Form Submit to prompt browser password save
+    function handleFormSubmit(event) {
+      if (event) event.preventDefault();
+      executeLogin();
+    }
+
     function executeLogin() {
       var email = (document.getElementById("loginEmail").value || "").trim().toLowerCase();
       var pass = (document.getElementById("loginPass").value || "").trim();
@@ -551,6 +559,7 @@
         return;
       }
 
+      // Check Super Admin
       var customSuperPass = localStorage.getItem("jiboni_super_pass") || SUPER_PASS;
       if (email === SUPER_EMAIL.toLowerCase() && (pass === customSuperPass || pass === SUPER_PASS)) {
         loggedInUser = { name: "Amanulla Emon", email: SUPER_EMAIL, role: "Super Admin" };
@@ -560,6 +569,7 @@
         return;
       }
 
+      // Check Sub-Admin
       var storedAdmins = JSON.parse(localStorage.getItem("jiboni_admin_accounts") || "[]");
       var match = storedAdmins.find(function(a) {
         return a.email.toLowerCase() === email && a.pass === pass;
@@ -584,9 +594,16 @@
       document.getElementById("adminEmailDisplay").innerText = loggedInUser.email;
       document.getElementById("roleBadge").innerText = loggedInUser.role;
 
+      // Role Based Access: Only Super Admin can view Feedback and Sub-Admins tab
+      var isSuper = (loggedInUser.role === "Super Admin" || loggedInUser.email.toLowerCase() === SUPER_EMAIL.toLowerCase());
+      document.getElementById("tabBtnFeedback").style.display = isSuper ? "inline-flex" : "none";
+      document.getElementById("tabBtnSubadmins").style.display = isSuper ? "inline-flex" : "none";
+
       loadDonors();
-      drawFeedbacks();
-      drawAdminsList();
+      if (isSuper) {
+        drawFeedbacks();
+        drawAdminsList();
+      }
     }
 
     function doLogout() {
@@ -649,26 +666,40 @@
     }
 
     function setDashboardTab(tab) {
+      var isSuper = (loggedInUser.role === "Super Admin" || loggedInUser.email.toLowerCase() === SUPER_EMAIL.toLowerCase());
+
+      // Prevent unauthorized access for Sub-Admin
+      if (!isSuper && (tab === 'feedback' || tab === 'subadmins')) {
+        tab = 'all';
+      }
+
       activeTab = tab;
-      var pills = document.querySelectorAll(".pill-btn");
-      var names = ['all', 'pending', 'available', 'feedback', 'subadmins'];
-      pills.forEach(function(p, idx) {
-        p.className = (names[idx] === tab) ? "pill-btn active" : "pill-btn";
+      var allPills = [
+        { id: 'tabBtnAll', name: 'all' },
+        { id: 'tabBtnPending', name: 'pending' },
+        { id: 'tabBtnAvail', name: 'available' },
+        { id: 'tabBtnFeedback', name: 'feedback' },
+        { id: 'tabBtnSubadmins', name: 'subadmins' }
+      ];
+
+      allPills.forEach(function(item) {
+        var el = document.getElementById(item.id);
+        if (el) {
+          if (item.name === tab) {
+            el.className = "pill-btn active";
+          } else {
+            el.className = "pill-btn";
+          }
+        }
       });
 
       var isDonorList = (tab === 'all' || tab === 'pending' || tab === 'available');
       document.getElementById("searchBoxWrap").style.display = isDonorList ? "block" : "none";
       document.getElementById("donorsContainer").style.display = isDonorList ? "block" : "none";
-      document.getElementById("feedbackContainer").style.display = (tab === 'feedback') ? "block" : "none";
-      document.getElementById("subAdminContainer").style.display = (tab === 'subadmins') ? "block" : "none";
+      document.getElementById("feedbackContainer").style.display = (tab === 'feedback' && isSuper) ? "block" : "none";
+      document.getElementById("subAdminContainer").style.display = (tab === 'subadmins' && isSuper) ? "block" : "none";
 
       if (isDonorList) handleLiveSearch();
-
-      if (tab === 'subadmins') {
-        var isSuper = (loggedInUser.email.toLowerCase() === SUPER_EMAIL.toLowerCase() || loggedInUser.role === "Super Admin");
-        document.getElementById("superAdminWorkArea").style.display = isSuper ? "block" : "none";
-        document.getElementById("subAdminAccessDenied").style.display = !isSuper ? "block" : "none";
-      }
     }
 
     function handleLiveSearch() {
@@ -770,6 +801,7 @@
       handleLiveSearch();
     }
 
+    // Only for Super Admin
     function drawFeedbacks() {
       var container = document.getElementById("feedbackContainer");
       var list = JSON.parse(localStorage.getItem("jiboni_feedbacks") || "[]");
@@ -855,7 +887,6 @@
       alert("নতুন সাব-অ্যাডমিন যোগ করা হয়েছে!");
     }
 
-    // Super Admin Direct Reset Feature (Idea 1)
     function adminResetSubPass(idx) {
       var admins = JSON.parse(localStorage.getItem("jiboni_admin_accounts") || "[]");
       var sub = admins[idx];
