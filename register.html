@@ -224,7 +224,7 @@
       display: none;
     }
 
-    /* KEYBOARD-SAFE CUSTOM PICKER MODAL */
+    /* CUSTOM BOTTOM-SHEET MODAL */
     .custom-modal-backdrop {
       position: fixed;
       inset: 0;
@@ -334,6 +334,74 @@
       letter-spacing: 0.5px;
     }
 
+    /* CUSTOM JIBONI ALERT DIALOG (REPLACES BROWSER ALERT) */
+    .custom-alert-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(4px);
+      z-index: 3000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .custom-alert-box {
+      background: #ffffff;
+      border-radius: 18px;
+      max-width: 340px;
+      width: 100%;
+      padding: 22px 20px;
+      text-align: center;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+      animation: alertPop 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    @keyframes alertPop {
+      from { transform: scale(0.85); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .alert-icon-wrap {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--primary-light);
+      color: var(--primary);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      margin-bottom: 12px;
+    }
+
+    .alert-title-text {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--slate-900);
+      margin-bottom: 6px;
+    }
+
+    .alert-body-text {
+      font-size: 0.85rem;
+      color: var(--slate-600);
+      margin-bottom: 18px;
+      line-height: 1.4;
+    }
+
+    .alert-confirm-btn {
+      width: 100%;
+      height: 40px;
+      background: var(--primary);
+      color: #ffffff;
+      border: none;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
     .site-footer {
       background: #ffffff;
       border-top: 1px solid var(--slate-200);
@@ -374,7 +442,7 @@
 
       <div class="nav-btn-row">
         <a href="index.html" class="btn-chip">← হোম পেজ</a>
-        <a href="update-profile.html" class="btn-chip">✏️ তথ্য আপডেট</a>
+        <a href="update-profile.html" class="btn-chip">✏️️ তথ্য আপডেট</a>
         <a href="developer.html" class="btn-chip">👨‍💻 ডেভেলপার</a>
       </div>
 
@@ -389,13 +457,11 @@
 
       <form id="registerForm" onsubmit="handleRegistration(event)" action="javascript:void(0);">
         
-        <!-- পুরো নাম -->
         <div class="input-group">
           <label class="field-label" for="regName">পূর্ণ নাম (Full Name): *</label>
           <input type="text" id="regName" class="text-input" placeholder="আপনার নাম লিখুন" required />
         </div>
 
-        <!-- রক্তের গ্রুপ (কাস্টম মোডাল বাটন) -->
         <div class="input-group">
           <label class="field-label">রক্তের গ্রুপ (Blood Group): *</label>
           <div class="custom-select-trigger" id="bloodTrigger" onclick="openPicker('blood')">
@@ -405,20 +471,17 @@
           <input type="hidden" id="regBlood" value="" required />
         </div>
 
-        <!-- মোবাইল নম্বর -->
         <div class="input-group">
           <label class="field-label" for="regPhone">মোবাইল নম্বর (Phone Number): *</label>
           <input type="tel" id="regPhone" name="username" class="text-input" placeholder="01XXXXXXXXX" autocomplete="username tel" required />
         </div>
 
-        <!-- জন্ম তারিখ -->
         <div class="input-group">
           <label class="field-label" for="regDob">জন্ম তারিখ (Date of Birth): *</label>
           <input type="date" id="regDob" class="text-input" required />
           <p class="field-hint">🔒 পাসকি বা পিন ভুলে গেলে এই জন্ম তারিখ দিয়ে পিন রিসেট করতে পারবেন।</p>
         </div>
 
-        <!-- জেলা / শহর (কাস্টম মোডাল বাটন) -->
         <div class="input-group">
           <label class="field-label">জেলা / শহর (District): *</label>
           <div class="custom-select-trigger" id="districtTrigger" onclick="openPicker('district')">
@@ -428,7 +491,6 @@
           <input type="hidden" id="regDistrict" value="" required />
         </div>
 
-        <!-- উপজেলা / থানা (কাস্টম মোডাল বাটন) -->
         <div class="input-group">
           <label class="field-label">উপজেলা / থানা (Upazila / Thana): *</label>
           <div class="custom-select-trigger" id="upazilaTrigger" onclick="openPicker('upazila')">
@@ -438,19 +500,16 @@
           <input type="hidden" id="regUpazila" value="" required />
         </div>
 
-        <!-- হল / বর্তমান ঠিকানা -->
         <div class="input-group">
           <label class="field-label" for="regHall">হল / বর্তমান ঠিকানা (Hall / Address):</label>
           <input type="text" id="regHall" class="text-input" placeholder="উদাঃ শহীদ সার্জেন্ট জহুরুল হক হল" />
         </div>
 
-        <!-- সর্বশেষ রক্তদানের তারিখ -->
         <div class="input-group">
           <label class="field-label" for="regLastDonation">সর্বশেষ রক্তদানের তারিখ (যদি থাকে):</label>
           <input type="date" id="regLastDonation" class="text-input" />
         </div>
 
-        <!-- ৪ ডিজিট সিক্রেট পিন -->
         <div class="input-group">
           <label class="field-label" for="regPin">৪ ডিজিট সিক্রেট পিন (Secret PIN): *</label>
           <input type="password" id="regPin" name="password" class="text-input" placeholder="****" maxlength="4" autocomplete="new-password" required />
@@ -464,7 +523,7 @@
     </div>
   </main>
 
-  <!-- KEYBOARD-SAFE CUSTOM PICKER MODAL -->
+  <!-- CUSTOM PICKER MODAL -->
   <div id="customPickerModal" class="custom-modal-backdrop" onclick="closePickerOnBackdrop(event)">
     <div class="custom-modal-sheet" id="modalSheetContent">
       <div class="modal-fixed-top">
@@ -477,6 +536,16 @@
         </div>
       </div>
       <div class="modal-sheet-list" id="modalListContainer"></div>
+    </div>
+  </div>
+
+  <!-- JIBONI BRANDED CUSTOM POPUP ALERT (NO SYSTEM ALERT) -->
+  <div id="customAlertModal" class="custom-alert-backdrop">
+    <div class="custom-alert-box">
+      <div class="alert-icon-wrap" id="customAlertIcon">⚠️</div>
+      <h3 class="alert-title-text" id="customAlertTitle">সতর্কতা</h3>
+      <p class="alert-body-text" id="customAlertMsg">বার্তা</p>
+      <button type="button" class="alert-confirm-btn" onclick="closeCustomAlert()">ঠিক আছে</button>
     </div>
   </div>
 
@@ -517,7 +586,7 @@
       { category: "চট্টগ্রাম বিভাগ", name: "Rangamati", label: "রাঙ্গামাটি (Rangamati)" },
 
       { category: "রাজশাহী বিভাগ", name: "Rajshahi", label: "রাজশাহী (Rajshahi)" },
-      { category: "Bogura", name: "Bogura", label: "বগুড়া (Bogura)" },
+      { category: "রাজশাহী বিভাগ", name: "Bogura", label: "বগুড়া (Bogura)" },
       { category: "রাজশাহী বিভাগ", name: "Pabna", label: "পাবনা (Pabna)" },
       { category: "রাজশাহী বিভাগ", name: "Sirajganj", label: "সিরাজগঞ্জ (Sirajganj)" },
       { category: "রাজশাহী বিভাগ", name: "Naogaon", label: "নওগাঁ (Naogaon)" },
@@ -630,6 +699,18 @@
       "Sherpur": ["শেরপুর সদর (Sadar)", "নকলা (Nakla)", "নালিতাবাড়ী (Nalitabari)", "শ্রীবরদী (Sreebardi)", "ঝিনাইগাতী (Jhenaigati)"]
     };
 
+    // Custom Alert Popup Function (Replaces browser alert)
+    function showCustomAlert(title, message, icon) {
+      document.getElementById("customAlertTitle").innerText = title || "সতর্কতা";
+      document.getElementById("customAlertMsg").innerText = message;
+      document.getElementById("customAlertIcon").innerText = icon || "⚠️";
+      document.getElementById("customAlertModal").style.display = "flex";
+    }
+
+    function closeCustomAlert() {
+      document.getElementById("customAlertModal").style.display = "none";
+    }
+
     function openPicker(mode) {
       currentPickerMode = mode;
       var modal = document.getElementById("customPickerModal");
@@ -663,8 +744,8 @@
       } else if (mode === "upazila") {
         var curDist = document.getElementById("regDistrict").value;
         if (!curDist) {
-          alert("অনুগ্রহ করে প্রথমে জেলা নির্বাচন করুন!");
           closePicker();
+          showCustomAlert("জেলা প্রয়োজন", "অনুগ্রহ করে প্রথমে জেলা নির্বাচন করুন!", "📍");
           return;
         }
 
@@ -766,7 +847,6 @@
       display.style.color = "var(--slate-900)";
       display.style.fontWeight = "700";
 
-      // Reset Upazila
       document.getElementById("regUpazila").value = "";
       var upzDisplay = document.getElementById("upazilaDisplay");
       upzDisplay.innerText = "উপজেলা / থানা নির্বাচন করুন";
@@ -801,7 +881,7 @@
       var lastDate = new Date(lastDonationDateStr);
       var today = new Date();
       var diffDays = (today - lastDate) / (1000 * 60 * 60 * 24);
-      return diffDays >= 120; // 4 months
+      return diffDays >= 120;
     }
 
     function handleRegistration(e) {
@@ -819,28 +899,19 @@
       var pin = document.getElementById("regPin").value.trim();
 
       if (!name || !blood || !phone || !dob || !district || !upazila || !pin) {
-        alertBox.style.display = "block";
-        alertBox.style.background = "#fee2e2";
-        alertBox.style.color = "#b91c1c";
-        alertBox.innerText = "অনুগ্রহ করে সকল আবশ্যকীয় তথ্য (*) পূরণ করুন!";
+        showCustomAlert("তথ্য অসম্পূর্ণ", "অনুগ্রহ করে সকল আবশ্যকীয় তথ্য (*) সঠিকভাবে পূরণ করুন!", "✍️");
         return;
       }
 
       if (pin.length !== 4 || isNaN(pin)) {
-        alertBox.style.display = "block";
-        alertBox.style.background = "#fee2e2";
-        alertBox.style.color = "#b91c1c";
-        alertBox.innerText = "সিক্রেট পিন অবশ্যই ৪ সংখ্যার হতে হবে!";
+        showCustomAlert("ভুল পিন", "সিক্রেট পিন অবশ্যই ৪ সংখ্যার হতে হবে!", "🔒");
         return;
       }
 
       var donors = JSON.parse(localStorage.getItem("jiboni_donors_cache") || localStorage.getItem("donors") || "[]");
 
       if (donors.some(function(d) { return d.phone === phone; })) {
-        alertBox.style.display = "block";
-        alertBox.style.background = "#fee2e2";
-        alertBox.style.color = "#b91c1c";
-        alertBox.innerText = "এই মোবাইল নম্বরটি ইতোমধ্যে নিবন্ধিত!";
+        showCustomAlert("নিবন্ধিত নম্বর", "এই মোবাইল নম্বরটি ইতোমধ্যে নিবন্ধিত রয়েছে!", "📱");
         return;
       }
 
@@ -866,7 +937,6 @@
       localStorage.setItem("jiboni_donors_cache", JSON.stringify(donors));
       localStorage.setItem("donors", JSON.stringify(donors));
 
-      // Browser Password Manager Save Prompt
       if (window.PasswordCredential && navigator.credentials) {
         try {
           var cred = new PasswordCredential({
