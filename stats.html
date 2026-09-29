@@ -4,97 +4,435 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>পরিসংখ্যান - JIBONI</title>
-  <link rel="stylesheet" href="style.css" />
   <style>
-    .stats-summary-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-      gap: 10px;
-      margin-top: 14px;
+    @import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Hind Siliguri', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     }
-    .stat-box {
-      background: rgba(255, 255, 255, 0.9);
-      border: 1px solid #cbd5e1;
-      border-radius: 8px;
-      padding: 14px 10px;
+
+    body {
+      background-color: #f8fafc;
+      color: #1e293b;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background-image: none !important;
+    }
+
+    /* Top Header */
+    .site-header {
+      background: #ffffff;
+      padding: 14px 16px 12px;
+      border-bottom: 1px solid #e2e8f0;
       text-align: center;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+      width: 100%;
     }
-    .stat-number {
+
+    .header-inner {
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    .brand-row {
+      margin-bottom: 10px;
+    }
+
+    .brand-logo {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      text-decoration: none;
+    }
+
+    .blood-drop {
       font-size: 1.5rem;
+      line-height: 1;
+    }
+
+    .brand-name {
+      font-size: 1.6rem;
       font-weight: 800;
       color: #dc2626;
-      margin-bottom: 2px;
+      letter-spacing: 0.5px;
+      line-height: 1;
     }
-    .stat-label {
+
+    .nav-btn-row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+    }
+
+    .btn-chip {
+      padding: 5px 12px;
+      border-radius: 20px;
       font-size: 0.8rem;
       font-weight: 700;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      border: 1px solid transparent;
+    }
+
+    .btn-chip-red {
+      background: #dc2626;
+      color: #ffffff !important;
+    }
+
+    .btn-chip-gray {
+      background: #f1f5f9;
+      color: #475569 !important;
+      border-color: #cbd5e1;
+    }
+
+    .brand-slogan {
+      font-size: 0.74rem;
       color: #475569;
+      margin-top: 4px;
+      font-style: italic;
+    }
+
+    /* Main Container */
+    .main-wrapper {
+      flex: 1;
+      max-width: 520px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 16px 14px 40px;
+    }
+
+    .page-title {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: #0f172a;
+      margin-bottom: 4px;
+    }
+
+    .page-subtitle {
+      font-size: 0.85rem;
+      color: #64748b;
+      margin-bottom: 16px;
+    }
+
+    /* Top Stats Grid */
+    .top-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+
+    .stat-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 16px 8px;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+    }
+
+    .stat-number {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: #dc2626;
+      line-height: 1.2;
+      margin-bottom: 4px;
+    }
+
+    .stat-label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #475569;
+    }
+
+    /* Section Subhead */
+    .section-head {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: #0f172a;
+      margin-bottom: 12px;
+    }
+
+    /* Group Stats Grid */
+    .groups-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .group-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 12px 6px;
+      text-align: center;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+    }
+
+    .group-badge {
+      display: inline-block;
+      background: #fee2e2;
+      color: #b91c1c;
+      font-weight: 800;
+      font-size: 0.88rem;
+      padding: 2px 8px;
+      border-radius: 6px;
+      margin-bottom: 6px;
+    }
+
+    .group-count {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: #0f172a;
+    }
+
+    .group-text {
+      font-size: 0.7rem;
+      color: #64748b;
+      font-weight: 600;
+    }
+
+    /* Loading / Status */
+    .loading-status {
+      text-align: center;
+      padding: 10px;
+      font-size: 0.85rem;
+      color: #64748b;
+    }
+
+    /* Footer */
+    .site-footer {
+      background: #ffffff;
+      border-top: 1px solid #e2e8f0;
+      padding: 14px 16px;
+      text-align: center;
+      margin-top: auto;
+      width: 100%;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 6px;
+    }
+
+    .footer-link {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #b91c1c;
+      text-decoration: none;
+    }
+
+    .link-divider {
+      color: #cbd5e1;
+      font-size: 0.75rem;
+    }
+
+    .footer-copy {
+      font-size: 0.75rem;
+      color: #334155;
+      margin-top: 4px;
+    }
+
+    .footer-copy a {
+      color: #dc2626;
+      font-weight: 700;
+      text-decoration: none;
     }
   </style>
 </head>
 <body>
 
-  <!-- Header -->
-  <header class="header">
-    <div class="header-container">
-      <div class="header-main-row">
-        <a href="index.html" class="logo">
-          <span class="logo-drop">🩸</span>
-          <span class="logo-text">JIBONI</span>
+  <!-- Top Header -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="brand-row">
+        <a href="index.html" class="brand-logo">
+          <span class="blood-drop">🩸</span>
+          <span class="brand-name">JIBONI</span>
         </a>
       </div>
 
-      <div class="header-nav-row">
-        <a href="index.html" class="nav-chip">← হোম পেজ</a>
-        <a href="register.html" class="nav-chip">➕ ডোনার নিবন্ধন</a>
-        <a href="developer.html" class="nav-chip">👨‍💻 ডেভেলপার</a>
+      <div class="nav-btn-row">
+        <a href="index.html" class="btn-chip btn-chip-gray">← হোম পেজ</a>
+        <a href="register.html" class="btn-chip btn-chip-red">+ ডোনার নিবন্ধন</a>
+        <a href="developer.html" class="btn-chip btn-chip-gray">👨‍💻 ডেভেলপার</a>
       </div>
 
-      <div class="header-slogan-wrap">
-        <p class="header-slogan">"অচেনা কাউকে বাঁচার আশা দিয়ে, লিখে যাও এক নিঃস্বার্থ জীবনী।"</p>
-      </div>
+      <p class="brand-slogan">"অচেনা কাউকে বাঁচার আশা দিয়ে, লিখে যাও এক নিঃস্বার্থ জীবনী।"</p>
     </div>
   </header>
 
-  <!-- Stats Container -->
-  <main class="container">
-    <div class="card">
-      <h1 class="card-title">প্ল্যাটফর্ম পরিসংখ্যান</h1>
-      <p class="card-subtitle">JIBONI নেটওয়ার্কে নিবন্ধিত রক্তদাতাদের রিয়েল-টাইম তথ্য</p>
+  <!-- Main Content -->
+  <main class="main-wrapper">
+    <h1 class="page-title">প্ল্যাটফর্ম পরিসংখ্যান</h1>
+    <p class="page-subtitle">JIBONI নেটওয়ার্কে নিবন্ধিত রক্তদাতাদের রিয়েল-টাইম তথ্য</p>
 
-      <div class="stats-summary-grid" id="statsGrid">
-        <div class="stat-box">
-          <div class="stat-number" id="totalDonors">--</div>
-          <div class="stat-label">মোট রক্তদাতা</div>
-        </div>
-        <div class="stat-box">
-          <div class="stat-number" id="availableDonors">--</div>
-          <div class="stat-label">প্রস্তুত (Available)</div>
-        </div>
-        <div class="stat-box">
-          <div class="stat-number" id="totalDistricts">৬৪</div>
-          <div class="stat-label">জেলাভিত্তিক নেটওয়ার্ক</div>
-        </div>
+    <!-- Top 3 Primary Cards -->
+    <div class="top-stats-grid">
+      <div class="stat-card">
+        <div class="stat-number" id="totalDonors">--</div>
+        <div class="stat-label">মোট রক্তদাতা</div>
       </div>
 
-      <div id="groupStatsWrapper" style="margin-top: 20px;">
-        <h3 style="font-size: 1rem; color: #0f172a; margin-bottom: 10px;">গ্রুপভিত্তিক রক্তদাতার সংখ্যা</h3>
-        <div id="bloodGroupStats" class="results-grid"></div>
+      <div class="stat-card">
+        <div class="stat-number" id="availableDonors">--</div>
+        <div class="stat-label">প্রস্তুত (Available)</div>
       </div>
 
-      <div id="statsLoading" class="status-msg" style="display:none;">পরিসংখ্যান লোড হচ্ছে...</div>
+      <div class="stat-card">
+        <div class="stat-number" id="districtCount">৬৪</div>
+        <div class="stat-label">জেলাভিত্তিক নেটওয়ার্ক</div>
+      </div>
     </div>
+
+    <!-- Blood Group Wise Distribution -->
+    <h2 class="section-head">গ্রুপভিত্তিক রক্তদাতার সংখ্যা</h2>
+    <div class="groups-grid" id="groupsGrid">
+      <div class="group-card">
+        <div class="group-badge">A+</div>
+        <div class="group-count" id="count-A-pos">0</div>
+        <div class="group-text">জন ডোনার</div>
+      </div>
+      <div class="group-card">
+        <div class="group-badge">A-</div>
+        <div class="group-count" id="count-A-neg">0</div>
+        <div class="group-text">জন ডোনার</div>
+      </div>
+      <div class="group-card">
+        <div class="group-badge">B+</div>
+        <div class="group-count" id="count-B-pos">0</div>
+        <div class="group-text">জন ডোনার</div>
+      </div>
+      <div class="group-card">
+        <div class="group-badge">B-</div>
+        <div class="group-count" id="count-B-neg">0</div>
+        <div class="group-text">জন ডোনার</div>
+      </div>
+      <div class="group-card">
+        <div class="group-badge">AB+</div>
+        <div class="group-count" id="count-AB-pos">0</div>
+        <div class="group-text">জন ডোনার</div>
+      </div>
+      <div class="group-card">
+        <div class="group-badge">AB-</div>
+        <div class="group-count" id="count-AB-neg">0</div>
+        <div class="group-text">জন ডোনার</div>
+      </div>
+      <div class="group-card">
+        <div class="group-badge">O+</div>
+        <div class="group-count" id="count-O-pos">0</div>
+        <div class="group-text">জন ডোনার</div>
+      </div>
+      <div class="group-card">
+        <div class="group-badge">O-</div>
+        <div class="group-count" id="count-O-neg">0</div>
+        <div class="group-text">জন ডোনার</div>
+      </div>
+    </div>
+
+    <div id="statusLoader" class="loading-status">ডেটাবেজ থেকে লাইভ তথ্য লোড হচ্ছে...</div>
   </main>
 
   <!-- Footer -->
-  <footer class="footer">
-    <div class="footer-container">
-      <p class="footer-notice">JIBONI — মানবতার সেবায় উৎসর্গীকৃত</p>
-      <p class="footer-credit">Designed & Developed by <a href="developer.html">Amanulla Emon</a></p>
+  <footer class="site-footer">
+    <div class="footer-links">
+      <a href="index.html" class="footer-link">🔍 রক্ত খুঁজুন</a>
+      <span class="link-divider">•</span>
+      <a href="feedback.html" class="footer-link">💬 মতামত দিন</a>
+      <span class="link-divider">•</span>
+      <a href="guidelines.html" class="footer-link">📖 নির্দেশিকা</a>
     </div>
+    <p class="footer-copy">JIBONI — মানবতার সেবায় উৎসর্গীকৃত</p>
+    <p class="footer-copy">Designed & Developed by <a href="developer.html">Amanulla Emon</a></p>
   </footer>
 
+  <!-- Live Stats Logic connecting to Supabase / App Script -->
+  <script src="script.js"></script>
   <script src="app.js"></script>
+  <script>
+    async function updateRealtimeStats() {
+      try {
+        let donors = [];
+
+        // App script ba Supabase window object theke data ana
+        if (window.fetchDonorsFromDB && typeof window.fetchDonorsFromDB === 'function') {
+          donors = await window.fetchDonorsFromDB();
+        } else if (window.supabase) {
+          const { data, error } = await window.supabase.from('donors').select('blood_group, is_available');
+          if (!error && data) donors = data;
+        } else {
+          // Jodi app.js cache kora data thake
+          const localData = localStorage.getItem('jiboni_donors_cache') || localStorage.getItem('donors');
+          if (localData) {
+            donors = JSON.parse(localData);
+          }
+        }
+
+        if (!donors || donors.length === 0) {
+          document.getElementById('statusLoader').innerText = "কোনো নিবন্ধিত রক্তদাতার তথ্য পাওয়া যায়নি।";
+          document.getElementById('totalDonors').innerText = "০";
+          document.getElementById('availableDonors').innerText = "০";
+          return;
+        }
+
+        // Calculation
+        const total = donors.length;
+        const available = donors.filter(d => d.is_available === true || d.status === 'available' || d.availability === true).length;
+
+        // Group counts mapping
+        const groupMap = {
+          'A+': 0, 'A-': 0,
+          'B+': 0, 'B-': 0,
+          'AB+': 0, 'AB-': 0,
+          'O+': 0, 'O-': 0
+        };
+
+        donors.forEach(d => {
+          const grp = (d.blood_group || d.bloodGroup || '').trim().toUpperCase();
+          if (groupMap[grp] !== undefined) {
+            groupMap[grp]++;
+          }
+        });
+
+        // Set Top Stats
+        document.getElementById('totalDonors').innerText = total;
+        document.getElementById('availableDonors').innerText = available;
+
+        // Set Individual Group Stats
+        document.getElementById('count-A-pos').innerText = groupMap['A+'];
+        document.getElementById('count-A-neg').innerText = groupMap['A-'];
+        document.getElementById('count-B-pos').innerText = groupMap['B+'];
+        document.getElementById('count-B-neg').innerText = groupMap['B-'];
+        document.getElementById('count-AB-pos').innerText = groupMap['AB+'];
+        document.getElementById('count-AB-neg').innerText = groupMap['AB-'];
+        document.getElementById('count-O-pos').innerText = groupMap['O+'];
+        document.getElementById('count-O-neg').innerText = groupMap['O-'];
+
+        document.getElementById('statusLoader').style.display = 'none';
+
+      } catch (err) {
+        console.error("Realtime stats loading error:", err);
+        document.getElementById('statusLoader').innerText = "তথ্য লোড হতে সমস্যা হয়েছে। পেজ রিফ্রেশ করুন।";
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      updateRealtimeStats();
+    });
+  </script>
 </body>
 </html>
