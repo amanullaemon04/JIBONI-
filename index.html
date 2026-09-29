@@ -490,10 +490,10 @@
       <!-- নির্দিষ্ট এলাকা / হল -->
       <div class="input-group">
         <label class="field-label" for="filterLocation">নির্দিষ্ট এলাকা / হল (Specific Location / DU Hall)</label>
-        <input type="text" id="filterLocation" class="text-input" placeholder="e.g. Zahurul Huq Hall, Salimullah, AF Rahman" onkeyup="runFilter()" />
+        <input type="text" id="filterLocation" class="text-input" placeholder="e.g. Zahurul Huq Hall, Salimullah, AF Rahman" onkeyup="handleLocationInput()" />
       </div>
 
-      <!-- প্রাপ্যতা স্ট্যাটাস (FIXED NORMAL FONT COLOR) -->
+      <!-- প্রাপ্যতা স্ট্যাটাস -->
       <div class="input-group">
         <label class="field-label">স্ট্যাটাস (Availability)</label>
         <div class="custom-select-trigger" id="availTrigger" onclick="openPicker('avail')">
@@ -683,6 +683,79 @@
       "Sherpur": ["শেরপুর সদর (Sadar)", "নকলা (Nakla)", "নালিতাবাড়ী (Nalitabari)", "শ্রীবরদী (Sreebardi)", "ঝিনাইগাতী (Jhenaigati)"]
     };
 
+    // URL QUERY PARAMETER SYNC FUNCTION
+    function updateURLQuery() {
+      var blood = document.getElementById("filterBlood").value || "";
+      var district = document.getElementById("filterDistrict").value || "";
+      var upazila = document.getElementById("filterUpazila").value || "";
+      var loc = document.getElementById("filterLocation").value.trim() || "";
+      var avail = document.getElementById("filterAvail").value || "All";
+
+      var params = new URLSearchParams();
+      if (blood) params.set("blood", blood);
+      if (district) params.set("district", district);
+      if (upazila) params.set("upazila", upazila);
+      if (loc) params.set("location", loc);
+      if (avail && avail !== "All") params.set("avail", avail);
+
+      var newUrl = window.location.pathname + (params.toString() ? "?" + params.toString() : "");
+      window.history.replaceState({}, "", newUrl);
+    }
+
+    // RESTORE STATE FROM URL QUERY PARAMS ON PAGE LOAD
+    function restoreFromURLQuery() {
+      var params = new URLSearchParams(window.location.search);
+
+      var bloodParam = params.get("blood");
+      if (bloodParam) {
+        bloodParam = bloodParam.trim().toUpperCase();
+        if (bloodGroupsList.includes(bloodParam)) {
+          document.getElementById("filterBlood").value = bloodParam;
+          var bDisp = document.getElementById("bloodDisplay");
+          bDisp.innerText = bloodParam;
+          bDisp.style.color = "var(--slate-900)";
+          bDisp.style.fontWeight = "700";
+        }
+      }
+
+      var distParam = params.get("district");
+      if (distParam) {
+        var matchDist = districtsList.find(function(d) {
+          return d.name.toLowerCase() === distParam.trim().toLowerCase() || d.label.toLowerCase().includes(distParam.trim().toLowerCase());
+        });
+        if (matchDist) {
+          document.getElementById("filterDistrict").value = matchDist.name;
+          var dDisp = document.getElementById("districtDisplay");
+          dDisp.innerText = matchDist.label;
+          dDisp.style.color = "var(--slate-900)";
+          dDisp.style.fontWeight = "700";
+
+          var upzParam = params.get("upazila");
+          if (upzParam) {
+            document.getElementById("filterUpazila").value = upzParam;
+            var uDisp = document.getElementById("upazilaDisplay");
+            uDisp.innerText = upzParam;
+            uDisp.style.color = "var(--slate-900)";
+            uDisp.style.fontWeight = "700";
+          }
+        }
+      }
+
+      var locParam = params.get("location");
+      if (locParam) {
+        document.getElementById("filterLocation").value = locParam;
+      }
+
+      var availParam = params.get("avail");
+      if (availParam) {
+        if (availParam === "Available") {
+          selectAvail("Available", "⚡ রক্তদানে প্রস্তুত (Available)");
+        } else if (availParam === "Unavailable") {
+          selectAvail("Unavailable", "⏳ অনুপলব্ধ (Resting)");
+        }
+      }
+    }
+
     function openPicker(mode) {
       currentPickerMode = mode;
       var modal = document.getElementById("customPickerModal");
@@ -842,6 +915,7 @@
       display.style.color = "var(--slate-900)";
       display.style.fontWeight = "700";
       closePicker();
+      updateURLQuery();
       runFilter();
     }
 
@@ -859,6 +933,7 @@
       upzDisplay.style.fontWeight = "normal";
 
       closePicker();
+      updateURLQuery();
       runFilter();
     }
 
@@ -869,6 +944,7 @@
       display.style.color = val ? "var(--slate-900)" : "var(--slate-400)";
       display.style.fontWeight = val ? "700" : "normal";
       closePicker();
+      updateURLQuery();
       runFilter();
     }
 
@@ -879,6 +955,12 @@
       display.style.color = "var(--slate-900)";
       display.style.fontWeight = "700";
       closePicker();
+      updateURLQuery();
+      runFilter();
+    }
+
+    function handleLocationInput() {
+      updateURLQuery();
       runFilter();
     }
 
@@ -1014,6 +1096,7 @@
     }
 
     window.onload = function() {
+      restoreFromURLQuery();
       runFilter();
     };
   </script>
