@@ -35,10 +35,8 @@
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      background-image: none !important;
     }
 
-    /* Top Header */
     .site-header {
       background: #ffffff;
       padding: 14px 16px 12px;
@@ -114,7 +112,6 @@
       font-style: italic;
     }
 
-    /* Main Container */
     .main-wrapper {
       flex: 1;
       max-width: 480px;
@@ -223,7 +220,6 @@
       display: none;
     }
 
-    /* Modal for PIN Reset */
     .modal-backdrop {
       position: fixed;
       inset: 0;
@@ -269,7 +265,6 @@
 </head>
 <body>
 
-  <!-- Top Header -->
   <header class="site-header">
     <div class="header-inner">
       <div class="brand-row">
@@ -289,13 +284,11 @@
     </div>
   </header>
 
-  <!-- Main Container -->
   <main class="main-wrapper">
     <div class="profile-card">
       <h1 class="page-title">রক্তদাতার তথ্য আপডেট</h1>
       <p class="page-subtitle">আপনার নিবন্ধিত মোবাইল নম্বর ও পিন দিয়ে প্রোফাইল হালনাগাদ করুন</p>
 
-      <!-- Step 1: Verification Form -->
       <form id="verifyDonorForm">
         <div class="input-group">
           <label class="field-label" for="authPhone">নিবন্ধিত মোবাইল নম্বর: *</label>
@@ -314,7 +307,6 @@
         <button type="submit" class="btn-submit" id="verifyBtn">প্রোফাইল লোড করুন</button>
       </form>
 
-      <!-- Step 2: Full Edit Form (Shown after verification) -->
       <form id="editProfileForm" style="display: none; margin-top: 10px;">
         <hr style="border: 0; border-top: 1px dashed var(--slate-200); margin: 16px 0;" />
 
@@ -358,7 +350,6 @@
     </div>
   </main>
 
-  <!-- PIN RESET MODAL -->
   <div id="resetPinModal" class="modal-backdrop">
     <div class="modal-box">
       <h3 style="font-size: 1.15rem; font-weight: 800; color: var(--slate-900); margin-bottom: 4px;">পিন রিসেট করুন</h3>
@@ -387,7 +378,6 @@
     </div>
   </div>
 
-  <!-- Footer -->
   <footer class="site-footer">
     <p class="footer-copy">JIBONI — প্রতিটি ফোঁটা রক্তে বাঁচে একটি প্রাণ</p>
     <p class="footer-copy">Designed & Developed by <a href="developer.html">Amanulla Emon</a></p>
@@ -398,22 +388,32 @@
     let donorsList = [];
 
     function getDonors() {
-      const stored = localStorage.getItem("jiboni_donors_cache") || localStorage.getItem("donors");
+      var stored = localStorage.getItem("jiboni_donors_cache") || localStorage.getItem("donors");
       return stored ? JSON.parse(stored) : [];
     }
 
-    // Step 1: Verify donor phone & PIN
+    // 🩸 4 MONTHS (120 DAYS) REST PERIOD CALCULATION
+    function checkEligibility(lastDonationDateStr) {
+      if (!lastDonationDateStr || lastDonationDateStr === "তথ্য নেই") return true;
+      var lastDate = new Date(lastDonationDateStr);
+      var today = new Date();
+      var diffDays = (today - lastDate) / (1000 * 60 * 60 * 24);
+      return diffDays >= 120;
+    }
+
     document.getElementById("verifyDonorForm").addEventListener("submit", function(e) {
       e.preventDefault();
-      const phone = document.getElementById("authPhone").value.trim();
-      const pin = document.getElementById("authPin").value.trim();
-      const alertBox = document.getElementById("updateAlert");
+      var phone = document.getElementById("authPhone").value.trim();
+      var pin = document.getElementById("authPin").value.trim();
+      var alertBox = document.getElementById("updateAlert");
 
       donorsList = getDonors();
-      activeDonorIndex = donorsList.findIndex(d => (d.phone === phone) && (String(d.pin) === String(pin)));
+      activeDonorIndex = donorsList.findIndex(function(d) {
+        return (d.phone === phone) && (String(d.pin) === String(pin));
+      });
 
       if (activeDonorIndex !== -1) {
-        const donor = donorsList[activeDonorIndex];
+        var donor = donorsList[activeDonorIndex];
         alertBox.style.display = "none";
         document.getElementById("verifyDonorForm").style.display = "none";
         document.getElementById("editProfileForm").style.display = "block";
@@ -428,23 +428,36 @@
         alertBox.style.display = "block";
         alertBox.style.background = "#fee2e2";
         alertBox.style.color = "#b91c1c";
-        alertBox.innerText = "মোবাইল নম্বর বা পিন সঠিক নয়! পুনরায় চেষ্টা করুন।";
+        alertBox.innerText = "মোবাইল নম্বর বা পিন সঠিক নয়!";
       }
     });
 
-    // Step 2: Save Profile Changes
     document.getElementById("editProfileForm").addEventListener("submit", function(e) {
       e.preventDefault();
-      const alertBox = document.getElementById("updateAlert");
+      var alertBox = document.getElementById("updateAlert");
 
       if (activeDonorIndex !== -1 && donorsList[activeDonorIndex]) {
+        var newLastDonation = document.getElementById("editLastDonation").value;
+        var selectedAvail = document.getElementById("editAvailability").value === "true";
+        var isEligible = checkEligibility(newLastDonation);
+
+        if (selectedAvail && !isEligible) {
+          var allow = confirm("সতর্কতা: শেষ রক্তদান থেকে এখনো ৪ মাস (১২০ দিন) পূর্ণ হয়নি। তবুও কি আপনি প্রস্তুত (Available) রাখতে চান?");
+          if (!allow) return;
+          donorsList[activeDonorIndex].manual_override = true;
+        } else {
+          donorsList[activeDonorIndex].manual_override = false;
+        }
+
         donorsList[activeDonorIndex].name = document.getElementById("editName").value.trim();
         donorsList[activeDonorIndex].district = document.getElementById("editDistrict").value.trim();
         donorsList[activeDonorIndex].hall = document.getElementById("editHall").value.trim();
-        donorsList[activeDonorIndex].last_donation = document.getElementById("editLastDonation").value;
-        donorsList[activeDonorIndex].is_available = (document.getElementById("editAvailability").value === "true");
+        donorsList[activeDonorIndex].last_donation = newLastDonation;
+        donorsList[activeDonorIndex].is_available = selectedAvail;
 
+        // Synchronize both cache storage keys
         localStorage.setItem("jiboni_donors_cache", JSON.stringify(donorsList));
+        localStorage.setItem("donors", JSON.stringify(donorsList));
 
         alertBox.style.display = "block";
         alertBox.style.background = "#dcfce7";
@@ -453,7 +466,6 @@
       }
     });
 
-    // Reset PIN Modal Handlers
     function openResetPinModal() {
       document.getElementById("resetPinModal").style.display = "flex";
       document.getElementById("resetAlert").style.display = "none";
@@ -464,26 +476,24 @@
       document.getElementById("resetPinModal").style.display = "none";
     }
 
-    // Reset PIN Verification Logic (Mobile + Date of Birth Verification)
     document.getElementById("resetPinForm").addEventListener("submit", function(e) {
       e.preventDefault();
-      const phone = document.getElementById("resetPhone").value.trim();
-      const dob = document.getElementById("resetDob").value;
-      const newPin = document.getElementById("resetNewPin").value.trim();
-      const alertMsg = document.getElementById("resetAlert");
+      var phone = document.getElementById("resetPhone").value.trim();
+      var dob = document.getElementById("resetDob").value;
+      var newPin = document.getElementById("resetNewPin").value.trim();
+      var alertMsg = document.getElementById("resetAlert");
 
       alertMsg.style.display = "block";
-      const donors = getDonors();
-
-      // STRICT VERIFICATION: Both Phone and Date of Birth must match
-      const targetDonor = donors.find(d => d.phone === phone && d.dob === dob);
+      var donors = getDonors();
+      var targetDonor = donors.find(function(d) { return d.phone === phone && d.dob === dob; });
 
       if (targetDonor) {
         targetDonor.pin = newPin;
         localStorage.setItem("jiboni_donors_cache", JSON.stringify(donors));
+        localStorage.setItem("donors", JSON.stringify(donors));
         alertMsg.style.color = "var(--success)";
         alertMsg.innerText = "পিন সফলভাবে রিসেট হয়েছে! এখন নতুন পিন দিয়ে লগইন করুন।";
-        setTimeout(() => { closeResetPinModal(); }, 1400);
+        setTimeout(function() { closeResetPinModal(); }, 1400);
       } else {
         alertMsg.style.color = "var(--primary)";
         alertMsg.innerText = "ভুল তথ্য! মোবাইল নম্বর ও জন্ম তারিখ মেলেনি।";
