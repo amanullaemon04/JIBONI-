@@ -2,254 +2,418 @@
 <html lang="bn">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Amanulla Emon - Biography & Portfolio</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>সংক্ষিপ্ত পরিচিতি ও বায়ো - JIBONI</title>
   <style>
-    .bio-container {
-      max-width: 600px;
-      margin: 0 auto;
-      padding: 12px 14px 40px;
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Hind+Siliguri:wght@500;600;700&display=swap');
+
+    :root {
+      --primary: #dc2626;
+      --primary-hover: #b91c1c;
+      --primary-light: #fee2e2;
+      --slate-50: #f8fafc;
+      --slate-100: #f1f5f9;
+      --slate-200: #e2e8f0;
+      --slate-400: #94a3b8;
+      --slate-600: #475569;
+      --slate-800: #1e293b;
+      --slate-900: #0f172a;
     }
 
-    .bio-card {
-      background: rgba(255, 255, 255, 0.8);
-      backdrop-filter: blur(4px);
-      border: 1.5px solid rgba(255, 255, 255, 0.9);
-      border-radius: var(--radius, 12px);
-      padding: 24px 20px;
-      margin-top: 10px;
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
-      position: relative;
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Hind Siliguri', 'Plus Jakarta Sans', sans-serif;
+      -webkit-tap-highlight-color: transparent;
     }
 
-    .bio-header {
-      text-align: center;
-      margin-bottom: 20px;
+    body {
+      background-color: var(--slate-50);
+      color: var(--slate-800);
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
+    }
+
+    /* Standard Site Header */
+    .site-header {
+      background: #ffffff;
+      padding: 14px 16px 12px;
+      border-bottom: 1px solid var(--slate-200);
+      text-align: center;
+      width: 100%;
+    }
+
+    .header-inner {
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    .brand-row {
+      margin-bottom: 8px;
+    }
+
+    .brand-logo {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      text-decoration: none;
+    }
+
+    .blood-drop {
+      font-size: 1.5rem;
+      line-height: 1;
+    }
+
+    .brand-name {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: var(--primary);
+      letter-spacing: 0.5px;
+      line-height: 1;
+    }
+
+    .nav-btn-row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
+      flex-wrap: wrap;
+    }
+
+    .btn-chip {
+      padding: 5px 14px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      border: 1px solid var(--slate-200);
+      background: var(--slate-100);
+      color: var(--slate-600);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-chip:hover {
+      background: var(--slate-200);
+      color: var(--slate-900);
+    }
+
+    .brand-slogan {
+      font-size: 0.74rem;
+      color: var(--slate-600);
+      font-style: italic;
+    }
+
+    /* Main Container */
+    .main-wrapper {
+      flex: 1;
+      max-width: 480px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 16px 14px 40px;
+    }
+
+    /* Immersive Bio Card */
+    .bio-card {
+      background: #ffffff;
+      border: 1px solid var(--slate-200);
+      border-radius: 20px;
+      padding: 24px 20px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .bio-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #dc2626, #ef4444, #f87171);
+    }
+
+    /* Avatar */
+    .avatar-wrap {
+      width: 90px;
+      height: 90px;
+      margin: 0 auto 10px;
+      border-radius: 50%;
+      padding: 3px;
+      background: linear-gradient(135deg, #dc2626, #fca5a5);
+      box-shadow: 0 6px 16px rgba(220, 38, 38, 0.22);
+      display: flex;
       align-items: center;
       justify-content: center;
     }
 
-    /* Perfect Circle Avatar */
-    .bio-avatar {
-      width: 108px;
-      height: 108px;
-      min-width: 108px;
-      min-height: 108px;
-      aspect-ratio: 1 / 1;
+    .avatar-img {
+      width: 100%;
+      height: 100%;
       border-radius: 50%;
-      border: 3.5px solid #dc2626;
       object-fit: cover;
-      object-position: center;
-      background: #f8fafc;
-      box-shadow: 0 4px 12px rgba(220, 38, 38, 0.25);
+      background: #ffffff;
       display: block;
     }
 
     .bio-name {
       font-size: 1.35rem;
       font-weight: 800;
-      color: #0f172a;
-      margin: 12px 0 2px 0;
+      color: var(--slate-900);
+      margin-bottom: 2px;
+      text-align: center;
     }
 
-    .bio-tagline {
-      font-size: 0.86rem;
-      color: #dc2626;
+    .bio-role {
+      font-size: 0.85rem;
       font-weight: 700;
-      margin: 0;
+      color: var(--primary);
+      margin-bottom: 14px;
+      text-align: center;
     }
 
-    .bio-section {
-      margin-top: 20px;
-      border-top: 1px solid rgba(203, 213, 225, 0.6);
-      padding-top: 16px;
+    /* Quote Box */
+    .quote-box {
+      background: #fff5f5;
+      border: 1px solid #fee2e2;
+      border-left: 4px solid var(--primary);
+      border-radius: 12px;
+      padding: 12px 14px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--slate-800);
+      font-style: italic;
+      margin-bottom: 20px;
+      line-height: 1.5;
     }
 
+    /* Section Headings */
     .section-title {
-      font-size: 0.95rem;
+      font-size: 0.98rem;
       font-weight: 800;
-      color: #0f172a;
+      color: var(--slate-900);
+      margin-bottom: 8px;
       display: flex;
       align-items: center;
       gap: 6px;
-      margin-bottom: 8px;
     }
 
-    .bio-text {
-      font-size: 0.88rem;
-      color: #334155;
+    .section-desc {
+      font-size: 0.84rem;
+      color: var(--slate-600);
       line-height: 1.6;
-      margin: 0;
+      margin-bottom: 18px;
+      text-align: justify;
     }
 
-    /* Skills Pill Grid */
-    .skills-grid {
+    .section-divider {
+      border: 0;
+      border-top: 1px solid var(--slate-100);
+      margin: 18px 0;
+    }
+
+    /* Information List with Aligned Colons */
+    .details-list {
       display: flex;
-      flex-wrap: wrap;
+      flex-direction: column;
+      gap: 9px;
+      font-size: 0.84rem;
+      margin-bottom: 18px;
+    }
+
+    .detail-row {
+      display: flex;
+      align-items: flex-start;
+      line-height: 1.45;
+    }
+
+    .detail-label-wrap {
+      width: 110px;
+      min-width: 110px;
+      max-width: 110px;
+      font-weight: 700;
+      color: var(--slate-800);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-right: 8px;
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+
+    .detail-value {
+      flex: 1;
+      color: var(--slate-800);
+      word-break: break-word;
+    }
+
+    /* Back Button */
+    .btn-back-dev {
+      width: 100%;
+      height: 42px;
+      background: var(--slate-100);
+      border: 1px solid var(--slate-200);
+      border-radius: 10px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--slate-700);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       gap: 6px;
+      transition: all 0.2s ease;
       margin-top: 8px;
     }
 
-    .skill-chip {
-      background: rgba(255, 255, 255, 0.9);
-      border: 1px solid #cbd5e1;
-      padding: 5px 10px;
-      border-radius: 6px;
-      font-size: 0.78rem;
-      font-weight: 700;
-      color: #334155;
+    .btn-back-dev:hover {
+      background: var(--slate-200);
+      color: var(--slate-900);
     }
 
-    /* Details List */
-    .info-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      font-size: 0.86rem;
-      color: #334155;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .info-list li {
-      display: flex;
-      align-items: baseline;
-      gap: 6px;
-    }
-
-    .info-list strong {
-      color: #0f172a;
-      min-width: 85px;
-    }
-
-    .quote-box {
-      background: rgba(220, 38, 38, 0.05);
-      border-left: 3px solid #dc2626;
-      padding: 10px 14px;
-      border-radius: 0 8px 8px 0;
-      font-style: italic;
-      color: #475569;
-      font-size: 0.84rem;
-      margin: 16px 0 6px;
-      line-height: 1.5;
-      text-align: left;
+    .site-footer {
+      background: #ffffff;
+      border-top: 1px solid var(--slate-200);
+      padding: 12px 16px 16px;
+      text-align: center;
+      margin-top: auto;
       width: 100%;
-      box-sizing: border-box;
+    }
+
+    .footer-disclaimer {
+      font-size: 0.72rem;
+      color: var(--slate-600);
+      margin-bottom: 3px;
+    }
+
+    .footer-credit {
+      font-size: 0.75rem;
+      color: var(--slate-800);
+    }
+
+    .footer-credit a {
+      color: var(--primary);
+      font-weight: 700;
+      text-decoration: none;
     }
   </style>
 </head>
 <body>
 
-  <!-- Header -->
-  <header class="header">
-    <div class="header-container">
-      <div class="header-main-row">
-        <a href="index.html" class="logo">
-          <span class="logo-drop">🩸</span>
-          <span class="logo-text">JIBONI</span>
+  <!-- Standard Header Matching All Modules -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="brand-row">
+        <a href="index.html" class="brand-logo">
+          <span class="blood-drop">🩸</span>
+          <span class="brand-name">JIBONI</span>
         </a>
       </div>
 
-      <div class="header-nav-row">
-        <a href="index.html" class="nav-chip">← হোম পেজ</a>
-        <a href="developer.html" class="nav-chip">👨‍💻 ডেভেলপার পেজ</a>
+      <div class="nav-btn-row">
+        <a href="index.html" class="btn-chip">← হোম পেজ</a>
+        <a href="developer.html" class="btn-chip">👨‍💻 ডেভেলপার পেজ</a>
       </div>
 
-      <div class="header-slogan-wrap">
-        <p class="header-slogan">"অচেনা কাউকে বাঁচার আশা দিয়ে, লিখে যাও এক নিঃস্বার্থ জীবনী।"</p>
-      </div>
+      <p class="brand-slogan">"অচেনা কাউকে বাঁচার আশা দিয়ে, লিখে যাও এক নিঃস্বার্থ জীবনী।"</p>
     </div>
   </header>
 
-  <main class="bio-container">
+  <main class="main-wrapper">
     <div class="bio-card">
-      
-      <!-- Top Profile Overview -->
-      <div class="bio-header">
+      <!-- Profile Picture -->
+      <div class="avatar-wrap">
         <img 
           src="profile.jpg" 
           alt="Amanulla Emon" 
-          class="bio-avatar" 
+          class="avatar-img" 
+          onerror="if(this.src.indexOf('profile.jpg')!==-1){this.src='emon.jpg';}else{this.src='https://avatars.githubusercontent.com/u/10000000?v=4';}"
         />
-        <h1 class="bio-name">Amanulla Emon</h1>
-        <p class="bio-tagline">Web Developer & Tech Enthusiast</p>
       </div>
 
+      <h1 class="bio-name">Amanulla Emon</h1>
+      <p class="bio-role">Web Developer & Tech Enthusiast</p>
+
+      <!-- Motto / Quote -->
       <div class="quote-box">
-        "প্রযুক্তি মানুষের কল্যাণে আসুক, সেবাই হোক জীবনের মূল সুর।"
+        “প্রযুক্তি মানুষের কল্যাণে আসুক, সেবাই হোক জীবনের মূল সুর।”
       </div>
 
-      <!-- Section: About Me -->
-      <div class="bio-section">
-        <div class="section-title">
-          <span>👤</span> আমার সম্পর্কে (About Me)
-        </div>
-        <p class="bio-text">
-          আমি প্রযুক্তি এবং সফটওয়্যার আর্কিটেকচার নিয়ে কাজ করতে ভালোবাসি। যেকোনো জটিল সমস্যার সহজ ডিজিটাল সমাধান তৈরি করা এবং সাধারণ মানুষের দৈনন্দিন প্রয়োজনে অবদান রাখাই আমার মূল লক্ষ্য।
-        </p>
+      <!-- About Me Section -->
+      <div class="section-title">
+        <span>👤</span>
+        <span>আমার সম্পর্কে (About Me)</span>
       </div>
+      <p class="section-desc">
+        আমি প্রযুক্তি এবং সফটওয়্যার আর্কিটেকচার নিয়ে কাজ করতে ভালোবাসি। যেকোনো জটিল সমস্যার সহজ ডিজিটাল সমাধান তৈরি করা এবং সাধারণ মানুষের দৈনন্দিন প্রয়োজনে অবদান রাখাই আমার মূল লক্ষ্য।
+      </p>
 
-      <!-- Section: Academics & Info -->
-      <div class="bio-section">
-        <div class="section-title">
-          <span>🎓</span> শিক্ষা ও ব্যক্তিগত তথ্য (Details)
-        </div>
-        <ul class="info-list">
-          <li><strong>ইনস্টিটিউট:</strong> ঢাকা বিশ্ববিদ্যালয় (University of Dhaka)</li>
-          <li><strong>আবাসন/হল:</strong> শহীদ সার্জেন্ট জহুরুল হক হল</li>
-          <li><strong>জেলা:</strong> ঢাকা, বাংলাদেশ</li>
-          <li><strong>ইন্টারেস্ট:</strong> ওয়েব ডেভেলপমেন্ট, প্রবলেম সলভিং ও সমাজসেবা</li>
-        </ul>
+      <hr class="section-divider" />
+
+      <!-- Education & Personal Details with Strict Colon Alignment -->
+      <div class="section-title">
+        <span>🎓</span>
+        <span>শিক্ষা ও ব্যক্তিগত তথ্য (Details)</span>
       </div>
-
-      <!-- Section: JIBONI Story -->
-      <div class="bio-section">
-        <div class="section-title">
-          <span>🩸</span> JIBONI (জীবনী) প্ল্যাটফর্মের গল্প
+      
+      <div class="details-list">
+        <div class="detail-row">
+          <div class="detail-label-wrap">
+            <span>ইনস্টিটিউট</span><span>:</span>
+          </div>
+          <div class="detail-value">ঢাকা বিশ্ববিদ্যালয় (University of Dhaka)</div>
         </div>
-        <p class="bio-text">
-          জরুরি রক্তের প্রয়োজনে রক্তদাতার খোঁজ পাওয়া অনেক সময় বেশ কঠিন ও সময়সাপেক্ষ হয়ে দাঁড়ায়। এই প্রক্রিয়াটিকে দ্রুত, সহজ এবং সরাসরি যোগাযোগের আওতায় নিয়ে আসতেই একক উদ্যোগে <strong>JIBONI (জীবনী)</strong> রক্তদাতা নেটওয়ার্ক প্ল্যাটফর্মটি তৈরি করা।
-        </p>
-      </div>
 
-      <!-- Section: Technical Stack -->
-      <div class="bio-section">
-        <div class="section-title">
-          <span>💻</span> টেকনিক্যাল স্কিলস (Tech Stack)
+        <div class="detail-row">
+          <div class="detail-label-wrap">
+            <span>আবাসন/হল</span><span>:</span>
+          </div>
+          <div class="detail-value">শহীদ সার্জেন্ট জহুরুল হক হল</div>
         </div>
-        <div class="skills-grid">
-          <span class="skill-chip">HTML5</span>
-          <span class="skill-chip">CSS3 / Responsive UI</span>
-          <span class="skill-chip">JavaScript (ES6+)</span>
-          <span class="skill-chip">Supabase (PostgreSQL)</span>
-          <span class="skill-chip">Cloudflare Workers</span>
-          <span class="skill-chip">REST APIs</span>
-          <span class="skill-chip">Git / GitHub</span>
+
+        <div class="detail-row">
+          <div class="detail-label-wrap">
+            <span>জেলা</span><span>:</span>
+          </div>
+          <div class="detail-value">ঢাকা, বাংলাদেশ</div>
+        </div>
+
+        <div class="detail-row">
+          <div class="detail-label-wrap">
+            <span>ইন্টারেস্ট</span><span>:</span>
+          </div>
+          <div class="detail-value">ওয়েব ডেভেলপমেন্ট, প্রবলেম সলভিং ও সমাজসেবা</div>
         </div>
       </div>
 
-      <!-- Section: Co-curricular / Hobbies -->
-      <div class="bio-section">
-        <div class="section-title">
-          <span>🎯</span> সহশিক্ষা ও অন্যান্য আগ্রহ
-        </div>
-        <p class="bio-text">
-          কোডিং ও সফটওয়্যার তৈরির পাশাপাশি ভাষা শিক্ষা, দাবা (Chess) খেলা এবং বিভিন্ন সামাজিক ও স্বেচ্ছাসেবী কার্যক্রমে অংশ নিতে আমি পছন্দ করি।
-        </p>
-      </div>
+      <hr class="section-divider" />
 
+      <!-- Story of JIBONI Platform -->
+      <div class="section-title">
+        <span>🩸</span>
+        <span>JIBONI (জীবনী) প্ল্যাটফর্মের গল্প</span>
+      </div>
+      <p class="section-desc" style="margin-bottom: 12px;">
+        জরুরি রক্তের প্রয়োজনে রক্তদাতার খোঁজ পাওয়া অনেক সময় বেশ কঠিন ও সময়সাপেক্ষ হয়ে দাঁড়ায়। এই প্রক্রিয়াটিকে দ্রুত, সহজ এবং সম্পূর্ণ নিঃস্বার্থ মানবকল্যাণে ব্যবহারের উপযোগী করে তোলার তাগিদ থেকেই JIBONI-র সূচনা। এটি কোনো বাণিজ্যিক প্ল্যাটফর্ম নয়, বরং জীবন বাঁচানোর এক যৌথ প্রয়াস।
+      </p>
+
+      <a href="developer.html" class="btn-back-dev">
+        <span>← ডেভেলপার পেজে ফিরে যান</span>
+      </a>
     </div>
   </main>
 
-  <footer class="footer">
-    <div class="footer-container">
-      <p class="footer-notice">JIBONI — রক্তদানে সচেতনতা আমাদের লক্ষ্য</p>
-      <p class="footer-credit">Designed & Developed by <a href="developer.html">Amanulla Emon</a></p>
-    </div>
+  <footer class="site-footer">
+    <p class="footer-disclaimer">Use donor information responsibly. Confirm availability before contacting.</p>
+    <p class="footer-credit">Designed & Developed by <a href="developer.html">Amanulla Emon</a></p>
   </footer>
 
 </body>
