@@ -3,35 +3,49 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>JIBONI - জরুরি রক্তের সন্ধান</title>
+  <title>JIBONI - জীবন বাঁচুক ভালোবাসায়</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Hind+Siliguri:wght@500;600;700&display=swap');
+
+    :root {
+      --primary: #dc2626;
+      --primary-hover: #b91c1c;
+      --primary-light: #fee2e2;
+      --success: #15803d;
+      --success-light: #dcfce7;
+      --warning: #b45309;
+      --warning-light: #fef3c7;
+      --info: #0284c7;
+      --info-light: #e0f2fe;
+      --slate-50: #f8fafc;
+      --slate-100: #f1f5f9;
+      --slate-200: #e2e8f0;
+      --slate-400: #94a3b8;
+      --slate-600: #475569;
+      --slate-800: #1e293b;
+      --slate-900: #0f172a;
+    }
 
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: 'Hind Siliguri', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-family: 'Hind Siliguri', 'Plus Jakarta Sans', sans-serif;
+      -webkit-tap-highlight-color: transparent;
     }
 
     body {
-      background-color: #f8fafc;
-      color: #1e293b;
+      background: var(--slate-50);
+      color: var(--slate-800);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      background-image: none !important;
-    }
-
-    body::before, body::after {
-      display: none !important;
-      content: none !important;
     }
 
     .site-header {
       background: #ffffff;
-      padding: 16px 16px 14px;
-      border-bottom: 1px solid #e2e8f0;
+      padding: 14px 16px 12px;
+      border-bottom: 1px solid var(--slate-200);
       text-align: center;
       width: 100%;
     }
@@ -42,7 +56,7 @@
     }
 
     .brand-row {
-      margin-bottom: 12px;
+      margin-bottom: 8px;
     }
 
     .brand-logo {
@@ -54,14 +68,14 @@
     }
 
     .blood-drop {
-      font-size: 1.6rem;
+      font-size: 1.5rem;
       line-height: 1;
     }
 
     .brand-name {
-      font-size: 1.7rem;
+      font-size: 1.6rem;
       font-weight: 800;
-      color: #dc2626;
+      color: var(--primary);
       letter-spacing: 0.5px;
       line-height: 1;
     }
@@ -71,50 +85,38 @@
       justify-content: center;
       align-items: center;
       gap: 8px;
-      margin-bottom: 10px;
+      margin-bottom: 6px;
       flex-wrap: wrap;
     }
 
     .btn-chip {
-      padding: 6px 14px;
+      padding: 5px 12px;
       border-radius: 20px;
-      font-size: 0.82rem;
+      font-size: 0.8rem;
       font-weight: 700;
       text-decoration: none;
       display: inline-flex;
       align-items: center;
-      gap: 5px;
-      transition: all 0.2s ease;
-      border: 1px solid transparent;
+      gap: 4px;
+      border: 1px solid var(--slate-200);
+      background: var(--slate-100);
+      color: var(--slate-600);
+      cursor: pointer;
     }
 
     .btn-chip-red {
-      background: #dc2626;
+      background: var(--primary);
       color: #ffffff !important;
-      box-shadow: 0 2px 6px rgba(220, 38, 38, 0.2);
-    }
-
-    .btn-chip-blue {
-      background: #eff6ff;
-      color: #1d4ed8 !important;
-      border-color: #bfdbfe;
-    }
-
-    .btn-chip-gray {
-      background: #f1f5f9;
-      color: #475569 !important;
-      border-color: #cbd5e1;
+      border-color: var(--primary);
     }
 
     .brand-slogan {
-      font-size: 0.78rem;
-      color: #475569;
-      margin-top: 4px;
+      font-size: 0.74rem;
+      color: var(--slate-600);
       font-style: italic;
-      line-height: 1.4;
     }
 
-    .main-wrapper {
+    .app-main {
       flex: 1;
       max-width: 480px;
       width: 100%;
@@ -124,116 +126,166 @@
 
     .filter-card {
       background: #ffffff;
-      border: 1px solid #e2e8f0;
-      border-radius: 12px;
-      padding: 18px 16px 10px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
-      margin-bottom: 14px;
+      border: 1px solid var(--slate-200);
+      border-radius: 14px;
+      padding: 18px 16px;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.03);
+      margin-bottom: 16px;
     }
 
-    .input-field-group {
-      margin-bottom: 14px;
+    .input-group {
+      margin-bottom: 12px;
+      text-align: left;
     }
 
-    .field-title {
+    .input-group:last-child {
+      margin-bottom: 0;
+    }
+
+    .field-label {
       display: block;
-      font-size: 0.84rem;
+      font-size: 0.82rem;
       font-weight: 700;
-      color: #0f172a;
-      margin-bottom: 6px;
+      color: var(--slate-800);
+      margin-bottom: 5px;
     }
 
-    .select-box,
+    .select-input,
     .text-input {
       width: 100%;
-      height: 44px;
+      height: 42px;
       padding: 0 12px;
       background: #ffffff;
-      border: 1px solid #cbd5e1;
-      border-radius: 8px;
+      border: 1px solid var(--slate-200);
+      border-radius: 10px;
       font-size: 0.88rem;
-      color: #1e293b;
+      color: var(--slate-800);
       outline: none;
-      transition: border-color 0.2s;
+      transition: all 0.2s;
     }
 
-    .select-box:focus,
+    .select-input:focus,
     .text-input:focus {
-      border-color: #dc2626;
+      border-color: var(--primary);
       box-shadow: 0 0 0 2px rgba(220, 38, 38, 0.1);
     }
 
-    .placeholder-box {
+    .results-notice {
       background: #ffffff;
-      border: 1.5px dashed #cbd5e1;
-      border-radius: 10px;
-      padding: 24px 16px;
+      border: 1px dashed var(--slate-200);
+      border-radius: 12px;
+      padding: 16px;
       text-align: center;
-      margin-top: 6px;
+      color: var(--slate-600);
+      font-size: 0.86rem;
     }
 
-    .placeholder-text {
-      font-size: 0.88rem;
-      color: #475569;
-      line-height: 1.5;
-      margin: 0;
-    }
-
-    .results-container {
-      margin-top: 14px;
-    }
-
-    .site-footer {
+    .donor-card {
       background: #ffffff;
-      border-top: 1px solid #e2e8f0;
-      padding: 14px 16px;
-      text-align: center;
-      margin-top: auto;
+      border: 1px solid var(--slate-200);
+      border-radius: 14px;
+      padding: 16px;
+      margin-bottom: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+    }
+
+    .donor-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .donor-name {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--slate-900);
+    }
+
+    .blood-badge {
+      background: #fff1f2;
+      color: var(--primary);
+      border: 1px solid #ffe4e6;
+      font-weight: 800;
+      font-size: 0.85rem;
+      padding: 2px 10px;
+      border-radius: 8px;
+    }
+
+    .donor-meta {
+      display: grid;
+      gap: 5px;
+      font-size: 0.82rem;
+      color: var(--slate-600);
+      margin-bottom: 12px;
+    }
+
+    .meta-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .status-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-size: 0.74rem;
+    }
+
+    .status-avail {
+      background: var(--success-light);
+      color: var(--success);
+    }
+
+    .status-rest {
+      background: var(--warning-light);
+      color: var(--warning);
+    }
+
+    .call-btn {
       width: 100%;
+      height: 38px;
+      background: var(--primary);
+      color: #ffffff;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      text-decoration: none;
     }
 
-    .footer-links {
+    .footer-nav {
+      background: #ffffff;
+      border-top: 1px solid var(--slate-200);
+      padding: 12px;
       display: flex;
       justify-content: center;
-      align-items: center;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin-bottom: 6px;
+      gap: 16px;
+      font-size: 0.78rem;
+      margin-top: auto;
     }
 
-    .footer-link {
-      font-size: 0.82rem;
+    .footer-nav a {
+      color: var(--slate-600);
+      text-decoration: none;
       font-weight: 600;
-      color: #b91c1c;
-      text-decoration: none;
     }
 
-    .link-divider {
-      color: #cbd5e1;
-      font-size: 0.75rem;
-    }
-
-    .footer-warning {
-      font-size: 0.72rem;
-      color: #64748b;
-      margin: 4px 0 2px;
-    }
-
-    .footer-copy {
-      font-size: 0.75rem;
-      color: #334155;
-    }
-
-    .footer-copy a {
-      color: #dc2626;
-      font-weight: 700;
-      text-decoration: none;
+    .footer-nav a:hover {
+      color: var(--primary);
     }
   </style>
 </head>
 <body>
 
-  <!-- Top Header -->
   <header class="site-header">
     <div class="header-inner">
       <div class="brand-row">
@@ -243,157 +295,202 @@
         </a>
       </div>
 
-      <!-- Quick Action Buttons -->
       <div class="nav-btn-row">
         <a href="register.html" class="btn-chip btn-chip-red">+ রক্তদাতা হন</a>
-        <a href="update-profile.html" class="btn-chip btn-chip-blue">👤 প্রোফাইল</a>
-        <a href="admin.html" class="btn-chip btn-chip-gray">⚙️ Admin</a>
+        <a href="update-profile.html" class="btn-chip">👤 প্রোফাইল</a>
+        <a href="admin.html" class="btn-chip">⚙️ Admin</a>
       </div>
 
       <p class="brand-slogan">"অচেনা কাউকে বাঁচার আশা দিয়ে, লিখে যাও এক নিঃস্বার্থ জীবনী।"</p>
     </div>
   </header>
 
-  <!-- Main Search Container -->
-  <main class="main-wrapper">
+  <main class="app-main">
     <div class="filter-card">
-      <form id="searchForm">
-        
-        <!-- Blood Group Field -->
-        <div class="input-field-group">
-          <label class="field-title" for="bloodGroup">রক্তের গ্রুপ (Blood Group)</label>
-          <select id="bloodGroup" name="bloodGroup" class="select-box">
-            <option value="">রক্তের গ্রুপ নির্বাচন করুন (Select Blood Group)</option>
-            <option value="A+">A+</option>
-            <option value="A-">A-</option>
-            <option value="B+">B+</option>
-            <option value="B-">B-</option>
-            <option value="AB+">AB+</option>
-            <option value="AB-">AB-</option>
-            <option value="O+">O+</option>
-            <option value="O-">O-</option>
-          </select>
-        </div>
+      <div class="input-group">
+        <label class="field-label" for="filterBlood">রক্তের গ্রুপ (Blood Group)</label>
+        <select id="filterBlood" class="select-input" onchange="runFilter()">
+          <option value="">সকল গ্রুপ (All Groups)</option>
+          <option value="A+">A+</option>
+          <option value="A-">A-</option>
+          <option value="B+">B+</option>
+          <option value="B-">B-</option>
+          <option value="AB+">AB+</option>
+          <option value="AB-">AB-</option>
+          <option value="O+">O+</option>
+          <option value="O-">O-</option>
+        </select>
+      </div>
 
-        <!-- District Field (64 Districts: Bangla + English) -->
-        <div class="input-field-group">
-          <label class="field-title" for="district">জেলা / শহর (City / District)</label>
-          <select id="district" name="district" class="select-box">
-            <option value="">জেলা নির্বাচন করুন (Select District)</option>
-            <option value="Bagerhat">বাগেরহাট (Bagerhat)</option>
-            <option value="Bandarban">বান্দরবান (Bandarban)</option>
-            <option value="Barguna">বরগুনা (Barguna)</option>
-            <option value="Barishal">বরিশাল (Barishal)</option>
-            <option value="Bhola">ভোলা (Bhola)</option>
-            <option value="Bogura">বগুড়া (Bogura)</option>
-            <option value="Brahmanbaria">ব্রাহ্মণবাড়িয়া (Brahmanbaria)</option>
-            <option value="Chandpur">চাঁদপুর (Chandpur)</option>
-            <option value="Chattogram">চট্টগ্রাম (Chattogram)</option>
-            <option value="Chuadanga">চুয়াডাঙ্গা (Chuadanga)</option>
-            <option value="Cox's Bazar">কক্সবাজার (Cox's Bazar)</option>
-            <option value="Cumilla">কুমিল্লা (Cumilla)</option>
-            <option value="Dhaka">ঢাকা (Dhaka)</option>
-            <option value="Dinajpur">দিনাজপুর (Dinajpur)</option>
-            <option value="Faridpur">ফরিদপুর (Faridpur)</option>
-            <option value="Feni">ফেনী (Feni)</option>
-            <option value="Gaibandha">গাইবান্ধা (Gaibandha)</option>
-            <option value="Gazipur">গাজীপুর (Gazipur)</option>
-            <option value="Gopalganj">গোপালগঞ্জ (Gopalganj)</option>
-            <option value="Habiganj">হবিগঞ্জ (Habiganj)</option>
-            <option value="Jamalpur">জামালপুর (Jamalpur)</option>
-            <option value="Jashore">যশোর (Jashore)</option>
-            <option value="Jhalokati">ঝালকাঠি (Jhalokati)</option>
-            <option value="Jhenaidah">ঝিনাইদহ (Jhenaidah)</option>
-            <option value="Joypurhat">জয়পুরহাট (Joypurhat)</option>
-            <option value="Khagrachhari">খাগড়াছড়ি (Khagrachhari)</option>
-            <option value="Khulna">খুলনা (Khulna)</option>
-            <option value="Kishoreganj">কিশোরগঞ্জ (Kishoreganj)</option>
-            <option value="Kurigram">কুড়িগ্রাম (Kurigram)</option>
-            <option value="Kushtia">কুষ্টিয়া (Kushtia)</option>
-            <option value="Lakshmipur">লক্ষ্মীপুর (Lakshmipur)</option>
-            <option value="Lalmonirhat">লালমনিরহাট (Lalmonirhat)</option>
-            <option value="Madaripur">মাদারীপুর (Madaripur)</option>
-            <option value="Magura">মাগুরা (Magura)</option>
-            <option value="Manikganj">মানিকগঞ্জ (Manikganj)</option>
-            <option value="Meherpur">মেহেরপুর (Meherpur)</option>
-            <option value="Moulvibazar">মৌলভীবাজার (Moulvibazar)</option>
-            <option value="Munshiganj">মুন্সীগঞ্জ (Munshiganj)</option>
-            <option value="Mymensingh">ময়মনসিংহ (Mymensingh)</option>
-            <option value="Naogaon">নওগাঁ (Naogaon)</option>
-            <option value="Narail">নড়াইল (Narail)</option>
-            <option value="Narayanganj">নারায়ণগঞ্জ (Narayanganj)</option>
-            <option value="Narsingdi">নরসিংদী (Narsingdi)</option>
-            <option value="Natore">নাটোর (Natore)</option>
-            <option value="Netrokona">নেত্রকোণা (Netrokona)</option>
-            <option value="Nilphamari">নীলফামারী (Nilphamari)</option>
-            <option value="Noakhali">নোয়াখালী (Noakhali)</option>
-            <option value="Pabna">পাবনা (Pabna)</option>
-            <option value="Panchagarh">পঞ্চগড় (Panchagarh)</option>
-            <option value="Patuakhali">পটুয়াখালী (Patuakhali)</option>
-            <option value="Pirojpur">পিরোজপুর (Pirojpur)</option>
-            <option value="Rajbari">রাজবাড়ী (Rajbari)</option>
-            <option value="Rajshahi">রাজশাহী (Rajshahi)</option>
-            <option value="Rangamati">রাঙ্গামাটি (Rangamati)</option>
-            <option value="Rangpur">রংপুর (Rangpur)</option>
-            <option value="Satkhira">সাতক্ষীরা (Satkhira)</option>
-            <option value="Shariatpur">শরীয়তপুর (Shariatpur)</option>
-            <option value="Sherpur">শেরপুর (Sherpur)</option>
-            <option value="Sirajganj">সিরাজগঞ্জ (Sirajganj)</option>
-            <option value="Sunamganj">সুনামগঞ্জ (Sunamganj)</option>
-            <option value="Sylhet">সিলেট (Sylhet)</option>
-            <option value="Tangail">টাঙ্গাইল (Tangail)</option>
-            <option value="Thakurgaon">ঠাকুরগাঁও (Thakurgaon)</option>
-          </select>
-        </div>
+      <div class="input-group">
+        <label class="field-label" for="filterDistrict">জেলা / শহর (City / District)</label>
+        <select id="filterDistrict" class="select-input" onchange="runFilter()">
+          <option value="">সকল জেলা (All Districts)</option>
+          <option value="Dhaka">ঢাকা (Dhaka)</option>
+          <option value="Chattogram">চট্টগ্রাম (Chattogram)</option>
+          <option value="Rajshahi">রাজশাহী (Rajshahi)</option>
+          <option value="Khulna">খুলনা (Khulna)</option>
+          <option value="Barishal">বরিশাল (Barishal)</option>
+          <option value="Sylhet">সিলেট (Sylhet)</option>
+          <option value="Rangpur">রংপুর (Rangpur)</option>
+          <option value="Mymensingh">ময়মনসিংহ (Mymensingh)</option>
+          <option value="Nilphamari">নীলফামারী (Nilphamari)</option>
+        </select>
+      </div>
 
-        <!-- Specific Location / Hall Field -->
-        <div class="input-field-group">
-          <label class="field-title" for="specificLocation">নির্দিষ্ট এলাকা / হল (Specific Location)</label>
-          <input 
-            type="text" 
-            id="specificLocation" 
-            name="specificLocation" 
-            class="text-input" 
-            placeholder="e.g. Zahurul Huq Hall (ঐচ্ছিক)"
-          />
-        </div>
+      <div class="input-group">
+        <label class="field-label" for="filterLocation">নির্দিষ্ট এলাকা / হল (Specific Location)</label>
+        <input type="text" id="filterLocation" class="text-input" placeholder="e.g. Zahurul Huq Hall (ঐচ্ছিক)" onkeyup="runFilter()" />
+      </div>
 
-        <!-- Availability Field -->
-        <div class="input-field-group">
-          <label class="field-title" for="availability">স্ট্যাটাস (Availability)</label>
-          <select id="availability" name="availability" class="select-box">
-            <option value="">All</option>
-            <option value="available">Available (প্রস্তুত)</option>
-            <option value="unavailable">Unavailable (অনুপলব্ধ)</option>
-          </select>
-        </div>
-
-      </form>
+      <div class="input-group">
+        <label class="field-label" for="filterAvail">স্ট্যাটাস (Availability)</label>
+        <select id="filterAvail" class="select-input" onchange="runFilter()">
+          <option value="All">All</option>
+          <option value="Available">রক্তদানে প্রস্তুত (Available)</option>
+          <option value="Unavailable">অনুপলব্ধ (Resting)</option>
+        </select>
+      </div>
     </div>
 
-    <!-- Initial Status Prompt -->
-    <div id="resultsPlaceholder" class="placeholder-box">
-      <p class="placeholder-text">📍 রক্তদাতা খুঁজতে অনুগ্রহ করে রক্তের গ্রুপ ও জেলা নির্বাচন করুন।</p>
+    <div id="resultsWrapper">
+      <div class="results-notice">
+        📍 রক্তদাতা খুঁজতে অনুগ্রহ করে রক্তের গ্রুপ বা জেলা নির্বাচন করুন।
+      </div>
     </div>
-
-    <!-- Search Results Dynamic List -->
-    <div id="resultsList" class="results-container"></div>
   </main>
 
-  <!-- Sticky / Bottom Footer -->
-  <footer class="site-footer">
-    <div class="footer-links">
-      <a href="stats.html" class="footer-link">📊 রক্তের পরিসংখ্যান</a>
-      <span class="link-divider">•</span>
-      <a href="feedback.html" class="footer-link">💬 মতামত দিন</a>
-      <span class="link-divider">•</span>
-      <a href="guidelines.html" class="footer-link">📖 নির্দেশিকা</a>
-    </div>
-    <p class="footer-warning">Use donor information responsibly. Confirm availability before contacting.</p>
-    <p class="footer-copy">Designed & Developed by <a href="developer.html">Amanulla Emon</a></p>
+  <footer class="footer-nav">
+    <a href="stats.html">📊 রক্তের পরিসংখ্যান</a>
+    <a href="feedback.html">💬 মতামত দিন</a>
+    <a href="guidelines.html">📖 নির্দেশিকা</a>
   </footer>
 
-  <script src="script.js"></script>
-  <script src="app.js"></script>
+  <script>
+    function checkDonationEligibility(lastDonationDateStr) {
+      if (!lastDonationDateStr || lastDonationDateStr === "তথ্য নেই") return true;
+      var lastDate = new Date(lastDonationDateStr);
+      var today = new Date();
+      var diffDays = (today - lastDate) / (1000 * 60 * 60 * 24);
+      return diffDays >= 120; // 4 months logic
+    }
+
+    function calculateNextEligibleDate(lastDonationDateStr) {
+      if (!lastDonationDateStr || lastDonationDateStr === "তথ্য নেই") return null;
+      var d = new Date(lastDonationDateStr);
+      if (isNaN(d.getTime())) return null;
+      d.setMonth(d.getMonth() + 4);
+      var yyyy = d.getFullYear();
+      var mm = String(d.getMonth() + 1).padStart(2, '0');
+      var dd = String(d.getDate()).padStart(2, '0');
+      return yyyy + "-" + mm + "-" + dd;
+    }
+
+    function getDonorsData() {
+      var stored = localStorage.getItem("jiboni_donors_cache") || localStorage.getItem("donors");
+      if (stored) {
+        try {
+          return JSON.parse(stored);
+        } catch(e) {}
+      }
+      return [
+        { id: 1, name: "Amanulla Emon", blood_group: "B+", phone: "01608575239", district: "Dhaka", hall: "Shahid Sergeant Zahurul Huq Hall", last_donation: "2026-09-02", is_available: false, is_verified: true },
+        { id: 2, name: "Arafat", blood_group: "A+", phone: "01602689896", district: "Dhaka", hall: "Shahid Sergeant Zahurul Huq Hall", last_donation: "2026-08-02", is_available: false, is_verified: true }
+      ];
+    }
+
+    function runFilter() {
+      var blood = (document.getElementById("filterBlood").value || "").trim().toUpperCase();
+      var district = (document.getElementById("filterDistrict").value || "").trim().toLowerCase();
+      var loc = (document.getElementById("filterLocation").value || "").trim().toLowerCase();
+      var avail = document.getElementById("filterAvail").value;
+
+      var allDonors = getDonorsData();
+      var container = document.getElementById("resultsWrapper");
+
+      // Auto update availability according to 4-month rule
+      allDonors.forEach(function(d) {
+        var isEligible = checkDonationEligibility(d.last_donation);
+        if (!isEligible && d.is_available && !d.manual_override) {
+          d.is_available = false;
+        }
+      });
+
+      // Filter query
+      var results = allDonors.filter(function(d) {
+        var dBlood = (d.blood_group || d.bloodGroup || "").toUpperCase();
+        var dDistrict = (d.district || "").toLowerCase();
+        var dHall = (d.hall || "").toLowerCase();
+
+        // 1. Blood Filter
+        if (blood && dBlood !== blood) return false;
+
+        // 2. District Filter (Checks english or bangla token)
+        if (district) {
+          if (!dDistrict.includes(district) && !district.includes(dDistrict)) return false;
+        }
+
+        // 3. Specific location / Hall filter
+        if (loc) {
+          if (!dHall.includes(loc) && !dDistrict.includes(loc)) return false;
+        }
+
+        // 4. Availability Filter
+        if (avail === "Available" && !d.is_available) return false;
+        if (avail === "Unavailable" && d.is_available) return false;
+
+        return true;
+      });
+
+      if (!blood && !district && !loc && avail === "All") {
+        container.innerHTML = '<div class="results-notice">📍 রক্তদাতা খুঁজতে অনুগ্রহ করে রক্তের গ্রুপ বা জেলা নির্বাচন করুন।</div>';
+        return;
+      }
+
+      if (results.length === 0) {
+        container.innerHTML = '<div class="results-notice">❌ দুঃখিত, আপনার দেওয়া তথ্যানুযায়ী কোনো রক্তদাতা পাওয়া যায়নি।</div>';
+        return;
+      }
+
+      var html = "";
+      results.forEach(function(d) {
+        var isEligible = checkDonationEligibility(d.last_donation);
+        var nextDate = calculateNextEligibleDate(d.last_donation);
+
+        var statusChip = d.is_available 
+          ? '<span class="status-chip status-avail">● রক্তদানে প্রস্তুত (Available)</span>' 
+          : '<span class="status-chip status-rest">⏳ বিরতি কালীন (4-Month Rest)</span>';
+
+        var nextDateLine = "";
+        if (nextDate && !isEligible) {
+          nextDateLine = '<div class="meta-row">🗓️ <strong>পরবর্তী রক্তদান:</strong> <span style="color:var(--info); font-weight:700;">' + nextDate + ' (থেকে সম্ভাব্য)</span></div>';
+        } else if (isEligible && d.last_donation && d.last_donation !== "তথ্য নেই") {
+          nextDateLine = '<div class="meta-row">🗓️ <strong>পরবর্তী রক্তদান:</strong> <span style="color:var(--success); font-weight:700;">✅ যেকোনো সময় সক্ষম</span></div>';
+        }
+
+        html += 
+          '<div class="donor-card">' +
+            '<div class="donor-header">' +
+              '<span class="donor-name">' + (d.name || "অজ্ঞাত নাম") + '</span>' +
+              '<span class="blood-badge">' + (d.blood_group || d.bloodGroup || "--") + '</span>' +
+            '</div>' +
+            '<div class="donor-meta">' +
+              '<div class="meta-row">📍 <strong>ঠিকানা/হল:</strong> ' + (d.district || "--") + (d.hall ? ' (' + d.hall + ')' : '') + '</div>' +
+              '<div class="meta-row">🗓️ <strong>সর্বশেষ রক্তদান:</strong> ' + (d.last_donation || "তথ্য নেই") + '</div>' +
+              '<div class="meta-row">⚡ <strong>স্ট্যাটাস:</strong> ' + statusChip + '</div>' +
+              nextDateLine +
+            '</div>' +
+            '<a href="tel:' + d.phone + '" class="call-btn">📞 কল করুন (' + d.phone + ')</a>' +
+          '</div>';
+      });
+
+      container.innerHTML = html;
+    }
+
+    // Run automatically on load if preset
+    window.onload = function() {
+      runFilter();
+    };
+  </script>
 </body>
 </html>
