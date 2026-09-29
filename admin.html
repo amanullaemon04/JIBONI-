@@ -201,6 +201,10 @@
       padding: 4px 0;
     }
 
+    .forgot-link:hover {
+      text-decoration: underline;
+    }
+
     .admin-profile-strip {
       background: #ffffff;
       border: 1px solid var(--slate-200);
@@ -570,7 +574,6 @@
         sessionStorage.setItem("jiboni_session_user", JSON.stringify(matchedAdmin));
         err.style.display = "none";
 
-        // Modern Browser Credential Management API to guarantee "Save Password" prompt
         if (window.PasswordCredential && navigator.credentials) {
           try {
             var cred = new PasswordCredential({
@@ -636,16 +639,17 @@
       }
     }
 
+    // 🩸 4 MONTHS (120 DAYS) REST PERIOD CALCULATION
     function checkDonationEligibility(lastDonationDateStr) {
       if (!lastDonationDateStr || lastDonationDateStr === "তথ্য নেই") return true;
       var lastDate = new Date(lastDonationDateStr);
       var today = new Date();
       var diffDays = (today - lastDate) / (1000 * 60 * 60 * 24);
-      return diffDays >= 90;
+      return diffDays >= 120;
     }
 
     function loadDonors() {
-      var stored = localStorage.getItem("jiboni_donors_cache");
+      var stored = localStorage.getItem("jiboni_donors_cache") || localStorage.getItem("donors");
       localDonors = stored ? JSON.parse(stored) : [];
 
       localDonors.forEach(function(d) {
@@ -737,7 +741,7 @@
         
         var statusText = donor.is_available ? '● প্রস্তুত (Available)' : '○ অনুপলব্ধ (Resting)';
         if (!isEligible && !donor.is_available) {
-          statusText = '⏳ বিরতি কালীন (Rest)';
+          statusText = '⏳ বিরতি কালীন (4-Month Rest)';
         }
 
         var card = document.createElement("div");
@@ -778,7 +782,7 @@
       var isEligible = checkDonationEligibility(donor.last_donation);
 
       if (!donor.is_available && !isEligible) {
-        var allow = confirm("সতর্কতা: শেষ রক্তদান থেকে এখনো ৩ মাস পূর্ণ হয়নি! তবুও কি আপনি ম্যানুয়ালি Available করতে চান?");
+        var allow = confirm("সতর্কতা: শেষ রক্তদান থেকে এখনো ৪ মাস (১২০ দিন) পূর্ণ হয়নি! তবুও কি আপনি ম্যানুয়ালি Available করতে চান?");
         if (!allow) return;
         donor.manual_override = true;
       } else {
@@ -798,6 +802,7 @@
 
     function saveDonors() {
       localStorage.setItem("jiboni_donors_cache", JSON.stringify(localDonors));
+      localStorage.setItem("donors", JSON.stringify(localDonors));
       renderDonorsUI();
       handleLiveSearch();
     }
