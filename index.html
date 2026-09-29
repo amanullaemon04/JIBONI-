@@ -121,7 +121,7 @@
       max-width: 480px;
       width: 100%;
       margin: 0 auto;
-      padding: 16px 14px 40px;
+      padding: 16px 14px 30px;
     }
 
     .filter-card {
@@ -263,15 +263,22 @@
       text-decoration: none;
     }
 
-    .footer-nav {
+    /* Standard Classic Footer */
+    .site-footer {
       background: #ffffff;
       border-top: 1px solid var(--slate-200);
-      padding: 12px;
+      padding: 12px 16px 16px;
+      text-align: center;
+      margin-top: auto;
+      width: 100%;
+    }
+
+    .footer-nav {
       display: flex;
       justify-content: center;
       gap: 16px;
-      font-size: 0.78rem;
-      margin-top: auto;
+      font-size: 0.8rem;
+      margin-bottom: 8px;
     }
 
     .footer-nav a {
@@ -282,6 +289,27 @@
 
     .footer-nav a:hover {
       color: var(--primary);
+    }
+
+    .footer-disclaimer {
+      font-size: 0.72rem;
+      color: var(--slate-600);
+      margin-bottom: 3px;
+    }
+
+    .footer-credit {
+      font-size: 0.75rem;
+      color: var(--slate-800);
+    }
+
+    .footer-credit a {
+      color: var(--primary);
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .footer-credit a:hover {
+      text-decoration: underline;
     }
   </style>
 </head>
@@ -299,7 +327,7 @@
       <div class="nav-btn-row">
         <a href="register.html" class="btn-chip btn-chip-red">+ রক্তদাতা হন</a>
         <a href="update-profile.html" class="btn-chip">👤 প্রোফাইল</a>
-        <a href="admin.html" class="btn-chip">⚙️️ Admin</a>
+        <a href="admin.html" class="btn-chip">⚙️ Admin</a>
       </div>
 
       <p class="brand-slogan">"অচেনা কাউকে বাঁচার আশা দিয়ে, লিখে যাও এক নিঃস্বার্থ জীবনী।"</p>
@@ -420,7 +448,7 @@
         </select>
       </div>
 
-      <!-- উপজেলা / থানা (উপজেলা ডাটাবেজ) -->
+      <!-- উপজেলা / থানা -->
       <div class="input-group">
         <label class="field-label" for="filterUpazila">উপজেলা / থানা (Upazila / Thana)</label>
         <select id="filterUpazila" class="select-input" onchange="runFilter()">
@@ -453,10 +481,15 @@
     </div>
   </main>
 
-  <footer class="footer-nav">
-    <a href="stats.html">📊 রক্তের পরিসংখ্যান</a>
-    <a href="feedback.html">💬 মতামত দিন</a>
-    <a href="guidelines.html">📖 নির্দেশিকা</a>
+  <!-- Complete Standard Footer (Matching Badhan ZH) -->
+  <footer class="site-footer">
+    <div class="footer-nav">
+      <a href="stats.html">📊 রক্তের পরিসংখ্যান</a>
+      <a href="feedback.html">💬 মতামত দিন</a>
+      <a href="guidelines.html">📖 নির্দেশিকা</a>
+    </div>
+    <p class="footer-disclaimer">Use donor information responsibly. Confirm availability before contacting.</p>
+    <p class="footer-credit">Designed & Developed by <a href="developer.html">Amanulla Emon</a></p>
   </footer>
 
   <script>
@@ -665,7 +698,7 @@
             '</div>' +
             '<div class="donor-meta">' +
               '<div class="meta-row">📍 <strong>ঠিকানা/হল:</strong> ' + (d.district || "--") + (d.hall ? ' (' + d.hall + ')' : '') + '</div>' +
-              '<div class="meta-row">🗓️ <strong>সর্বশেষ রক্তদান:</strong> ' + (d.last_donation || "তথ্য নেই") + '</div>' +
+              '<div class="meta-row">🗓️️ <strong>সর্বশেষ রক্তদান:</strong> ' + (d.last_donation || "তথ্য নেই") + '</div>' +
               '<div class="meta-row">⚡ <strong>স্ট্যাটাস:</strong> ' + statusChip + '</div>' +
               nextDateLine +
             '</div>' +
