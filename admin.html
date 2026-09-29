@@ -768,23 +768,30 @@
     let currentTab = "all";
     const SUPER_ADMIN_EMAIL = "amanullaemon04@gmail.com";
 
-    // EXACT LOCAL TIME FORMATTER WITH SECONDS
+    // EXACT BANGLADESH LOCAL TIME WITH SECONDS (TIMEZONE FIX)
     function formatFeedbackDateTime(rawDate) {
       if (!rawDate) return "আজ";
       var d = new Date(rawDate);
       if (isNaN(d.getTime())) {
         return rawDate;
       }
-      var yyyy = d.getFullYear();
-      var mm = String(d.getMonth() + 1).padStart(2, '0');
-      var dd = String(d.getDate()).padStart(2, '0');
 
-      var hours = d.getHours();
-      var minutes = String(d.getMinutes()).padStart(2, '0');
-      var seconds = String(d.getSeconds()).padStart(2, '0');
+      // If stored string ends with 'Z' or doesn't have offset, parse it properly or adjust offset for BD (+6 hours)
+      if (typeof rawDate === 'string' && (rawDate.endsWith('Z') || rawDate.indexOf('+') === -1 && rawDate.indexOf('T') !== -1)) {
+        // Add 6 hours to correct UTC offset to Bangladesh Standard Time
+        d = new Date(d.getTime() + (6 * 60 * 60 * 1000));
+      }
+
+      var yyyy = d.getUTCFullYear();
+      var mm = String(d.getUTCMonth() + 1).padStart(2, '0');
+      var dd = String(d.getUTCDate()).padStart(2, '0');
+
+      var hours = d.getUTCHours();
+      var minutes = String(d.getUTCMinutes()).padStart(2, '0');
+      var seconds = String(d.getUTCSeconds()).padStart(2, '0');
       var ampm = hours >= 12 ? 'PM' : 'AM';
       hours = hours % 12;
-      hours = hours ? hours : 12; // 0 hour is 12 AM
+      hours = hours ? hours : 12;
       var strTime = String(hours).padStart(2, '0') + ':' + minutes + ':' + seconds + ' ' + ampm;
 
       return yyyy + '-' + mm + '-' + dd + ', ' + strTime;
@@ -1144,7 +1151,7 @@
                 '<span class="detail-val">' + mainLoc + '</span>' +
               '</div>' +
               '<div class="detail-item">' +
-                '<div class="detail-label-wrap"><span>🗓️ সর্বশেষ রক্তদান</span><span>:</span></div>' +
+                '<div class="detail-label-wrap"><span>🗓️️ সর্বশেষ রক্তদান</span><span>:</span></div>' +
                 '<span class="detail-val">' + (d.last_donation || "তথ্য নেই") + '</span>' +
               '</div>' +
               '<div class="detail-item">' +
@@ -1192,7 +1199,7 @@
     }
 
     // ==========================================
-    // 💬 RENDER FEEDBACKS WITH EXACT SECONDS & TIMEZONE FIX
+    // 💬 RENDER FEEDBACKS WITH CORRECT LOCAL BANGLADESH TIME
     // ==========================================
     function renderFeedbacks() {
       var session = getActiveSession();
