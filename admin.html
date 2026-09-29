@@ -192,6 +192,7 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
+      transition: all 0.15s ease;
     }
 
     .admin-tab.active {
@@ -269,7 +270,7 @@
       border-radius: 8px;
     }
 
-    /* PERFECT 2-SPACE COMPACT ALIGNMENT */
+    /* CLEAN COMPACT COLON ALIGNMENT */
     .donor-detail-list {
       display: flex;
       flex-direction: column;
@@ -285,7 +286,6 @@
       line-height: 1.45;
     }
 
-    /* 120px exactly matches "🗓️ সর্বশেষ রক্তদান" + 2 spaces gap */
     .detail-label-wrap {
       width: 120px;
       min-width: 120px;
@@ -384,6 +384,36 @@
       font-size: 0.95rem;
     }
 
+    /* SUB-ADMIN FORM STYLES */
+    .subadmin-form-card {
+      background: #ffffff;
+      border: 1px solid var(--slate-200);
+      border-radius: 14px;
+      padding: 16px;
+      margin-bottom: 14px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+    }
+
+    .form-heading {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: var(--slate-900);
+      margin-bottom: 10px;
+    }
+
+    .btn-submit-sub {
+      width: 100%;
+      height: 40px;
+      background: var(--primary);
+      color: #ffffff;
+      border: none;
+      border-radius: 10px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 6px;
+    }
+
     .empty-state {
       background: #ffffff;
       border: 1px dashed var(--slate-200);
@@ -452,7 +482,7 @@
       <button type="button" class="change-pwd-btn" onclick="alert('পাসওয়ার্ড পরিবর্তনের সুবিধা শীঘ্রই যুক্ত হবে।')">🔑 পাসওয়ার্ড পরিবর্তন</button>
     </div>
 
-    <!-- Tabs Navigation -->
+    <!-- Tabs Navigation (Now with Feedback & Sub-Admin tabs) -->
     <div class="admin-tabs-row">
       <button type="button" class="admin-tab active" id="tabAll" onclick="switchTab('all')">
         👥 সকল রক্তদাতা <span class="tab-counter" id="countAll">0</span>
@@ -463,15 +493,33 @@
       <button type="button" class="admin-tab" id="tabAvailable" onclick="switchTab('available')">
         ⚡ প্রস্তুত <span class="tab-counter" id="countAvailable">0</span>
       </button>
+      <button type="button" class="admin-tab" id="tabFeedback" onclick="switchTab('feedback')">
+        💬 মতামত <span class="tab-counter" id="countFeedback">0</span>
+      </button>
+      <button type="button" class="admin-tab" id="tabSubAdmin" onclick="switchTab('subadmin')">
+        🛡️ সাব-অ্যাডমিন <span class="tab-counter" id="countSubAdmin">0</span>
+      </button>
     </div>
 
-    <!-- Search Input -->
-    <div class="search-input-wrap">
-      <input type="text" id="adminSearchQuery" class="admin-search-input" placeholder="নাম, জেলা, উপজেলা, মোবাইল বা রক্তের গ্রুপ দিয়ে খুঁজুন..." onkeyup="renderAdminDonors()" />
+    <!-- Search Input for Donors / Feedbacks -->
+    <div class="search-input-wrap" id="searchWrap">
+      <input type="text" id="adminSearchQuery" class="admin-search-input" placeholder="নাম, জেলা, উপজেলা, মোবাইল বা রক্তের গ্রুপ দিয়ে খুঁজুন..." onkeyup="renderCurrentView()" />
     </div>
 
-    <!-- Donors List Container -->
-    <div id="adminDonorsList"></div>
+    <!-- Sub-Admin Add Form (Visible only on subadmin tab) -->
+    <div id="subAdminFormWrap" style="display: none;">
+      <div class="subadmin-form-card">
+        <h3 class="form-heading">+ নতুন সাব-অ্যাডমিন যুক্ত করুন</h3>
+        <form onsubmit="handleAddSubAdmin(event)" style="display: flex; flex-direction: column; gap: 8px;">
+          <input type="text" id="subName" class="admin-search-input" placeholder="সাব-অ্যাডমিনের নাম" style="height: 40px;" required />
+          <input type="email" id="subEmail" class="admin-search-input" placeholder="ইমেইল অ্যাড্রেস" style="height: 40px;" required />
+          <button type="submit" class="btn-submit-sub">অ্যাডমিন যুক্ত করুন</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Dynamic Content Container -->
+    <div id="adminContentContainer"></div>
   </main>
 
   <footer class="site-footer">
@@ -517,40 +565,103 @@
     function saveDonors(list) {
       localStorage.setItem("jiboni_donors_cache", JSON.stringify(list));
       localStorage.setItem("donors", JSON.stringify(list));
-      renderAdminDonors();
+      renderCurrentView();
+    }
+
+    function getFeedbacks() {
+      var stored = localStorage.getItem("jiboni_feedbacks");
+      return stored ? JSON.parse(stored) : [];
+    }
+
+    function saveFeedbacks(list) {
+      localStorage.setItem("jiboni_feedbacks", JSON.stringify(list));
+      renderCurrentView();
+    }
+
+    function getSubAdmins() {
+      var stored = localStorage.getItem("jiboni_sub_admins");
+      return stored ? JSON.parse(stored) : [
+        { id: 101, name: "সাপোর্ট টিম", email: "support@jiboni.org", added_date: "2026-09-01" }
+      ];
+    }
+
+    function saveSubAdmins(list) {
+      localStorage.setItem("jiboni_sub_admins", JSON.stringify(list));
+      renderCurrentView();
     }
 
     function switchTab(tab) {
       currentTab = tab;
       document.querySelectorAll(".admin-tab").forEach(function(btn) { btn.classList.remove("active"); });
-      if (tab === "all") document.getElementById("tabAll").classList.add("active");
-      if (tab === "pending") document.getElementById("tabPending").classList.add("active");
-      if (tab === "available") document.getElementById("tabAvailable").classList.add("active");
-      renderAdminDonors();
+      
+      var tabBtnMap = {
+        'all': 'tabAll',
+        'pending': 'tabPending',
+        'available': 'tabAvailable',
+        'feedback': 'tabFeedback',
+        'subadmin': 'tabSubAdmin'
+      };
+      if (tabBtnMap[tab]) {
+        document.getElementById(tabBtnMap[tab]).classList.add("active");
+      }
+
+      var searchWrap = document.getElementById("searchWrap");
+      var searchInput = document.getElementById("adminSearchQuery");
+      var subFormWrap = document.getElementById("subAdminFormWrap");
+
+      if (tab === "subadmin") {
+        searchWrap.style.display = "none";
+        subFormWrap.style.display = "block";
+      } else {
+        searchWrap.style.display = "block";
+        subFormWrap.style.display = "none";
+        if (tab === "feedback") {
+          searchInput.placeholder = "ফিডব্যাক, নাম বা যোগাযোগ নম্বর দিয়ে খুঁজুন...";
+        } else {
+          searchInput.placeholder = "নাম, জেলা, উপজেলা, মোবাইল বা রক্তের গ্রুপ দিয়ে খুঁজুন...";
+        }
+      }
+
+      renderCurrentView();
     }
 
-    function renderAdminDonors() {
+    function updateBadgeCounters() {
+      var allDonors = getDonors();
+      var feedbacks = getFeedbacks();
+      var subAdmins = getSubAdmins();
+
+      document.getElementById("countAll").innerText = allDonors.length;
+      document.getElementById("countPending").innerText = allDonors.filter(function(d) { return !d.is_verified; }).length;
+      document.getElementById("countAvailable").innerText = allDonors.filter(function(d) { return d.is_available; }).length;
+      document.getElementById("countFeedback").innerText = feedbacks.length;
+      document.getElementById("countSubAdmin").innerText = subAdmins.length;
+    }
+
+    function renderCurrentView() {
+      updateBadgeCounters();
+      if (currentTab === "feedback") {
+        renderFeedbacks();
+      } else if (currentTab === "subadmin") {
+        renderSubAdmins();
+      } else {
+        renderDonorsList();
+      }
+    }
+
+    // ==========================================
+    // 👥 RENDER DONORS
+    // ==========================================
+    function renderDonorsList() {
       var allDonors = getDonors();
       var q = (document.getElementById("adminSearchQuery").value || "").trim().toLowerCase();
-      var container = document.getElementById("adminDonorsList");
+      var container = document.getElementById("adminContentContainer");
 
-      // Update Tab Badges Count
-      var countAll = allDonors.length;
-      var countPending = allDonors.filter(function(d) { return !d.is_verified; }).length;
-      var countAvailable = allDonors.filter(function(d) { return d.is_available; }).length;
-
-      document.getElementById("countAll").innerText = countAll;
-      document.getElementById("countPending").innerText = countPending;
-      document.getElementById("countAvailable").innerText = countAvailable;
-
-      // Filter by Tab
       var filtered = allDonors.filter(function(d) {
         if (currentTab === "pending") return !d.is_verified;
         if (currentTab === "available") return d.is_available;
         return true;
       });
 
-      // Filter by Search Query
       if (q) {
         filtered = filtered.filter(function(d) {
           var name = (d.name || "").toLowerCase();
@@ -573,14 +684,11 @@
         var isEligible = checkEligibility(d.last_donation);
         var nextDate = calculateNextEligibleDate(d.last_donation);
 
-        // Location formatting: জেলা, উপজেলা (নির্দিষ্ট এলাকা/হল)
         var locParts = [];
         if (d.district) locParts.push(d.district);
         if (d.upazila) locParts.push(d.upazila);
         var mainLoc = locParts.join(", ");
-        if (d.hall) {
-          mainLoc += mainLoc ? " (" + d.hall + ")" : d.hall;
-        }
+        if (d.hall) mainLoc += mainLoc ? " (" + d.hall + ")" : d.hall;
         if (!mainLoc) mainLoc = "তথ্য নেই";
 
         var statusBadge = d.is_available
@@ -671,8 +779,137 @@
       }
     }
 
+    // ==========================================
+    // 💬 RENDER FEEDBACKS (From feedback.html)
+    // ==========================================
+    function renderFeedbacks() {
+      var feedbacks = getFeedbacks();
+      var q = (document.getElementById("adminSearchQuery").value || "").trim().toLowerCase();
+      var container = document.getElementById("adminContentContainer");
+
+      if (q) {
+        feedbacks = feedbacks.filter(function(f) {
+          var name = (f.name || "").toLowerCase();
+          var contact = (f.contact || "").toLowerCase();
+          var msg = (f.message || "").toLowerCase();
+          return name.includes(q) || contact.includes(q) || msg.includes(q);
+        });
+      }
+
+      if (feedbacks.length === 0) {
+        container.innerHTML = '<div class="empty-state">কোনো মতামত বা ফিডব্যাক পাওয়া যায়নি।</div>';
+        return;
+      }
+
+      var html = "";
+      feedbacks.forEach(function(f) {
+        html += 
+          '<div class="donor-admin-card">' +
+            '<div class="card-top-row">' +
+              '<span class="donor-card-name">👤 ' + (f.name || "অজ্ঞাত ব্যবহারকারী") + '</span>' +
+              '<span style="font-size:0.75rem; color:var(--slate-400); font-weight:700;">📅 ' + (f.date || "আজ") + '</span>' +
+            '</div>' +
+            '<div class="donor-detail-list">' +
+              '<div class="detail-item">' +
+                '<div class="detail-label-wrap"><span>📞 যোগাযোগ</span><span>:</span></div>' +
+                '<span class="detail-val" style="color:var(--primary); font-weight:700;">' + (f.contact || "--") + '</span>' +
+              '</div>' +
+              '<div class="detail-item">' +
+                '<div class="detail-label-wrap"><span>💬 বার্তা</span><span>:</span></div>' +
+                '<span class="detail-val" style="line-height:1.5; background:var(--slate-50); padding:8px 10px; border-radius:8px; border:1px solid var(--slate-200);">' + (f.message || "--") + '</span>' +
+              '</div>' +
+            '</div>' +
+            '<div class="admin-actions-grid" style="justify-content: flex-end;">' +
+              '<a href="tel:' + f.contact + '" class="btn-verify" style="text-decoration:none; max-width:120px;">📞 কল দিন</a>' +
+              '<button type="button" class="btn-delete" title="মুছে ফেলুন" onclick="deleteFeedback(' + f.id + ')">🗑️</button>' +
+            '</div>' +
+          '</div>';
+      });
+
+      container.innerHTML = html;
+    }
+
+    function deleteFeedback(id) {
+      if (confirm("এই মতামতটি মুছে ফেলতে চান?")) {
+        var list = getFeedbacks().filter(function(f) { return f.id !== id; });
+        saveFeedbacks(list);
+      }
+    }
+
+    // ==========================================
+    // 🛡️ RENDER SUB-ADMINS
+    // ==========================================
+    function renderSubAdmins() {
+      var list = getSubAdmins();
+      var container = document.getElementById("adminContentContainer");
+
+      if (list.length === 0) {
+        container.innerHTML = '<div class="empty-state">কোনো সাব-অ্যাডমিন যুক্ত করা নেই।</div>';
+        return;
+      }
+
+      var html = "";
+      list.forEach(function(s) {
+        html += 
+          '<div class="donor-admin-card">' +
+            '<div class="card-top-row">' +
+              '<span class="donor-card-name">🛡️ ' + s.name + '</span>' +
+              '<span style="background:var(--slate-100); color:var(--slate-700); font-size:0.75rem; font-weight:700; padding:2px 8px; border-radius:6px;">Sub Admin</span>' +
+            '</div>' +
+            '<div class="donor-detail-list">' +
+              '<div class="detail-item">' +
+                '<div class="detail-label-wrap"><span>✉️ ইমেইল</span><span>:</span></div>' +
+                '<span class="detail-val" style="font-weight:700;">' + s.email + '</span>' +
+              '</div>' +
+              '<div class="detail-item">' +
+                '<div class="detail-label-wrap"><span>🗓️ যুক্ত হওয়ার তারিখ</span><span>:</span></div>' +
+                '<span class="detail-val">' + (s.added_date || "2026-09-01") + '</span>' +
+              '</div>' +
+            '</div>' +
+            '<div class="admin-actions-grid" style="justify-content: flex-end;">' +
+              '<button type="button" class="btn-delete" title="মুছে ফেলুন" onclick="deleteSubAdmin(' + s.id + ')">🗑️</button>' +
+            '</div>' +
+          '</div>';
+      });
+
+      container.innerHTML = html;
+    }
+
+    function handleAddSubAdmin(e) {
+      e.preventDefault();
+      var name = document.getElementById("subName").value.trim();
+      var email = document.getElementById("subEmail").value.trim();
+
+      if (!name || !email) return;
+
+      var list = getSubAdmins();
+      if (list.some(function(s) { return s.email.toLowerCase() === email.toLowerCase(); })) {
+        alert("এই ইমেইলটি ইতোমধ্যে সাব-অ্যাডমিন হিসেবে যুক্ত আছে!");
+        return;
+      }
+
+      list.push({
+        id: Date.now(),
+        name: name,
+        email: email,
+        added_date: new Date().toISOString().split("T")[0]
+      });
+
+      saveSubAdmins(list);
+      document.getElementById("subName").value = "";
+      document.getElementById("subEmail").value = "";
+      alert("সাব-অ্যাডমিন সফলভাবে যুক্ত হয়েছে!");
+    }
+
+    function deleteSubAdmin(id) {
+      if (confirm("এই সাব-অ্যাডমিনকে অপসারণ করতে চান?")) {
+        var list = getSubAdmins().filter(function(s) { return s.id !== id; });
+        saveSubAdmins(list);
+      }
+    }
+
     window.onload = function() {
-      renderAdminDonors();
+      renderCurrentView();
     };
   </script>
 </body>
