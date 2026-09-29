@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>অ্যাডমিন প্যানেল লগইন - JIBONI</title>
+  <title>অ্যাডমিন প্যানেল - JIBONI</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Hind+Siliguri:wght@500;600;700&display=swap');
 
@@ -368,8 +368,8 @@
     }
 
     .status-resting {
-      background: var(--slate-100);
-      color: var(--slate-600);
+      background: var(--warning-light);
+      color: var(--warning);
     }
 
     .card-footer-actions {
@@ -614,7 +614,6 @@
         return;
       }
 
-      // Check Super Admin
       if (email === MASTER_EMAIL.toLowerCase() && pass === MASTER_PASS) {
         loggedInUser = { name: "Amanulla Emon", email: MASTER_EMAIL, pass: MASTER_PASS, role: "Super Admin" };
         sessionStorage.setItem("jiboni_session_user", JSON.stringify(loggedInUser));
@@ -623,7 +622,6 @@
         return;
       }
 
-      // Check Sub-Admin
       var storedAdmins = JSON.parse(localStorage.getItem("jiboni_admin_accounts") || "[]");
       var match = storedAdmins.find(function(a) {
         return a.email.toLowerCase() === email && a.pass === pass;
@@ -690,283 +688,4 @@
       }
 
       var admins = JSON.parse(localStorage.getItem("jiboni_admin_accounts") || "[]");
-      var target = admins.find(function(a) { return a.email.toLowerCase() === email; });
-
-      if (target) {
-        var tempPass = "reset" + Math.floor(1000 + Math.random() * 9000);
-        target.pass = tempPass;
-        localStorage.setItem("jiboni_admin_accounts", JSON.stringify(admins));
-        msg.style.color = "var(--success)";
-        msg.innerHTML = "পাসওয়ার্ড রিসেট হয়েছে! সাময়িক পাসওয়ার্ড: <b>" + tempPass + "</b> (লগইন করে পরিবর্তন করুন)।";
-      } else {
-        msg.style.color = "var(--primary)";
-        msg.innerText = "কোনো সাব-অ্যাডমিন অ্যাকাউন্ট পাওয়া যায়নি!";
-      }
-    }
-
-    function openChangePassModalDirect() {
-      var modal = document.getElementById("changePassModal");
-      if (modal) modal.style.display = "flex";
-      var msg = document.getElementById("changePassMsg");
-      if (msg) msg.style.display = "none";
-      var passInp = document.getElementById("newSecretPassword");
-      if (passInp) passInp.value = "";
-    }
-
-    function closeChangePassModalDirect() {
-      var modal = document.getElementById("changePassModal");
-      if (modal) modal.style.display = "none";
-    }
-
-    function saveNewPassword() {
-      var newPass = document.getElementById("newSecretPassword").value.trim();
-      var msg = document.getElementById("changePassMsg");
-      msg.style.display = "block";
-
-      if (!newPass || newPass.length < 4) {
-        msg.style.color = "var(--primary)";
-        msg.innerText = "কমপক্ষে ৪ ডিজিটের পাসওয়ার্ড দিন!";
-        return;
-      }
-
-      if (loggedInUser.role === "Super Admin") {
-        MASTER_PASS = newPass;
-      }
-
-      var admins = JSON.parse(localStorage.getItem("jiboni_admin_accounts") || "[]");
-      var found = admins.find(function(a) { return a.email.toLowerCase() === loggedInUser.email.toLowerCase(); });
-      if (found) {
-        found.pass = newPass;
-        localStorage.setItem("jiboni_admin_accounts", JSON.stringify(admins));
-      }
-
-      loggedInUser.pass = newPass;
-      sessionStorage.setItem("jiboni_session_user", JSON.stringify(loggedInUser));
-
-      msg.style.color = "var(--success)";
-      msg.innerText = "পাসওয়ার্ড সফলভাবে পরিবর্তিত হয়েছে!";
-      setTimeout(closeChangePassModalDirect, 1200);
-    }
-
-    function loadDonors() {
-      var stored = localStorage.getItem("jiboni_donors_cache");
-      localDonors = stored ? JSON.parse(stored) : [
-        { id: 1, name: "Md. Shamsujjaman", blood_group: "A+", phone: "01331538250", district: "Dhaka", hall: "Shahid Sergeant Jahurul Haque Hall", last_donation: "তথ্য নেই", is_available: true, is_verified: false },
-        { id: 2, name: "Md Rokonujjaman Rokon", blood_group: "A+", phone: "01745416152", district: "Nilphamari", hall: "Shahid Sargent Zahurul Haque Hall", last_donation: "2025-09-18", is_available: true, is_verified: true },
-        { id: 3, name: "Arman Hossain", blood_group: "O+", phone: "01823887222", district: "Dhaka", hall: "Dhaka college", last_donation: "2026-01-24", is_available: false, is_verified: true }
-      ];
-      renderDonorsUI();
-    }
-
-    function renderDonorsUI() {
-      document.getElementById("countAll").innerText = localDonors.length;
-      document.getElementById("countPending").innerText = localDonors.filter(function(d) { return !d.is_verified; }).length;
-      document.getElementById("countAvail").innerText = localDonors.filter(function(d) { return d.is_available; }).length;
-      renderDonorsCards(localDonors);
-    }
-
-    function setDashboardTab(tab) {
-      activeTab = tab;
-      var pills = document.querySelectorAll(".pill-btn");
-      var names = ['all', 'pending', 'available', 'feedback', 'subadmins'];
-      pills.forEach(function(p, idx) {
-        p.className = (names[idx] === tab) ? "pill-btn active" : "pill-btn";
-      });
-
-      var isDonorList = (tab === 'all' || tab === 'pending' || tab === 'available');
-      document.getElementById("searchBoxWrap").style.display = isDonorList ? "block" : "none";
-      document.getElementById("donorsContainer").style.display = isDonorList ? "block" : "none";
-      document.getElementById("feedbackContainer").style.display = (tab === 'feedback') ? "block" : "none";
-      document.getElementById("subAdminContainer").style.display = (tab === 'subadmins') ? "block" : "none";
-
-      if (isDonorList) handleLiveSearch();
-
-      if (tab === 'subadmins') {
-        var isSuper = (loggedInUser.email.toLowerCase() === MASTER_EMAIL.toLowerCase() || loggedInUser.role === "Super Admin");
-        document.getElementById("superAdminWorkArea").style.display = isSuper ? "block" : "none";
-        document.getElementById("subAdminAccessDenied").style.display = !isSuper ? "block" : "none";
-      }
-    }
-
-    function handleLiveSearch() {
-      var q = (document.getElementById("liveSearchInput").value || "").toLowerCase().trim();
-      var subset = localDonors;
-
-      if (activeTab === 'pending') subset = localDonors.filter(function(d) { return !d.is_verified; });
-      else if (activeTab === 'available') subset = localDonors.filter(function(d) { return d.is_available; });
-
-      if (q) {
-        subset = subset.filter(function(d) {
-          return (d.name || "").toLowerCase().indexOf(q) !== -1 ||
-                 (d.phone || "").indexOf(q) !== -1 ||
-                 (d.district || "").toLowerCase().indexOf(q) !== -1 ||
-                 (d.hall || "").toLowerCase().indexOf(q) !== -1 ||
-                 (d.blood_group || "").toLowerCase().indexOf(q) !== -1;
-        });
-      }
-      renderDonorsCards(subset);
-    }
-
-    function renderDonorsCards(list) {
-      var wrap = document.getElementById("donorsContainer");
-      wrap.innerHTML = "";
-
-      if (list.length === 0) {
-        wrap.innerHTML = '<div style="text-align:center; padding:30px; color:var(--slate-400);">কোনো রক্তদাতার তথ্য পাওয়া যায়নি।</div>';
-        return;
-      }
-
-      list.forEach(function(donor) {
-        var actualIdx = localDonors.indexOf(donor);
-        var card = document.createElement("div");
-        card.className = "donor-entry-card";
-        card.innerHTML = 
-          '<div class="donor-top-meta">' +
-            '<span class="donor-full-name">' + (donor.name || "অজ্ঞাত নাম") + '</span>' +
-            '<span class="blood-tag">' + (donor.blood_group || "--") + '</span>' +
-          '</div>' +
-          '<div class="donor-details-grid">' +
-            '<div class="detail-item">📞 <strong>মোবাইল:</strong> <a href="tel:' + donor.phone + '" style="color:var(--slate-900); text-decoration:none; font-weight:700;">' + (donor.phone || "--") + '</a></div>' +
-            '<div class="detail-item">📍 <strong>ঠিকানা/হল:</strong> ' + (donor.district || "--") + (donor.hall ? ' (' + donor.hall + ')' : '') + '</div>' +
-            '<div class="detail-item">🗓️️ <strong>সর্বশেষ রক্তদান:</strong> <span style="font-weight:700; color:' + (donor.last_donation && donor.last_donation !== 'তথ্য নেই' ? 'var(--primary)' : 'var(--slate-600)') + ';">' + (donor.last_donation || "তথ্য নেই") + '</span></div>' +
-            '<div class="detail-item">⚡ <strong>স্ট্যাটাস:</strong> ' +
-              '<span class="status-chip ' + (donor.is_available ? 'status-ready' : 'status-resting') + '">' +
-                (donor.is_available ? '● প্রস্তুত (Available)' : '○ অনুপলব্ধ') +
-              '</span>' +
-            '</div>' +
-          '</div>' +
-          '<div class="card-footer-actions">' +
-            '<button type="button" class="card-btn ' + (donor.is_verified ? 'btn-verify-success' : 'btn-verify-warn') + '" onclick="toggleDonorVerify(' + actualIdx + ')">' +
-              (donor.is_verified ? '✓ অনুমোদিত' : '⏳ অনুমোদন দিন') +
-            '</button>' +
-            '<button type="button" class="card-btn btn-status-toggle" onclick="toggleDonorStatus(' + actualIdx + ')">' +
-              (donor.is_available ? 'Make Unavailable' : 'Make Available') +
-            '</button>' +
-            '<button type="button" class="card-btn btn-trash" onclick="removeDonorRecord(' + actualIdx + ')">🗑</button>' +
-          '</div>';
-        wrap.appendChild(card);
-      });
-    }
-
-    function toggleDonorVerify(idx) {
-      localDonors[idx].is_verified = !localDonors[idx].is_verified;
-      saveDonors();
-    }
-
-    function toggleDonorStatus(idx) {
-      localDonors[idx].is_available = !localDonors[idx].is_available;
-      saveDonors();
-    }
-
-    function removeDonorRecord(idx) {
-      if (confirm('আপনি কি "' + localDonors[idx].name + '" এর তথ্য মুছে ফেলতে চান?')) {
-        localDonors.splice(idx, 1);
-        saveDonors();
-      }
-    }
-
-    function saveDonors() {
-      localStorage.setItem("jiboni_donors_cache", JSON.stringify(localDonors));
-      renderDonorsUI();
-      handleLiveSearch();
-    }
-
-    function drawFeedbacks() {
-      var container = document.getElementById("feedbackContainer");
-      var list = JSON.parse(localStorage.getItem("jiboni_feedbacks") || "[]");
-      document.getElementById("countFeedback").innerText = list.length;
-
-      if (list.length === 0) {
-        container.innerHTML = '<div style="text-align:center; padding:30px; color:var(--slate-400);">এখনো কোনো মতামত জমা পড়েনি।</div>';
-        return;
-      }
-
-      container.innerHTML = list.map(function(item) {
-        return '<div style="background:#ffffff; border:1px solid var(--slate-200); border-radius:12px; padding:14px; margin-bottom:10px;">' +
-          '<div style="display:flex; justify-content:space-between; margin-bottom:4px;">' +
-            '<strong>' + (item.name || "বেনামী") + '</strong>' +
-            '<small style="color:var(--slate-400);">' + (item.contact || "") + '</small>' +
-          '</div>' +
-          '<p style="font-size:0.85rem; color:var(--slate-800);">' + (item.message || "") + '</p>' +
-        '</div>';
-      }).join("");
-    }
-
-    function drawAdminsList() {
-      var admins = JSON.parse(localStorage.getItem("jiboni_admin_accounts") || "[]");
-      var wrap = document.getElementById("adminCardsList");
-      wrap.innerHTML = "";
-
-      var superDiv = document.createElement("div");
-      superDiv.className = "subadmin-box";
-      superDiv.style.marginBottom = "8px";
-      superDiv.innerHTML = 
-        '<div style="display:flex; justify-content:space-between; align-items:center;">' +
-          '<div>' +
-            '<strong style="font-size:0.9rem;">Amanulla Emon</strong><br>' +
-            '<small style="color:var(--slate-600);">' + MASTER_EMAIL + ' • <b>Super Admin</b></small>' +
-          '</div>' +
-          '<span style="font-size:0.75rem; color:var(--slate-400);">Primary</span>' +
-        '</div>';
-      wrap.appendChild(superDiv);
-
-      admins.forEach(function(admin, idx) {
-        var div = document.createElement("div");
-        div.className = "subadmin-box";
-        div.style.marginBottom = "8px";
-        div.innerHTML = 
-          '<div style="display:flex; justify-content:space-between; align-items:center;">' +
-            '<div>' +
-              '<strong style="font-size:0.9rem;">' + admin.name + '</strong><br>' +
-              '<small style="color:var(--slate-600);">' + admin.email + ' • <b>Sub Admin</b></small>' +
-            '</div>' +
-            '<button type="button" onclick="deleteAdminAccount(' + idx + ')" class="btn-chip" style="background:var(--primary-light); color:var(--primary); border-radius:6px; cursor:pointer; height:32px; padding:0 10px;">অপসারণ</button>' +
-          '</div>';
-        wrap.appendChild(div);
-      });
-    }
-
-    function handleAddSubAdmin() {
-      var name = document.getElementById("newAdminName").value.trim();
-      var email = document.getElementById("newAdminEmail").value.trim();
-      var pass = document.getElementById("newAdminPass").value.trim();
-
-      if (!name || !email || !pass) {
-        alert("সবগুলো তথ্য পূরণ করুন!");
-        return;
-      }
-
-      var admins = JSON.parse(localStorage.getItem("jiboni_admin_accounts") || "[]");
-      if (admins.some(function(a) { return a.email.toLowerCase() === email.toLowerCase(); }) || email.toLowerCase() === MASTER_EMAIL.toLowerCase()) {
-        alert("এই ইমেইল ইতোমধ্যে নিবন্ধিত!");
-        return;
-      }
-
-      admins.push({ name: name, email: email, pass: pass, role: "Sub Admin" });
-      localStorage.setItem("jiboni_admin_accounts", JSON.stringify(admins));
-      document.getElementById("newAdminName").value = "";
-      document.getElementById("newAdminEmail").value = "";
-      document.getElementById("newAdminPass").value = "";
-      drawAdminsList();
-      alert("নতুন সাব-অ্যাডমিন যোগ করা হয়েছে!");
-    }
-
-    function deleteAdminAccount(idx) {
-      var admins = JSON.parse(localStorage.getItem("jiboni_admin_accounts") || "[]");
-      if (confirm('আপনি কি "' + admins[idx].name + '" কে বাদ দিতে চান?')) {
-        admins.splice(idx, 1);
-        localStorage.setItem("jiboni_admin_accounts", JSON.stringify(admins));
-        drawAdminsList();
-      }
-    }
-
-    window.onload = function() {
-      var activeSession = sessionStorage.getItem("jiboni_session_user");
-      if (activeSession) {
-        loggedInUser = JSON.parse(activeSession);
-        renderDashboard();
-      }
-    };
-  </script>
-</body>
-</html>
+      var target = admins.fi
