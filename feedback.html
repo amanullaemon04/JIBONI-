@@ -2,8 +2,8 @@
 <html lang="bn">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>মতামত ও ফিডব্যাক - JIBONI</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>আপনার মূল্যবান মতামত - JIBONI</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Hind+Siliguri:wght@500;600;700&display=swap');
 
@@ -11,6 +11,8 @@
       --primary: #dc2626;
       --primary-hover: #b91c1c;
       --primary-light: #fee2e2;
+      --success: #15803d;
+      --success-light: #dcfce7;
       --slate-50: #f8fafc;
       --slate-100: #f1f5f9;
       --slate-200: #e2e8f0;
@@ -25,6 +27,7 @@
       padding: 0;
       box-sizing: border-box;
       font-family: 'Hind Siliguri', 'Plus Jakarta Sans', sans-serif;
+      -webkit-tap-highlight-color: transparent;
     }
 
     body {
@@ -33,10 +36,8 @@
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      background-image: none !important;
     }
 
-    /* Header */
     .site-header {
       background: #ffffff;
       padding: 14px 16px 12px;
@@ -51,7 +52,7 @@
     }
 
     .brand-row {
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
 
     .brand-logo {
@@ -80,7 +81,7 @@
       justify-content: center;
       align-items: center;
       gap: 8px;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
       flex-wrap: wrap;
     }
 
@@ -96,17 +97,15 @@
       border: 1px solid var(--slate-200);
       background: var(--slate-100);
       color: var(--slate-600);
-      transition: all 0.2s ease;
+      cursor: pointer;
     }
 
     .brand-slogan {
       font-size: 0.74rem;
       color: var(--slate-600);
-      margin-top: 4px;
       font-style: italic;
     }
 
-    /* Main Form Area */
     .main-wrapper {
       flex: 1;
       max-width: 480px;
@@ -115,7 +114,7 @@
       padding: 18px 14px 40px;
     }
 
-    .feedback-card {
+    .form-card {
       background: #ffffff;
       border: 1px solid var(--slate-200);
       border-radius: 14px;
@@ -139,7 +138,7 @@
       line-height: 1.4;
     }
 
-    .form-group {
+    .input-group {
       margin-bottom: 14px;
       text-align: left;
     }
@@ -170,7 +169,7 @@
     }
 
     .textarea-input {
-      min-height: 110px;
+      min-height: 120px;
       resize: vertical;
     }
 
@@ -187,11 +186,10 @@
       color: #ffffff;
       border: none;
       border-radius: 10px;
-      font-size: 0.92rem;
+      font-size: 0.94rem;
       font-weight: 700;
       cursor: pointer;
-      margin-top: 6px;
-      transition: background 0.2s ease;
+      margin-top: 8px;
       box-shadow: 0 2px 8px rgba(220, 38, 38, 0.25);
     }
 
@@ -199,7 +197,7 @@
       background: var(--primary-hover);
     }
 
-    .status-alert {
+    .alert-box {
       margin-top: 14px;
       padding: 10px 12px;
       border-radius: 8px;
@@ -209,22 +207,95 @@
       display: none;
     }
 
-    /* Footer */
+    /* CUSTOM JIBONI ALERT DIALOG */
+    .custom-alert-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(4px);
+      z-index: 3000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .custom-alert-box {
+      background: #ffffff;
+      border-radius: 18px;
+      max-width: 340px;
+      width: 100%;
+      padding: 22px 20px;
+      text-align: center;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+      animation: alertPop 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    @keyframes alertPop {
+      from { transform: scale(0.85); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .alert-icon-wrap {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--primary-light);
+      color: var(--primary);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      margin-bottom: 12px;
+    }
+
+    .alert-title-text {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--slate-900);
+      margin-bottom: 6px;
+    }
+
+    .alert-body-text {
+      font-size: 0.85rem;
+      color: var(--slate-600);
+      margin-bottom: 18px;
+      line-height: 1.4;
+    }
+
+    .alert-confirm-btn {
+      width: 100%;
+      height: 40px;
+      background: var(--primary);
+      color: #ffffff;
+      border: none;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
     .site-footer {
       background: #ffffff;
       border-top: 1px solid var(--slate-200);
-      padding: 14px 16px;
+      padding: 12px 16px 16px;
       text-align: center;
       margin-top: auto;
       width: 100%;
     }
 
-    .footer-copy {
-      font-size: 0.75rem;
+    .footer-disclaimer {
+      font-size: 0.72rem;
       color: var(--slate-600);
+      margin-bottom: 3px;
     }
 
-    .footer-copy a {
+    .footer-credit {
+      font-size: 0.75rem;
+      color: var(--slate-800);
+    }
+
+    .footer-credit a {
       color: var(--primary);
       font-weight: 700;
       text-decoration: none;
@@ -233,7 +304,6 @@
 </head>
 <body>
 
-  <!-- Top Header -->
   <header class="site-header">
     <div class="header-inner">
       <div class="brand-row">
@@ -253,84 +323,99 @@
     </div>
   </header>
 
-  <!-- Main Container -->
   <main class="main-wrapper">
-    <div class="feedback-card">
+    <div class="form-card">
       <h1 class="page-title">আপনার মূল্যবান মতামত</h1>
       <p class="page-subtitle">JIBONI প্ল্যাটফর্মকে আরও উন্নত করতে আপনার পরামর্শ বা অভিজ্ঞতা জানান</p>
 
-      <form id="feedbackForm">
-        <div class="form-group">
-          <label class="field-label" for="fbName">আপনার নাম (ঐচ্ছিক):</label>
-          <input type="text" id="fbName" class="text-input" placeholder="নাম লিখুন" />
+      <form id="feedbackForm" onsubmit="handleFeedbackSubmit(event)">
+        <!-- আপনার নাম (বাধ্যতামূলক) -->
+        <div class="input-group">
+          <label class="field-label" for="feedName">আপনার নাম: *</label>
+          <input type="text" id="feedName" class="text-input" placeholder="নাম লিখুন" required />
         </div>
 
-        <div class="form-group">
-          <label class="field-label" for="fbContact">মোবাইল বা ইমেইল (ঐচ্ছিক):</label>
-          <input type="text" id="fbContact" class="text-input" placeholder="যোগাযোগের নম্বর/ইমেইল" />
+        <!-- মোবাইল বা ইমেইল (বাধ্যতামূলক) -->
+        <div class="input-group">
+          <label class="field-label" for="feedContact">মোবাইল বা ইমেইল: *</label>
+          <input type="text" id="feedContact" class="text-input" placeholder="যোগাযোগের নম্বর/ইমেইল" required />
         </div>
 
-        <div class="form-group">
-          <label class="field-label" for="fbMessage">বার্তা বা পরামর্শ: *</label>
-          <textarea id="fbMessage" class="textarea-input" required placeholder="আপনার মতামত বিস্তারিত লিখুন..."></textarea>
+        <!-- বার্তা বা পরামর্শ (বাধ্যতামূলক) -->
+        <div class="input-group">
+          <label class="field-label" for="feedMessage">বার্তা বা পরামর্শ: *</label>
+          <textarea id="feedMessage" class="textarea-input" placeholder="আপনার মতামত বিস্তারিত লিখুন..." required></textarea>
         </div>
 
-        <button type="submit" class="btn-submit" id="fbBtn">ফিডব্যাক পাঠান</button>
+        <button type="submit" class="btn-submit" id="feedSubmitBtn">ফিডব্যাক পাঠান</button>
       </form>
 
-      <div id="fbAlert" class="status-alert"></div>
+      <div id="feedbackAlert" class="alert-box"></div>
     </div>
   </main>
 
-  <!-- Footer -->
+  <!-- JIBONI BRANDED POPUP ALERT -->
+  <div id="customAlertModal" class="custom-alert-backdrop">
+    <div class="custom-alert-box">
+      <div class="alert-icon-wrap" id="customAlertIcon">⚠️</div>
+      <h3 class="alert-title-text" id="customAlertTitle">সতর্কতা</h3>
+      <p class="alert-body-text" id="customAlertMsg">বার্তা</p>
+      <button type="button" class="alert-confirm-btn" onclick="closeCustomAlert()">ঠিক আছে</button>
+    </div>
+  </div>
+
   <footer class="site-footer">
-    <p class="footer-copy">JIBONI — রক্তদানে সচেতনতা আমাদের লক্ষ্য</p>
-    <p class="footer-copy">Designed & Developed by <a href="developer.html">Amanulla Emon</a></p>
+    <p class="footer-disclaimer">Use donor information responsibly. Confirm availability before contacting.</p>
+    <p class="footer-credit">Designed & Developed by <a href="developer.html">Amanulla Emon</a></p>
   </footer>
 
   <script>
-    document.getElementById("feedbackForm").addEventListener("submit", function(e) {
+    function showCustomAlert(title, message, icon) {
+      document.getElementById("customAlertTitle").innerText = title || "সতর্কতা";
+      document.getElementById("customAlertMsg").innerText = message;
+      document.getElementById("customAlertIcon").innerText = icon || "⚠️";
+      document.getElementById("customAlertModal").style.display = "flex";
+    }
+
+    function closeCustomAlert() {
+      document.getElementById("customAlertModal").style.display = "none";
+    }
+
+    function handleFeedbackSubmit(e) {
       e.preventDefault();
-      const btn = document.getElementById("fbBtn");
-      const alertBox = document.getElementById("fbAlert");
+      var name = document.getElementById("feedName").value.trim();
+      var contact = document.getElementById("feedContact").value.trim();
+      var message = document.getElementById("feedMessage").value.trim();
+      var alertBox = document.getElementById("feedbackAlert");
 
-      const name = document.getElementById("fbName").value.trim();
-      const contact = document.getElementById("fbContact").value.trim();
-      const message = document.getElementById("fbMessage").value.trim();
-
-      if (!message) return;
-
-      btn.disabled = true;
-      btn.innerText = "পাঠানো হচ্ছে...";
-
-      try {
-        const feedbackEntry = {
-          name: name || "নাম প্রকাশে অনিচ্ছুক",
-          contact: contact || "তথ্য নেই",
-          message: message,
-          date: new Date().toISOString()
-        };
-
-        const existing = JSON.parse(localStorage.getItem("jiboni_feedbacks") || "[]");
-        existing.unshift(feedbackEntry);
-        localStorage.setItem("jiboni_feedbacks", JSON.stringify(existing));
-
-        alertBox.style.display = "block";
-        alertBox.style.background = "#dcfce7";
-        alertBox.style.color = "#15803d";
-        alertBox.innerText = "ধন্যবাদ! আপনার মূল্যবান মতামত সফলভাবে গ্রহণ করা হয়েছে।";
-
-        document.getElementById("feedbackForm").reset();
-      } catch (err) {
-        alertBox.style.display = "block";
-        alertBox.style.background = "#fee2e2";
-        alertBox.style.color = "#b91c1c";
-        alertBox.innerText = "মতামত পাঠাতে সমস্যা হয়েছে, অনুগ্রহ করে পুনরায় চেষ্টা করুন।";
-      } finally {
-        btn.disabled = false;
-        btn.innerText = "ফিডব্যাক পাঠান";
+      if (!name || !contact || !message) {
+        showCustomAlert("তথ্য অসম্পূর্ণ", "অনুগ্রহ করে সকল আবশ্যকীয় তথ্য (*) পূরণ করুন!", "✍️");
+        return;
       }
-    });
+
+      var feedbacks = JSON.parse(localStorage.getItem("jiboni_feedbacks") || "[]");
+      var newFeedback = {
+        id: Date.now(),
+        name: name,
+        contact: contact,
+        message: message,
+        date: new Date().toISOString().split("T")[0]
+      };
+
+      feedbacks.unshift(newFeedback);
+      localStorage.setItem("jiboni_feedbacks", JSON.stringify(feedbacks));
+
+      alertBox.style.display = "block";
+      alertBox.style.background = "#dcfce7";
+      alertBox.style.color = "#15803d";
+      alertBox.innerText = "ধন্যবাদ! আপনার মূল্যবান মতামত সফলভাবে গ্রহণ করা হয়েছে।";
+
+      document.getElementById("feedbackForm").reset();
+
+      setTimeout(function() {
+        alertBox.style.display = "none";
+      }, 3500);
+    }
   </script>
 </body>
 </html>
