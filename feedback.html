@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>মতামত দিন - BADHAN ZH</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    .feedback-card {
+      background: rgba(255, 255, 255, 0.35);
+      backdrop-filter: blur(2px);
+      border: 1.5px solid rgba(255, 255, 255, 0.65);
+      border-radius: var(--radius);
+      padding: 16px 14px;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+      margin-top: 6px;
+      margin-bottom: 12px;
+    }
+    .form-title {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--primary);
+      text-align: center;
+      margin-bottom: 4px;
+    }
+    .form-subtitle {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-align: center;
+      line-height: 1.35;
+      margin-bottom: 14px;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin-bottom: 10px;
+    }
+    .form-group label {
+      font-size: 0.84rem;
+      font-weight: 700;
+      color: #1e293b;
+    }
+    .form-group input, .form-group textarea {
+      width: 100%;
+      padding: 8px 12px;
+      border: 1.5px solid rgba(203, 213, 225, 0.85);
+      border-radius: 8px;
+      font-size: 0.92rem;
+      font-weight: 500;
+      background-color: rgba(255, 255, 255, 0.45);
+      color: var(--text-main);
+      outline: none;
+      font-family: inherit;
+    }
+    .form-group input { height: 40px; }
+    .form-group textarea { resize: vertical; min-height: 90px; }
+    .btn-submit {
+      width: 100%;
+      height: 42px;
+      background: var(--primary);
+      color: #ffffff;
+      font-size: 0.96rem;
+      font-weight: 700;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 6px;
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-container">
+      <div class="header-main-row">
+        <a href="index.html" class="logo">
+          <span class="logo-drop">🩸</span>
+          <span class="logo-text">BADHAN</span>
+          <span class="logo-zh-badge">ZH</span>
+        </a>
+      </div>
+      <div class="header-nav-row">
+        <a href="index.html" class="nav-chip">← হোম পেজ</a>
+      </div>
+      <div class="header-slogan-wrap">
+        <p class="header-slogan">"একের রক্ত অন্যের জীবন, রক্তই হোক আত্মার বাঁধন"</p>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="feedback-card">
+      <h2 class="form-title">ওয়েবসাইট সম্পর্কে আপনার মতামত দিন</h2>
+      <p class="form-subtitle">BADHAN ZH প্ল্যাটফর্মটি আরও উন্নত করতে আপনার মূল্যবান মতামত ও পরামর্শ জানান।</p>
+      <form id="feedbackForm">
+        <div class="form-group">
+          <label for="name">আপনার নাম *</label>
+          <input type="text" id="name" placeholder="e.g. Amanulla Emon" required />
+        </div>
+        <div class="form-group">
+          <label for="contact">মোবাইল বা ইমেইল (ঐচ্ছিক)</label>
+          <input type="text" id="contact" placeholder="01XXXXXXXXX বা email" />
+        </div>
+        <div class="form-group">
+          <label for="message">আপনার মতামত বা পরামর্শ *</label>
+          <textarea id="message" placeholder="আপনার মতামত বিস্তারিত লিখুন..." required></textarea>
+        </div>
+        <button type="submit" class="btn-submit" id="submitBtn">মতামত জমা দিন</button>
+      </form>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-container">
+      <p class="footer-notice">BADHAN ZH — আপনার মতামত আমাদের অনুপ্রেরণা</p>
+      <p class="footer-credit">Designed & Developed by <a href="developer.html">Amanulla Emon</a></p>
+    </div>
+  </footer>
+
+  <script>
+    const SUPABASE_URL = "https://qqwuweskgtoqigfvvfso.supabase.co";
+    const SUPABASE_ANON_KEY = "sb_publishable_A1qWn9h-TYg1dXxOgbYlxg_MXanpCxA";
+    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    document.getElementById('feedbackForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const submitBtn = document.getElementById('submitBtn');
+      submitBtn.disabled = true;
+      submitBtn.textContent = "অপেক্ষা করুন...";
+
+      try {
+        const { error } = await supabaseClient.from('feedback').insert([{
+          name: document.getElementById('name').value.trim(),
+          contact: document.getElementById('contact').value.trim() || null,
+          message: document.getElementById('message').value.trim()
+        }]);
+        if (error) throw error;
+        alert("আপনার মতামত সফলভাবে জমা হয়েছে! ধন্যবাদ।");
+        document.getElementById('feedbackForm').reset();
+      } catch (err) {
+        alert("ত্রুটি: " + err.message);
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "মতামত জমা দিন";
+      }
+    });
+  </script>
+</body>
+</html>
