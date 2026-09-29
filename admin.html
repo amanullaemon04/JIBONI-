@@ -143,77 +143,163 @@
       text-align: center;
     }
 
-    /* Admin Info Card */
-    .admin-info-card {
+    /* STYLISH EYE-CATCHING ADMIN BADGE HERO */
+    .admin-hero-card {
       background: #ffffff;
       border: 1px solid var(--slate-200);
-      border-radius: 14px;
-      padding: 14px 16px;
+      border-radius: 16px;
+      padding: 16px;
       margin-bottom: 14px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+      box-shadow: 0 4px 18px rgba(15, 23, 42, 0.04);
+      position: relative;
+      overflow: hidden;
     }
 
-    .admin-meta-row {
+    .admin-hero-card.super-theme::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3.5px;
+      background: linear-gradient(90deg, #dc2626, #f87171, #ef4444);
+    }
+
+    .admin-hero-card.sub-theme::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3.5px;
+      background: linear-gradient(90deg, #0284c7, #38bdf8, #0ea5e9);
+    }
+
+    .admin-hero-top {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      margin-bottom: 10px;
-      flex-wrap: wrap;
-      gap: 8px;
+      gap: 12px;
+      margin-bottom: 12px;
     }
 
-    .badge-admin-role {
-      font-size: 0.76rem;
-      font-weight: 800;
-      padding: 3px 9px;
-      border-radius: 6px;
-    }
-
-    .badge-super {
-      background: #fee2e2;
-      color: var(--primary);
-    }
-
-    .badge-sub {
-      background: var(--info-light);
-      color: var(--info);
-    }
-
-    .admin-email-text {
-      font-size: 0.88rem;
-      font-weight: 700;
-      color: var(--slate-800);
-    }
-
-    .admin-header-actions {
+    .admin-avatar-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
       display: flex;
       align-items: center;
-      gap: 8px;
+      justify-content: center;
+      font-size: 1.4rem;
+      flex-shrink: 0;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
     }
 
-    .change-pwd-btn {
-      background: var(--slate-100);
-      border: 1px solid var(--slate-200);
-      border-radius: 20px;
-      padding: 4px 12px;
-      font-size: 0.76rem;
-      font-weight: 700;
-      color: var(--slate-600);
-      cursor: pointer;
+    .avatar-super {
+      background: linear-gradient(135deg, #fee2e2, #fecaca);
+      color: #dc2626;
+      border: 1px solid #fca5a5;
+    }
+
+    .avatar-sub {
+      background: linear-gradient(135deg, #e0f2fe, #bae6fd);
+      color: #0284c7;
+      border: 1px solid #7dd3fc;
+    }
+
+    .admin-hero-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .admin-pill-badge {
       display: inline-flex;
       align-items: center;
       gap: 4px;
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      margin-bottom: 2px;
     }
 
-    .logout-btn {
-      background: #fff1f2;
-      border: 1px solid #fecdd3;
-      border-radius: 20px;
-      padding: 4px 12px;
-      font-size: 0.76rem;
+    .pill-super {
+      background: #fef2f2;
+      color: #b91c1c;
+      border: 1px solid #fecaca;
+    }
+
+    .pill-sub {
+      background: #f0f9ff;
+      color: #0369a1;
+      border: 1px solid #bae6fd;
+    }
+
+    .admin-main-name {
+      font-size: 0.96rem;
+      font-weight: 800;
+      color: var(--slate-900);
+      line-height: 1.25;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .admin-email-sub {
+      font-size: 0.78rem;
+      color: var(--slate-600);
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-top: 1px;
+    }
+
+    .admin-hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-top: 1px solid var(--slate-100);
+      padding-top: 10px;
+    }
+
+    .hero-btn {
+      flex: 1;
+      height: 34px;
+      border-radius: 8px;
+      font-size: 0.78rem;
       font-weight: 700;
-      color: var(--primary);
       cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      transition: all 0.15s ease;
+      border: 1px solid var(--slate-200);
+    }
+
+    .hero-btn-pwd {
+      background: #ffffff;
+      color: var(--slate-700);
+    }
+
+    .hero-btn-pwd:hover {
+      background: var(--slate-50);
+      border-color: var(--slate-300);
+    }
+
+    .hero-btn-logout {
+      background: #fff1f2;
+      border-color: #fecdd3;
+      color: var(--primary);
+    }
+
+    .hero-btn-logout:hover {
+      background: #ffe4e6;
     }
 
     /* Tabs Row */
@@ -595,16 +681,23 @@
     <!-- MAIN ADMIN DASHBOARD SECTION -->
     <div id="adminDashboardSection" style="display: none;">
       
-      <div class="admin-info-card">
-        <div class="admin-meta-row">
-          <div style="display: flex; align-items: center; gap: 8px;">
-            <span class="badge-admin-role" id="adminRoleBadge">Super Admin</span>
-            <span class="admin-email-text" id="adminEmailDisplay">amanullaemon04@gmail.com</span>
+      <!-- NEW IMMERSIVE & EYE-CATCHING ADMIN HERO CARD -->
+      <div class="admin-hero-card super-theme" id="adminHeroCard">
+        <div class="admin-hero-top">
+          <div class="admin-avatar-icon avatar-super" id="adminAvatarIcon">👑</div>
+          <div class="admin-hero-info">
+            <span class="admin-pill-badge pill-super" id="adminPillBadge">👑 Super Admin</span>
+            <h2 class="admin-main-name" id="adminMainName">Amanulla Emon</h2>
+            <div class="admin-email-sub">
+              <span>✉️</span>
+              <span id="adminEmailDisplay">amanullaemon04@gmail.com</span>
+            </div>
           </div>
-          <div class="admin-header-actions">
-            <button type="button" class="change-pwd-btn" onclick="openChangePwdModal()">🔑 পাসওয়ার্ড পরিবর্তন</button>
-            <button type="button" class="logout-btn" onclick="handleLogout()">লগআউট</button>
-          </div>
+        </div>
+
+        <div class="admin-hero-actions">
+          <button type="button" class="hero-btn hero-btn-pwd" onclick="openChangePwdModal()">🔑 পাসওয়ার্ড পরিবর্তন</button>
+          <button type="button" class="hero-btn hero-btn-logout" onclick="handleLogout()">🚪 লগআউট</button>
         </div>
       </div>
 
@@ -754,28 +847,41 @@
       var dashSec = document.getElementById("adminDashboardSection");
 
       if (!session) {
-        session = { email: SUPER_ADMIN_EMAIL, role: "super", name: "Super Admin" };
+        session = { email: SUPER_ADMIN_EMAIL, role: "super", name: "Amanulla Emon" };
         sessionStorage.setItem("jiboni_admin_session", JSON.stringify(session));
       }
 
       loginSec.style.display = "none";
       dashSec.style.display = "block";
 
-      var roleBadge = document.getElementById("adminRoleBadge");
+      var heroCard = document.getElementById("adminHeroCard");
+      var avatarIcon = document.getElementById("adminAvatarIcon");
+      var pillBadge = document.getElementById("adminPillBadge");
+      var mainName = document.getElementById("adminMainName");
       var emailDisplay = document.getElementById("adminEmailDisplay");
+
       var tabFeedback = document.getElementById("tabFeedback");
       var tabSubAdmin = document.getElementById("tabSubAdmin");
 
       emailDisplay.innerText = session.email;
 
       if (session.role === "super") {
-        roleBadge.className = "badge-admin-role badge-super";
-        roleBadge.innerText = "Super Admin";
+        heroCard.className = "admin-hero-card super-theme";
+        avatarIcon.className = "admin-avatar-icon avatar-super";
+        avatarIcon.innerText = "👑";
+        pillBadge.className = "admin-pill-badge pill-super";
+        pillBadge.innerText = "👑 Super Admin";
+        mainName.innerText = session.name || "Amanulla Emon";
+
         tabFeedback.style.display = "inline-flex";
         tabSubAdmin.style.display = "inline-flex";
       } else {
-        roleBadge.className = "badge-admin-role badge-sub";
-        roleBadge.innerText = "Sub Admin (" + (session.name || "অ্যাসিস্ট্যান্ট") + ")";
+        heroCard.className = "admin-hero-card sub-theme";
+        avatarIcon.className = "admin-avatar-icon avatar-sub";
+        avatarIcon.innerText = "🛡️";
+        pillBadge.className = "admin-pill-badge pill-sub";
+        pillBadge.innerText = "🛡️ Sub Admin";
+        mainName.innerText = session.name || "Assistant Admin";
         
         tabFeedback.style.display = "none";
         tabSubAdmin.style.display = "none";
@@ -797,7 +903,7 @@
       if (email === SUPER_ADMIN_EMAIL.toLowerCase()) {
         var masterPwd = localStorage.getItem("jiboni_admin_pwd") || "admin123";
         if (pwd === masterPwd) {
-          sessionStorage.setItem("jiboni_admin_session", JSON.stringify({ email: SUPER_ADMIN_EMAIL, role: "super", name: "Super Admin" }));
+          sessionStorage.setItem("jiboni_admin_session", JSON.stringify({ email: SUPER_ADMIN_EMAIL, role: "super", name: "Amanulla Emon" }));
           checkAuth();
           return;
         }
@@ -1121,9 +1227,6 @@
       }
     }
 
-    // ==========================================
-    // 🛡️ RENDER SUB-ADMINS WITH STRICT 135px ALIGNMENT
-    // ==========================================
     function renderSubAdmins() {
       var session = getActiveSession();
       if (session && session.role !== "super") return;
