@@ -4,107 +4,171 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Developer Info - JIBONI</title>
-  <link rel="stylesheet" href="style.css" />
   <style>
-    .dev-container {
-      max-width: 520px;
-      margin: 0 auto;
-      padding: 10px 14px 40px;
+    @import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Hind Siliguri', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     }
 
-    .dev-card {
-      background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(4px);
-      border: 1.5px solid rgba(255, 255, 255, 0.95);
-      border-radius: var(--radius, 12px);
-      padding: 24px 18px;
-      margin-top: 10px;
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
-      text-align: center;
-      position: relative;
-    }
-
-    /* Perfect Circle Profile Avatar */
-    .dev-avatar-wrap {
-      margin-bottom: 12px;
+    body {
+      background-color: #f8fafc;
+      color: #1e293b;
+      min-height: 100vh;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    /* Compact Header */
+    .header {
+      background: #ffffff;
+      padding: 8px 12px 6px;
+      border-bottom: 1px solid #e2e8f0;
+      text-align: center;
+    }
+
+    .header-main-row {
+      margin-bottom: 4px;
+    }
+
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      text-decoration: none;
+    }
+
+    .logo-drop {
+      font-size: 1.3rem;
+      line-height: 1;
+    }
+
+    .logo-text {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: #dc2626;
+      letter-spacing: 0.5px;
+      line-height: 1;
+    }
+
+    .header-nav-row {
+      margin-bottom: 4px;
+    }
+
+    .nav-chip {
+      padding: 3px 10px;
+      border-radius: 16px;
+      font-size: 0.76rem;
+      font-weight: 700;
+      text-decoration: none;
+      display: inline-block;
+      background: #f1f5f9;
+      color: #475569;
+      border: 1px solid #cbd5e1;
+    }
+
+    .header-slogan {
+      font-size: 0.72rem;
+      color: #64748b;
+      font-style: italic;
+      line-height: 1.2;
+    }
+
+    /* Main Container (Scroll-Free Fitted) */
+    .dev-container {
+      max-width: 440px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 6px 12px;
+      flex: 1;
+      display: flex;
       align-items: center;
     }
 
+    .dev-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 12px 14px;
+      width: 100%;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+      text-align: center;
+    }
+
+    .dev-avatar-wrap {
+      margin-bottom: 6px;
+      display: flex;
+      justify-content: center;
+    }
+
     .dev-avatar {
-      width: 108px;
-      height: 108px;
-      min-width: 108px;
-      min-height: 108px;
-      aspect-ratio: 1 / 1;
+      width: 82px;
+      height: 82px;
+      min-width: 82px;
+      min-height: 82px;
       border-radius: 50%;
-      border: 3.5px solid #dc2626;
+      border: 3px solid #dc2626;
       object-fit: cover;
       object-position: center;
-      box-shadow: 0 4px 12px rgba(220, 38, 38, 0.25);
-      background: #f8fafc;
+      box-shadow: 0 2px 8px rgba(220, 38, 38, 0.2);
       display: block;
     }
 
     .dev-name {
-      font-size: 1.28rem;
+      font-size: 1.15rem;
       font-weight: 800;
       color: #0f172a;
-      margin: 0 0 2px 0;
+      line-height: 1.2;
     }
 
     .dev-role {
-      font-size: 0.88rem;
+      font-size: 0.78rem;
       font-weight: 700;
       color: #b91c1c;
-      margin: 0 0 10px 0;
+      margin-bottom: 6px;
     }
 
     .dev-desc {
-      font-size: 0.84rem;
+      font-size: 0.76rem;
       color: #475569;
-      line-height: 1.55;
-      margin: 0 auto 14px;
-      max-width: 95%;
+      line-height: 1.35;
+      margin: 0 auto 8px;
     }
 
-    /* Bio / About Button */
+    /* Compact Bio Link */
     .btn-bio-link {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 6px;
+      gap: 5px;
       width: 100%;
-      height: 42px;
+      height: 32px;
       background: rgba(220, 38, 38, 0.05);
       color: #b91c1c;
-      border: 1.5px dashed #fca5a5;
-      border-radius: 8px;
-      font-size: 0.86rem;
+      border: 1px dashed #fca5a5;
+      border-radius: 6px;
+      font-size: 0.78rem;
       font-weight: 700;
       text-decoration: none;
-      margin-bottom: 14px;
-      transition: all 0.2s ease;
+      margin-bottom: 8px;
     }
 
-    .btn-bio-link:active {
-      background: #fee2e2;
-      border-color: #ef4444;
-    }
-
-    /* Details Box */
+    /* Compact Info Box */
     .dev-info-box {
-      border: 1px solid #cbd5e1;
-      border-radius: 8px;
-      padding: 12px 14px;
-      margin-bottom: 14px;
+      border: 1px solid #e2e8f0;
+      background: #f8fafc;
+      border-radius: 6px;
+      padding: 6px 10px;
+      margin-bottom: 8px;
       text-align: left;
-      font-size: 0.85rem;
+      font-size: 0.78rem;
       display: flex;
       flex-direction: column;
-      gap: 8px;
-      background: rgba(255, 255, 255, 0.6);
+      gap: 4px;
     }
 
     .dev-info-row {
@@ -115,7 +179,7 @@
 
     .dev-info-label {
       font-weight: 700;
-      color: #334155;
+      color: #475569;
     }
 
     .dev-info-val {
@@ -129,26 +193,25 @@
       font-weight: 800;
     }
 
-    /* Primary Action Buttons */
+    /* Primary Actions */
     .primary-actions-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 8px;
-      margin-bottom: 10px;
+      gap: 6px;
+      margin-bottom: 6px;
     }
 
     .btn-primary-action {
-      height: 42px;
-      border-radius: 8px;
-      font-size: 0.88rem;
+      height: 36px;
+      border-radius: 6px;
+      font-size: 0.82rem;
       font-weight: 700;
       color: #ffffff;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
+      gap: 6px;
       text-decoration: none;
-      border: none;
     }
 
     .btn-email {
@@ -159,40 +222,57 @@
       background: #16a34a;
     }
 
-    /* Social Links Grid */
+    /* Social Grid */
     .social-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 8px;
+      gap: 6px;
     }
 
     .btn-social {
-      height: 40px;
+      height: 34px;
       background: #ffffff;
       border: 1px solid #cbd5e1;
-      border-radius: 8px;
-      font-size: 0.85rem;
+      border-radius: 6px;
+      font-size: 0.78rem;
       font-weight: 700;
       color: #334155;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
+      gap: 6px;
       text-decoration: none;
-      transition: background 0.15s ease;
     }
 
-    .btn-social:active {
-      background: #f1f5f9;
-    }
-
-    /* SVG Brand Icon styles */
     .icon-svg {
-      width: 18px;
-      height: 18px;
-      display: inline-block;
-      vertical-align: middle;
+      width: 15px;
+      height: 15px;
       flex-shrink: 0;
+    }
+
+    /* Compact Footer */
+    .footer {
+      background: #ffffff;
+      border-top: 1px solid #e2e8f0;
+      padding: 6px 10px;
+      text-align: center;
+    }
+
+    .footer-notice {
+      font-size: 0.7rem;
+      color: #64748b;
+      margin-bottom: 1px;
+    }
+
+    .footer-credit {
+      font-size: 0.7rem;
+      color: #334155;
+    }
+
+    .footer-credit a {
+      color: #dc2626;
+      font-weight: 700;
+      text-decoration: none;
     }
   </style>
 </head>
@@ -200,24 +280,21 @@
 
   <!-- Header -->
   <header class="header">
-    <div class="header-container">
-      <div class="header-main-row">
-        <a href="index.html" class="logo">
-          <span class="logo-drop">🩸</span>
-          <span class="logo-text">JIBONI</span>
-        </a>
-      </div>
-
-      <div class="header-nav-row">
-        <a href="index.html" class="nav-chip">← হোম পেজ</a>
-      </div>
-
-      <div class="header-slogan-wrap">
-        <p class="header-slogan">"অচেনা কাউকে বাঁচার আশা দিয়ে, লিখে যাও এক নিঃস্বার্থ জীবনী।"</p>
-      </div>
+    <div class="header-main-row">
+      <a href="index.html" class="logo">
+        <span class="logo-drop">🩸</span>
+        <span class="logo-text">JIBONI</span>
+      </a>
     </div>
+
+    <div class="header-nav-row">
+      <a href="index.html" class="nav-chip">← হোম পেজ</a>
+    </div>
+
+    <p class="header-slogan">"অচেনা কাউকে বাঁচার আশা দিয়ে, লিখে যাও এক নিঃস্বার্থ জীবনী।"</p>
   </header>
 
+  <!-- Main Container -->
   <main class="dev-container">
     <div class="dev-card">
       
@@ -233,12 +310,12 @@
       <h1 class="dev-name">Amanulla Emon</h1>
       <div class="dev-role">Lead Developer & Maintainer</div>
       <p class="dev-desc">
-        JIBONI (জীবনী) ব্লাড ডোনার প্ল্যাটফর্মের ডেভেলপার। জরুরি রক্তের প্রয়োজনে মানুষের পাশে দাঁড়াতে ও জীবন বাঁচানোর সেতুবন্ধন গড়তেই এই প্ল্যাটফর্মের সূচনা।
+        JIBONI প্ল্যাটফর্মের প্রতিষ্ঠাতা ও ডেভেলপার। জরুরি রক্তের প্রয়োজনে মানুষের পাশে দাঁড়াতে ও জীবন বাঁচানোর সেতুবন্ধন গড়তেই এই প্ল্যাটফর্ম।
       </p>
 
       <!-- Biography Link Button -->
       <a href="bio.html" class="btn-bio-link">
-        📖 সংক্ষিপ্ত পরিচিতি ও বায়ো (About / Bio) →
+        📖 সংক্ষিপ্ত বায়ো (About / Bio) →
       </a>
 
       <!-- Info Table Box -->
@@ -257,14 +334,14 @@
         </div>
       </div>
 
-      <!-- Send Email & WhatsApp Actions -->
+      <!-- Action Buttons -->
       <div class="primary-actions-grid">
         <a href="mailto:amanullaemon04@gmail.com" class="btn-primary-action btn-email">
           <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <rect x="2" y="4" width="20" height="16" rx="2"></rect>
             <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
           </svg>
-          Send Email
+          Email
         </a>
         <a href="https://wa.me/8801608575239" target="_blank" rel="noopener noreferrer" class="btn-primary-action btn-whatsapp">
           <svg class="icon-svg" viewBox="0 0 24 24" fill="currentColor">
@@ -274,10 +351,8 @@
         </a>
       </div>
 
-      <!-- Social Media Grid -->
+      <!-- Social Grid -->
       <div class="social-grid">
-        
-        <!-- GitHub Direct Profile -->
         <a href="https://github.com/amanullaemon04" target="_blank" rel="noopener noreferrer" class="btn-social">
           <svg class="icon-svg" viewBox="0 0 24 24" fill="#181717">
             <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
@@ -285,7 +360,6 @@
           GitHub
         </a>
 
-        <!-- Facebook Direct Profile -->
         <a href="https://www.facebook.com/amanullaemon.5" target="_blank" rel="noopener noreferrer" class="btn-social">
           <svg class="icon-svg" viewBox="0 0 24 24" fill="#1877F2">
             <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
@@ -293,7 +367,6 @@
           Facebook
         </a>
 
-        <!-- Telegram Direct Profile -->
         <a href="https://t.me/amanullaemon" target="_blank" rel="noopener noreferrer" class="btn-social">
           <svg class="icon-svg" viewBox="0 0 24 24" fill="#24A1DE">
             <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.161c-.18 1.897-.962 6.502-1.359 8.627-.168.9-.5 1.201-.82 1.23-.697.064-1.226-.46-1.901-.903-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.479.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635.099-.002.321.023.465.141.121.1.155.234.17.332-.001.07.013.297 0 .474z"/>
@@ -301,40 +374,21 @@
           Telegram
         </a>
 
-        <!-- Instagram Direct Profile -->
         <a href="https://www.instagram.com/_amanulla__emon_?stkn=Y2x0a2VoOHpkNmk2" target="_blank" rel="noopener noreferrer" class="btn-social">
           <svg class="icon-svg" viewBox="0 0 24 24" fill="#E4405F">
             <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
           </svg>
           Instagram
         </a>
-
-        <!-- Official X Direct Profile -->
-        <a href="https://x.com/amanulla_emon" target="_blank" rel="noopener noreferrer" class="btn-social">
-          <svg class="icon-svg" viewBox="0 0 24 24" fill="#000000">
-            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-          </svg>
-          X
-        </a>
-
-        <!-- Discord Direct User Profile Link via User ID -->
-        <a href="https://discord.com/users/1061164627637055538" target="_blank" rel="noopener noreferrer" class="btn-social">
-          <svg class="icon-svg" viewBox="0 0 24 24" fill="#5865F2">
-            <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.894.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
-          </svg>
-          Discord
-        </a>
-
       </div>
 
     </div>
   </main>
 
+  <!-- Footer -->
   <footer class="footer">
-    <div class="footer-container">
-      <p class="footer-notice">JIBONI — Service to Humanity</p>
-      <p class="footer-credit">Designed & Developed by <a href="developer.html">Amanulla Emon</a></p>
-    </div>
+    <p class="footer-notice">JIBONI — Service to Humanity</p>
+    <p class="footer-credit">Designed & Developed by <a href="developer.html">Amanulla Emon</a></p>
   </footer>
 
 </body>
