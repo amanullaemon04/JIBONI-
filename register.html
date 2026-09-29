@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, interactive-widget=resizes-content" />
-  <title>নতুন রক্তদাতা নিবন্ধন - JIBONI</title>
+  <title>ডোনার নিবন্ধন - JIBONI</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Hind+Siliguri:wght@500;600;700&display=swap');
 
@@ -13,6 +13,10 @@
       --primary-light: #fee2e2;
       --success: #15803d;
       --success-light: #dcfce7;
+      --warning: #b45309;
+      --warning-light: #fef3c7;
+      --info: #0284c7;
+      --info-light: #e0f2fe;
       --slate-50: #f8fafc;
       --slate-100: #f1f5f9;
       --slate-200: #e2e8f0;
@@ -111,40 +115,29 @@
       max-width: 480px;
       width: 100%;
       margin: 0 auto;
-      padding: 16px 14px 30px;
+      padding: 16px 14px 40px;
     }
 
-    .form-card {
+    .register-card {
       background: #ffffff;
       border: 1px solid var(--slate-200);
-      border-radius: 14px;
+      border-radius: 16px;
       padding: 20px 16px;
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.03);
-    }
-
-    .page-title {
-      font-size: 1.3rem;
-      font-weight: 800;
-      color: var(--slate-900);
-      margin-bottom: 4px;
-      text-align: center;
-    }
-
-    .page-subtitle {
-      font-size: 0.82rem;
-      color: var(--slate-600);
-      margin-bottom: 18px;
-      text-align: center;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
     }
 
     .input-group {
-      margin-bottom: 13px;
+      margin-bottom: 14px;
       text-align: left;
+    }
+
+    .input-group:last-of-type {
+      margin-bottom: 18px;
     }
 
     .field-label {
       display: block;
-      font-size: 0.82rem;
+      font-size: 0.84rem;
       font-weight: 700;
       color: var(--slate-800);
       margin-bottom: 5px;
@@ -153,7 +146,7 @@
     .text-input,
     .custom-select-trigger {
       width: 100%;
-      height: 42px;
+      height: 44px;
       padding: 0 12px;
       background: #ffffff;
       border: 1px solid var(--slate-200);
@@ -170,58 +163,40 @@
     }
 
     .text-input:focus,
-    .custom-select-trigger:focus {
+    .custom-select-trigger:focus,
+    .custom-select-trigger.active {
       border-color: var(--primary);
       box-shadow: 0 0 0 2px rgba(220, 38, 38, 0.1);
     }
 
     .field-hint {
-      font-size: 0.74rem;
-      color: var(--primary);
-      margin-top: 4px;
-      line-height: 1.3;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-
-    .field-hint-sub {
-      font-size: 0.73rem;
+      font-size: 0.72rem;
       color: var(--slate-400);
       margin-top: 4px;
+      display: block;
+      line-height: 1.35;
     }
 
-    .select-arrow {
-      font-size: 0.7rem;
-      color: var(--slate-400);
-    }
-
-    .btn-submit {
+    .submit-btn {
       width: 100%;
       height: 44px;
       background: var(--primary);
       color: #ffffff;
       border: none;
       border-radius: 10px;
-      font-size: 0.94rem;
+      font-size: 0.92rem;
       font-weight: 700;
       cursor: pointer;
-      margin-top: 8px;
-      box-shadow: 0 2px 8px rgba(220, 38, 38, 0.25);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      box-shadow: 0 4px 12px rgba(220, 38, 38, 0.25);
+      transition: all 0.15s;
     }
 
-    .btn-submit:active {
-      background: var(--primary-hover);
-    }
-
-    .alert-box {
-      margin-top: 14px;
-      padding: 10px 12px;
-      border-radius: 8px;
-      font-size: 0.84rem;
-      font-weight: 700;
-      text-align: center;
-      display: none;
+    .submit-btn:active {
+      transform: scale(0.98);
     }
 
     /* CUSTOM BOTTOM-SHEET MODALS */
@@ -241,6 +216,8 @@
       background: #ffffff;
       width: 100%;
       max-width: 480px;
+      height: 82vh;
+      height: 82dvh;
       border-top-left-radius: 20px;
       border-top-right-radius: 20px;
       display: flex;
@@ -278,8 +255,8 @@
     .modal-sheet-close {
       background: var(--slate-100);
       border: none;
-      width: 34px;
-      height: 34px;
+      width: 32px;
+      height: 32px;
       border-radius: 50%;
       font-size: 1.1rem;
       cursor: pointer;
@@ -291,7 +268,7 @@
 
     .modal-sheet-list {
       overflow-y: auto;
-      max-height: 60vh;
+      flex: 1;
       padding: 10px 16px 30px;
       display: flex;
       flex-direction: column;
@@ -330,239 +307,6 @@
       padding: 10px 4px 4px;
       text-transform: uppercase;
       letter-spacing: 0.5px;
-    }
-
-    /* FIXED-HEIGHT CALENDAR STYLING */
-    .calendar-month-nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 6px 8px;
-      background: var(--slate-50);
-      border-radius: 10px;
-      margin-bottom: 10px;
-      font-weight: 800;
-      color: var(--slate-900);
-      font-size: 0.95rem;
-    }
-
-    .cal-nav-btn {
-      background: #ffffff;
-      border: 1px solid var(--slate-200);
-      width: 38px;
-      height: 38px;
-      border-radius: 8px;
-      font-weight: 800;
-      font-size: 1.1rem;
-      color: var(--slate-800);
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      touch-action: manipulation;
-    }
-
-    .cal-nav-btn:active {
-      background: var(--slate-100);
-    }
-
-    .cal-year-badge {
-      background: #ffffff;
-      border: 1px solid var(--slate-200);
-      padding: 5px 12px;
-      border-radius: 8px;
-      font-size: 0.9rem;
-      font-weight: 800;
-      color: var(--primary);
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      transition: all 0.2s;
-    }
-
-    .cal-year-badge:hover {
-      background: var(--primary-light);
-      border-color: var(--primary);
-    }
-
-    .cal-weekdays-grid {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      text-align: center;
-      font-size: 0.75rem;
-      font-weight: 700;
-      color: var(--slate-400);
-      margin-bottom: 6px;
-    }
-
-    /* Fixed Height Container to prevent resizing (6 rows × 38px + gaps) */
-    .cal-days-grid {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      grid-template-rows: repeat(6, 38px);
-      gap: 4px;
-      text-align: center;
-      margin-bottom: 12px;
-      min-height: 248px;
-      max-height: 248px;
-    }
-
-    .cal-day-cell {
-      height: 38px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.88rem;
-      font-weight: 700;
-      color: var(--slate-800);
-      border-radius: 50%;
-      cursor: pointer;
-      user-select: none;
-      transition: all 0.15s;
-    }
-
-    .cal-day-cell:hover {
-      background: var(--slate-100);
-    }
-
-    .cal-day-cell.empty {
-      cursor: default;
-      pointer-events: none;
-    }
-
-    .cal-day-cell.today {
-      border: 1.5px solid var(--primary);
-      color: var(--primary);
-    }
-
-    .cal-day-cell.selected {
-      background: var(--primary) !important;
-      color: #ffffff !important;
-      box-shadow: 0 2px 8px rgba(220, 38, 38, 0.3);
-    }
-
-    .cal-year-grid {
-      display: none;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 8px;
-      height: 278px;
-      overflow-y: auto;
-      padding: 6px;
-      margin-bottom: 12px;
-    }
-
-    .cal-year-cell {
-      padding: 10px 0;
-      border-radius: 10px;
-      border: 1px solid var(--slate-200);
-      background: #ffffff;
-      font-size: 0.88rem;
-      font-weight: 700;
-      color: var(--slate-800);
-      text-align: center;
-      cursor: pointer;
-      transition: all 0.15s;
-    }
-
-    .cal-year-cell:hover,
-    .cal-year-cell.selected {
-      background: var(--primary);
-      color: #ffffff;
-      border-color: var(--primary);
-    }
-
-    .cal-actions-row {
-      display: flex;
-      gap: 10px;
-      border-top: 1px solid var(--slate-100);
-      padding-top: 12px;
-    }
-
-    .cal-action-btn {
-      flex: 1;
-      height: 40px;
-      border-radius: 10px;
-      font-size: 0.88rem;
-      font-weight: 700;
-      cursor: pointer;
-      border: 1px solid var(--slate-200);
-      background: #ffffff;
-      color: var(--slate-600);
-    }
-
-    .cal-confirm-btn {
-      background: var(--primary);
-      color: #ffffff;
-      border-color: var(--primary);
-    }
-
-    /* CUSTOM JIBONI ALERT DIALOG */
-    .custom-alert-backdrop {
-      position: fixed;
-      inset: 0;
-      background: rgba(15, 23, 42, 0.6);
-      backdrop-filter: blur(4px);
-      z-index: 3000;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 16px;
-    }
-
-    .custom-alert-box {
-      background: #ffffff;
-      border-radius: 18px;
-      max-width: 340px;
-      width: 100%;
-      padding: 22px 20px;
-      text-align: center;
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
-      animation: alertPop 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    }
-
-    @keyframes alertPop {
-      from { transform: scale(0.85); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
-    }
-
-    .alert-icon-wrap {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      background: var(--primary-light);
-      color: var(--primary);
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.4rem;
-      margin-bottom: 12px;
-    }
-
-    .alert-title-text {
-      font-size: 1.05rem;
-      font-weight: 800;
-      color: var(--slate-900);
-      margin-bottom: 6px;
-    }
-
-    .alert-body-text {
-      font-size: 0.85rem;
-      color: var(--slate-600);
-      margin-bottom: 18px;
-      line-height: 1.4;
-    }
-
-    .alert-confirm-btn {
-      width: 100%;
-      height: 40px;
-      background: var(--primary);
-      color: #ffffff;
-      border: none;
-      border-radius: 10px;
-      font-size: 0.9rem;
-      font-weight: 700;
-      cursor: pointer;
     }
 
     .site-footer {
@@ -605,8 +349,7 @@
 
       <div class="nav-btn-row">
         <a href="index.html" class="btn-chip">← হোম পেজ</a>
-        <a href="update-profile.html" class="btn-chip">✏️ তথ্য আপডেট</a>
-        <a href="developer.html" class="btn-chip">👨‍💻 ডেভেলপার</a>
+        <a href="update-profile.html" class="btn-chip">👤 প্রোফাইল</a>
       </div>
 
       <p class="brand-slogan">"অচেনা কাউকে বাঁচার আশা দিয়ে, লিখে যাও এক নিঃস্বার্থ জীবনী।"</p>
@@ -614,45 +357,43 @@
   </header>
 
   <main class="app-main">
-    <div class="form-card">
-      <h1 class="page-title">নতুন রক্তদাতা নিবন্ধন</h1>
-      <p class="page-subtitle">সঠিক তথ্য দিয়ে জীবন বাঁচানোর এই মহৎ উদ্যোগে যুক্ত হোন</p>
+    <div class="register-card">
+      <!-- Added autocomplete attributes for Google Password Manager prompt -->
+      <form id="registerForm" onsubmit="handleRegister(event)" autocomplete="on">
 
-      <form id="registerForm" onsubmit="handleRegistration(event)" action="javascript:void(0);">
-        
+        <!-- পূর্ণ নাম -->
         <div class="input-group">
-          <label class="field-label" for="regName">পূর্ণ নাম (Full Name): *</label>
-          <input type="text" id="regName" class="text-input" placeholder="আপনার নাম লিখুন" required />
+          <label class="field-label" for="regName">পূর্ণ নাম (Full Name) *</label>
+          <input type="text" id="regName" class="text-input" placeholder="আপনার সম্পূর্ণ নাম লিখুন" required autocomplete="name" />
         </div>
 
+        <!-- রক্তের গ্রুপ -->
         <div class="input-group">
-          <label class="field-label">রক্তের গ্রুপ (Blood Group): *</label>
+          <label class="field-label">রক্তের গ্রুপ (Blood Group) *</label>
           <div class="custom-select-trigger" id="bloodTrigger" onclick="openPicker('blood')">
-            <span id="bloodDisplay" style="color: var(--slate-400);">রক্তের গ্রুপ নির্বাচন করুন</span>
+            <span id="bloodDisplay" style="color: var(--slate-400);">-- রক্তের গ্রুপ নির্বাচন করুন --</span>
             <span class="select-arrow">▼</span>
           </div>
           <input type="hidden" id="regBlood" value="" required />
         </div>
 
+        <!-- মোবাইল নম্বর (Acts as Username for Password Manager) -->
         <div class="input-group">
-          <label class="field-label" for="regPhone">মোবাইল নম্বর (Phone Number): *</label>
-          <input type="tel" id="regPhone" name="username" class="text-input" placeholder="01XXXXXXXXX" autocomplete="username tel" required />
+          <label class="field-label" for="regPhone">মোবাইল নম্বর (Phone Number) *</label>
+          <input type="tel" id="regPhone" class="text-input" placeholder="01XXXXXXXXX" pattern="^01[0-9]{9}$" title="সঠিক ১১ ডিজিটের মোবাইল নম্বর দিন" required autocomplete="username" />
+          <span class="field-hint">যোগাযোগের জন্য সঠিক ১১ ডিজিটের নম্বর দিন।</span>
         </div>
 
         <!-- জন্ম তারিখ -->
         <div class="input-group">
-          <label class="field-label">জন্ম তারিখ (Date of Birth): *</label>
-          <div class="custom-select-trigger" id="dobTrigger" onclick="openCalendarFor('dob')">
-            <span id="dobDisplay" style="color: var(--slate-400);">জন্ম তারিখ নির্বাচন করুন</span>
-            <span class="select-arrow">📅</span>
-          </div>
-          <input type="hidden" id="regDob" value="" required />
-          <p class="field-hint">🔒 পাসকি বা পিন ভুলে গেলে এই জন্ম তারিখ দিয়ে পিন রিসেট করতে পারবেন।</p>
+          <label class="field-label" for="regDob">জন্ম তারিখ (Date of Birth) *</label>
+          <input type="date" id="regDob" class="text-input" required autocomplete="bday" />
+          <span class="field-hint">🔒 পাসকি বা পিন ভুলে গেলে এই জন্ম তারিখ দিয়ে পিন রিসেট করতে পারবেন।</span>
         </div>
 
         <!-- জেলা / শহর -->
         <div class="input-group">
-          <label class="field-label">জেলা / শহর (District): *</label>
+          <label class="field-label">জেলা / শহর (District) *</label>
           <div class="custom-select-trigger" id="districtTrigger" onclick="openPicker('district')">
             <span id="districtDisplay" style="color: var(--slate-400);">জেলা নির্বাচন করুন</span>
             <span class="select-arrow">▼</span>
@@ -662,7 +403,7 @@
 
         <!-- উপজেলা / থানা -->
         <div class="input-group">
-          <label class="field-label">উপজেলা / থানা (Upazila / Thana): *</label>
+          <label class="field-label">উপজেলা / থানা (Upazila / Thana) *</label>
           <div class="custom-select-trigger" id="upazilaTrigger" onclick="openPicker('upazila')">
             <span id="upazilaDisplay" style="color: var(--slate-400);">উপজেলা / থানা নির্বাচন করুন</span>
             <span class="select-arrow">▼</span>
@@ -670,35 +411,31 @@
           <input type="hidden" id="regUpazila" value="" required />
         </div>
 
+        <!-- হল / বর্তমান ঠিকানা -->
         <div class="input-group">
-          <label class="field-label" for="regHall">হল / বর্তমান ঠিকানা (Hall / Address):</label>
-          <input type="text" id="regHall" class="text-input" placeholder="উদাঃ শহীদ সার্জেন্ট জহুরুল হক হল" />
+          <label class="field-label" for="regHall">হল / বর্তমান ঠিকানা (Hall / Address)</label>
+          <input type="text" id="regHall" class="text-input" placeholder="उदाঃ শহীদ সার্জেন্ট জহুরুল হক হল" autocomplete="street-address" />
         </div>
 
         <!-- সর্বশেষ রক্তদানের তারিখ -->
         <div class="input-group">
-          <label class="field-label">সর্বশেষ রক্তদানের তারিখ (যদি থাকে):</label>
-          <div class="custom-select-trigger" id="lastDonationTrigger" onclick="openCalendarFor('lastDonation')">
-            <span id="lastDonationDisplay" style="color: var(--slate-400);">রক্তদানের তারিখ নির্বাচন করুন</span>
-            <span class="select-arrow">📅</span>
-          </div>
-          <input type="hidden" id="regLastDonation" value="" />
+          <label class="field-label" for="regLastDonation">সর্বশেষ রক্তদানের তারিখ (যদি থাকে)</label>
+          <input type="date" id="regLastDonation" class="text-input" />
         </div>
 
+        <!-- পিন বা পাসওয়ার্ড (Triggers Google Save Password Prompt) -->
         <div class="input-group">
-          <label class="field-label" for="regPin">৪ ডিজিট সিক্রেট পিন (Secret PIN): *</label>
-          <input type="password" id="regPin" name="password" class="text-input" placeholder="****" maxlength="4" autocomplete="new-password" required />
-          <p class="field-hint-sub">পরবর্তীতে নিজের তথ্য ও স্ট্যাটাস আপডেট করার জন্য এই পিন লাগবে।</p>
+          <label class="field-label" for="regPin">পিন বা পাসওয়ার্ড (4-8 Digit PIN/Password) *</label>
+          <input type="password" id="regPin" class="text-input" placeholder="••••" minlength="4" maxlength="8" required autocomplete="new-password" />
+          <span class="field-hint">পরবর্তীতে নিজের তথ্য ও স্ট্যাটাস আপডেট করার জন্য এই পিন বা পাসওয়ার্ড লাগবে।</span>
         </div>
 
-        <button type="submit" class="btn-submit" id="submitRegBtn">নিবন্ধন সম্পন্ন করুন</button>
+        <button type="submit" class="submit-btn">নিবন্ধন সম্পন্ন করুন</button>
       </form>
-
-      <div id="regAlert" class="alert-box"></div>
     </div>
   </main>
 
-  <!-- CUSTOM PICKER MODAL -->
+  <!-- CUSTOM BOTTOM-SHEET MODAL -->
   <div id="customPickerModal" class="custom-modal-backdrop" onclick="closePickerOnBackdrop(event)">
     <div class="custom-modal-sheet" id="modalSheetContent">
       <div class="modal-fixed-top">
@@ -714,56 +451,6 @@
     </div>
   </div>
 
-  <!-- FIXED-HEIGHT JIBONI BOTTOM-SHEET CALENDAR MODAL -->
-  <div id="customCalendarModal" class="custom-modal-backdrop" onclick="closeCalendarOnBackdrop(event)">
-    <div class="custom-modal-sheet" style="padding: 16px 16px 20px;">
-      <div class="modal-sheet-header">
-        <h3 class="modal-sheet-title" id="calendarTitle">তারিখ নির্বাচন করুন</h3>
-        <button type="button" class="modal-sheet-close" onclick="closeCalendarPicker()">✕</button>
-      </div>
-
-      <!-- Month & Year Navigation -->
-      <div class="calendar-month-nav">
-        <button type="button" class="cal-nav-btn" onclick="changeCalMonth(-1)">❮</button>
-        <div style="display:flex; align-items:center; gap:8px;">
-          <span id="calMonthLabel" style="font-weight:800; min-width: 80px; text-align: center;">সেপ্টেম্বর</span>
-          <div class="cal-year-badge" id="calYearBadge" onclick="toggleYearGridView()">
-            <span id="calYearLabel">২০২৬</span>
-            <span style="font-size:0.7rem;">▾</span>
-          </div>
-        </div>
-        <button type="button" class="cal-nav-btn" onclick="changeCalMonth(1)">❯</button>
-      </div>
-
-      <!-- Day View (Fixed Height Container) -->
-      <div id="calDaysViewWrap">
-        <div class="cal-weekdays-grid">
-          <div>রবি</div><div>সোম</div><div>মঙ্গল</div><div>বুধ</div><div>বৃহ</div><div>শুক্র</div><div>শনি</div>
-        </div>
-        <div class="cal-days-grid" id="calDaysGrid"></div>
-      </div>
-
-      <!-- Year Selection Grid View -->
-      <div class="cal-year-grid" id="calYearGrid"></div>
-
-      <!-- Footer Buttons -->
-      <div class="cal-actions-row">
-        <button type="button" class="cal-action-btn" onclick="clearCalendarDate()">মুছে ফেলুন</button>
-        <button type="button" class="cal-action-btn cal-confirm-btn" onclick="confirmCalendarDate()">নিশ্চিত করুন</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- JIBONI BRANDED CUSTOM POPUP ALERT -->
-  <div id="customAlertModal" class="custom-alert-backdrop">
-    <div class="custom-alert-box">
-      <div class="alert-icon-wrap" id="customAlertIcon">⚠️</div>
-      <h3 class="alert-title-text" id="customAlertTitle">সতর্কতা</h3>
-      <p class="alert-body-text" id="customAlertMsg">বার্তা</p>
-      <button type="button" class="alert-confirm-btn" onclick="closeCustomAlert()">ঠিক আছে</button>
-    </div>
-  </div>
-
   <footer class="site-footer">
     <p class="footer-disclaimer">JIBONI — রক্তদানে সচেতনতা আমাদের লক্ষ্য</p>
     <p class="footer-credit">Designed & Developed by <a href="developer.html">Amanulla Emon</a></p>
@@ -771,23 +458,7 @@
 
   <script>
     var currentPickerMode = "";
-    var currentCalendarTarget = "";
-    var isYearViewOpen = false;
-
-    var calViewDate = new Date();
-    var tempSelectedDateStr = "";
-
     var bloodGroupsList = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
-
-    const banglaMonths = [
-      "জানুয়ারি", "ফেব্রুয়ারি", "মার্চ", "এপ্রিল", "মে", "জুন",
-      "জুলাই", "আগস্ট", "সেপ্টেম্বর", "অক্টোবর", "নভেম্বর", "ডিসেম্বর"
-    ];
-
-    function toBanglaDigits(str) {
-      const bn = ["০", "১", "২", "৩", "৪", "৫", "৬", "৭", "৮", "৯"];
-      return String(str).replace(/[0-9]/g, function(d) { return bn[d]; });
-    }
 
     var districtsList = [
       { category: "ঢাকা বিভাগ", name: "Dhaka", label: "ঢাকা (Dhaka)" },
@@ -896,7 +567,7 @@
       "Natore": ["নাটোর সদর (Sadar)", "সিংড়া (Singra)", "বড়াইগ্রাম (Baraigram)", "গুরুদাসপুর (Gurudaspur)", "লালপুর (Lalpur)", "বাগাতিপাড়া (Bagatipara)", "নলডাঙ্গা (Naldanga)"],
       "Chapai Nawabganj": ["চাঁপাইনবাবগঞ্জ সদর (Sadar)", "শিবগঞ্জ (Shibganj)", "গোমস্তাপুর (Gomastapur)", "নাচোল (Nachole)", "ভোলাহাট (Bholahat)"],
       "Joypurhat": ["জয়পুরহাট সদর (Sadar)", "পাঁচবিবি (Panchbibi)", "কালাই (Kalai)", "ক্ষেতলাল (Khetlal)", "আক্কেলপুর (Akkelpur)"],
-      "Khulna": ["খুলনা সদর (Sadar)", "সোনাডাঙ্গা (Sonadanga)", "খালিশপুর (Khalishpur)", "দৌলতপুর (Daulatpur)", "খানজাহান আলী (Khan Jahan Ali)", "ডুমুরিয়া (Dumuria)", "ফুলতলা (Phultala)", "রূপসা (Rupsha)", "তেরখাদা (Terokhada)", "দিঘলিয়া (Dighalia)", "পাইকগাছা (Paikgachha)", "কয়রা (Koyra)", "বটিয়াঘাটা (Batiaghata)", "দাকোপ (Dacope)"],
+      "Khulna": ["খুলনা সদর (Sadar)", "সোনাডাঙ্গা (Sonadanga)", "খালিশপুর (Khalিশপুর)", "দৌলতপুর (Daulatpur)", "খানজাহান আলী (Khan Jahan Ali)", "ডুমুরিয়া (Dumuria)", "ফুলতলা (Phultala)", "রূপসা (Rupsha)", "তেরখাদা (Terokhada)", "দিঘলিয়া (Dighalia)", "পাইকগাছা (Paikgachha)", "কয়রা (Koyra)", "বটিয়াঘাটা (Batiaghata)", "দাকোপ (Dacope)"],
       "Jashore": ["যশোর সদর (Sadar)", "ঝিকরগাছা (Jhikargachha)", "মণিরামপুর (Manirampur)", "কেশবপুর (Keshabpur)", "শার্শা (Sharsha)", "চৌগাছা (Chowgachha)", "বাঘারপাড়া (Bagherpara)", "অভয়নগর / নওয়াপাড়া (Abhaynagar / Noapara)"],
       "Kushtia": ["কুষ্টিয়া সদর (Sadar)", "কুমারখালী (Kumarkhali)", "মিরপুর (Mirpur)", "ভেড়ামারা (Bheramara)", "দৌলতপুর (Daulatpur)", "খোকসা (Khoksa)"],
       "Satkhira": ["সাতক্ষীরা সদর (Sadar)", "কলারোয়া (Kalaroa)", "তালা (Tala)", "কালীগঞ্জ (Kaliganj)", "শ্যামনগর (Shyamnagar)", "আশাশুনি (Assasuni)", "দেবহাটা (Debhata)"],
@@ -930,16 +601,7 @@
       "Sherpur": ["শেরপুর সদর (Sadar)", "নকলা (Nakla)", "নালিতাবাড়ী (Nalitabari)", "শ্রীবরদী (Sreebardi)", "ঝিনাইগাতী (Jhenaigati)"]
     };
 
-    function showCustomAlert(title, message, icon) {
-      document.getElementById("customAlertTitle").innerText = title || "সতর্কতা";
-      document.getElementById("customAlertMsg").innerText = message;
-      document.getElementById("customAlertIcon").innerText = icon || "⚠️";
-      document.getElementById("customAlertModal").style.display = "flex";
-    }
-
-    function closeCustomAlert() {
-      document.getElementById("customAlertModal").style.display = "none";
-    }
+    var currentPickerMode = "";
 
     function openPicker(mode) {
       currentPickerMode = mode;
@@ -969,26 +631,23 @@
       } else if (mode === "district") {
         title.innerText = "জেলা নির্বাচন করুন";
         searchWrap.style.display = "block";
-        searchInput.placeholder = "জেলা খুঁজুন (e.g. ঢাকা, Dhaka)...";
+        searchInput.placeholder = "জেলা খুঁজুন...";
         renderDistrictModalList("");
       } else if (mode === "upazila") {
         var curDist = document.getElementById("regDistrict").value;
         if (!curDist) {
+          alert("অনুগ্রহ করে প্রথমে জেলা নির্বাচন করুন!");
           closePicker();
-          showCustomAlert("জেলা প্রয়োজন", "অনুগ্রহ করে প্রথমে জেলা নির্বাচন করুন!", "📍");
           return;
         }
-
         title.innerText = "উপজেলা / থানা নির্বাচন করুন";
         searchWrap.style.display = "block";
         searchInput.placeholder = "উপজেলা / থানা খুঁজুন...";
         renderUpazilaModalList("");
       }
 
-      if (mode !== "blood") {
-        setTimeout(function() {
-          searchInput.focus();
-        }, 80);
+      if (mode === "district" || mode === "upazila") {
+        setTimeout(function() { searchInput.focus(); }, 80);
       }
     }
 
@@ -1000,9 +659,7 @@
 
       var currentCat = "";
       districtsList.forEach(function(item) {
-        if (q && !item.name.toLowerCase().includes(q) && !item.label.toLowerCase().includes(q)) {
-          return;
-        }
+        if (q && !item.name.toLowerCase().includes(q) && !item.label.toLowerCase().includes(q)) return;
 
         if (!q && item.category !== currentCat) {
           currentCat = item.category;
@@ -1019,10 +676,6 @@
         btn.onclick = function() { selectDistrict(item.name, item.label); };
         listContainer.appendChild(btn);
       });
-
-      if (listContainer.children.length === 0) {
-        listContainer.innerHTML = '<div style="text-align:center; padding:30px; color:var(--slate-400);">কোনো জেলা খুঁজে পাওয়া যায়নি</div>';
-      }
     }
 
     function renderUpazilaModalList(filterQuery) {
@@ -1043,13 +696,6 @@
         btn.onclick = function() { selectUpazila(u, u); };
         listContainer.appendChild(btn);
       });
-
-      if (listContainer.children.length === 0 && q) {
-        var emptyNotice = document.createElement("div");
-        emptyNotice.style.cssText = "text-align:center; padding:20px; color:var(--slate-400);";
-        emptyNotice.innerText = "কোনো উপজেলা খুঁজে পাওয়া যায়নি";
-        listContainer.appendChild(emptyNotice);
-      }
     }
 
     function filterModalItems() {
@@ -1106,264 +752,51 @@
       }
     }
 
-    // ==========================================
-    // 📅 FIXED 42-CELL JIBONI CALENDAR MODAL LOGIC
-    // ==========================================
-    function openCalendarFor(target) {
-      currentCalendarTarget = target;
-      var modal = document.getElementById("customCalendarModal");
-      var title = document.getElementById("calendarTitle");
-      var currentVal = "";
-
-      isYearViewOpen = false;
-      document.getElementById("calDaysViewWrap").style.display = "block";
-      document.getElementById("calYearGrid").style.display = "none";
-
-      if (target === "dob") {
-        title.innerText = "জন্ম তারিখ নির্বাচন করুন";
-        currentVal = document.getElementById("regDob").value;
-      } else {
-        title.innerText = "সর্বশেষ রক্তদানের তারিখ নির্বাচন";
-        currentVal = document.getElementById("regLastDonation").value;
-      }
-
-      if (currentVal && !isNaN(new Date(currentVal).getTime())) {
-        calViewDate = new Date(currentVal);
-        tempSelectedDateStr = currentVal;
-      } else {
-        if (target === "dob") {
-          calViewDate = new Date(2002, 0, 1);
-        } else {
-          calViewDate = new Date();
-        }
-        tempSelectedDateStr = currentVal || "";
-      }
-
-      renderCalendarGrid();
-      modal.style.display = "flex";
-    }
-
-    function toggleYearGridView() {
-      isYearViewOpen = !isYearViewOpen;
-      var daysWrap = document.getElementById("calDaysViewWrap");
-      var yearGrid = document.getElementById("calYearGrid");
-
-      if (isYearViewOpen) {
-        daysWrap.style.display = "none";
-        yearGrid.style.display = "grid";
-        renderYearGrid();
-      } else {
-        daysWrap.style.display = "block";
-        yearGrid.style.display = "none";
-        renderCalendarGrid();
-      }
-    }
-
-    function renderYearGrid() {
-      var grid = document.getElementById("calYearGrid");
-      grid.innerHTML = "";
-      var currentYear = new Date().getFullYear();
-      var startYear = (currentCalendarTarget === "dob") ? 1960 : 2018;
-      var endYear = currentYear;
-
-      for (var y = endYear; y >= startYear; y--) {
-        var cell = document.createElement("div");
-        cell.className = "cal-year-cell" + (calViewDate.getFullYear() === y ? " selected" : "");
-        cell.innerText = toBanglaDigits(y);
-        (function(yearVal) {
-          cell.onclick = function() {
-            calViewDate.setFullYear(yearVal);
-            toggleYearGridView();
-          };
-        })(y);
-        grid.appendChild(cell);
-      }
-
-      setTimeout(function() {
-        var sel = grid.querySelector(".selected");
-        if (sel) sel.scrollIntoView({ block: "center" });
-      }, 50);
-    }
-
-    function closeCalendarPicker() {
-      document.getElementById("customCalendarModal").style.display = "none";
-    }
-
-    function closeCalendarOnBackdrop(e) {
-      if (e.target.id === "customCalendarModal") {
-        closeCalendarPicker();
-      }
-    }
-
-    function changeCalMonth(delta) {
-      calViewDate.setMonth(calViewDate.getMonth() + delta);
-      renderCalendarGrid();
-    }
-
-    // Guaranteed Fixed Height: Always renders exactly 42 cells (6 rows × 7 days)
-    function renderCalendarGrid() {
-      var year = calViewDate.getFullYear();
-      var month = calViewDate.getMonth();
-
-      document.getElementById("calMonthLabel").innerText = banglaMonths[month];
-      document.getElementById("calYearLabel").innerText = toBanglaDigits(year);
-
-      var grid = document.getElementById("calDaysGrid");
-      grid.innerHTML = "";
-
-      var firstDay = new Date(year, month, 1).getDay();
-      var daysInMonth = new Date(year, month + 1, 0).getDate();
-
-      // Empty spaces before first day
-      for (var i = 0; i < firstDay; i++) {
-        var blank = document.createElement("div");
-        blank.className = "cal-day-cell empty";
-        grid.appendChild(blank);
-      }
-
-      var today = new Date();
-      var todayFormatted = today.getFullYear() + "-" + String(today.getMonth() + 1).padStart(2, '0') + "-" + String(today.getDate()).padStart(2, '0');
-
-      // Month days
-      for (var day = 1; day <= daysInMonth; day++) {
-        var dayStr = String(day).padStart(2, '0');
-        var monthStr = String(month + 1).padStart(2, '0');
-        var fullDateStr = year + "-" + monthStr + "-" + dayStr;
-
-        var cell = document.createElement("div");
-        cell.className = "cal-day-cell";
-        cell.innerText = toBanglaDigits(day);
-
-        if (fullDateStr === todayFormatted) {
-          cell.classList.add("today");
-        }
-
-        if (fullDateStr === tempSelectedDateStr) {
-          cell.classList.add("selected");
-        }
-
-        (function(dStr) {
-          cell.onclick = function() {
-            tempSelectedDateStr = dStr;
-            renderCalendarGrid();
-          };
-        })(fullDateStr);
-
-        grid.appendChild(cell);
-      }
-
-      // Pad remaining empty slots to strictly maintain 42 cells (6 full rows)
-      var totalRendered = firstDay + daysInMonth;
-      var remainingCells = 42 - totalRendered;
-      for (var r = 0; r < remainingCells; r++) {
-        var emptyCell = document.createElement("div");
-        emptyCell.className = "cal-day-cell empty";
-        grid.appendChild(emptyCell);
-      }
-    }
-
-    function clearCalendarDate() {
-      tempSelectedDateStr = "";
-      confirmCalendarDate();
-    }
-
-    function confirmCalendarDate() {
-      if (currentCalendarTarget === "dob") {
-        document.getElementById("regDob").value = tempSelectedDateStr;
-        var display = document.getElementById("dobDisplay");
-        display.innerText = tempSelectedDateStr || "জন্ম তারিখ নির্বাচন করুন";
-        display.style.color = tempSelectedDateStr ? "var(--slate-900)" : "var(--slate-400)";
-        display.style.fontWeight = tempSelectedDateStr ? "700" : "normal";
-      } else {
-        document.getElementById("regLastDonation").value = tempSelectedDateStr;
-        var display = document.getElementById("lastDonationDisplay");
-        display.innerText = tempSelectedDateStr || "রক্তদানের তারিখ নির্বাচন করুন";
-        display.style.color = tempSelectedDateStr ? "var(--slate-900)" : "var(--slate-400)";
-        display.style.fontWeight = tempSelectedDateStr ? "700" : "normal";
-      }
-      closeCalendarPicker();
-    }
-
-    function checkDonationEligibility(lastDonationDateStr) {
-      if (!lastDonationDateStr || lastDonationDateStr === "তথ্য নেই") return true;
-      var lastDate = new Date(lastDonationDateStr);
-      var today = new Date();
-      var diffDays = (today - lastDate) / (1000 * 60 * 60 * 24);
-      return diffDays >= 120;
-    }
-
-    function handleRegistration(e) {
-      if (e) e.preventDefault();
-      var alertBox = document.getElementById("regAlert");
-
+    function handleRegister(e) {
+      e.preventDefault();
       var name = document.getElementById("regName").value.trim();
       var blood = document.getElementById("regBlood").value.trim();
       var phone = document.getElementById("regPhone").value.trim();
       var dob = document.getElementById("regDob").value;
-      var district = document.getElementById("regDistrict").value.trim();
-      var upazila = document.getElementById("regUpazila").value.trim();
+      var district = document.getElementById("regDistrict").value;
+      var upazila = document.getElementById("regUpazila").value;
       var hall = document.getElementById("regHall").value.trim();
-      var lastDonation = document.getElementById("regLastDonation").value;
+      var lastDonation = document.getElementById("regLastDonation").value || "তথ্য নেই";
       var pin = document.getElementById("regPin").value.trim();
 
-      if (!name || !blood || !phone || !dob || !district || !upazila || !pin) {
-        showCustomAlert("তথ্য অসম্পূর্ণ", "অনুগ্রহ করে সকল আবশ্যকীয় তথ্য (*) সঠিকভাবে পূরণ করুন!", "✍️");
+      if (!blood || !district || !upazila) {
+        alert("অনুগ্রহ করে রক্তের গ্রুপ, জেলা এবং উপজেলা সঠিকভাবে নির্বাচন করুন।");
         return;
       }
 
-      if (pin.length !== 4 || isNaN(pin)) {
-        showCustomAlert("ভুল পিন", "সিক্রেট পিন অবশ্যই ৪ সংখ্যার হতে হবে!", "🔒");
+      if (pin.length < 4 || pin.length > 8) {
+        alert("পিন বা পাসওয়ার্ড অবশ্যই ৪ থেকে ৮ ডিজিট বা অক্ষরের হতে হবে!");
         return;
       }
 
       var donors = JSON.parse(localStorage.getItem("jiboni_donors_cache") || localStorage.getItem("donors") || "[]");
 
-      if (donors.some(function(d) { return d.phone === phone; })) {
-        showCustomAlert("নিবন্ধিত নম্বর", "এই মোবাইল নম্বরটি ইতোমধ্যে নিবন্ধিত রয়েছে!", "📱");
-        return;
-      }
-
-      var isEligible = checkDonationEligibility(lastDonation);
-
       var newDonor = {
         id: Date.now(),
         name: name,
         blood_group: blood,
-        bloodGroup: blood,
         phone: phone,
         dob: dob,
         district: district,
         upazila: upazila,
         hall: hall,
-        last_donation: lastDonation || "তথ্য নেই",
-        is_available: isEligible,
-        is_verified: true,
-        pin: pin
+        last_donation: lastDonation,
+        pin: pin,
+        is_available: true,
+        is_verified: false
       };
 
       donors.unshift(newDonor);
       localStorage.setItem("jiboni_donors_cache", JSON.stringify(donors));
       localStorage.setItem("donors", JSON.stringify(donors));
 
-      if (window.PasswordCredential && navigator.credentials) {
-        try {
-          var cred = new PasswordCredential({
-            id: phone,
-            password: pin,
-            name: name
-          });
-          navigator.credentials.store(cred).catch(function(err) {});
-        } catch(e) {}
-      }
-
-      alertBox.style.display = "block";
-      alertBox.style.background = "#dcfce7";
-      alertBox.style.color = "#15803d";
-      alertBox.innerHTML = "🎉 অভিনন্দন! রক্তদাতা হিসেবে আপনার নিবন্ধন সফল হয়েছে।<br>হোম পেজে নিয়ে যাওয়া হচ্ছে...";
-
-      setTimeout(function() {
-        window.location.href = "index.html";
-      }, 1600);
+      alert("অভিনন্দন! আপনার রক্তদাতা নিবন্ধন সফল হয়েছে। অ্যাডমিন যাচাই করার পর আপনার প্রোফাইল তালিকায় যুক্ত হবে।");
+      window.location.href = "index.html";
     }
   </script>
 </body>
