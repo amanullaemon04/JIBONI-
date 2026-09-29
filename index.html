@@ -178,6 +178,7 @@
       text-align: center;
       color: var(--slate-600);
       font-size: 0.86rem;
+      line-height: 1.4;
     }
 
     .donor-card {
@@ -298,7 +299,7 @@
       <div class="nav-btn-row">
         <a href="register.html" class="btn-chip btn-chip-red">+ রক্তদাতা হন</a>
         <a href="update-profile.html" class="btn-chip">👤 প্রোফাইল</a>
-        <a href="admin.html" class="btn-chip">⚙️ Admin</a>
+        <a href="admin.html" class="btn-chip">⚙️️ Admin</a>
       </div>
 
       <p class="brand-slogan">"অচেনা কাউকে বাঁচার আশা দিয়ে, লিখে যাও এক নিঃস্বার্থ জীবনী।"</p>
@@ -307,10 +308,11 @@
 
   <main class="app-main">
     <div class="filter-card">
+      <!-- রক্তের গ্রুপ (বাধ্যতামূলক) -->
       <div class="input-group">
-        <label class="field-label" for="filterBlood">রক্তের গ্রুপ (Blood Group)</label>
+        <label class="field-label" for="filterBlood">রক্তের গ্রুপ (Blood Group) *</label>
         <select id="filterBlood" class="select-input" onchange="runFilter()">
-          <option value="">সকল গ্রুপ (All Groups)</option>
+          <option value="">-- রক্তের গ্রুপ নির্বাচন করুন (বাধ্যতামূলক) --</option>
           <option value="A+">A+</option>
           <option value="A-">A-</option>
           <option value="B+">B+</option>
@@ -322,7 +324,7 @@
         </select>
       </div>
 
-      <!-- ৬৪ জেলা -->
+      <!-- ৬৪ জেলা (বাধ্যতামূলক) -->
       <div class="input-group">
         <label class="field-label" for="filterDistrict">জেলা / শহর (District) *</label>
         <select id="filterDistrict" class="select-input" onchange="handleDistrictChange()">
@@ -426,11 +428,13 @@
         </select>
       </div>
 
+      <!-- নির্দিষ্ট এলাকা / হল -->
       <div class="input-group">
         <label class="field-label" for="filterLocation">নির্দিষ্ট এলাকা / হল (Specific Location / DU Hall)</label>
         <input type="text" id="filterLocation" class="text-input" placeholder="e.g. Zahurul Huq Hall, Salimullah, AF Rahman" onkeyup="runFilter()" />
       </div>
 
+      <!-- প্রাপ্যতা স্ট্যাটাস -->
       <div class="input-group">
         <label class="field-label" for="filterAvail">স্ট্যাটাস (Availability)</label>
         <select id="filterAvail" class="select-input" onchange="runFilter()">
@@ -441,9 +445,10 @@
       </div>
     </div>
 
+    <!-- ফলাফল বা নির্দেশনা নোটিশ -->
     <div id="resultsWrapper">
       <div class="results-notice">
-        📍 রক্তদাতা খুঁজতে অনুগ্রহ করে প্রথমে জেলা নির্বাচন করুন।
+        📍 রক্তদাতা খুঁজতে অনুগ্রহ করে প্রথমে রক্তের গ্রুপ ও জেলা নির্বাচন করুন।
       </div>
     </div>
   </main>
@@ -455,7 +460,6 @@
   </footer>
 
   <script>
-    // ৬৪ জেলার প্রধান উপজেলা ও থানা ম্যাপিং
     var upazilaDatabase = {
       "Dhaka": ["ধানমন্ডি (Dhanmondi)", "মিরপুর (Mirpur)", "গুলশান (Gulshan)", "উত্তরা (Uttara)", "মোহাম্মদপুর (Mohammadpur)", "শাহবাগ / ঢাবি (Shahbagh / DU)", "মতিঝিল (Motijheel)", "পল্টন (Paltan)", "তেজগাঁও (Tejgaon)", "সাভার (Savar)", "ধামরাই (Dhamrai)", "কেরানীগঞ্জ (Keraniganj)", "নবাবগঞ্জ (Nawabganj)", "দোহার (Dohar)"],
       "Gazipur": ["গাজীপুর সদর (Sadar)", "টঙ্গী (Tongi)", "কালিয়াকৈর (Kaliakair)", "শ্রীপুর (Sreepur)", "কাপাসিয়া (Kapasia)", "কালীগঞ্জ (Kaliganj)"],
@@ -528,7 +532,6 @@
       var upazilaSelect = document.getElementById("filterUpazila");
       var selectedDist = distSelect.value;
 
-      // Reset Upazila options
       upazilaSelect.innerHTML = '<option value="">সকল উপজেলা / থানা (All Upazilas)</option>';
 
       if (selectedDist && upazilaDatabase[selectedDist]) {
@@ -585,15 +588,15 @@
 
       var container = document.getElementById("resultsWrapper");
 
-      // MANDATORY RULE: Do not show any donors if District is not selected
-      if (!district) {
-        container.innerHTML = '<div class="results-notice">📍 রক্তদাতা খুঁজতে অনুগ্রহ করে প্রথমে জেলা নির্বাচন করুন।</div>';
+      // STRICT MANDATORY RULE: Both Blood Group and District must be selected
+      if (!blood || !district) {
+        container.innerHTML = '<div class="results-notice">📍 রক্তদাতা খুঁজতে অনুগ্রহ করে প্রথমে রক্তের গ্রুপ ও জেলা নির্বাচন করুন।</div>';
         return;
       }
 
       var allDonors = getDonorsData();
 
-      // Auto update availability according to 4-month rule
+      // Auto update availability according to 4-month rest rule
       allDonors.forEach(function(d) {
         var isEligible = checkDonationEligibility(d.last_donation);
         if (!isEligible && d.is_available && !d.manual_override) {
@@ -601,32 +604,32 @@
         }
       });
 
-      // Filter query
+      // Filter logic
       var results = allDonors.filter(function(d) {
         var dBlood = (d.blood_group || d.bloodGroup || "").toUpperCase();
         var dDistrict = (d.district || "").toLowerCase();
         var dHall = (d.hall || "").toLowerCase();
         var dUpazila = (d.upazila || "").toLowerCase();
 
-        // 1. District Check
+        // 1. Mandatory Blood Group Check
+        if (dBlood !== blood) return false;
+
+        // 2. Mandatory District Check
         if (!dDistrict.includes(district) && !district.includes(dDistrict)) return false;
 
-        // 2. Upazila Check
+        // 3. Optional Upazila Check
         if (upazila) {
           var cleanUpz = upazila.split(" ")[0].toLowerCase();
           if (!dHall.includes(cleanUpz) && !dDistrict.includes(cleanUpz) && !dUpazila.includes(cleanUpz)) return false;
         }
 
-        // 3. Blood Group Check
-        if (blood && dBlood !== blood) return false;
-
-        // 4. Specific Location / Hall Check (Case-insensitive substring search for DU halls & areas)
+        // 4. Optional Location / Hall Check (Case-insensitive)
         if (loc) {
           var combinedText = (dHall + " " + dDistrict + " " + dUpazila).toLowerCase();
           if (!combinedText.includes(loc)) return false;
         }
 
-        // 5. Availability Check
+        // 5. Optional Availability Check
         if (avail === "Available" && !d.is_available) return false;
         if (avail === "Unavailable" && d.is_available) return false;
 
