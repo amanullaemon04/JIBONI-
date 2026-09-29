@@ -34,6 +34,12 @@
       -webkit-tap-highlight-color: transparent;
     }
 
+    /* RED AND WHITE ACCENT THEME FOR CALENDAR PICKER */
+    input[type="date"] {
+      accent-color: var(--primary);
+      color-scheme: light;
+    }
+
     body {
       background: var(--slate-50);
       color: var(--slate-800);
@@ -358,7 +364,6 @@
 
   <main class="app-main">
     <div class="register-card">
-      <!-- Added autocomplete attributes for Google Password Manager prompt -->
       <form id="registerForm" onsubmit="handleRegister(event)" autocomplete="on">
 
         <!-- পূর্ণ নাম -->
@@ -377,7 +382,7 @@
           <input type="hidden" id="regBlood" value="" required />
         </div>
 
-        <!-- মোবাইল নম্বর (Acts as Username for Password Manager) -->
+        <!-- মোবাইল নম্বর -->
         <div class="input-group">
           <label class="field-label" for="regPhone">মোবাইল নম্বর (Phone Number) *</label>
           <input type="tel" id="regPhone" class="text-input" placeholder="01XXXXXXXXX" pattern="^01[0-9]{9}$" title="সঠিক ১১ ডিজিটের মোবাইল নম্বর দিন" required autocomplete="username" />
@@ -423,7 +428,7 @@
           <input type="date" id="regLastDonation" class="text-input" />
         </div>
 
-        <!-- পিন বা পাসওয়ার্ড (Triggers Google Save Password Prompt) -->
+        <!-- পিন বা পাসওয়ার্ড -->
         <div class="input-group">
           <label class="field-label" for="regPin">পিন বা পাসওয়ার্ড (4-8 Digit PIN/Password) *</label>
           <input type="password" id="regPin" class="text-input" placeholder="••••" minlength="4" maxlength="8" required autocomplete="new-password" />
@@ -474,7 +479,6 @@
       { category: "ঢাকা বিভাগ", name: "Madaripur", label: "মাদারীপুর (Madaripur)" },
       { category: "ঢাকা বিভাগ", name: "Rajbari", label: "রাজবাড়ী (Rajbari)" },
       { category: "ঢাকা বিভাগ", name: "Shariatpur", label: "শরীয়তপুর (Shariatpur)" },
-
       { category: "চট্টগ্রাম বিভাগ", name: "Chattogram", label: "চট্টগ্রাম (Chattogram)" },
       { category: "চট্টগ্রাম বিভাগ", name: "Cox's Bazar", label: "কক্সবাজার (Cox's Bazar)" },
       { category: "চট্টগ্রাম বিভাগ", name: "Cumilla", label: "কুমিল্লা (Cumilla)" },
@@ -486,7 +490,6 @@
       { category: "চট্টগ্রাম বিভাগ", name: "Bandarban", label: "বান্দরবান (Bandarban)" },
       { category: "চট্টগ্রাম বিভাগ", name: "Khagrachhari", label: "খাগড়াছড়ি (Khagrachhari)" },
       { category: "চট্টগ্রাম বিভাগ", name: "Rangamati", label: "রাঙ্গামাটি (Rangamati)" },
-
       { category: "রাজশাহী বিভাগ", name: "Rajshahi", label: "রাজশাহী (Rajshahi)" },
       { category: "রাজশাহী বিভাগ", name: "Bogura", label: "বগুড়া (Bogura)" },
       { category: "রাজশাহী বিভাগ", name: "Pabna", label: "পাবনা (Pabna)" },
@@ -495,7 +498,6 @@
       { category: "রাজশাহী বিভাগ", name: "Natore", label: "নাটোর (Natore)" },
       { category: "রাজশাহী বিভাগ", name: "Chapai Nawabganj", label: "চাঁপাইনবাবগঞ্জ (Chapai Nawabganj)" },
       { category: "রাজশাহী বিভাগ", name: "Joypurhat", label: "জয়পুরহাট (Joypurhat)" },
-
       { category: "খুলনা বিভাগ", name: "Khulna", label: "খুলনা (Khulna)" },
       { category: "খুলনা বিভাগ", name: "Jashore", label: "যশোর (Jashore)" },
       { category: "খুলনা বিভাগ", name: "Kushtia", label: "কুষ্টিয়া (Kushtia)" },
@@ -506,19 +508,16 @@
       { category: "খুলনা বিভাগ", name: "Magura", label: "মাগুরা (Magura)" },
       { category: "খুলনা বিভাগ", name: "Meherpur", label: "মেহেরপুর (Meherpur)" },
       { category: "খুলনা বিভাগ", name: "Narail", label: "নড়াইল (Narail)" },
-
       { category: "বরিশাল বিভাগ", name: "Barishal", label: "বরিশাল (Barishal)" },
       { category: "বরিশাল বিভাগ", name: "Bhola", label: "ভোলা (Bhola)" },
       { category: "বরিশাল বিভাগ", name: "Patuakhali", label: "পটুয়াখালী (Patuakhali)" },
       { category: "বরিশাল বিভাগ", name: "Pirojpur", label: "পিরোজপুর (Pirojpur)" },
       { category: "বরিশাল বিভাগ", name: "Barguna", label: "বরগুনা (Barguna)" },
       { category: "বরিশাল বিভাগ", name: "Jhalokati", label: "ঝালকাঠি (Jhalokati)" },
-
       { category: "সিলেট বিভাগ", name: "Sylhet", label: "সিলেট (Sylhet)" },
       { category: "সিলেট বিভাগ", name: "Moulvibazar", label: "মৌলভীবাজার (Moulvibazar)" },
       { category: "সিলেট বিভাগ", name: "Habiganj", label: "হবিগঞ্জ (Habiganj)" },
       { category: "সিলেট বিভাগ", name: "Sunamganj", label: "সুনামগঞ্জ (Sunamganj)" },
-
       { category: "রংপুর বিভাগ", name: "Rangpur", label: "রংপুর (Rangpur)" },
       { category: "রংপুর বিভাগ", name: "Dinajpur", label: "দিনাজপুর (Dinajpur)" },
       { category: "রংপুর বিভাগ", name: "Nilphamari", label: "নীলফামারী (Nilphamari)" },
@@ -527,7 +526,6 @@
       { category: "রংপুর বিভাগ", name: "Lalmonirhat", label: "লালমনিরহাট (Lalmonirhat)" },
       { category: "রংপুর বিভাগ", name: "Panchagarh", label: "পঞ্চগড় (Panchagarh)" },
       { category: "রংপুর বিভাগ", name: "Thakurgaon", label: "ঠাকুরগাঁও (Thakurgaon)" },
-
       { category: "ময়মনসিংহ বিভাগ", name: "Mymensingh", label: "ময়মনসিংহ (Mymensingh)" },
       { category: "ময়মনসিংহ বিভাগ", name: "Jamalpur", label: "জামালপুর (Jamalpur)" },
       { category: "ময়মনসিংহ বিভাগ", name: "Netrokona", label: "নেত্রকোণা (Netrokona)" },
@@ -555,7 +553,7 @@
       "Brahmanbaria": ["ব্রাহ্মণবাড়িয়া সদর (Sadar)", "আশুগঞ্জ (Ashuganj)", "সরাইল (Sarail)", "কসবা (Kasba)", "নবীনগর (Nabinagar)", "আখাউড়া (Akhaura)", "নাসিরনগর (Nasirnagar)", "বাঞ্ছারামপুর (Bancharampur)", "বিজয়নগর (Bijoynagar)"],
       "Noakhali": ["নোয়াখালী সদর / সুধারাম (Sadar)", "বেগমগঞ্জ (Begumganj)", "চাটখিল (Chatkhil)", "কোম্পানীগঞ্জ (Companiganj)", "হাতিয়া (Hatiya)", "সেনবাগ (Senbagh)", "সোনাইমুড়ী (Sonaimuri)", "সুবর্ণচর (Subarnachar)", "কবিরহাট (Kabirhat)"],
       "Chandpur": ["চাঁদপুর সদর (Sadar)", "হাজীগঞ্জ (Hajiganj)", "শাহরাস্তি (Shahrasti)", "মতলব উত্তর (Matlab North)", "মতলব দক্ষিণ (Matlab South)", "ফরিদগঞ্জ (Faridganj)", "কচুয়া (Kachua)", "হাইমচর (Haimchar)"],
-      "Lakshmipur": ["লক্ষ্মীপুর সদর (Sadar)", "রায়পুর (Raipur)", "রামগঞ্জ (Ramganj)", "রামগতি (Ramgati)", "কমলনগর (Kamalnagar)"],
+      "Lakshmipur": ["লক্ষ্মীপুর সদর (Sadar)", "রায়পুর (Raipur)", "রামগঞ্জ (Ramগঞ্জ)", "রামগতি (Ramgati)", "কমলনগর (Kamalnagar)"],
       "Bandarban": ["বান্দরবান সদর (Sadar)", "রুমা (Ruma)", "থানচি (Thanchi)", "রোয়াংছড়ি (Rowangchhari)", "লামা (Lama)", "আলীকদম (Alikadam)", "নাইক্ষ্যংছড়ি (Naikhongchhari)"],
       "Khagrachhari": ["খাগড়াছড়ি সদর (Sadar)", "দীঘিনালা (Dighinala)", "পানছড়ি (Panchhari)", "মহালছড়ি (Mahalchhari)", "মাটিরাঙ্গা (Matiranga)", "মানিকছড়ি (Manikchhari)", "রামগড় (Ramgarh)", "লক্ষ্মীছড়ি (Lakshmichhari)", "গুইমারা (Guimara)"],
       "Rangamati": ["রাঙ্গামাটি সদর (Sadar)", "কাপ্তাই (Kaptai)", "বাঘাইছড়ি (Baghaichhari)", "বরকল (Barkal)", "লংগদু (Langadu)", "নানিয়ারচর (Naniarchar)", "জুরাইছড়ি (Juraichhari)", "কাউখালী (Kawkhali)", "বিলাইছড়ি (Bilaichhari)", "রাজস্থলী (Rajasthali)"],
@@ -567,7 +565,7 @@
       "Natore": ["নাটোর সদর (Sadar)", "সিংড়া (Singra)", "বড়াইগ্রাম (Baraigram)", "গুরুদাসপুর (Gurudaspur)", "লালপুর (Lalpur)", "বাগাতিপাড়া (Bagatipara)", "নলডাঙ্গা (Naldanga)"],
       "Chapai Nawabganj": ["চাঁপাইনবাবগঞ্জ সদর (Sadar)", "শিবগঞ্জ (Shibganj)", "গোমস্তাপুর (Gomastapur)", "নাচোল (Nachole)", "ভোলাহাট (Bholahat)"],
       "Joypurhat": ["জয়পুরহাট সদর (Sadar)", "পাঁচবিবি (Panchbibi)", "কালাই (Kalai)", "ক্ষেতলাল (Khetlal)", "আক্কেলপুর (Akkelpur)"],
-      "Khulna": ["খুলনা সদর (Sadar)", "সোনাডাঙ্গা (Sonadanga)", "খালিশপুর (Khalিশপুর)", "দৌলতপুর (Daulatpur)", "খানজাহান আলী (Khan Jahan Ali)", "ডুমুরিয়া (Dumuria)", "ফুলতলা (Phultala)", "রূপসা (Rupsha)", "তেরখাদা (Terokhada)", "দিঘলিয়া (Dighalia)", "পাইকগাছা (Paikgachha)", "কয়রা (Koyra)", "বটিয়াঘাটা (Batiaghata)", "দাকোপ (Dacope)"],
+      "Khulna": ["খুলনা সদর (Sadar)", "সোনাডাঙ্গা (Sonadanga)", "খালিশপুর (Khalishpur)", "দৌলতপুর (Daulatpur)", "খানজাহান আলী (Khan Jahan Ali)", "ডুমুরিয়া (Dumuria)", "ফুলতলা (Phultala)", "রূপসা (Rupsha)", "তেরখাদা (Terokhada)", "দিঘলিয়া (Dighalia)", "পাইকগাছা (Paikgachha)", "কয়রা (Koyra)", "বটিয়াঘাটা (Batiaghata)", "দাকোপ (Dacope)"],
       "Jashore": ["যশোর সদর (Sadar)", "ঝিকরগাছা (Jhikargachha)", "মণিরামপুর (Manirampur)", "কেশবপুর (Keshabpur)", "শার্শা (Sharsha)", "চৌগাছা (Chowgachha)", "বাঘারপাড়া (Bagherpara)", "অভয়নগর / নওয়াপাড়া (Abhaynagar / Noapara)"],
       "Kushtia": ["কুষ্টিয়া সদর (Sadar)", "কুমারখালী (Kumarkhali)", "মিরপুর (Mirpur)", "ভেড়ামারা (Bheramara)", "দৌলতপুর (Daulatpur)", "খোকসা (Khoksa)"],
       "Satkhira": ["সাতক্ষীরা সদর (Sadar)", "কলারোয়া (Kalaroa)", "তালা (Tala)", "কালীগঞ্জ (Kaliganj)", "শ্যামনগর (Shyamnagar)", "আশাশুনি (Assasuni)", "দেবহাটা (Debhata)"],
