@@ -371,11 +371,6 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      touch-action: manipulation;
-    }
-
-    .cal-nav-btn:active {
-      background: var(--slate-100);
     }
 
     .cal-year-badge {
@@ -390,12 +385,6 @@
       display: inline-flex;
       align-items: center;
       gap: 4px;
-      transition: all 0.2s;
-    }
-
-    .cal-year-badge:hover {
-      background: var(--primary-light);
-      border-color: var(--primary);
     }
 
     .cal-weekdays-grid {
@@ -408,7 +397,6 @@
       margin-bottom: 6px;
     }
 
-    /* Fixed Height Container (6 rows × 38px + gaps) */
     .cal-days-grid {
       display: grid;
       grid-template-columns: repeat(7, 1fr);
@@ -431,7 +419,6 @@
       border-radius: 50%;
       cursor: pointer;
       user-select: none;
-      transition: all 0.15s;
     }
 
     .cal-day-cell:hover {
@@ -474,7 +461,6 @@
       color: var(--slate-800);
       text-align: center;
       cursor: pointer;
-      transition: all 0.15s;
     }
 
     .cal-year-cell:hover,
@@ -509,7 +495,7 @@
       border-color: var(--primary);
     }
 
-    /* CUSTOM JIBONI ALERT DIALOG */
+    /* CUSTOM POPUP ALERT */
     .custom-alert-backdrop {
       position: fixed;
       inset: 0;
@@ -530,12 +516,6 @@
       padding: 22px 20px;
       text-align: center;
       box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
-      animation: alertPop 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    }
-
-    @keyframes alertPop {
-      from { transform: scale(0.85); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
     }
 
     .alert-icon-wrap {
@@ -659,7 +639,7 @@
         <button type="submit" class="btn-submit" id="verifyBtn">প্রোফাইল লোড করুন</button>
       </form>
 
-      <!-- EDIT PROFILE FORM (LOADED AFTER LOGIN) -->
+      <!-- EDIT PROFILE FORM -->
       <form id="editProfileForm" style="display: none; margin-top: 10px;" onsubmit="saveProfileChanges(event)">
         <hr style="border: 0; border-top: 1px dashed var(--slate-200); margin: 16px 0;" />
 
@@ -673,17 +653,15 @@
           <input type="text" id="editBloodGroup" class="text-input" readonly style="background: var(--slate-100); color: var(--slate-600); font-weight:700;" />
         </div>
 
-        <!-- CUSTOM DISTRICT PICKER TRIGGER -->
         <div class="input-group">
           <label class="field-label">জেলা / শহর (District): *</label>
           <div class="custom-select-trigger" id="districtTrigger" onclick="openCustomPicker('district')">
-            <span id="districtDisplay" style="color: var(--slate-900); font-weight: 700;">ঢাকা (Dhaka)</span>
+            <span id="districtDisplay" style="color: var(--slate-900); font-weight: 700;">জেলা নির্বাচন করুন</span>
             <span class="select-arrow">▼</span>
           </div>
-          <input type="hidden" id="editDistrict" value="Dhaka" required />
+          <input type="hidden" id="editDistrict" value="" required />
         </div>
 
-        <!-- CUSTOM UPAZILA PICKER TRIGGER -->
         <div class="input-group">
           <label class="field-label">উপজেলা / থানা (Upazila / Thana): *</label>
           <div class="custom-select-trigger" id="upazilaTrigger" onclick="openCustomPicker('upazila')">
@@ -698,7 +676,6 @@
           <input type="text" id="editHall" class="text-input" placeholder="উদাঃ শহীদ সার্জেন্ট জহুরুল হক হল" />
         </div>
 
-        <!-- CUSTOM JIBONI CALENDAR TRIGGER -->
         <div class="input-group">
           <label class="field-label">সর্বশেষ রক্তদানের তারিখ:</label>
           <div class="custom-select-trigger" id="lastDonationTrigger" onclick="openCalendarPicker()">
@@ -708,7 +685,6 @@
           <input type="hidden" id="editLastDonation" value="" />
         </div>
 
-        <!-- CUSTOM AVAILABILITY TRIGGER -->
         <div class="input-group">
           <label class="field-label">রক্তদানের প্রাপ্যতা (Availability):</label>
           <div class="custom-select-trigger" id="availTrigger" onclick="openCustomPicker('availability')">
@@ -725,7 +701,7 @@
     </div>
   </main>
 
-  <!-- KEYBOARD-SAFE CUSTOM PICKER MODAL (DISTRICT, UPAZILA, AVAILABILITY) -->
+  <!-- CUSTOM PICKER MODAL -->
   <div id="customPickerModal" class="custom-modal-backdrop" onclick="closeCustomPickerOnBackdrop(event)">
     <div class="custom-modal-sheet" id="modalSheetContent">
       <div class="modal-fixed-top">
@@ -741,7 +717,7 @@
     </div>
   </div>
 
-  <!-- FIXED-HEIGHT JIBONI CALENDAR MODAL -->
+  <!-- FIXED HEIGHT CALENDAR MODAL -->
   <div id="customCalendarModal" class="custom-modal-backdrop" onclick="closeCalendarOnBackdrop(event)">
     <div class="custom-modal-sheet" style="padding: 16px 16px 20px;">
       <div class="modal-sheet-header">
@@ -749,12 +725,11 @@
         <button type="button" class="modal-sheet-close" onclick="closeCalendarPicker()">✕</button>
       </div>
 
-      <!-- Month & Year Navigation -->
       <div class="calendar-month-nav">
         <button type="button" class="cal-nav-btn" onclick="changeCalMonth(-1)">❮</button>
         <div style="display:flex; align-items:center; gap:8px;">
           <span id="calMonthLabel" style="font-weight:800; min-width: 80px; text-align: center;">সেপ্টেম্বর</span>
-          <div class="cal-year-badge" id="calYearBadge" onclick="toggleYearGridView()">
+          <div class="cal-year-badge" onclick="toggleYearGridView()">
             <span id="calYearLabel">২০২৬</span>
             <span style="font-size:0.7rem;">▾</span>
           </div>
@@ -762,7 +737,6 @@
         <button type="button" class="cal-nav-btn" onclick="changeCalMonth(1)">❯</button>
       </div>
 
-      <!-- Day View (Fixed Height Container) -->
       <div id="calDaysViewWrap">
         <div class="cal-weekdays-grid">
           <div>রবি</div><div>সোম</div><div>মঙ্গল</div><div>বুধ</div><div>বৃহ</div><div>শুক্র</div><div>শনি</div>
@@ -770,10 +744,8 @@
         <div class="cal-days-grid" id="calDaysGrid"></div>
       </div>
 
-      <!-- Year Selection Grid View -->
       <div class="cal-year-grid" id="calYearGrid"></div>
 
-      <!-- Footer Buttons -->
       <div class="cal-actions-row">
         <button type="button" class="cal-action-btn" onclick="clearSelectedDate()">মুছে ফেলুন</button>
         <button type="button" class="cal-action-btn cal-confirm-btn" onclick="confirmCalendarDate()">নিশ্চিত করুন</button>
@@ -781,7 +753,7 @@
     </div>
   </div>
 
-  <!-- JIBONI BRANDED CUSTOM POPUP ALERT -->
+  <!-- CUSTOM POPUP ALERT -->
   <div id="customAlertModal" class="custom-alert-backdrop">
     <div class="custom-alert-box">
       <div class="alert-icon-wrap" id="customAlertIcon">⚠️</div>
@@ -792,12 +764,12 @@
   </div>
 
   <!-- PIN RESET MODAL -->
-  <div id="resetPinModal" class="custom-modal-backdrop" style="align-items: center;">
+  <div id="resetPinModal" class="custom-modal-backdrop" style="align-items: center;" onclick="closeResetModalOnBackdrop(event)">
     <div class="modal-box">
       <h3 style="font-size: 1.15rem; font-weight: 800; color: var(--slate-900); margin-bottom: 4px;">পিন রিসেট করুন</h3>
       <p style="font-size: 0.8rem; color: var(--slate-600); margin-bottom: 16px;">নিবন্ধনে ব্যবহৃত মোবাইল নম্বর ও জন্ম তারিখ দিন।</p>
 
-      <form id="resetPinForm">
+      <form id="resetPinForm" onsubmit="handleResetPin(event)">
         <div class="input-group">
           <label class="field-label" style="font-size: 0.78rem;">মোবাইল নম্বর:</label>
           <input type="tel" id="resetPhone" class="text-input" placeholder="01XXXXXXXXX" required />
@@ -858,7 +830,6 @@
       { category: "ঢাকা বিভাগ", name: "Madaripur", label: "মাদারীপুর (Madaripur)" },
       { category: "ঢাকা বিভাগ", name: "Rajbari", label: "রাজবাড়ী (Rajbari)" },
       { category: "ঢাকা বিভাগ", name: "Shariatpur", label: "শরীয়তপুর (Shariatpur)" },
-
       { category: "চট্টগ্রাম বিভাগ", name: "Chattogram", label: "চট্টগ্রাম (Chattogram)" },
       { category: "চট্টগ্রাম বিভাগ", name: "Cox's Bazar", label: "কক্সবাজার (Cox's Bazar)" },
       { category: "চট্টগ্রাম বিভাগ", name: "Cumilla", label: "কুমিল্লা (Cumilla)" },
@@ -870,7 +841,6 @@
       { category: "চট্টগ্রাম বিভাগ", name: "Bandarban", label: "বান্দরবান (Bandarban)" },
       { category: "চট্টগ্রাম বিভাগ", name: "Khagrachhari", label: "খাগড়াছড়ি (Khagrachhari)" },
       { category: "চট্টগ্রাম বিভাগ", name: "Rangamati", label: "রাঙ্গামাটি (Rangamati)" },
-
       { category: "রাজশাহী বিভাগ", name: "Rajshahi", label: "রাজশাহী (Rajshahi)" },
       { category: "রাজশাহী বিভাগ", name: "Bogura", label: "বগুড়া (Bogura)" },
       { category: "রাজশাহী বিভাগ", name: "Pabna", label: "পাবনা (Pabna)" },
@@ -879,7 +849,6 @@
       { category: "রাজশাহী বিভাগ", name: "Natore", label: "নাটোর (Natore)" },
       { category: "রাজশাহী বিভাগ", name: "Chapai Nawabganj", label: "চাঁপাইনবাবগঞ্জ (Chapai Nawabganj)" },
       { category: "রাজশাহী বিভাগ", name: "Joypurhat", label: "জয়পুরহাট (Joypurhat)" },
-
       { category: "খুলনা বিভাগ", name: "Khulna", label: "খুলনা (Khulna)" },
       { category: "খুলনা বিভাগ", name: "Jashore", label: "যশোর (Jashore)" },
       { category: "খুলনা বিভাগ", name: "Kushtia", label: "কুষ্টিয়া (Kushtia)" },
@@ -890,19 +859,16 @@
       { category: "খুলনা বিভাগ", name: "Magura", label: "মাগুরা (Magura)" },
       { category: "খুলনা বিভাগ", name: "Meherpur", label: "মেহেরপুর (Meherpur)" },
       { category: "খুলনা বিভাগ", name: "Narail", label: "নড়াইল (Narail)" },
-
       { category: "বরিশাল বিভাগ", name: "Barishal", label: "বরিশাল (Barishal)" },
       { category: "বরিশাল বিভাগ", name: "Bhola", label: "ভোলা (Bhola)" },
       { category: "বরিশাল বিভাগ", name: "Patuakhali", label: "পটুয়াখালী (Patuakhali)" },
       { category: "বরিশাল বিভাগ", name: "Pirojpur", label: "পিরোজপুর (Pirojpur)" },
       { category: "বরিশাল বিভাগ", name: "Barguna", label: "বরগুনা (Barguna)" },
       { category: "বরিশাল বিভাগ", name: "Jhalokati", label: "ঝালকাঠি (Jhalokati)" },
-
       { category: "সিলেট বিভাগ", name: "Sylhet", label: "সিলেট (Sylhet)" },
       { category: "সিলেট বিভাগ", name: "Moulvibazar", label: "মৌলভীবাজার (Moulvibazar)" },
       { category: "সিলেট বিভাগ", name: "Habiganj", label: "হবিগঞ্জ (Habiganj)" },
       { category: "সিলেট বিভাগ", name: "Sunamganj", label: "সুনামগঞ্জ (Sunamganj)" },
-
       { category: "রংপুর বিভাগ", name: "Rangpur", label: "রংপুর (Rangpur)" },
       { category: "রংপুর বিভাগ", name: "Dinajpur", label: "দিনাজপুর (Dinajpur)" },
       { category: "রংপুর বিভাগ", name: "Nilphamari", label: "নীলফামারী (Nilphamari)" },
@@ -911,7 +877,6 @@
       { category: "রংপুর বিভাগ", name: "Lalmonirhat", label: "লালমনিরহাট (Lalmonirhat)" },
       { category: "রংপুর বিভাগ", name: "Panchagarh", label: "পঞ্চগড় (Panchagarh)" },
       { category: "রংপুর বিভাগ", name: "Thakurgaon", label: "ঠাকুরগাঁও (Thakurgaon)" },
-
       { category: "ময়মনসিংহ বিভাগ", name: "Mymensingh", label: "ময়মনসিংহ (Mymensingh)" },
       { category: "ময়মনসিংহ বিভাগ", name: "Jamalpur", label: "জামালপুর (Jamalpur)" },
       { category: "ময়মনসিংহ বিভাগ", name: "Netrokona", label: "নেত্রকোণা (Netrokona)" },
@@ -961,7 +926,7 @@
       "Magura": ["মাগুরা সদর (Sadar)", "শ্রীপুর (Sreepur)", "শালিখা (Shalikha)", "মহম্মদপুর (Mohammadpur)"],
       "Meherpur": ["মেহেরপুর সদর (Sadar)", "গাংনী (Gangni)", "মুজিবনগর (Mujibnagar)"],
       "Narail": ["নড়াইল সদর (Sadar)", "লোহাগড়া (Lohagara)", "কালিয়া (Kalia)"],
-      "Barishal": ["বরিশাল সদর / কোতোয়ালী (Sadar)", "বাকেরগঞ্জ (Bakerganj)", "বাবুগঞ্জ (Babuganj)", "উজিরপুর (Wazirpur)", "গৌরনদী (Gournadi)", "আগৈলঝাড়া (Agailjhara)", "বানারীপাড়া (Banaripara)", "মুলাদী (Muladi)", "মেহেন্দীগঞ্জ (Mehendiganj)", "হিজলা (Hizla)"],
+      "Barishal": ["বরিশাল সদর / কোতোয়ালী (Sadar)", "বাকেরগঞ্জ (Bakerganj)", "বাবুগঞ্জ (Babuganj)", "উজিরপুর (Wazirpur)", "গৌরনদী (Gournadi)", "আগৈলঝাড়া (Agailjhara)", "বানারীপাড়া (Banaripara)", "মুলাদী (Muladi)", "মেহেন্দীগঞ্জ (Mehendiganj)", "হিজলা (Hিজলা)"],
       "Bhola": ["ভোলা সদর (Sadar)", "বোরহানউদ্দিন (Borhanuddin)", "দৌলতখান (Daulatkhan)", "লালমোহন (Lalmohan)", "চরফ্যাশন (Char Fasson)", "তজুমদ্দিন (Tazumuddin)", "মনপুরা (Monpura)"],
       "Patuakhali": ["পটুয়াখালী সদর (Sadar)", "বাউফল (Bauphal)", "গলাচিপা (Galachipa)", "কলাপাড়া / কুয়াকাটা (Kalapara)", "দশমিনা (Dashmina)", "মির্জাগঞ্জ (Mirzaganj)", "দুমকি (Dumki)", "রাঙ্গাবালী (Rangabali)"],
       "Pirojpur": ["পিরোজপুর সদর (Sadar)", "ভাণ্ডারিয়া (Bhandaria)", "মঠবাড়িয়া (Mathbaria)", "নাজিরপুর (Nazirpur)", "নেছারাবাদ / স্বরূপকাঠি (Nesarabad)", "কাউখালী (Kawkhali)", "ইন্দুরকানী / জিয়ানগর (Indurkani)"],
@@ -970,11 +935,11 @@
       "Sylhet": ["সিলেট সদর / কোতোয়ালী (Sadar)", "দক্ষিণ সুরমা (South Surma)", "গোলাপগঞ্জ (Golapganj)", "বিয়ানীবাজার (Beanibazar)", "বিশ্বনাথ (Biswanath)", "জৈন্তাপুর (Jaintiapur)", "জকিগঞ্জ (Zakiganj)", "কানাইঘাট (Kanaighat)", "গোয়াইনঘাট (Gowainghat)", "কোম্পানীগঞ্জ (Companiganj)", "ফেঞ্চুগঞ্জ (Fenchuganj)", "বালাগঞ্জ (Balaganj)", "ওসমানীনগর (Osmani Nagar)"],
       "Moulvibazar": ["মৌলভীবাজার সদর (Sadar)", "শ্রীমঙ্গল (Sreemangal)", "কমলগঞ্জ (Kamalganj)", "কুলাউড়া (Kulaura)", "বড়লেখা (Barlekha)", "রাজনগর (Rajnagar)", "জুড়ী (Juri)"],
       "Habiganj": ["হবিগঞ্জ সদর (Sadar)", "মাধবপুর (Madhabpur)", "চুনারুঘাট (Chunarughat)", "বাহুবল (Bahubal)", "নবীগঞ্জ (Nabiganj)", "বানিয়াচং (Baniachong)", "লাখাই (Lakhai)", "আজমিরীগঞ্জ (Ajmiriganj)", "শায়স্তাগঞ্জ (Shayestaganj)"],
-      "Sunamganj": ["সুনামগঞ্জ সদর (Sadar)", "জগন্নাথপুর (Jagannathpur)", "ছাতক (Chhatak)", "তাহিরপুর (Tahirpur)", "দেরাই (Derai)", "শাল্লা (Shalla)", "ধর্মপাশা (Dharmapasha)", "জামালগঞ্জ (Jamalganj)", "দোয়ারাবাজার (Dowarabazar)", "বিশ্বম্ভরপুর (Bishwamvarpur)", "শান্তিগঞ্জ (Shantiganj)"],
+      "Sunamganj": ["সুনামগঞ্জ সদর (Sadar)", "জগন্নাথপুর (Jagannathpur)", "ছাতক (Chhatak)", "তাহিরপুর (Tahirpur)", "দেরাই (Derai)", "শাল্লা (Shalla)", "ধর্মপাশা (Dharmapasha)", "জামালগঞ্জ (Jamalগঞ্জ)", "দোয়ারাবাজার (Dowarabazar)", "বিশ্বম্ভরপুর (Bishwamvarpur)", "শান্তিগঞ্জ (Shantiganj)"],
       "Rangpur": ["রংপুর সদর / কোতোয়ালী (Sadar)", "বদরগঞ্জ (Badarganj)", "পীরগঞ্জ (Pirganj)", "পীরগাছা (Pirgachha)", "মিঠাপুকুর (Mithapukur)", "গঙ্গাচড়া (Gangachhara)", "কাউনিয়া (Kaunia)", "তারাগঞ্জ (Taraganj)"],
       "Dinajpur": ["দিনাজপুর সদর (Sadar)", "বিরামপুর (Birampur)", "ফুলবাড়ী (Fulbari)", "বীরগঞ্জ (Birganj)", "বোচাগঞ্জ (Bochaganj)", "কাহারোল (Kaharole)", "চিরিরবন্দর (Chirirbandar)", "পার্বতীপুর (Parbatipur)", "নবাবগঞ্জ (Nawabganj)", "ঘোড়াঘাট (Ghoraghat)", "হাকিমপুর / হিলি (Hakimpur)", "খানসামা (Khansama)", "বিরল (Birol)"],
       "Nilphamari": ["নীলফামারী সদর (Nilphamari Sadar)", "সৈয়দপুর (Saidpur)", "জলঢাকা (Jaldhaka)", "ডোমার (Domar)", "ডিমলা (Dimla)", "কিশোরগঞ্জ (Kishoreganj)"],
-      "Kurigram": ["কুড়িগ্রাম সদর (Sadar)", "উলিপুর (Ulipur)", "নাগেশ্বরী (Nageshwari)", "ভুরুঙ্গামারী (Bhurungamari)", "চিলমারী (Chilmari)", "ফুলবাড়ী (Fulbari)", "রৌমারী (Roumari)", "রাজিবপুর (Rajibpur)", "রাজারহাট (Rajarhat)"],
+      "Kurigram": ["কুড়িগ্রাম সদর (Sadar)", "উলিপুর (Ulিপুর)", "নাগেশ্বরী (Nageshwari)", "ভুরুঙ্গামারী (Bhurungamari)", "চিলমারী (Chilmari)", "ফুলবাড়ী (Fulbari)", "রৌমারী (Roumari)", "রাজিবপুর (Rajibpur)", "রাজারহাট (Rajarhat)"],
       "Gaibandha": ["গাইবান্ধা সদর (Sadar)", "গোবিন্দগঞ্জ (Gobindaganj)", "পলাশবাড়ী (Palashbari)", "সুন্দরগঞ্জ (Sundarganj)", "সাদুল্লাপুর (Sadullapur)", "সাঘাটা (Saghata)", "ফুলছড়ি (Fulchhari)"],
       "Lalmonirhat": ["লালমনিরহাট সদর (Sadar)", "হাতীবান্ধা (Hatibandha)", "পাটগ্রাম (Patgram)", "কালীগঞ্জ (Kaliganj)", "আদিতমারী (Aditmari)"],
       "Panchagarh": ["পঞ্চগড় সদর (Sadar)", "তেঁতুলিয়া (Tetulia)", "বোদা (Boda)", "দেবীগঞ্জ (Debiganj)", "আটোয়ারী (Atwari)"],
@@ -988,7 +953,7 @@
     function showCustomAlert(title, message, icon) {
       document.getElementById("customAlertTitle").innerText = title || "সতর্কতা";
       document.getElementById("customAlertMsg").innerText = message;
-      document.getElementById("customAlertIcon").innerText = icon || "⚠️";
+      document.getElementById("customAlertIcon").innerText = icon || "⚠️️";
       document.getElementById("customAlertModal").style.display = "flex";
     }
 
@@ -996,7 +961,89 @@
       document.getElementById("customAlertModal").style.display = "none";
     }
 
-    function openPicker(mode) {
+    function getDonors() {
+      var stored = localStorage.getItem("jiboni_donors_cache") || localStorage.getItem("donors");
+      return stored ? JSON.parse(stored) : [];
+    }
+
+    function checkEligibility(lastDonationDateStr) {
+      if (!lastDonationDateStr || lastDonationDateStr === "তথ্য নেই") return true;
+      var lastDate = new Date(lastDonationDateStr);
+      var today = new Date();
+      var diffDays = (today - lastDate) / (1000 * 60 * 60 * 24);
+      return diffDays >= 120;
+    }
+
+    function verifyDonorLogin(e) {
+      if (e) e.preventDefault();
+      var phone = document.getElementById("authPhone").value.trim();
+      var pin = document.getElementById("authPin").value.trim();
+      var alertBox = document.getElementById("updateAlert");
+
+      donorsList = getDonors();
+      activeDonorIndex = donorsList.findIndex(function(d) {
+        return (d.phone === phone) && (String(d.pin) === String(pin));
+      });
+
+      if (activeDonorIndex !== -1) {
+        var donor = donorsList[activeDonorIndex];
+        alertBox.style.display = "none";
+        document.getElementById("verifyDonorForm").style.display = "none";
+        document.getElementById("editProfileForm").style.display = "block";
+
+        document.getElementById("editName").value = donor.name || "";
+        document.getElementById("editBloodGroup").value = donor.blood_group || donor.bloodGroup || "";
+        document.getElementById("editHall").value = donor.hall || "";
+
+        // Set District
+        var distVal = donor.district || "Dhaka";
+        var distObj = districtsList.find(function(d) { return d.name.toLowerCase() === distVal.toLowerCase(); });
+        var distLabel = distObj ? distObj.label : distVal;
+        document.getElementById("editDistrict").value = distObj ? distObj.name : distVal;
+        document.getElementById("districtDisplay").innerText = distLabel;
+        document.getElementById("districtDisplay").style.color = "var(--slate-900)";
+        document.getElementById("districtDisplay").style.fontWeight = "700";
+
+        // Set Upazila
+        var upzVal = donor.upazila || "";
+        document.getElementById("editUpazila").value = upzVal;
+        var upzDisplay = document.getElementById("upazilaDisplay");
+        upzDisplay.innerText = upzVal || "উপজেলা / থানা নির্বাচন করুন";
+        upzDisplay.style.color = upzVal ? "var(--slate-900)" : "var(--slate-400)";
+        upzDisplay.style.fontWeight = upzVal ? "700" : "normal";
+
+        // Set Last Donation
+        var lastDateVal = donor.last_donation && donor.last_donation !== "তথ্য নেই" ? donor.last_donation : "";
+        document.getElementById("editLastDonation").value = lastDateVal;
+        document.getElementById("lastDonationDisplay").innerText = lastDateVal || "তথ্য নেই";
+        document.getElementById("lastDonationDisplay").style.color = lastDateVal ? "var(--slate-900)" : "var(--slate-800)";
+        document.getElementById("lastDonationDisplay").style.fontWeight = lastDateVal ? "700" : "600";
+
+        // Set Availability
+        setAvailabilityValue(donor.is_available ? "true" : "false");
+
+        if (window.PasswordCredential && navigator.credentials) {
+          try {
+            var cred = new PasswordCredential({
+              id: phone,
+              password: pin,
+              name: donor.name || "JIBONI Donor"
+            });
+            navigator.credentials.store(cred).catch(function(err) {});
+          } catch(e) {}
+        }
+      } else {
+        alertBox.style.display = "block";
+        alertBox.style.background = "#fee2e2";
+        alertBox.style.color = "#b91c1c";
+        alertBox.innerText = "মোবাইল নম্বর বা পিন সঠিক নয়!";
+      }
+    }
+
+    // ==========================================
+    // 🔽 CUSTOM PICKER MODAL
+    // ==========================================
+    function openCustomPicker(mode) {
       currentPickerMode = mode;
       var modal = document.getElementById("customPickerModal");
       var title = document.getElementById("modalTitle");
@@ -1008,28 +1055,15 @@
       searchInput.value = "";
       listContainer.innerHTML = "";
 
-      if (mode === "blood") {
-        title.innerText = "রক্তের গ্রুপ নির্বাচন করুন";
-        searchWrap.style.display = "none";
-        var curBlood = document.getElementById("regBlood").value;
-
-        bloodGroupsList.forEach(function(bg) {
-          var btn = document.createElement("button");
-          btn.type = "button";
-          btn.className = "modal-item-btn" + (curBlood === bg ? " selected" : "");
-          btn.innerHTML = "<span>" + bg + "</span>" + (curBlood === bg ? "<span>✓</span>" : "");
-          btn.onclick = function() { selectBlood(bg); };
-          listContainer.appendChild(btn);
-        });
-      } else if (mode === "district") {
+      if (mode === "district") {
         title.innerText = "জেলা নির্বাচন করুন";
         searchWrap.style.display = "block";
         searchInput.placeholder = "জেলা খুঁজুন (e.g. ঢাকা, Dhaka)...";
         renderDistrictModalList("");
       } else if (mode === "upazila") {
-        var curDist = document.getElementById("regDistrict").value;
+        var curDist = document.getElementById("editDistrict").value;
         if (!curDist) {
-          closePicker();
+          closeCustomPicker();
           showCustomAlert("জেলা প্রয়োজন", "অনুগ্রহ করে প্রথমে জেলা নির্বাচন করুন!", "📍");
           return;
         }
@@ -1038,9 +1072,13 @@
         searchWrap.style.display = "block";
         searchInput.placeholder = "উপজেলা / থানা খুঁজুন...";
         renderUpazilaModalList("");
+      } else if (mode === "availability") {
+        title.innerText = "রক্তদানের প্রাপ্যতা নির্বাচন করুন";
+        searchWrap.style.display = "none";
+        renderAvailabilityModalList();
       }
 
-      if (mode !== "blood") {
+      if (mode !== "availability") {
         setTimeout(function() {
           searchInput.focus();
         }, 80);
@@ -1050,7 +1088,7 @@
     function renderDistrictModalList(filterQuery) {
       var listContainer = document.getElementById("modalListContainer");
       listContainer.innerHTML = "";
-      var curDist = document.getElementById("regDistrict").value;
+      var curDist = document.getElementById("editDistrict").value;
       var q = filterQuery.toLowerCase().trim();
 
       var currentCat = "";
@@ -1083,8 +1121,8 @@
     function renderUpazilaModalList(filterQuery) {
       var listContainer = document.getElementById("modalListContainer");
       listContainer.innerHTML = "";
-      var curDist = document.getElementById("regDistrict").value;
-      var curUpz = document.getElementById("regUpazila").value;
+      var curDist = document.getElementById("editDistrict").value;
+      var curUpz = document.getElementById("editUpazila").value;
       var q = filterQuery.toLowerCase().trim();
 
       var list = upazilaDatabase[curDist] || [];
@@ -1107,6 +1145,27 @@
       }
     }
 
+    function renderAvailabilityModalList() {
+      var listContainer = document.getElementById("modalListContainer");
+      listContainer.innerHTML = "";
+      var curVal = document.getElementById("editAvailability").value;
+
+      var optTrue = document.createElement("button");
+      optTrue.type = "button";
+      optTrue.className = "modal-item-btn" + (curVal === "true" ? " selected" : "");
+      optTrue.innerHTML = "<span>✅ আমি রক্তদানে প্রস্তুত (Available)</span>" + (curVal === "true" ? "<span>✓</span>" : "");
+      optTrue.onclick = function() { setAvailabilityValue("true"); closeCustomPicker(); };
+
+      var optFalse = document.createElement("button");
+      optFalse.type = "button";
+      optFalse.className = "modal-item-btn" + (curVal === "false" ? " selected" : "");
+      optFalse.innerHTML = "<span>❌ সাময়িকভাবে অনুপলব্ধ (Unavailable)</span>" + (curVal === "false" ? "<span>✓</span>" : "");
+      optFalse.onclick = function() { setAvailabilityValue("false"); closeCustomPicker(); };
+
+      listContainer.appendChild(optTrue);
+      listContainer.appendChild(optFalse);
+    }
+
     function filterModalItems() {
       var q = document.getElementById("modalSearchInput").value;
       if (currentPickerMode === "district") {
@@ -1116,86 +1175,71 @@
       }
     }
 
-    function selectBlood(bg) {
-      document.getElementById("regBlood").value = bg;
-      var display = document.getElementById("bloodDisplay");
-      display.innerText = bg;
-      display.style.color = "var(--slate-900)";
-      display.style.fontWeight = "700";
-      closePicker();
-    }
-
     function selectDistrict(name, label) {
-      document.getElementById("regDistrict").value = name;
+      document.getElementById("editDistrict").value = name;
       var display = document.getElementById("districtDisplay");
       display.innerText = label;
       display.style.color = "var(--slate-900)";
       display.style.fontWeight = "700";
 
-      document.getElementById("regUpazila").value = "";
+      document.getElementById("editUpazila").value = "";
       var upzDisplay = document.getElementById("upazilaDisplay");
       upzDisplay.innerText = "উপজেলা / থানা নির্বাচন করুন";
       upzDisplay.style.color = "var(--slate-400)";
       upzDisplay.style.fontWeight = "normal";
 
-      closePicker();
+      closeCustomPicker();
     }
 
     function selectUpazila(val, label) {
-      document.getElementById("regUpazila").value = val;
+      document.getElementById("editUpazila").value = val;
       var display = document.getElementById("upazilaDisplay");
       display.innerText = label;
       display.style.color = "var(--slate-900)";
       display.style.fontWeight = "700";
-      closePicker();
+      closeCustomPicker();
     }
 
-    function closePicker() {
+    function setAvailabilityValue(val) {
+      document.getElementById("editAvailability").value = val;
+      var display = document.getElementById("availDisplay");
+      if (val === "true") {
+        display.innerHTML = '<span style="color:var(--success);">✅ আমি রক্তদানে প্রস্তুত (Available)</span>';
+      } else {
+        display.innerHTML = '<span style="color:var(--warning);">❌ সাময়িকভাবে অনুপলব্ধ (Unavailable)</span>';
+      }
+    }
+
+    function closeCustomPicker() {
       document.getElementById("customPickerModal").style.display = "none";
       if (document.activeElement) document.activeElement.blur();
     }
 
-    function closePickerOnBackdrop(e) {
+    function closeCustomPickerOnBackdrop(e) {
       if (e.target.id === "customPickerModal") {
-        closePicker();
+        closeCustomPicker();
       }
     }
 
     // ==========================================
-    // 📅 FIXED HEIGHT (42 CELLS) CALENDAR LOGIC
+    // 📅 FIXED 42-CELL CALENDAR MODAL
     // ==========================================
-    function openCalendarFor(target) {
-      currentCalendarTarget = target;
-      var modal = document.getElementById("customCalendarModal");
-      var title = document.getElementById("calendarTitle");
-      var currentVal = "";
-
+    function openCalendarPicker() {
+      var currentVal = document.getElementById("editLastDonation").value;
       isYearViewOpen = false;
       document.getElementById("calDaysViewWrap").style.display = "block";
       document.getElementById("calYearGrid").style.display = "none";
-
-      if (target === "dob") {
-        title.innerText = "জন্ম তারিখ নির্বাচন করুন";
-        currentVal = document.getElementById("regDob").value;
-      } else {
-        title.innerText = "সর্বশেষ রক্তদানের তারিখ নির্বাচন";
-        currentVal = document.getElementById("regLastDonation").value;
-      }
 
       if (currentVal && !isNaN(new Date(currentVal).getTime())) {
         calViewDate = new Date(currentVal);
         tempSelectedDateStr = currentVal;
       } else {
-        if (target === "dob") {
-          calViewDate = new Date(2002, 0, 1);
-        } else {
-          calViewDate = new Date();
-        }
+        calViewDate = new Date();
         tempSelectedDateStr = currentVal || "";
       }
 
       renderCalendarGrid();
-      modal.style.display = "flex";
+      document.getElementById("customCalendarModal").style.display = "flex";
     }
 
     function toggleYearGridView() {
@@ -1218,7 +1262,7 @@
       var grid = document.getElementById("calYearGrid");
       grid.innerHTML = "";
       var currentYear = new Date().getFullYear();
-      var startYear = (currentCalendarTarget === "dob") ? 1960 : 2018;
+      var startYear = 2018;
       var endYear = currentYear;
 
       for (var y = endYear; y >= startYear; y--) {
@@ -1255,7 +1299,6 @@
       renderCalendarGrid();
     }
 
-    // Fixed 42 cells (6 rows × 7 days) ensures constant height in all months
     function renderCalendarGrid() {
       var year = calViewDate.getFullYear();
       var month = calViewDate.getMonth();
@@ -1269,7 +1312,6 @@
       var firstDay = new Date(year, month, 1).getDay();
       var daysInMonth = new Date(year, month + 1, 0).getDate();
 
-      // Empty spaces before first day
       for (var i = 0; i < firstDay; i++) {
         var blank = document.createElement("div");
         blank.className = "cal-day-cell empty";
@@ -1279,7 +1321,6 @@
       var today = new Date();
       var todayFormatted = today.getFullYear() + "-" + String(today.getMonth() + 1).padStart(2, '0') + "-" + String(today.getDate()).padStart(2, '0');
 
-      // Month days
       for (var day = 1; day <= daysInMonth; day++) {
         var dayStr = String(day).padStart(2, '0');
         var monthStr = String(month + 1).padStart(2, '0');
@@ -1307,7 +1348,6 @@
         grid.appendChild(cell);
       }
 
-      // Pad remaining empty slots to strictly maintain 42 cells (6 full rows)
       var totalRendered = firstDay + daysInMonth;
       var remainingCells = 42 - totalRendered;
       for (var r = 0; r < remainingCells; r++) {
@@ -1317,108 +1357,105 @@
       }
     }
 
-    function clearCalendarDate() {
+    function clearSelectedDate() {
       tempSelectedDateStr = "";
       confirmCalendarDate();
     }
 
     function confirmCalendarDate() {
-      if (currentCalendarTarget === "dob") {
-        document.getElementById("regDob").value = tempSelectedDateStr;
-        var display = document.getElementById("dobDisplay");
-        display.innerText = tempSelectedDateStr || "জন্ম তারিখ নির্বাচন করুন";
-        display.style.color = tempSelectedDateStr ? "var(--slate-900)" : "var(--slate-400)";
-        display.style.fontWeight = tempSelectedDateStr ? "700" : "normal";
-      } else {
-        document.getElementById("regLastDonation").value = tempSelectedDateStr;
-        var display = document.getElementById("lastDonationDisplay");
-        display.innerText = tempSelectedDateStr || "রক্তদানের তারিখ নির্বাচন করুন";
-        display.style.color = tempSelectedDateStr ? "var(--slate-900)" : "var(--slate-400)";
-        display.style.fontWeight = tempSelectedDateStr ? "700" : "normal";
-      }
+      document.getElementById("editLastDonation").value = tempSelectedDateStr;
+      document.getElementById("lastDonationDisplay").innerText = tempSelectedDateStr || "তথ্য নেই";
+      document.getElementById("lastDonationDisplay").style.color = tempSelectedDateStr ? "var(--slate-900)" : "var(--slate-800)";
+      document.getElementById("lastDonationDisplay").style.fontWeight = tempSelectedDateStr ? "700" : "600";
       closeCalendarPicker();
     }
 
-    function checkDonationEligibility(lastDonationDateStr) {
-      if (!lastDonationDateStr || lastDonationDateStr === "তথ্য নেই") return true;
-      var lastDate = new Date(lastDonationDateStr);
-      var today = new Date();
-      var diffDays = (today - lastDate) / (1000 * 60 * 60 * 24);
-      return diffDays >= 120;
+    // ==========================================
+    // 💾 SAVE PROFILE CHANGES
+    // ==========================================
+    function saveProfileChanges(e) {
+      if (e) e.preventDefault();
+      var alertBox = document.getElementById("updateAlert");
+
+      if (activeDonorIndex !== -1 && donorsList[activeDonorIndex]) {
+        var district = document.getElementById("editDistrict").value.trim();
+        var upazila = document.getElementById("editUpazila").value.trim();
+
+        if (!district || !upazila) {
+          showCustomAlert("তথ্য অসম্পূর্ণ", "অনুগ্রহ করে জেলা এবং উপজেলা/থানা উভয়ই নির্বাচন করুন!", "📍");
+          return;
+        }
+
+        var newLastDonation = document.getElementById("editLastDonation").value;
+        var selectedAvail = document.getElementById("editAvailability").value === "true";
+        var isEligible = checkEligibility(newLastDonation);
+
+        if (selectedAvail && !isEligible) {
+          var allow = confirm("সতর্কতা: শেষ রক্তদান থেকে এখনো ৪ মাস (১২০ দিন) পূর্ণ হয়নি। তবুও কি আপনি প্রস্তুত (Available) রাখতে চান?");
+          if (!allow) return;
+          donorsList[activeDonorIndex].manual_override = true;
+        } else {
+          donorsList[activeDonorIndex].manual_override = false;
+        }
+
+        donorsList[activeDonorIndex].name = document.getElementById("editName").value.trim();
+        donorsList[activeDonorIndex].district = district;
+        donorsList[activeDonorIndex].upazila = upazila;
+        donorsList[activeDonorIndex].hall = document.getElementById("editHall").value.trim();
+        donorsList[activeDonorIndex].last_donation = newLastDonation || "তথ্য নেই";
+        donorsList[activeDonorIndex].is_available = selectedAvail;
+
+        localStorage.setItem("jiboni_donors_cache", JSON.stringify(donorsList));
+        localStorage.setItem("donors", JSON.stringify(donorsList));
+
+        alertBox.style.display = "block";
+        alertBox.style.background = "#dcfce7";
+        alertBox.style.color = "#15803d";
+        alertBox.innerText = "আপনার তথ্য সফলভাবে হালনাগাদ করা হয়েছে!";
+      }
     }
 
-    function handleRegistration(e) {
-      if (e) e.preventDefault();
-      var alertBox = document.getElementById("regAlert");
+    // ==========================================
+    // 🔒 PIN RESET MODAL LOGIC
+    // ==========================================
+    function openResetPinModal() {
+      document.getElementById("resetPinModal").style.display = "flex";
+      document.getElementById("resetAlert").style.display = "none";
+      document.getElementById("resetPinForm").reset();
+    }
 
-      var name = document.getElementById("regName").value.trim();
-      var blood = document.getElementById("regBlood").value.trim();
-      var phone = document.getElementById("regPhone").value.trim();
-      var dob = document.getElementById("regDob").value;
-      var district = document.getElementById("regDistrict").value.trim();
-      var upazila = document.getElementById("regUpazila").value.trim();
-      var hall = document.getElementById("regHall").value.trim();
-      var lastDonation = document.getElementById("regLastDonation").value;
-      var pin = document.getElementById("regPin").value.trim();
+    function closeResetPinModal() {
+      document.getElementById("resetPinModal").style.display = "none";
+    }
 
-      if (!name || !blood || !phone || !dob || !district || !upazila || !pin) {
-        showCustomAlert("তথ্য অসম্পূর্ণ", "অনুগ্রহ করে সকল আবশ্যকীয় তথ্য (*) সঠিকভাবে পূরণ করুন!", "✍️");
-        return;
+    function closeResetModalOnBackdrop(e) {
+      if (e.target.id === "resetPinModal") {
+        closeResetPinModal();
       }
+    }
 
-      if (pin.length !== 4 || isNaN(pin)) {
-        showCustomAlert("ভুল পিন", "সিক্রেট পিন অবশ্যই ৪ সংখ্যার হতে হবে!", "🔒");
-        return;
+    function handleResetPin(e) {
+      e.preventDefault();
+      var phone = document.getElementById("resetPhone").value.trim();
+      var dob = document.getElementById("resetDob").value;
+      var newPin = document.getElementById("resetNewPin").value.trim();
+      var alertMsg = document.getElementById("resetAlert");
+
+      alertMsg.style.display = "block";
+      var donors = getDonors();
+      var targetDonor = donors.find(function(d) { return d.phone === phone && d.dob === dob; });
+
+      if (targetDonor) {
+        targetDonor.pin = newPin;
+        localStorage.setItem("jiboni_donors_cache", JSON.stringify(donors));
+        localStorage.setItem("donors", JSON.stringify(donors));
+        alertMsg.style.color = "var(--success)";
+        alertMsg.innerText = "পিন সফলভাবে রিসেট হয়েছে! এখন নতুন পিন দিয়ে লগইন করুন।";
+        setTimeout(function() { closeResetPinModal(); }, 1400);
+      } else {
+        alertMsg.style.color = "var(--primary)";
+        alertMsg.innerText = "ভুল তথ্য! মোবাইল নম্বর ও জন্ম তারিখ মেলেনি।";
       }
-
-      var donors = JSON.parse(localStorage.getItem("jiboni_donors_cache") || localStorage.getItem("donors") || "[]");
-
-      if (donors.some(function(d) { return d.phone === phone; })) {
-        showCustomAlert("নিবন্ধিত নম্বর", "এই মোবাইল নম্বরটি ইতোমধ্যে নিবন্ধিত রয়েছে!", "📱");
-        return;
-      }
-
-      var isEligible = checkDonationEligibility(lastDonation);
-
-      var newDonor = {
-        id: Date.now(),
-        name: name,
-        blood_group: blood,
-        bloodGroup: blood,
-        phone: phone,
-        dob: dob,
-        district: district,
-        upazila: upazila,
-        hall: hall,
-        last_donation: lastDonation || "তথ্য নেই",
-        is_available: isEligible,
-        is_verified: true,
-        pin: pin
-      };
-
-      donors.unshift(newDonor);
-      localStorage.setItem("jiboni_donors_cache", JSON.stringify(donors));
-      localStorage.setItem("donors", JSON.stringify(donors));
-
-      if (window.PasswordCredential && navigator.credentials) {
-        try {
-          var cred = new PasswordCredential({
-            id: phone,
-            password: pin,
-            name: name
-          });
-          navigator.credentials.store(cred).catch(function(err) {});
-        } catch(e) {}
-      }
-
-      alertBox.style.display = "block";
-      alertBox.style.background = "#dcfce7";
-      alertBox.style.color = "#15803d";
-      alertBox.innerHTML = "🎉 অভিনন্দন! রক্তদাতা হিসেবে আপনার নিবন্ধন সফল হয়েছে।<br>হোম পেজে নিয়ে যাওয়া হচ্ছে...";
-
-      setTimeout(function() {
-        window.location.href = "index.html";
-      }, 1600);
     }
   </script>
 </body>
