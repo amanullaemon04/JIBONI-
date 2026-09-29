@@ -323,9 +323,9 @@
       </div>
 
       <div class="input-group">
-        <label class="field-label" for="filterDistrict">জেলা / শহর (City / District)</label>
+        <label class="field-label" for="filterDistrict">জেলা / শহর (City / District) *</label>
         <select id="filterDistrict" class="select-input" onchange="runFilter()">
-          <option value="">সকল জেলা (All Districts)</option>
+          <option value="">-- জেলা নির্বাচন করুন --</option>
           <option value="Dhaka">ঢাকা (Dhaka)</option>
           <option value="Chattogram">চট্টগ্রাম (Chattogram)</option>
           <option value="Rajshahi">রাজশাহী (Rajshahi)</option>
@@ -340,7 +340,7 @@
 
       <div class="input-group">
         <label class="field-label" for="filterLocation">নির্দিষ্ট এলাকা / হল (Specific Location)</label>
-        <input type="text" id="filterLocation" class="text-input" placeholder="e.g. Zahurul Huq Hall (ঐচ্ছিক)" onkeyup="runFilter()" />
+        <input type="text" id="filterLocation" class="text-input" placeholder="e.g. Zahurul Huq Hall বা hall" onkeyup="runFilter()" />
       </div>
 
       <div class="input-group">
@@ -355,7 +355,7 @@
 
     <div id="resultsWrapper">
       <div class="results-notice">
-        📍 রক্তদাতা খুঁজতে অনুগ্রহ করে রক্তের গ্রুপ বা জেলা নির্বাচন করুন।
+        📍 রক্তদাতা খুঁজতে অনুগ্রহ করে প্রথমে জেলা নির্বাচন করুন।
       </div>
     </div>
   </main>
@@ -405,8 +405,15 @@
       var loc = (document.getElementById("filterLocation").value || "").trim().toLowerCase();
       var avail = document.getElementById("filterAvail").value;
 
-      var allDonors = getDonorsData();
       var container = document.getElementById("resultsWrapper");
+
+      // MANDATORY RULE: Do not show any donors if District is not selected
+      if (!district) {
+        container.innerHTML = '<div class="results-notice">📍 রক্তদাতা খুঁজতে অনুগ্রহ করে প্রথমে জেলা নির্বাচন করুন।</div>';
+        return;
+      }
+
+      var allDonors = getDonorsData();
 
       // Auto update availability according to 4-month rule
       allDonors.forEach(function(d) {
@@ -416,36 +423,30 @@
         }
       });
 
-      // Filter query
+      // Filter query with case-insensitive robust matching
       var results = allDonors.filter(function(d) {
         var dBlood = (d.blood_group || d.bloodGroup || "").toUpperCase();
         var dDistrict = (d.district || "").toLowerCase();
         var dHall = (d.hall || "").toLowerCase();
 
-        // 1. Blood Filter
+        // 1. District Check (Must match)
+        if (!dDistrict.includes(district) && !district.includes(dDistrict)) return false;
+
+        // 2. Blood Group Check
         if (blood && dBlood !== blood) return false;
 
-        // 2. District Filter (Checks english or bangla token)
-        if (district) {
-          if (!dDistrict.includes(district) && !district.includes(dDistrict)) return false;
-        }
-
-        // 3. Specific location / Hall filter
+        // 3. Specific Location / Hall Check (Case-insensitive substring search for DU halls & areas)
         if (loc) {
-          if (!dHall.includes(loc) && !dDistrict.includes(loc)) return false;
+          var combinedText = (dHall + " " + dDistrict).toLowerCase();
+          if (!combinedText.includes(loc)) return false;
         }
 
-        // 4. Availability Filter
+        // 4. Availability Check
         if (avail === "Available" && !d.is_available) return false;
         if (avail === "Unavailable" && d.is_available) return false;
 
         return true;
       });
-
-      if (!blood && !district && !loc && avail === "All") {
-        container.innerHTML = '<div class="results-notice">📍 রক্তদাতা খুঁজতে অনুগ্রহ করে রক্তের গ্রুপ বা জেলা নির্বাচন করুন।</div>';
-        return;
-      }
 
       if (results.length === 0) {
         container.innerHTML = '<div class="results-notice">❌ দুঃখিত, আপনার দেওয়া তথ্যানুযায়ী কোনো রক্তদাতা পাওয়া যায়নি।</div>';
@@ -485,11 +486,6 @@
       });
 
       container.innerHTML = html;
-    }
-
-    // Run automatically on load if preset
-    window.onload = function() {
-      runFilter();
     };
   </script>
 </body>
