@@ -40,7 +40,6 @@
       flex-direction: column;
     }
 
-    /* Top Header */
     .site-header {
       background: #ffffff;
       padding: 14px 16px 12px;
@@ -55,7 +54,7 @@
     }
 
     .brand-row {
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
 
     .brand-logo {
@@ -84,7 +83,7 @@
       justify-content: center;
       align-items: center;
       gap: 8px;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
       flex-wrap: wrap;
     }
 
@@ -100,18 +99,15 @@
       border: 1px solid var(--slate-200);
       background: var(--slate-100);
       color: var(--slate-600);
-      transition: all 0.2s ease;
       cursor: pointer;
     }
 
     .brand-slogan {
       font-size: 0.74rem;
       color: var(--slate-600);
-      margin-top: 4px;
       font-style: italic;
     }
 
-    /* Main Container */
     .app-main {
       flex: 1;
       max-width: 480px;
@@ -120,7 +116,6 @@
       padding: 18px 14px 40px;
     }
 
-    /* Auth Box */
     .auth-panel {
       background: #ffffff;
       border: 1px solid var(--slate-200);
@@ -166,7 +161,6 @@
       color: var(--slate-800);
       outline: none;
       background: #ffffff;
-      transition: all 0.2s;
     }
 
     .custom-input:focus {
@@ -186,7 +180,6 @@
       cursor: pointer;
       margin-top: 6px;
       box-shadow: 0 2px 8px rgba(220, 38, 38, 0.25);
-      touch-action: manipulation;
     }
 
     .btn-primary:active {
@@ -199,38 +192,17 @@
       margin-bottom: 14px;
     }
 
-    .forgot-btn {
-      background: none;
-      border: none;
+    .forgot-link {
       font-size: 0.78rem;
       color: var(--primary);
       font-weight: 700;
-      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
       padding: 4px 0;
-      user-select: none;
     }
 
-    /* Modal */
-    .modal-backdrop {
-      position: fixed;
-      inset: 0;
-      background: rgba(15, 23, 42, 0.6);
-      backdrop-filter: blur(4px);
-      display: none;
-      justify-content: center;
-      align-items: center;
-      z-index: 1000;
-      padding: 16px;
-    }
-
-    .modal-box {
-      background: #ffffff;
-      border-radius: 16px;
-      padding: 24px 20px;
-      max-width: 400px;
-      width: 100%;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-      text-align: center;
+    .forgot-link:hover {
+      text-decoration: underline;
     }
 
     /* Dashboard UI */
@@ -426,7 +398,6 @@
       margin-bottom: 16px;
     }
 
-    /* Footer */
     .site-footer {
       background: #ffffff;
       border-top: 1px solid var(--slate-200);
@@ -450,7 +421,6 @@
 </head>
 <body>
 
-  <!-- Top Header -->
   <header class="site-header">
     <div class="header-inner">
       <div class="brand-row">
@@ -487,7 +457,7 @@
       </div>
 
       <div class="forgot-link-wrap">
-        <button type="button" class="forgot-btn" onclick="openForgotModalDirect()">পাসওয়ার্ড ভুলে গেছেন?</button>
+        <a href="forgot-password.html" class="forgot-link">পাসওয়ার্ড ভুলে গেছেন? (Forgot Password)</a>
       </div>
 
       <button type="button" class="btn-primary" onclick="executeLogin()">লগইন করুন</button>
@@ -502,7 +472,7 @@
           <span id="roleBadge" class="user-role-tag">Super Admin</span>
           <span id="adminEmailDisplay" style="color: var(--slate-600); font-weight: 600;"></span>
         </div>
-        <button type="button" onclick="openChangePassModalDirect()" class="btn-chip" style="cursor: pointer; font-size: 0.75rem;">🔑 পাসওয়ার্ড পরিবর্তন</button>
+        <button type="button" onclick="showChangePassPrompt()" class="btn-chip" style="cursor: pointer; font-size: 0.75rem;">🔑 পাসওয়ার্ড পরিবর্তন</button>
       </div>
 
       <div class="filter-pills-bar">
@@ -556,57 +526,26 @@
 
   </main>
 
-  <!-- PASSWORD CHANGE MODAL -->
-  <div id="changePassModal" class="modal-backdrop">
-    <div class="modal-box">
-      <h3 style="font-size: 1.15rem; font-weight: 800; color: var(--slate-900); margin-bottom: 4px;">পাসওয়ার্ড পরিবর্তন করুন</h3>
-      <p style="font-size: 0.8rem; color: var(--slate-600); margin-bottom: 16px;">আপনার অ্যাকাউন্টের জন্য নতুন একটি পাসওয়ার্ড দিন।</p>
-      
-      <div class="input-field">
-        <input type="password" id="newSecretPassword" class="custom-input" placeholder="নতুন পাসওয়ার্ড লিখুন" />
-      </div>
-      <button type="button" class="btn-primary" style="height: 40px; margin-bottom: 8px;" onclick="saveNewPassword()">পাসওয়ার্ড আপডেট করুন</button>
-      <button type="button" onclick="closeChangePassModalDirect()" class="btn-chip" style="width: 100%; justify-content: center; height: 38px; cursor: pointer;">বাতিল করুন</button>
-      <div id="changePassMsg" style="display:none; font-size:0.82rem; font-weight:700; margin-top:10px;"></div>
-    </div>
-  </div>
-
-  <!-- FORGOT PASSWORD MODAL -->
-  <div id="forgotPasswordModal" class="modal-backdrop">
-    <div class="modal-box">
-      <h3 style="font-size: 1.15rem; font-weight: 800; color: var(--slate-900); margin-bottom: 4px;">পাসওয়ার্ড রিসেট রিকোয়েস্ট</h3>
-      <p style="font-size: 0.8rem; color: var(--slate-600); margin-bottom: 16px;">আপনার সাব-অ্যাডমিন ইমেইল প্রদান করুন।</p>
-      
-      <div class="input-field">
-        <input type="email" id="forgotEmail" class="custom-input" placeholder="আপনার সাব-অ্যাডমিন ইমেইল" />
-      </div>
-      <button type="button" class="btn-primary" style="height: 40px; margin-bottom: 8px;" onclick="processForgotPassword()">রিসেট রিকোয়েস্ট পাঠান</button>
-      <button type="button" onclick="closeForgotModalDirect()" class="btn-chip" style="width: 100%; justify-content: center; height: 38px; cursor: pointer;">বাতিল করুন</button>
-      <div id="forgotMsg" style="display:none; font-size:0.82rem; font-weight:700; margin-top:10px;"></div>
-    </div>
-  </div>
-
-  <!-- Footer -->
   <footer class="site-footer">
     <p class="footer-copy">JIBONI — অ্যাডমিন কন্ট্রোল প্যানেল</p>
     <p class="footer-copy">Designed & Developed by <a href="developer.html">Amanulla Emon</a></p>
   </footer>
 
   <script>
-    var MASTER_EMAIL = "amanullaemon04@gmail.com";
-    var MASTER_PASS = "98602427EmoN";
+    // ==========================================
+    // 🛡️ SUPER ADMIN CREDENTIALS
+    // ==========================================
+    var SUPER_EMAIL = "amanullaemon04@gmail.com";
+    var SUPER_PASS = "98602427EmoN";
 
     var activeTab = "all";
     var loggedInUser = null;
     var localDonors = [];
 
     function executeLogin() {
-      var emailEl = document.getElementById("loginEmail");
-      var passEl = document.getElementById("loginPass");
+      var email = (document.getElementById("loginEmail").value || "").trim().toLowerCase();
+      var pass = (document.getElementById("loginPass").value || "").trim();
       var err = document.getElementById("loginError");
-
-      var email = emailEl ? emailEl.value.trim().toLowerCase() : "";
-      var pass = passEl ? passEl.value.trim() : "";
 
       if (!email || !pass) {
         err.style.display = "block";
@@ -614,14 +553,17 @@
         return;
       }
 
-      if (email === MASTER_EMAIL.toLowerCase() && pass === MASTER_PASS) {
-        loggedInUser = { name: "Amanulla Emon", email: MASTER_EMAIL, pass: MASTER_PASS, role: "Super Admin" };
+      // Check Super Admin
+      var customSuperPass = localStorage.getItem("jiboni_super_pass") || SUPER_PASS;
+      if (email === SUPER_EMAIL.toLowerCase() && (pass === customSuperPass || pass === SUPER_PASS)) {
+        loggedInUser = { name: "Amanulla Emon", email: SUPER_EMAIL, role: "Super Admin" };
         sessionStorage.setItem("jiboni_session_user", JSON.stringify(loggedInUser));
         err.style.display = "none";
         renderDashboard();
         return;
       }
 
+      // Check Sub-Admin
       var storedAdmins = JSON.parse(localStorage.getItem("jiboni_admin_accounts") || "[]");
       var match = storedAdmins.find(function(a) {
         return a.email.toLowerCase() === email && a.pass === pass;
@@ -656,36 +598,278 @@
       window.location.reload();
     }
 
-    function openForgotModalDirect() {
-      var modal = document.getElementById("forgotPasswordModal");
-      if (modal) modal.style.display = "flex";
-      var msg = document.getElementById("forgotMsg");
-      if (msg) msg.style.display = "none";
-      var emailInp = document.getElementById("forgotEmail");
-      if (emailInp) emailInp.value = "";
-    }
-
-    function closeForgotModalDirect() {
-      var modal = document.getElementById("forgotPasswordModal");
-      if (modal) modal.style.display = "none";
-    }
-
-    function processForgotPassword() {
-      var email = (document.getElementById("forgotEmail").value || "").trim().toLowerCase();
-      var msg = document.getElementById("forgotMsg");
-      msg.style.display = "block";
-
-      if (!email) {
-        msg.style.color = "var(--primary)";
-        msg.innerText = "ইমেইল লিখুন!";
+    function showChangePassPrompt() {
+      var newPass = prompt("আপনার অ্যাকাউন্টের জন্য নতুন পাসওয়ার্ড দিন (ন্যূনতম ৪ ডিজিট):");
+      if (!newPass) return;
+      newPass = newPass.trim();
+      if (newPass.length < 4) {
+        alert("পাসওয়ার্ড অবশ্যই কমপক্ষে ৪ অক্ষরের হতে হবে!");
         return;
       }
 
-      if (email === MASTER_EMAIL.toLowerCase()) {
-        msg.style.color = "var(--primary)";
-        msg.innerText = "Super Admin পাসওয়ার্ড কোডের MASTER_PASS থেকে নিয়ন্ত্রিত।";
+      if (loggedInUser.role === "Super Admin") {
+        localStorage.setItem("jiboni_super_pass", newPass);
+        alert("Super Admin পাসওয়ার্ড সফলভাবে পরিবর্তিত হয়েছে!");
+      } else {
+        var admins = JSON.parse(localStorage.getItem("jiboni_admin_accounts") || "[]");
+        var found = admins.find(function(a) { return a.email.toLowerCase() === loggedInUser.email.toLowerCase(); });
+        if (found) {
+          found.pass = newPass;
+          localStorage.setItem("jiboni_admin_accounts", JSON.stringify(admins));
+          alert("পাসওয়ার্ড সফলভাবে পরিবর্তিত হয়েছে!");
+        }
+      }
+    }
+
+    function checkDonationEligibility(lastDonationDateStr) {
+      if (!lastDonationDateStr || lastDonationDateStr === "তথ্য নেই") return true;
+      var lastDate = new Date(lastDonationDateStr);
+      var today = new Date();
+      var diffDays = (today - lastDate) / (1000 * 60 * 60 * 24);
+      return diffDays >= 90;
+    }
+
+    function loadDonors() {
+      var stored = localStorage.getItem("jiboni_donors_cache");
+      localDonors = stored ? JSON.parse(stored) : [];
+
+      localDonors.forEach(function(d) {
+        if (d.last_donation && d.last_donation !== "তথ্য নেই") {
+          var isEligible = checkDonationEligibility(d.last_donation);
+          if (!isEligible && d.is_available && !d.manual_override) {
+            d.is_available = false;
+          }
+        }
+      });
+
+      renderDonorsUI();
+    }
+
+    function renderDonorsUI() {
+      document.getElementById("countAll").innerText = localDonors.length;
+      document.getElementById("countPending").innerText = localDonors.filter(function(d) { return !d.is_verified; }).length;
+      document.getElementById("countAvail").innerText = localDonors.filter(function(d) { return d.is_available; }).length;
+      renderDonorsCards(localDonors);
+    }
+
+    function setDashboardTab(tab) {
+      activeTab = tab;
+      var pills = document.querySelectorAll(".pill-btn");
+      var names = ['all', 'pending', 'available', 'feedback', 'subadmins'];
+      pills.forEach(function(p, idx) {
+        p.className = (names[idx] === tab) ? "pill-btn active" : "pill-btn";
+      });
+
+      var isDonorList = (tab === 'all' || tab === 'pending' || tab === 'available');
+      document.getElementById("searchBoxWrap").style.display = isDonorList ? "block" : "none";
+      document.getElementById("donorsContainer").style.display = isDonorList ? "block" : "none";
+      document.getElementById("feedbackContainer").style.display = (tab === 'feedback') ? "block" : "none";
+      document.getElementById("subAdminContainer").style.display = (tab === 'subadmins') ? "block" : "none";
+
+      if (isDonorList) handleLiveSearch();
+
+      if (tab === 'subadmins') {
+        var isSuper = (loggedInUser.email.toLowerCase() === SUPER_EMAIL.toLowerCase() || loggedInUser.role === "Super Admin");
+        document.getElementById("superAdminWorkArea").style.display = isSuper ? "block" : "none";
+        document.getElementById("subAdminAccessDenied").style.display = !isSuper ? "block" : "none";
+      }
+    }
+
+    function handleLiveSearch() {
+      var q = (document.getElementById("liveSearchInput").value || "").toLowerCase().trim();
+      var subset = localDonors;
+
+      if (activeTab === 'pending') subset = localDonors.filter(function(d) { return !d.is_verified; });
+      else if (activeTab === 'available') subset = localDonors.filter(function(d) { return d.is_available; });
+
+      if (q) {
+        subset = subset.filter(function(d) {
+          return (d.name || "").toLowerCase().indexOf(q) !== -1 ||
+                 (d.phone || "").indexOf(q) !== -1 ||
+                 (d.district || "").toLowerCase().indexOf(q) !== -1 ||
+                 (d.hall || "").toLowerCase().indexOf(q) !== -1 ||
+                 (d.blood_group || "").toLowerCase().indexOf(q) !== -1;
+        });
+      }
+      renderDonorsCards(subset);
+    }
+
+    function renderDonorsCards(list) {
+      var wrap = document.getElementById("donorsContainer");
+      wrap.innerHTML = "";
+
+      if (list.length === 0) {
+        wrap.innerHTML = '<div style="text-align:center; padding:30px; color:var(--slate-400);">কোনো রক্তদাতার তথ্য পাওয়া যায়নি।</div>';
+        return;
+      }
+
+      list.forEach(function(donor) {
+        var actualIdx = localDonors.indexOf(donor);
+        var isEligible = checkDonationEligibility(donor.last_donation);
+        
+        var statusText = donor.is_available ? '● প্রস্তুত (Available)' : '○ অনুপলব্ধ (Resting)';
+        if (!isEligible && !donor.is_available) {
+          statusText = '⏳ বিরতি কালীন (Rest)';
+        }
+
+        var card = document.createElement("div");
+        card.className = "donor-entry-card";
+        card.innerHTML = 
+          '<div class="donor-top-meta">' +
+            '<span class="donor-full-name">' + (donor.name || "অজ্ঞাত নাম") + '</span>' +
+            '<span class="blood-tag">' + (donor.blood_group || "--") + '</span>' +
+          '</div>' +
+          '<div class="donor-details-grid">' +
+            '<div class="detail-item">📞 <strong>মোবাইল:</strong> <a href="tel:' + donor.phone + '" style="color:var(--slate-900); text-decoration:none; font-weight:700;">' + (donor.phone || "--") + '</a></div>' +
+            '<div class="detail-item">📍 <strong>ঠিকানা/হল:</strong> ' + (donor.district || "--") + (donor.hall ? ' (' + donor.hall + ')' : '') + '</div>' +
+            '<div class="detail-item">🗓️ <strong>সর্বশেষ রক্তদান:</strong> <span style="font-weight:700; color:' + (donor.last_donation && donor.last_donation !== 'তথ্য নেই' ? 'var(--primary)' : 'var(--slate-600)') + ';">' + (donor.last_donation || "তথ্য নেই") + '</span></div>' +
+            '<div class="detail-item">⚡ <strong>স্ট্যাটাস:</strong> ' +
+              '<span class="status-chip ' + (donor.is_available ? 'status-ready' : 'status-resting') + '">' + statusText + '</span>' +
+            '</div>' +
+          '</div>' +
+          '<div class="card-footer-actions">' +
+            '<button type="button" class="card-btn ' + (donor.is_verified ? 'btn-verify-success' : 'btn-verify-warn') + '" onclick="toggleDonorVerify(' + actualIdx + ')">' +
+              (donor.is_verified ? '✓ অনুমোদিত' : '⏳ অনুমোদন দিন') +
+            '</button>' +
+            '<button type="button" class="card-btn btn-status-toggle" onclick="toggleDonorStatus(' + actualIdx + ')">' +
+              (donor.is_available ? 'Make Unavailable' : 'Make Available') +
+            '</button>' +
+            '<button type="button" class="card-btn btn-trash" onclick="removeDonorRecord(' + actualIdx + ')">🗑</button>' +
+          '</div>';
+        wrap.appendChild(card);
+      });
+    }
+
+    function toggleDonorVerify(idx) {
+      localDonors[idx].is_verified = !localDonors[idx].is_verified;
+      saveDonors();
+    }
+
+    function toggleDonorStatus(idx) {
+      var donor = localDonors[idx];
+      var isEligible = checkDonationEligibility(donor.last_donation);
+
+      if (!donor.is_available && !isEligible) {
+        var allow = confirm("সতর্কতা: শেষ রক্তদান থেকে এখনো ৩ মাস পূর্ণ হয়নি! তবুও কি আপনি ম্যানুয়ালি Available করতে চান?");
+        if (!allow) return;
+        donor.manual_override = true;
+      } else {
+        donor.manual_override = false;
+      }
+
+      donor.is_available = !donor.is_available;
+      saveDonors();
+    }
+
+    function removeDonorRecord(idx) {
+      if (confirm('আপনি কি "' + localDonors[idx].name + '" এর তথ্য মুছে ফেলতে চান?')) {
+        localDonors.splice(idx, 1);
+        saveDonors();
+      }
+    }
+
+    function saveDonors() {
+      localStorage.setItem("jiboni_donors_cache", JSON.stringify(localDonors));
+      renderDonorsUI();
+      handleLiveSearch();
+    }
+
+    function drawFeedbacks() {
+      var container = document.getElementById("feedbackContainer");
+      var list = JSON.parse(localStorage.getItem("jiboni_feedbacks") || "[]");
+      document.getElementById("countFeedback").innerText = list.length;
+
+      if (list.length === 0) {
+        container.innerHTML = '<div style="text-align:center; padding:30px; color:var(--slate-400);">এখনো কোনো মতামত জমা পড়েনি।</div>';
+        return;
+      }
+
+      container.innerHTML = list.map(function(item) {
+        return '<div style="background:#ffffff; border:1px solid var(--slate-200); border-radius:12px; padding:14px; margin-bottom:10px;">' +
+          '<div style="display:flex; justify-content:space-between; margin-bottom:4px;">' +
+            '<strong>' + (item.name || "বেনামী") + '</strong>' +
+            '<small style="color:var(--slate-400);">' + (item.contact || "") + '</small>' +
+          '</div>' +
+          '<p style="font-size:0.85rem; color:var(--slate-800);">' + (item.message || "") + '</p>' +
+        '</div>';
+      }).join("");
+    }
+
+    function drawAdminsList() {
+      var admins = JSON.parse(localStorage.getItem("jiboni_admin_accounts") || "[]");
+      var wrap = document.getElementById("adminCardsList");
+      wrap.innerHTML = "";
+
+      var superDiv = document.createElement("div");
+      superDiv.className = "subadmin-box";
+      superDiv.style.marginBottom = "8px";
+      superDiv.innerHTML = 
+        '<div style="display:flex; justify-content:space-between; align-items:center;">' +
+          '<div>' +
+            '<strong style="font-size:0.9rem;">Amanulla Emon</strong><br>' +
+            '<small style="color:var(--slate-600);">' + SUPER_EMAIL + ' • <b>Super Admin</b></small>' +
+          '</div>' +
+          '<span style="font-size:0.75rem; color:var(--slate-400);">Primary</span>' +
+        '</div>';
+      wrap.appendChild(superDiv);
+
+      admins.forEach(function(admin, idx) {
+        var div = document.createElement("div");
+        div.className = "subadmin-box";
+        div.style.marginBottom = "8px";
+        div.innerHTML = 
+          '<div style="display:flex; justify-content:space-between; align-items:center;">' +
+            '<div>' +
+              '<strong style="font-size:0.9rem;">' + admin.name + '</strong><br>' +
+              '<small style="color:var(--slate-600);">' + admin.email + ' • <b>Sub Admin</b></small>' +
+            '</div>' +
+            '<button type="button" onclick="deleteAdminAccount(' + idx + ')" class="btn-chip" style="background:var(--primary-light); color:var(--primary); border-radius:6px; cursor:pointer; height:32px; padding:0 10px;">অপসারণ</button>' +
+          '</div>';
+        wrap.appendChild(div);
+      });
+    }
+
+    function handleAddSubAdmin() {
+      var name = document.getElementById("newAdminName").value.trim();
+      var email = document.getElementById("newAdminEmail").value.trim();
+      var pass = document.getElementById("newAdminPass").value.trim();
+
+      if (!name || !email || !pass) {
+        alert("সবগুলো তথ্য পূরণ করুন!");
         return;
       }
 
       var admins = JSON.parse(localStorage.getItem("jiboni_admin_accounts") || "[]");
-      var target = admins.fi
+      if (admins.some(function(a) { return a.email.toLowerCase() === email.toLowerCase(); }) || email.toLowerCase() === SUPER_EMAIL.toLowerCase()) {
+        alert("এই ইমেইল ইতোমধ্যে নিবন্ধিত!");
+        return;
+      }
+
+      admins.push({ name: name, email: email, pass: pass, role: "Sub Admin" });
+      localStorage.setItem("jiboni_admin_accounts", JSON.stringify(admins));
+      document.getElementById("newAdminName").value = "";
+      document.getElementById("newAdminEmail").value = "";
+      document.getElementById("newAdminPass").value = "";
+      drawAdminsList();
+      alert("নতুন সাব-অ্যাডমিন যোগ করা হয়েছে!");
+    }
+
+    function deleteAdminAccount(idx) {
+      var admins = JSON.parse(localStorage.getItem("jiboni_admin_accounts") || "[]");
+      if (confirm('আপনি কি "' + admins[idx].name + '" কে বাদ দিতে চান?')) {
+        admins.splice(idx, 1);
+        localStorage.setItem("jiboni_admin_accounts", JSON.stringify(admins));
+        drawAdminsList();
+      }
+    }
+
+    window.onload = function() {
+      var activeSession = sessionStorage.getItem("jiboni_session_user");
+      if (activeSession) {
+        loggedInUser = JSON.parse(activeSession);
+        renderDashboard();
+      }
+    };
+  </script>
+</body>
+</html>
