@@ -3,108 +3,303 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>নির্দেশিকা ও নিয়মাবলী - JIBONI</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>রক্তদান নির্দেশিকা ও যোগ্যতা - JIBONI</title>
   <style>
-    .guideline-item {
-      margin-bottom: 16px;
-      padding-bottom: 12px;
-      border-bottom: 1px solid rgba(203, 213, 225, 0.5);
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Hind+Siliguri:wght@500;600;700&display=swap');
+
+    :root {
+      --primary: #dc2626;
+      --primary-hover: #b91c1c;
+      --primary-light: #fee2e2;
+      --success: #15803d;
+      --success-light: #dcfce7;
+      --warning: #b45309;
+      --warning-light: #fef3c7;
+      --info: #0369a1;
+      --info-light: #e0f2fe;
+      --slate-50: #f8fafc;
+      --slate-100: #f1f5f9;
+      --slate-200: #e2e8f0;
+      --slate-400: #94a3b8;
+      --slate-600: #475569;
+      --slate-800: #1e293b;
+      --slate-900: #0f172a;
     }
-    .guideline-item:last-child {
-      border-bottom: none;
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Hind Siliguri', 'Plus Jakarta Sans', sans-serif;
     }
-    .guideline-item h3 {
-      font-size: 1.05rem;
-      color: #0f172a;
-      margin-bottom: 6px;
+
+    body {
+      background-color: var(--slate-50);
+      color: var(--slate-800);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background-image: none !important;
+    }
+
+    /* Top Header */
+    .site-header {
+      background: #ffffff;
+      padding: 14px 16px 12px;
+      border-bottom: 1px solid var(--slate-200);
+      text-align: center;
+      width: 100%;
+    }
+
+    .header-inner {
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    .brand-row {
+      margin-bottom: 10px;
+    }
+
+    .brand-logo {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      text-decoration: none;
+    }
+
+    .blood-drop {
+      font-size: 1.5rem;
+      line-height: 1;
+    }
+
+    .brand-name {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: var(--primary);
+      letter-spacing: 0.5px;
+      line-height: 1;
+    }
+
+    .nav-btn-row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+    }
+
+    .btn-chip {
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      border: 1px solid var(--slate-200);
+      background: var(--slate-100);
+      color: var(--slate-600);
+      transition: all 0.2s ease;
+    }
+
+    .btn-chip-red {
+      background: var(--primary);
+      color: #ffffff !important;
+      border-color: var(--primary);
+    }
+
+    .brand-slogan {
+      font-size: 0.74rem;
+      color: var(--slate-600);
+      margin-top: 4px;
+      font-style: italic;
+    }
+
+    /* Main Container */
+    .main-wrapper {
+      flex: 1;
+      max-width: 500px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 16px 14px 40px;
+    }
+
+    .page-title-box {
+      text-align: center;
+      margin-bottom: 18px;
+    }
+
+    .page-title {
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: var(--slate-900);
+      margin-bottom: 4px;
+    }
+
+    .page-subtitle {
+      font-size: 0.84rem;
+      color: var(--slate-600);
+      line-height: 1.4;
+    }
+
+    /* Content Cards */
+    .guide-card {
+      background: #ffffff;
+      border: 1px solid var(--slate-200);
+      border-radius: 14px;
+      padding: 16px;
+      margin-bottom: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+    }
+
+    .guide-title {
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--slate-900);
+      margin-bottom: 10px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--slate-100);
     }
-    .guideline-item p, .guideline-item ul {
-      font-size: 0.88rem;
-      color: #334155;
-      line-height: 1.6;
-      margin: 0;
+
+    .guide-list {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .guide-list li {
+      position: relative;
       padding-left: 18px;
+      font-size: 0.85rem;
+      line-height: 1.45;
+      color: var(--slate-700);
+    }
+
+    .guide-list li::before {
+      content: "•";
+      position: absolute;
+      left: 4px;
+      top: 0;
+      font-size: 1.1rem;
+      line-height: 1.3;
+      color: var(--primary);
+    }
+
+    /* Footer */
+    .site-footer {
+      background: #ffffff;
+      border-top: 1px solid var(--slate-200);
+      padding: 14px 16px;
+      text-align: center;
+      margin-top: auto;
+      width: 100%;
+    }
+
+    .footer-copy {
+      font-size: 0.75rem;
+      color: var(--slate-600);
+    }
+
+    .footer-copy a {
+      color: var(--primary);
+      font-weight: 700;
+      text-decoration: none;
     }
   </style>
 </head>
 <body>
 
-  <!-- Header -->
-  <header class="header">
-    <div class="header-container">
-      <div class="header-main-row">
-        <a href="index.html" class="logo">
-          <span class="logo-drop">🩸</span>
-          <span class="logo-text">JIBONI</span>
+  <!-- Top Header -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="brand-row">
+        <a href="index.html" class="brand-logo">
+          <span class="blood-drop">🩸</span>
+          <span class="brand-name">JIBONI</span>
         </a>
       </div>
 
-      <div class="header-nav-row">
-        <a href="index.html" class="nav-chip">← হোম পেজ</a>
-        <a href="register.html" class="nav-chip">➕ ডোনার নিবন্ধন</a>
-        <a href="stats.html" class="nav-chip">📊 পরিসংখ্যান</a>
+      <div class="nav-btn-row">
+        <a href="index.html" class="btn-chip">← হোম পেজ</a>
+        <a href="register.html" class="btn-chip btn-chip-red">+ ডোনার নিবন্ধন</a>
+        <a href="stats.html" class="btn-chip">📊 পরিসংখ্যান</a>
       </div>
 
-      <div class="header-slogan-wrap">
-        <p class="header-slogan">"অচেনা কাউকে বাঁচার আশা দিয়ে, লিখে যাও এক নিঃস্বার্থ জীবনী।"</p>
-      </div>
+      <p class="brand-slogan">"অচেনা কাউকে বাঁচার আশা দিয়ে, লিখে যাও এক নিঃস্বার্থ জীবনী।"</p>
     </div>
   </header>
 
-  <!-- Guidelines Content -->
-  <main class="container">
-    <div class="card">
-      <h1 class="card-title">রক্তদান নির্দেশিকা ও যোগ্যতা</h1>
-      <p class="card-subtitle">রক্তদান করার পূর্বে নিয়মাবলী ও স্বাস্থ্যগত শর্তসমূহ জেনে নিন</p>
+  <!-- Main Content -->
+  <main class="main-wrapper">
+    <div class="page-title-box">
+      <h1 class="page-title">রক্তদান নির্দেশিকা ও যোগ্যতা</h1>
+      <p class="page-subtitle">রক্তদান করার পূর্বে নিয়মাবলী ও স্বাস্থ্যগত শর্তসমূহ জেনে নিন</p>
+    </div>
 
-      <div class="guideline-item">
-        <h3>✅ রক্তদাতার প্রাথমিক যোগ্যতা</h3>
-        <ul>
-          <li>বয়স ন্যূনতম ১৮ থেকে ৬০ বছরের মধ্যে হতে হবে।</li>
-          <li>শারীরিক ওজন কমপক্ষে ৫০ কেজি (পুরুষ) ও ৪৫ কেজি (নারী) হতে হবে।</li>
-          <li>হিমোগ্লোবিনের মাত্রা নির্দিষ্ট স্বাভাবিক সীমার মধ্যে থাকতে হবে।</li>
-        </ul>
+    <!-- 1. Primary Eligibility -->
+    <div class="guide-card">
+      <div class="guide-title">
+        <span>✅</span>
+        <span>রক্তদাতার প্রাথমিক যোগ্যতা</span>
       </div>
+      <ul class="guide-list">
+        <li>বয়স ন্যূনতম ১৮ থেকে ৬০ বছরের মধ্যে হতে হবে।</li>
+        <li>শারীরিক ওজন কমপক্ষে ৫০ কেজি (পুরুষ) ও ৪৫ কেজি (নারী) হতে হবে।</li>
+        <li>হিমোগ্লোবিনের মাত্রা নির্দিষ্ট স্বাভাবিক সীমার মধ্যে থাকতে হবে।</li>
+      </ul>
+    </div>
 
-      <div class="guideline-item">
-        <h3>⏳ রক্তদানের বিরতি</h3>
-        <ul>
-          <li>পুরুষরা প্রতি ৩ মাস পর পর রক্তদান করতে পারেন।</li>
-          <li>নারীরা প্রতি ৪ মাস পর পর রক্তদান করতে পারেন।</li>
-        </ul>
+    <!-- 2. Donation Interval -->
+    <div class="guide-card">
+      <div class="guide-title">
+        <span>⏳</span>
+        <span>রক্তদানের বিরতি</span>
       </div>
+      <ul class="guide-list">
+        <li>পুরুষরা প্রতি ৩ মাস পর পর রক্তদান করতে পারেন।</li>
+        <li>নারীরা প্রতি ৪ মাস পর পর রক্তদান করতে পারেন।</li>
+      </ul>
+    </div>
 
-      <div class="guideline-item">
-        <h3>⚠️ কখন রক্তদান করা যাবে না?</h3>
-        <ul>
-          <li>জ্বর, সর্দি, অ্যান্টিবায়োটিক সেবন চলাকালীন বা বড় অস্ত্রোপচারের কিছুদিন পর।</li>
-          <li>হেপাটাইটিস, এইডস বা সংক্রামক জটিল রোগের ইতিহাস থাকলে।</li>
-          <li>গর্ভবতী অথবা স্তন্যদানকারী মায়েদের ক্ষেত্রে সাময়িক বিরত থাকতে হবে।</li>
-        </ul>
+    <!-- 3. When NOT to Donate -->
+    <div class="guide-card">
+      <div class="guide-title">
+        <span>⚠️</span>
+        <span>কখন রক্তদান করা যাবে না?</span>
       </div>
+      <ul class="guide-list">
+        <li>জ্বর, সর্দি, অ্যান্টিবায়োটিক সেবন চলাকালীন বা বড় অস্ত্রোপচারের কিছুদিন পর।</li>
+        <li>হেপাটাইটিস, এইডস বা সংক্রামক জটিল রোগের ইতিহাস থাকলে।</li>
+        <li>গর্ভবতী অথবা স্তন্যদানকারী মায়েদের ক্ষেত্রে সাময়িক বিরত থাকতে হবে।</li>
+      </ul>
+    </div>
 
-      <div class="guideline-item">
-        <h3>🛡️ JIBONI ব্যবহারের নিয়মাবলী</h3>
-        <ul>
-          <li>ডোনারদের সাথে অপ্রয়োজনে বা রাতে অসময়ে যোগাযোগ না করে ভদ্রতা বজায় রাখুন।</li>
-          <li>যেকোনো আর্থিক লেনদেনের উদ্দেশ্যে রক্তদাতার সাথে যোগাযোগ সম্পূর্ণ নিষিদ্ধ।</li>
-        </ul>
+    <!-- 4. Platform Rules -->
+    <div class="guide-card">
+      <div class="guide-title">
+        <span>🛡️</span>
+        <span>JIBONI ব্যবহারের নিয়মাবলী</span>
       </div>
+      <ul class="guide-list">
+        <li>ডোনারদের সাথে অপ্রয়োজনে বা রাতে অসময়ে যোগাযোগ না করে ভদ্রতা বজায় রাখুন।</li>
+        <li>যেকোনো আর্থিক লেনদেনের উদ্দেশ্যে রক্তদাতার সাথে যোগাযোগ সম্পূর্ণ নিষিদ্ধ।</li>
+      </ul>
     </div>
   </main>
 
   <!-- Footer -->
-  <footer class="footer">
-    <div class="footer-container">
-      <p class="footer-notice">JIBONI — প্রতিটি ফোঁটা রক্তে বাঁচে একটি প্রাণ</p>
-      <p class="footer-credit">Designed & Developed by <a href="developer.html">Amanulla Emon</a></p>
-    </div>
+  <footer class="site-footer">
+    <p class="footer-copy">JIBONI — প্রতিটি ফোঁটা রক্তে বাঁচে একটি প্রাণ</p>
+    <p class="footer-copy">Designed & Developed by <a href="developer.html">Amanulla Emon</a></p>
   </footer>
 
-  <script src="app.js"></script>
 </body>
 </html>
