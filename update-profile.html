@@ -227,12 +227,12 @@
     .modal-backdrop {
       position: fixed;
       inset: 0;
-      background: rgba(15, 23, 42, 0.5);
+      background: rgba(15, 23, 42, 0.6);
       backdrop-filter: blur(4px);
       display: none;
       justify-content: center;
       align-items: center;
-      z-index: 100;
+      z-index: 1000;
       padding: 16px;
     }
 
@@ -242,11 +242,10 @@
       padding: 24px 20px;
       max-width: 400px;
       width: 100%;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
       text-align: center;
     }
 
-    /* Footer */
     .site-footer {
       background: #ffffff;
       border-top: 1px solid var(--slate-200);
@@ -359,22 +358,28 @@
     </div>
   </main>
 
-  <!-- PIN RESET MODAL (Using Date of Birth) -->
+  <!-- PIN RESET MODAL -->
   <div id="resetPinModal" class="modal-backdrop">
     <div class="modal-box">
       <h3 style="font-size: 1.15rem; font-weight: 800; color: var(--slate-900); margin-bottom: 4px;">পিন রিসেট করুন</h3>
-      <p style="font-size: 0.8rem; color: var(--slate-600); margin-bottom: 14px;">নিবন্ধনে ব্যবহৃত মোবাইল নম্বর ও জন্ম তারিখ দিন।</p>
+      <p style="font-size: 0.8rem; color: var(--slate-600); margin-bottom: 16px;">নিবন্ধনে ব্যবহৃত মোবাইল নম্বর ও জন্ম তারিখ দিন।</p>
 
       <form id="resetPinForm">
         <div class="input-group">
-          <input type="tel" id="resetPhone" class="text-input" placeholder="মোবাইল নম্বর" required />
+          <label class="field-label" style="font-size: 0.78rem;">মোবাইল নম্বর:</label>
+          <input type="tel" id="resetPhone" class="text-input" placeholder="01XXXXXXXXX" required />
         </div>
+        
         <div class="input-group">
+          <label class="field-label" style="font-size: 0.78rem;">জন্ম তারিখ (Date of Birth):</label>
           <input type="date" id="resetDob" class="text-input" required />
         </div>
+
         <div class="input-group">
-          <input type="password" id="resetNewPin" class="text-input" placeholder="নতুন ৪ ডিজিট পিন" maxlength="4" required />
+          <label class="field-label" style="font-size: 0.78rem;">নতুন ৪ ডিজিট পিন:</label>
+          <input type="password" id="resetNewPin" class="text-input" placeholder="****" maxlength="4" required />
         </div>
+
         <button type="submit" class="btn-submit" style="height: 40px; margin-bottom: 8px;">পিন পরিবর্তন করুন</button>
         <button type="button" onclick="closeResetPinModal()" class="btn-chip" style="width: 100%; justify-content: center; height: 38px; cursor: pointer;">বাতিল</button>
       </form>
@@ -459,6 +464,7 @@
       document.getElementById("resetPinModal").style.display = "none";
     }
 
+    // Reset PIN Verification Logic (Mobile + Date of Birth Verification)
     document.getElementById("resetPinForm").addEventListener("submit", function(e) {
       e.preventDefault();
       const phone = document.getElementById("resetPhone").value.trim();
@@ -468,6 +474,8 @@
 
       alertMsg.style.display = "block";
       const donors = getDonors();
+
+      // STRICT VERIFICATION: Both Phone and Date of Birth must match
       const targetDonor = donors.find(d => d.phone === phone && d.dob === dob);
 
       if (targetDonor) {
@@ -475,10 +483,10 @@
         localStorage.setItem("jiboni_donors_cache", JSON.stringify(donors));
         alertMsg.style.color = "var(--success)";
         alertMsg.innerText = "পিন সফলভাবে রিসেট হয়েছে! এখন নতুন পিন দিয়ে লগইন করুন।";
-        setTimeout(() => { closeResetPinModal(); }, 1200);
+        setTimeout(() => { closeResetPinModal(); }, 1400);
       } else {
         alertMsg.style.color = "var(--primary)";
-        alertMsg.innerText = "মোবাইল নম্বর ও জন্ম তারিখ মিলেনি!";
+        alertMsg.innerText = "ভুল তথ্য! মোবাইল নম্বর ও জন্ম তারিখ মেলেনি।";
       }
     });
   </script>
