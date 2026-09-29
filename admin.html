@@ -269,7 +269,7 @@
       border-radius: 8px;
     }
 
-    /* CLEAN NATURAL COLON ALIGNMENT (NO UNWANTED GAPS) */
+    /* PERFECT 2-SPACE COMPACT ALIGNMENT */
     .donor-detail-list {
       display: flex;
       flex-direction: column;
@@ -282,13 +282,20 @@
     .detail-item {
       display: flex;
       align-items: flex-start;
-      gap: 6px;
       line-height: 1.45;
     }
 
-    .detail-label {
+    /* 120px exactly matches "🗓️ সর্বশেষ রক্তদান" + 2 spaces gap */
+    .detail-label-wrap {
+      width: 120px;
+      min-width: 120px;
+      max-width: 120px;
       font-weight: 700;
       color: var(--slate-800);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-right: 6px;
       flex-shrink: 0;
       white-space: nowrap;
     }
@@ -584,13 +591,13 @@
         if (nextDate && !isEligible) {
           nextDateHtml = 
             '<div class="detail-item">' +
-              '<span class="detail-label">🗓️ পরবর্তী রক্তদান:</span>' +
+              '<div class="detail-label-wrap"><span>🗓️ পরবর্তী রক্তদান</span><span>:</span></div>' +
               '<span class="detail-val"><span class="badge-next">' + nextDate + ' (থেকে সম্ভাব্য)</span></span>' +
             '</div>';
         } else if (isEligible && d.last_donation && d.last_donation !== "তথ্য নেই") {
           nextDateHtml = 
             '<div class="detail-item">' +
-              '<span class="detail-label">🗓️ পরবর্তী রক্তদান:</span>' +
+              '<div class="detail-label-wrap"><span>🗓️ পরবর্তী রক্তদান</span><span>:</span></div>' +
               '<span class="detail-val" style="color:var(--success); font-weight:700;">✅ যেকোনো সময় সক্ষম</span>' +
             '</div>';
         }
@@ -609,19 +616,19 @@
             '</div>' +
             '<div class="donor-detail-list">' +
               '<div class="detail-item">' +
-                '<span class="detail-label">📞 মোবাইল:</span>' +
+                '<div class="detail-label-wrap"><span>📞 মোবাইল</span><span>:</span></div>' +
                 '<span class="detail-val">' + (d.phone || "--") + '</span>' +
               '</div>' +
               '<div class="detail-item">' +
-                '<span class="detail-label">📍 ঠিকানা/হল:</span>' +
+                '<div class="detail-label-wrap"><span>📍 ঠিকানা/হল</span><span>:</span></div>' +
                 '<span class="detail-val">' + mainLoc + '</span>' +
               '</div>' +
               '<div class="detail-item">' +
-                '<span class="detail-label">🗓️ সর্বশেষ রক্তদান:</span>' +
+                '<div class="detail-label-wrap"><span>🗓️ সর্বশেষ রক্তদান</span><span>:</span></div>' +
                 '<span class="detail-val">' + (d.last_donation || "তথ্য নেই") + '</span>' +
               '</div>' +
               '<div class="detail-item">' +
-                '<span class="detail-label">⚡ স্ট্যাটাস:</span>' +
+                '<div class="detail-label-wrap"><span>⚡ স্ট্যাটাস</span><span>:</span></div>' +
                 '<span class="detail-val">' + statusBadge + '</span>' +
               '</div>' +
               nextDateHtml +
