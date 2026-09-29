@@ -200,7 +200,6 @@
       text-decoration: underline;
     }
 
-    /* Modal Styles */
     .modal-backdrop {
       position: fixed;
       inset: 0;
@@ -479,7 +478,7 @@
         </div>
 
         <div class="forgot-link-wrap">
-          <span class="forgot-link" id="forgotPassBtn">পাসওয়ার্ড ভুলে গেছেন? (Forgot Password)</span>
+          <span class="forgot-link" onclick="openForgotModal()">পাসওয়ার্ড ভুলে গেছেন? (Forgot Password)</span>
         </div>
 
         <button type="submit" class="btn-primary">লগইন করুন</button>
@@ -490,7 +489,6 @@
     <!-- MAIN DASHBOARD -->
     <div id="dashboardScreen" style="display: none;">
       
-      <!-- Current Admin Profile Bar -->
       <div class="admin-profile-strip">
         <div class="user-info">
           <span id="roleBadge" class="user-role-tag">Super Admin</span>
@@ -550,7 +548,7 @@
 
   </main>
 
-  <!-- PASSWORD CHANGE MODAL (Super & Sub-admin both can change own password) -->
+  <!-- PASSWORD CHANGE MODAL -->
   <div id="changePassModal" class="modal-backdrop">
     <div class="modal-box">
       <h3 style="font-size: 1.15rem; font-weight: 800; color: var(--slate-900); margin-bottom: 4px;">পাসওয়ার্ড পরিবর্তন করুন</h3>
@@ -590,9 +588,6 @@
   </footer>
 
   <script>
-    // =========================================================================
-    // ⚙️ SUPER ADMIN DEFAULT CONFIGURATION
-    // =========================================================================
     const SUPER_ADMIN_EMAIL = "amanullaemon04@gmail.com";
     const SUPER_ADMIN_DEFAULT_PASS = "superadmin123";
 
@@ -602,7 +597,16 @@
 
     function fetchAdminsData() {
       const saved = localStorage.getItem("jiboni_admin_accounts");
-      if (saved) return JSON.parse(saved);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        // Force update super admin password in local storage if outdated
+        const superAdmin = parsed.find(a => a.email.toLowerCase() === SUPER_ADMIN_EMAIL.toLowerCase());
+        if (superAdmin) {
+          superAdmin.pass = SUPER_ADMIN_DEFAULT_PASS;
+        }
+        return parsed;
+      }
+      
       const defaults = [
         { name: "Amanulla Emon", email: SUPER_ADMIN_EMAIL, pass: SUPER_ADMIN_DEFAULT_PASS, role: "Super Admin" },
         { name: "Support Admin", email: "support@jiboni.org", pass: "admin123", role: "Sub Admin" }
@@ -612,21 +616,6 @@
     }
 
     document.addEventListener("DOMContentLoaded", () => {
-      // Ensure input is empty with placeholder
-      const emailInput = document.getElementById("loginEmail");
-      if (emailInput) {
-        emailInput.value = "";
-      }
-
-      // Safe trigger for Forgot Password button
-      const forgotBtn = document.getElementById("forgotPassBtn");
-      if (forgotBtn) {
-        forgotBtn.onclick = function() {
-          openForgotModal();
-        };
-      }
-
-      // Check current session
       const activeSession = sessionStorage.getItem("jiboni_session_user");
       if (activeSession) {
         loggedInUser = JSON.parse(activeSession);
@@ -634,7 +623,6 @@
       }
     });
 
-    // Login Form Submit
     document.getElementById("loginForm").addEventListener("submit", (e) => {
       e.preventDefault();
       const mail = document.getElementById("loginEmail").value.trim().toLowerCase();
@@ -671,7 +659,6 @@
       window.location.reload();
     }
 
-    /* Change Password Modal for Active Logged-in Admin */
     function openChangePassModal() {
       document.getElementById("changePassModal").style.display = "flex";
       document.getElementById("changePassMsg").style.display = "none";
@@ -688,4 +675,15 @@
       if (!newPass) return;
 
       const admins = fetchAdminsData();
-      const
+      const found = admins.find(a => a.email.toLowerCase() === loggedInUser.email.toLowerCase());
+
+      if (found) {
+        found.pass = newPass;
+        loggedInUser.pass = newPass;
+        localStorage.setItem("jiboni_admin_accounts", JSON.stringify(admins));
+        sessionStorage.setItem("jiboni_session_user", JSON.stringify(loggedInUser));
+
+        const msg = document.getElementById("changePassMsg");
+        msg.style.display = "block";
+        msg.style.color = "var(--success)";
+        msg.innerText =
