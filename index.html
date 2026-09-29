@@ -4,7 +4,238 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>JIBONI - জরুরি রক্তের সন্ধান</title>
-  <link rel="stylesheet" href="style.css" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Hind Siliguri', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    /* Background theke ager sob watermark logo 100% remove kora holo */
+    body {
+      background-color: #f8fafc;
+      color: #1e293b;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background-image: none !important;
+    }
+
+    body::before, body::after {
+      display: none !important;
+      content: none !important;
+    }
+
+    /* Top Header */
+    .site-header {
+      background: #ffffff;
+      padding: 16px 16px 14px;
+      border-bottom: 1px solid #e2e8f0;
+      text-align: center;
+      width: 100%;
+    }
+
+    .header-inner {
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    .brand-row {
+      margin-bottom: 12px;
+    }
+
+    .brand-logo {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      text-decoration: none;
+    }
+
+    .blood-drop {
+      font-size: 1.6rem;
+      line-height: 1;
+    }
+
+    .brand-name {
+      font-size: 1.7rem;
+      font-weight: 800;
+      color: #dc2626;
+      letter-spacing: 0.5px;
+      line-height: 1;
+    }
+
+    /* Action Buttons (Nav Chips) */
+    .nav-btn-row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn-chip {
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.2s ease;
+      border: 1px solid transparent;
+    }
+
+    .btn-chip-red {
+      background: #dc2626;
+      color: #ffffff !important;
+      box-shadow: 0 2px 6px rgba(220, 38, 38, 0.2);
+    }
+
+    .btn-chip-blue {
+      background: #eff6ff;
+      color: #1d4ed8 !important;
+      border-color: #bfdbfe;
+    }
+
+    .btn-chip-gray {
+      background: #f1f5f9;
+      color: #475569 !important;
+      border-color: #cbd5e1;
+    }
+
+    .brand-slogan {
+      font-size: 0.78rem;
+      color: #475569;
+      margin-top: 4px;
+      font-style: italic;
+      line-height: 1.4;
+    }
+
+    /* Main Container & Filter Box */
+    .main-wrapper {
+      flex: 1;
+      max-width: 480px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 16px 14px 40px;
+    }
+
+    .filter-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 18px 16px 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+      margin-bottom: 14px;
+    }
+
+    .input-field-group {
+      margin-bottom: 14px;
+    }
+
+    .field-title {
+      display: block;
+      font-size: 0.84rem;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 6px;
+    }
+
+    .select-box,
+    .text-input {
+      width: 100%;
+      height: 44px;
+      padding: 0 12px;
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      color: #1e293b;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .select-box:focus,
+    .text-input:focus {
+      border-color: #dc2626;
+      box-shadow: 0 0 0 2px rgba(220, 38, 38, 0.1);
+    }
+
+    /* Dashed Placeholder Prompt */
+    .placeholder-box {
+      background: #ffffff;
+      border: 1.5px dashed #cbd5e1;
+      border-radius: 10px;
+      padding: 24px 16px;
+      text-align: center;
+      margin-top: 6px;
+    }
+
+    .placeholder-text {
+      font-size: 0.88rem;
+      color: #475569;
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    .results-container {
+      margin-top: 14px;
+    }
+
+    /* Footer Styles */
+    .site-footer {
+      background: #ffffff;
+      border-top: 1px solid #e2e8f0;
+      padding: 14px 16px;
+      text-align: center;
+      margin-top: auto;
+      width: 100%;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 6px;
+    }
+
+    .footer-link {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #b91c1c;
+      text-decoration: none;
+    }
+
+    .link-divider {
+      color: #cbd5e1;
+      font-size: 0.75rem;
+    }
+
+    .footer-warning {
+      font-size: 0.72rem;
+      color: #64748b;
+      margin: 4px 0 2px;
+    }
+
+    .footer-copy {
+      font-size: 0.75rem;
+      color: #334155;
+    }
+
+    .footer-copy a {
+      color: #dc2626;
+      font-weight: 700;
+      text-decoration: none;
+    }
+  </style>
 </head>
 <body>
 
@@ -55,7 +286,6 @@
           <label class="field-title" for="district">জেলা / শহর (City / District)</label>
           <select id="district" name="district" class="select-box">
             <option value="">জেলা নির্বাচন করুন (Select District)</option>
-            <!-- জেলা তালিকা স্ক্রিপ্ট থেকে ডায়নামিকালি আসবে -->
           </select>
         </div>
 
@@ -84,7 +314,7 @@
       </form>
     </div>
 
-    <!-- Initial Status / Placeholder Prompt -->
+    <!-- Initial Status Prompt -->
     <div id="resultsPlaceholder" class="placeholder-box">
       <p class="placeholder-text">📍 রক্তদাতা খুঁজতে অনুগ্রহ করে রক্তের গ্রুপ ও জেলা নির্বাচন করুন।</p>
     </div>
@@ -107,5 +337,6 @@
   </footer>
 
   <script src="script.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
