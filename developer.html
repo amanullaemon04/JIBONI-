@@ -2,275 +2,370 @@
 <html lang="bn">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Developer Info - JIBONI</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>ডেভেলপার পরিচিতি - JIBONI</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Hind+Siliguri:wght@500;600;700&display=swap');
+
+    :root {
+      --primary: #dc2626;
+      --primary-hover: #b91c1c;
+      --primary-light: #fee2e2;
+      --success: #16a34a;
+      --success-hover: #15803d;
+      --success-light: #dcfce7;
+      --slate-50: #f8fafc;
+      --slate-100: #f1f5f9;
+      --slate-200: #e2e8f0;
+      --slate-400: #94a3b8;
+      --slate-600: #475569;
+      --slate-800: #1e293b;
+      --slate-900: #0f172a;
+    }
 
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: 'Hind Siliguri', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-family: 'Hind Siliguri', 'Plus Jakarta Sans', sans-serif;
+      -webkit-tap-highlight-color: transparent;
     }
 
     body {
-      background-color: #f8fafc;
-      color: #1e293b;
+      background-color: var(--slate-50);
+      color: var(--slate-800);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
     }
 
-    /* Compact Header */
-    .header {
+    .site-header {
       background: #ffffff;
-      padding: 8px 12px 6px;
-      border-bottom: 1px solid #e2e8f0;
+      padding: 14px 16px 12px;
+      border-bottom: 1px solid var(--slate-200);
       text-align: center;
+      width: 100%;
     }
 
-    .header-main-row {
-      margin-bottom: 3px;
+    .header-inner {
+      max-width: 480px;
+      margin: 0 auto;
     }
 
-    .logo {
+    .brand-row {
+      margin-bottom: 8px;
+    }
+
+    .brand-logo {
       display: inline-flex;
       align-items: center;
-      gap: 5px;
+      justify-content: center;
+      gap: 6px;
       text-decoration: none;
     }
 
-    .logo-drop {
-      font-size: 1.3rem;
+    .blood-drop {
+      font-size: 1.5rem;
       line-height: 1;
     }
 
-    .logo-text {
-      font-size: 1.35rem;
+    .brand-name {
+      font-size: 1.6rem;
       font-weight: 800;
-      color: #dc2626;
+      color: var(--primary);
       letter-spacing: 0.5px;
       line-height: 1;
     }
 
-    .header-nav-row {
-      margin-bottom: 3px;
+    .nav-btn-row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
     }
 
-    .nav-chip {
-      padding: 3px 10px;
-      border-radius: 16px;
-      font-size: 0.76rem;
+    .btn-chip {
+      padding: 5px 14px;
+      border-radius: 20px;
+      font-size: 0.82rem;
       font-weight: 700;
       text-decoration: none;
-      display: inline-block;
-      background: #f1f5f9;
-      color: #475569;
-      border: 1px solid #cbd5e1;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      border: 1px solid var(--slate-200);
+      background: var(--slate-100);
+      color: var(--slate-600);
+      cursor: pointer;
+      transition: all 0.2s ease;
     }
 
-    .header-slogan {
-      font-size: 0.72rem;
-      color: #64748b;
+    .btn-chip:hover {
+      background: var(--slate-200);
+      color: var(--slate-900);
+    }
+
+    .brand-slogan {
+      font-size: 0.74rem;
+      color: var(--slate-600);
       font-style: italic;
-      line-height: 1.2;
     }
 
-    /* Main Container (Scroll-Free Fitted) */
-    .dev-container {
-      max-width: 440px;
+    .main-wrapper {
+      flex: 1;
+      max-width: 480px;
       width: 100%;
       margin: 0 auto;
-      padding: 6px 12px;
-      flex: 1;
+      padding: 22px 14px 44px;
+    }
+
+    /* EXPANDED & IMMERSIVE PROFILE CARD */
+    .profile-card {
+      background: #ffffff;
+      border: 1px solid var(--slate-200);
+      border-radius: 22px;
+      padding: 34px 22px;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .profile-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #dc2626, #ef4444, #f87171);
+    }
+
+    /* AVATAR WITH GLOW ACCENT */
+    .avatar-wrap {
+      width: 104px;
+      height: 104px;
+      margin: 0 auto 16px;
+      border-radius: 50%;
+      padding: 3px;
+      background: linear-gradient(135deg, #dc2626, #fca5a5);
+      box-shadow: 0 6px 18px rgba(220, 38, 38, 0.22);
       display: flex;
       align-items: center;
-    }
-
-    .dev-card {
-      background: #ffffff;
-      border: 1px solid #e2e8f0;
-      border-radius: 12px;
-      padding: 12px 14px;
-      width: 100%;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
-      text-align: center;
-    }
-
-    .dev-avatar-wrap {
-      margin-bottom: 6px;
-      display: flex;
       justify-content: center;
     }
 
-    .dev-avatar {
-      width: 80px;
-      height: 80px;
-      min-width: 80px;
-      min-height: 80px;
+    .avatar-img {
+      width: 100%;
+      height: 100%;
       border-radius: 50%;
-      border: 3px solid #dc2626;
       object-fit: cover;
-      object-position: center;
-      box-shadow: 0 2px 8px rgba(220, 38, 38, 0.2);
+      background: #ffffff;
       display: block;
     }
 
     .dev-name {
-      font-size: 1.15rem;
+      font-size: 1.42rem;
       font-weight: 800;
-      color: #0f172a;
-      line-height: 1.2;
+      color: var(--slate-900);
+      margin-bottom: 3px;
+      letter-spacing: -0.2px;
     }
 
     .dev-role {
-      font-size: 0.78rem;
+      font-size: 0.86rem;
       font-weight: 700;
-      color: #b91c1c;
-      margin-bottom: 4px;
+      color: var(--primary);
+      margin-bottom: 12px;
+      text-transform: capitalize;
     }
 
-    .dev-desc {
-      font-size: 0.76rem;
-      color: #475569;
-      line-height: 1.35;
-      margin: 0 auto 6px;
+    .dev-bio {
+      font-size: 0.85rem;
+      color: var(--slate-600);
+      line-height: 1.55;
+      margin: 0 auto 20px;
+      max-width: 380px;
     }
 
-    /* Compact Bio Link */
-    .btn-bio-link {
+    /* BIO ACCORDION BUTTON */
+    .bio-badge-btn {
+      width: 100%;
+      background: #fff5f5;
+      border: 1px dashed #fca5a5;
+      border-radius: 12px;
+      padding: 10px 14px;
+      font-size: 0.84rem;
+      font-weight: 700;
+      color: var(--primary);
+      cursor: pointer;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 5px;
-      width: 100%;
-      height: 30px;
-      background: rgba(220, 38, 38, 0.05);
-      color: #b91c1c;
-      border: 1px dashed #fca5a5;
-      border-radius: 6px;
-      font-size: 0.78rem;
-      font-weight: 700;
-      text-decoration: none;
-      margin-bottom: 6px;
+      gap: 6px;
+      margin-bottom: 22px;
+      transition: all 0.2s ease;
     }
 
-    /* Compact Info Box */
-    .dev-info-box {
-      border: 1px solid #e2e8f0;
-      background: #f8fafc;
-      border-radius: 6px;
-      padding: 5px 10px;
-      margin-bottom: 6px;
-      text-align: left;
-      font-size: 0.78rem;
+    .bio-badge-btn:hover {
+      background: var(--primary-light);
+    }
+
+    /* IMMERSIVE INFO BARS */
+    .info-bars-container {
       display: flex;
       flex-direction: column;
-      gap: 3px;
+      gap: 10px;
+      margin-bottom: 24px;
+      text-align: left;
     }
 
-    .dev-info-row {
+    .info-bar-row {
+      background: var(--slate-50);
+      border: 1px solid var(--slate-200);
+      border-left: 3.5px solid var(--primary);
+      border-radius: 12px;
+      padding: 11px 14px;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      transition: all 0.2s ease;
     }
 
-    .dev-info-label {
+    .info-bar-row:hover {
+      background: #ffffff;
+      border-color: #cbd5e1;
+      border-left-color: var(--primary);
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.03);
+    }
+
+    .info-bar-label {
+      font-size: 0.82rem;
       font-weight: 700;
-      color: #475569;
+      color: var(--slate-600);
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
 
-    .dev-info-val {
-      font-weight: 600;
-      color: #0f172a;
-      text-decoration: none;
+    .info-bar-val {
+      font-size: 0.84rem;
+      font-weight: 700;
+      color: var(--slate-900);
+      word-break: break-all;
     }
 
-    .status-active-badge {
-      color: #16a34a;
+    .status-active-pill {
+      background: var(--success-light);
+      color: var(--success);
+      padding: 2px 9px;
+      border-radius: 20px;
+      font-size: 0.76rem;
       font-weight: 800;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
     }
 
-    /* Primary Actions */
-    .primary-actions-grid {
+    /* IMMERSIVE CTA BUTTONS */
+    .cta-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 6px;
-      margin-bottom: 6px;
+      gap: 10px;
+      margin-bottom: 16px;
     }
 
-    .btn-primary-action {
-      height: 34px;
-      border-radius: 6px;
-      font-size: 0.8rem;
-      font-weight: 700;
-      color: #ffffff;
+    .cta-btn {
+      height: 44px;
+      border-radius: 12px;
+      font-size: 0.88rem;
+      font-weight: 800;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 6px;
+      gap: 8px;
       text-decoration: none;
+      color: #ffffff;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .btn-email {
-      background: #dc2626;
+      background: linear-gradient(135deg, #dc2626, #b91c1c);
+      box-shadow: 0 4px 14px rgba(220, 38, 38, 0.32);
     }
 
-    .btn-whatsapp {
-      background: #16a34a;
+    .btn-email:active {
+      transform: scale(0.98);
+      box-shadow: 0 2px 6px rgba(220, 38, 38, 0.3);
     }
 
-    /* 6 Social Buttons Grid */
+    .btn-wa {
+      background: linear-gradient(135deg, #16a34a, #15803d);
+      box-shadow: 0 4px 14px rgba(22, 163, 74, 0.32);
+    }
+
+    .btn-wa:active {
+      transform: scale(0.98);
+      box-shadow: 0 2px 6px rgba(22, 163, 74, 0.3);
+    }
+
+    /* IMMERSIVE SOCIAL GRID */
     .social-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 5px;
+      gap: 8px;
     }
 
-    .btn-social {
-      height: 32px;
+    .social-btn {
+      height: 40px;
+      border-radius: 10px;
+      border: 1px solid var(--slate-200);
       background: #ffffff;
-      border: 1px solid #cbd5e1;
-      border-radius: 6px;
-      font-size: 0.76rem;
+      color: var(--slate-700);
+      font-size: 0.84rem;
       font-weight: 700;
-      color: #334155;
+      text-decoration: none;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 6px;
-      text-decoration: none;
+      gap: 8px;
+      transition: all 0.2s ease;
     }
 
-    .icon-svg {
-      width: 14px;
-      height: 14px;
-      flex-shrink: 0;
+    .social-btn:hover {
+      background: var(--slate-50);
+      border-color: var(--slate-300);
+      transform: translateY(-1px);
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.04);
     }
 
-    /* Compact Footer */
-    .footer {
+    .social-btn:active {
+      transform: scale(0.98);
+    }
+
+    .site-footer {
       background: #ffffff;
-      border-top: 1px solid #e2e8f0;
-      padding: 6px 10px;
+      border-top: 1px solid var(--slate-200);
+      padding: 14px 16px 16px;
       text-align: center;
+      margin-top: auto;
+      width: 100%;
     }
 
-    .footer-notice {
-      font-size: 0.7rem;
-      color: #64748b;
-      margin-bottom: 1px;
+    .footer-disclaimer {
+      font-size: 0.72rem;
+      color: var(--slate-600);
+      margin-bottom: 4px;
     }
 
     .footer-credit {
-      font-size: 0.7rem;
-      color: #334155;
+      font-size: 0.75rem;
+      color: var(--slate-800);
     }
 
     .footer-credit a {
-      color: #dc2626;
+      color: var(--primary);
       font-weight: 700;
       text-decoration: none;
     }
@@ -278,132 +373,97 @@
 </head>
 <body>
 
-  <!-- Header -->
-  <header class="header">
-    <div class="header-main-row">
-      <a href="index.html" class="logo">
-        <span class="logo-drop">🩸</span>
-        <span class="logo-text">JIBONI</span>
-      </a>
-    </div>
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="brand-row">
+        <a href="index.html" class="brand-logo">
+          <span class="blood-drop">🩸</span>
+          <span class="brand-name">JIBONI</span>
+        </a>
+      </div>
 
-    <div class="header-nav-row">
-      <a href="index.html" class="nav-chip">← হোম পেজ</a>
-    </div>
+      <div class="nav-btn-row">
+        <a href="index.html" class="btn-chip">← হোম পেজ</a>
+      </div>
 
-    <p class="header-slogan">"অচেনা কাউকে বাঁচার আশা দিয়ে, লিখে যাও এক নিঃস্বার্থ জীবনী।"</p>
+      <p class="brand-slogan">"অচেনা কাউকে বাঁচার আশা দিয়ে, লিখে যাও এক নিঃস্বার্থ জীবনী।"</p>
+    </div>
   </header>
 
-  <!-- Main Container -->
-  <main class="dev-container">
-    <div class="dev-card">
-      
-      <!-- Developer Avatar -->
-      <div class="dev-avatar-wrap">
-        <img 
-          src="profile.jpg" 
-          alt="Amanulla Emon" 
-          class="dev-avatar"
-        />
+  <main class="main-wrapper">
+    <div class="profile-card">
+      <!-- Profile Picture (Logo Unchanged) -->
+      <div class="avatar-wrap">
+        <img src="emon.jpg" alt="Amanulla Emon" class="avatar-img" onerror="this.onerror=null; this.src='https://avatars.githubusercontent.com/u/10000000?v=4';" />
       </div>
 
       <h1 class="dev-name">Amanulla Emon</h1>
-      <div class="dev-role">Lead Developer & Maintainer</div>
-      <p class="dev-desc">
+      <p class="dev-role">Lead Developer & Maintainer</p>
+      
+      <p class="dev-bio">
         JIBONI প্ল্যাটফর্মের ডেভেলপার। জরুরি রক্তের প্রয়োজনে মানুষের পাশে দাঁড়াতে ও যোগাযোগ সহজ করতেই এই প্ল্যাটফর্ম।
       </p>
 
-      <!-- Biography Link Button -->
-      <a href="bio.html" class="btn-bio-link">
-        📖 সংক্ষিপ্ত পরিচিতি ও বায়ো (About / Bio) →
+      <!-- Expandable / Action Bio Button -->
+      <a href="bio.html" class="bio-badge-btn">
+        <span>📖 সংক্ষিপ্ত পরিচিতি ও বায়ো (About / Bio)</span>
+        <span>→</span>
       </a>
 
-      <!-- Info Table Box -->
-      <div class="dev-info-box">
-        <div class="dev-info-row">
-          <span class="dev-info-label">ইমেইল:</span>
-          <a href="mailto:amanullaemon04@gmail.com" class="dev-info-val">amanullaemon04@gmail.com</a>
+      <!-- Immersive Contact Information Bars -->
+      <div class="info-bars-container">
+        <div class="info-bar-row">
+          <span class="info-bar-label">✉️ ইমেইল:</span>
+          <span class="info-bar-val">amanullaemon04@gmail.com</span>
         </div>
-        <div class="dev-info-row">
-          <span class="dev-info-label">হোয়াটসঅ্যাপ:</span>
-          <a href="https://wa.me/8801608575239" target="_blank" rel="noopener noreferrer" class="dev-info-val">01608575239</a>
+
+        <div class="info-bar-row">
+          <span class="info-bar-label">💬 হোয়াটসঅ্যাপ:</span>
+          <span class="info-bar-val">01608575239</span>
         </div>
-        <div class="dev-info-row">
-          <span class="dev-info-label">স্ট্যাটাস:</span>
-          <span class="status-active-badge">Active Developer</span>
+
+        <div class="info-bar-row">
+          <span class="info-bar-label">⚡ স্ট্যাটাস:</span>
+          <span class="status-active-pill">● Active Developer</span>
         </div>
       </div>
 
       <!-- Action Buttons -->
-      <div class="primary-actions-grid">
-        <a href="mailto:amanullaemon04@gmail.com" class="btn-primary-action btn-email">
-          <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="2" y="4" width="20" height="16" rx="2"></rect>
-            <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
-          </svg>
-          Send Email
+      <div class="cta-grid">
+        <a href="mailto:amanullaemon04@gmail.com" class="cta-btn btn-email">
+          <span>✉️ Send Email</span>
         </a>
-        <a href="https://wa.me/8801608575239" target="_blank" rel="noopener noreferrer" class="btn-primary-action btn-whatsapp">
-          <svg class="icon-svg" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2zm0 18.14c-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.14 8.14 0 0 1-1.25-4.38c0-4.5 3.66-8.15 8.16-8.15 2.18 0 4.23.85 5.77 2.39a8.1 8.1 0 0 1 2.39 5.76c-.01 4.5-3.67 8.15-8.17 8.15zm4.47-6.1c-.24-.12-1.45-.71-1.67-.8-.23-.08-.39-.12-.56.12-.17.24-.64.8-.79.96-.14.16-.29.18-.53.06-.24-.12-1.03-.38-1.96-1.21-.72-.65-1.21-1.45-1.35-1.7-.14-.24-.01-.38.11-.5.11-.11.24-.29.36-.43.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.56-1.34-.76-1.84-.2-.48-.4-.42-.56-.43l-.47-.01c-.16 0-.43.06-.66.31-.22.24-.87.85-.87 2.07s.89 2.4 1.01 2.57c.12.16 1.76 2.68 4.25 3.76.59.26 1.06.41 1.42.53.6.19 1.14.16 1.57.1.48-.07 1.45-.59 1.66-1.17.2-.57.2-1.07.14-1.17-.06-.1-.22-.16-.47-.28z"/>
-          </svg>
-          WhatsApp
+        <a href="https://wa.me/8801608575239" target="_blank" rel="noopener noreferrer" class="cta-btn btn-wa">
+          <span>💬 WhatsApp</span>
         </a>
       </div>
 
-      <!-- Social Media 6-Grid (Including X and Discord) -->
+      <!-- Social Connections Grid -->
       <div class="social-grid">
-        <a href="https://github.com/amanullaemon04" target="_blank" rel="noopener noreferrer" class="btn-social">
-          <svg class="icon-svg" viewBox="0 0 24 24" fill="#181717">
-            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
-          </svg>
-          GitHub
+        <a href="https://github.com/amanullaemon04" target="_blank" rel="noopener noreferrer" class="social-btn">
+          <span>🐙 GitHub</span>
         </a>
-
-        <a href="https://www.facebook.com/amanullaemon.5" target="_blank" rel="noopener noreferrer" class="btn-social">
-          <svg class="icon-svg" viewBox="0 0 24 24" fill="#1877F2">
-            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-          </svg>
-          Facebook
+        <a href="https://facebook.com/amanulla.emon.5" target="_blank" rel="noopener noreferrer" class="social-btn" style="color: #1877f2;">
+          <span>📘 Facebook</span>
         </a>
-
-        <a href="https://t.me/amanullaemon" target="_blank" rel="noopener noreferrer" class="btn-social">
-          <svg class="icon-svg" viewBox="0 0 24 24" fill="#24A1DE">
-            <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.161c-.18 1.897-.962 6.502-1.359 8.627-.168.9-.5 1.201-.82 1.23-.697.064-1.226-.46-1.901-.903-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.479.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635.099-.002.321.023.465.141.121.1.155.234.17.332-.001.07.013.297 0 .474z"/>
-          </svg>
-          Telegram
+        <a href="https://t.me/amanullaemon04" target="_blank" rel="noopener noreferrer" class="social-btn" style="color: #0088cc;">
+          <span>✈️ Telegram</span>
         </a>
-
-        <a href="https://www.instagram.com/_amanulla__emon_?stkn=Y2x0a2VoOHpkNmk2" target="_blank" rel="noopener noreferrer" class="btn-social">
-          <svg class="icon-svg" viewBox="0 0 24 24" fill="#E4405F">
-            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-          </svg>
-          Instagram
+        <a href="https://instagram.com/amanullaemon04" target="_blank" rel="noopener noreferrer" class="social-btn" style="color: #e4405f;">
+          <span>📸 Instagram</span>
         </a>
-
-        <!-- X (Twitter) -->
-        <a href="https://x.com/amanulla_emon" target="_blank" rel="noopener noreferrer" class="btn-social">
-          <svg class="icon-svg" viewBox="0 0 24 24" fill="#0f172a">
-            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-          </svg>
-          X
+        <a href="https://x.com/amanullaemon04" target="_blank" rel="noopener noreferrer" class="social-btn" style="grid-column: span 1;">
+          <span>𝕏 X</span>
         </a>
-
-        <!-- Discord -->
-        <a href="https://discordapp.com/users/amanulla9860" target="_blank" rel="noopener noreferrer" class="btn-social" title="Discord: amanulla9860">
-          <svg class="icon-svg" viewBox="0 0 24 24" fill="#5865F2">
-            <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.929 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.894.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
-          </svg>
-          Discord
+        <a href="https://discordapp.com/users/amanullaemon04" target="_blank" rel="noopener noreferrer" class="social-btn" style="color: #5865f2;">
+          <span>🎮 Discord</span>
         </a>
       </div>
-
     </div>
   </main>
 
-  <!-- Footer -->
-  <footer class="footer">
-    <p class="footer-notice">JIBONI — Service to Humanity</p>
+  <footer class="site-footer">
+    <p class="footer-disclaimer">Use donor information responsibly. Confirm availability before contacting.</p>
     <p class="footer-credit">Designed & Developed by <a href="developer.html">Amanulla Emon</a></p>
   </footer>
 
