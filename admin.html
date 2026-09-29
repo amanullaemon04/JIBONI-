@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Admin Dashboard - JIBONI</title>
+  <title>Admin Portal - JIBONI</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Hind+Siliguri:wght@500;600;700&display=swap');
 
@@ -111,6 +111,7 @@
       padding: 16px 14px 50px;
     }
 
+    /* Auth Box */
     .auth-panel {
       background: #ffffff;
       border: 1px solid var(--slate-200);
@@ -156,7 +157,6 @@
       font-size: 0.9rem;
       color: var(--slate-800);
       outline: none;
-      transition: border-color 0.2s;
       background: #ffffff;
     }
 
@@ -174,7 +174,7 @@
       font-weight: 700;
       font-size: 0.9rem;
       cursor: pointer;
-      transition: background 0.2s;
+      margin-top: 6px;
     }
 
     .btn-primary:active {
@@ -191,24 +191,22 @@
       font-size: 0.78rem;
       color: var(--primary);
       text-decoration: none;
-      font-weight: 600;
+      font-weight: 700;
       cursor: pointer;
       display: inline-block;
+      user-select: none;
     }
 
-    .forgot-link:hover {
-      text-decoration: underline;
-    }
-
+    /* Modal */
     .modal-backdrop {
       position: fixed;
       inset: 0;
-      background: rgba(15, 23, 42, 0.5);
+      background: rgba(15, 23, 42, 0.6);
       backdrop-filter: blur(4px);
       display: none;
       justify-content: center;
       align-items: center;
-      z-index: 100;
+      z-index: 1000;
       padding: 16px;
     }
 
@@ -218,10 +216,11 @@
       padding: 24px 20px;
       max-width: 400px;
       width: 100%;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
       text-align: center;
     }
 
+    /* Dashboard UI */
     .admin-profile-strip {
       background: #ffffff;
       border: 1px solid var(--slate-200);
@@ -233,10 +232,6 @@
       align-items: center;
       flex-wrap: wrap;
       gap: 8px;
-    }
-
-    .user-info {
-      font-size: 0.82rem;
     }
 
     .user-role-tag {
@@ -258,7 +253,6 @@
       margin-bottom: 14px;
       scrollbar-width: none;
     }
-
     .filter-pills-bar::-webkit-scrollbar {
       display: none;
     }
@@ -277,7 +271,6 @@
       align-items: center;
       gap: 6px;
       flex-shrink: 0;
-      transition: all 0.2s;
     }
 
     .pill-btn.active {
@@ -300,10 +293,7 @@
       color: #ffffff;
     }
 
-    .search-holder {
-      margin-bottom: 14px;
-    }
-
+    /* Donor Card */
     .donor-entry-card {
       background: #ffffff;
       border: 1px solid var(--slate-200);
@@ -389,7 +379,6 @@
       justify-content: center;
       gap: 4px;
       border: 1px solid transparent;
-      transition: all 0.2s;
     }
 
     .btn-verify-success {
@@ -423,13 +412,6 @@
       border-radius: 12px;
       padding: 16px;
       margin-bottom: 16px;
-    }
-
-    .empty-state {
-      text-align: center;
-      padding: 40px 10px;
-      color: var(--slate-400);
-      font-size: 0.88rem;
     }
 
     .app-footer {
@@ -466,31 +448,29 @@
       <h2 class="auth-title">অ্যাডমিন প্রবেশদ্বার</h2>
       <p class="auth-subtitle">আপনার দায়িত্বশীল অ্যাকাউন্টে লগইন করুন</p>
 
-      <form id="loginForm">
-        <div class="input-field">
-          <label class="field-label" for="loginEmail">ইমেইল অ্যাড্রেস</label>
-          <input type="email" id="loginEmail" class="custom-input" placeholder="jiboni@gmail.com" required />
-        </div>
+      <div class="input-field">
+        <label class="field-label" for="loginEmail">ইমেইল অ্যাড্রেস</label>
+        <input type="email" id="loginEmail" class="custom-input" placeholder="jiboni@gmail.com" />
+      </div>
 
-        <div class="input-field">
-          <label class="field-label" for="loginPass">পাসওয়ার্ড</label>
-          <input type="password" id="loginPass" class="custom-input" placeholder="••••••••" required />
-        </div>
+      <div class="input-field">
+        <label class="field-label" for="loginPass">পাসওয়ার্ড</label>
+        <input type="password" id="loginPass" class="custom-input" placeholder="••••••••" />
+      </div>
 
-        <div class="forgot-link-wrap">
-          <span class="forgot-link" onclick="openForgotModal()">পাসওয়ার্ড ভুলে গেছেন? (Forgot Password)</span>
-        </div>
+      <div class="forgot-link-wrap">
+        <span class="forgot-link" onclick="openForgotModal()">পাসওয়ার্ড ভুলে গেছেন? (Forgot Password)</span>
+      </div>
 
-        <button type="submit" class="btn-primary">লগইন করুন</button>
-      </form>
-      <div id="loginError" style="display:none; color: var(--primary); font-size:0.8rem; font-weight:700; margin-top:10px;">ভুল ইমেইল বা পাসওয়ার্ড!</div>
+      <button type="button" class="btn-primary" onclick="handleAdminLogin()">লগইন করুন</button>
+      <div id="loginError" style="display:none; color: var(--primary); font-size:0.8rem; font-weight:700; margin-top:10px;">ইমেইল বা পাসওয়ার্ড সঠিক নয়!</div>
     </div>
 
     <!-- MAIN DASHBOARD -->
     <div id="dashboardScreen" style="display: none;">
       
       <div class="admin-profile-strip">
-        <div class="user-info">
+        <div>
           <span id="roleBadge" class="user-role-tag">Super Admin</span>
           <span id="adminEmailDisplay" style="color: var(--slate-600); font-weight: 600;"></span>
         </div>
@@ -515,7 +495,7 @@
         </button>
       </div>
 
-      <div class="search-holder" id="searchBoxWrap">
+      <div class="search-holder" id="searchBoxWrap" style="margin-bottom: 14px;">
         <input type="text" id="liveSearchInput" class="custom-input" placeholder="নাম, জেলা, মোবাইল বা রক্তের গ্রুপ দিয়ে খুঁজুন..." onkeyup="handleLiveSearch()" />
       </div>
 
@@ -531,12 +511,12 @@
         <div id="superAdminWorkArea">
           <div class="subadmin-box">
             <h3 style="font-size: 0.95rem; font-weight: 800; margin-bottom: 12px;">➕ নতুন সাব-অ্যাডমিন নিয়োগ</h3>
-            <form id="subAdminCreateForm" style="display:flex; flex-direction:column; gap:10px;">
-              <input type="text" id="newAdminName" class="custom-input" placeholder="অ্যাডমিনের পুরো নাম" required />
-              <input type="email" id="newAdminEmail" class="custom-input" placeholder="ইমেইল অ্যাড্রেস" required />
-              <input type="password" id="newAdminPass" class="custom-input" placeholder="পাসওয়ার্ড সেট করুন" required />
-              <button type="submit" class="btn-primary" style="height:40px;">সাব-অ্যাডমিন যোগ করুন</button>
-            </form>
+            <div style="display:flex; flex-direction:column; gap:10px;">
+              <input type="text" id="newAdminName" class="custom-input" placeholder="অ্যাডমিনের পুরো নাম" />
+              <input type="email" id="newAdminEmail" class="custom-input" placeholder="ইমেইল অ্যাড্রেস" />
+              <input type="password" id="newAdminPass" class="custom-input" placeholder="পাসওয়ার্ড সেট করুন" />
+              <button type="button" class="btn-primary" style="height:40px;" onclick="handleAddSubAdmin()">সাব-অ্যাডমিন যোগ করুন</button>
+            </div>
           </div>
 
           <h3 style="font-size: 0.9rem; font-weight: 800; margin-bottom: 8px;">নিবন্ধিত অ্যাডমিনদের তালিকা</h3>
@@ -554,13 +534,11 @@
       <h3 style="font-size: 1.15rem; font-weight: 800; color: var(--slate-900); margin-bottom: 4px;">পাসওয়ার্ড পরিবর্তন করুন</h3>
       <p style="font-size: 0.8rem; color: var(--slate-600); margin-bottom: 16px;">আপনার অ্যাকাউন্টের জন্য নতুন একটি শক্তিশালী পাসওয়ার্ড দিন।</p>
       
-      <form id="changePassForm">
-        <div class="input-field">
-          <input type="password" id="newSecretPassword" class="custom-input" placeholder="নতুন পাসওয়ার্ড লিখুন" required minlength="4" />
-        </div>
-        <button type="submit" class="btn-primary" style="height: 40px; margin-bottom: 8px;">পাসওয়ার্ড আপডেট করুন</button>
-        <button type="button" onclick="closeChangePassModal()" class="btn-header btn-back" style="width: 100%; height: 38px; cursor: pointer;">বাতিল করুন</button>
-      </form>
+      <div class="input-field">
+        <input type="password" id="newSecretPassword" class="custom-input" placeholder="নতুন পাসওয়ার্ড লিখুন" />
+      </div>
+      <button type="button" class="btn-primary" style="height: 40px; margin-bottom: 8px;" onclick="saveNewPassword()">পাসওয়ার্ড আপডেট করুন</button>
+      <button type="button" onclick="closeChangePassModal()" class="btn-header btn-back" style="width: 100%; height: 38px; cursor: pointer;">বাতিল করুন</button>
       <div id="changePassMsg" style="display:none; font-size:0.82rem; font-weight:700; margin-top:10px;"></div>
     </div>
   </div>
@@ -571,13 +549,11 @@
       <h3 style="font-size: 1.15rem; font-weight: 800; color: var(--slate-900); margin-bottom: 4px;">পাসওয়ার্ড রিসেট রিকোয়েস্ট</h3>
       <p style="font-size: 0.8rem; color: var(--slate-600); margin-bottom: 16px;">আপনার সাব-অ্যাডমিন ইমেইল প্রদান করুন।</p>
       
-      <form id="forgotForm">
-        <div class="input-field">
-          <input type="email" id="forgotEmail" class="custom-input" placeholder="আপনার সাব-অ্যাডমিন ইমেইল" required />
-        </div>
-        <button type="submit" class="btn-primary" style="height: 40px; margin-bottom: 8px;">রিসেট রিকোয়েস্ট পাঠান</button>
-        <button type="button" onclick="closeForgotModal()" class="btn-header btn-back" style="width: 100%; height: 38px; cursor: pointer;">বাতিল করুন</button>
-      </form>
+      <div class="input-field">
+        <input type="email" id="forgotEmail" class="custom-input" placeholder="আপনার সাব-অ্যাডমিন ইমেইল" />
+      </div>
+      <button type="button" class="btn-primary" style="height: 40px; margin-bottom: 8px;" onclick="processForgotPassword()">রিসেট রিকোয়েস্ট পাঠান</button>
+      <button type="button" onclick="closeForgotModal()" class="btn-header btn-back" style="width: 100%; height: 38px; cursor: pointer;">বাতিল করুন</button>
       <div id="forgotMsg" style="display:none; font-size:0.82rem; font-weight:700; margin-top:10px;"></div>
     </div>
   </div>
@@ -588,60 +564,67 @@
   </footer>
 
   <script>
-    const SUPER_ADMIN_EMAIL = "amanullaemon04@gmail.com";
-    const SUPER_ADMIN_DEFAULT_PASS = "superadmin123";
+    // ==========================================
+    // 🛡️ SUPER ADMIN CREDENTIALS
+    // ==========================================
+    const SUPER_EMAIL = "amanullaemon04@gmail.com";
+    const SUPER_PASS = "superadmin123";
 
     let activeTab = "all";
     let loggedInUser = null;
     let localDonors = [];
 
-    function fetchAdminsData() {
-      const saved = localStorage.getItem("jiboni_admin_accounts");
-      if (saved) {
-        const parsed = JSON.parse(saved);
-        // Force update super admin password in local storage if outdated
-        const superAdmin = parsed.find(a => a.email.toLowerCase() === SUPER_ADMIN_EMAIL.toLowerCase());
-        if (superAdmin) {
-          superAdmin.pass = SUPER_ADMIN_DEFAULT_PASS;
-        }
-        return parsed;
-      }
+    function getAdminAccounts() {
+      const stored = localStorage.getItem("jiboni_admin_accounts");
+      let list = stored ? JSON.parse(stored) : [];
       
-      const defaults = [
-        { name: "Amanulla Emon", email: SUPER_ADMIN_EMAIL, pass: SUPER_ADMIN_DEFAULT_PASS, role: "Super Admin" },
-        { name: "Support Admin", email: "support@jiboni.org", pass: "admin123", role: "Sub Admin" }
-      ];
-      localStorage.setItem("jiboni_admin_accounts", JSON.stringify(defaults));
-      return defaults;
+      // Ensure super admin always exists and credentials are correct
+      const exists = list.find(a => a.email.toLowerCase() === SUPER_EMAIL.toLowerCase());
+      if (!exists) {
+        list.unshift({ name: "Amanulla Emon", email: SUPER_EMAIL, pass: SUPER_PASS, role: "Super Admin" });
+        localStorage.setItem("jiboni_admin_accounts", JSON.stringify(list));
+      }
+      return list;
     }
 
-    document.addEventListener("DOMContentLoaded", () => {
-      const activeSession = sessionStorage.getItem("jiboni_session_user");
-      if (activeSession) {
-        loggedInUser = JSON.parse(activeSession);
-        setupDashboard();
+    // Direct Login Click Function
+    function handleAdminLogin() {
+      const email = (document.getElementById("loginEmail").value || "").trim().toLowerCase();
+      const pass = (document.getElementById("loginPass").value || "").trim();
+      const err = document.getElementById("loginError");
+
+      if (!email || !pass) {
+        err.style.display = "block";
+        err.innerText = "ইমেইল ও পাসওয়ার্ড প্রদান করুন!";
+        return;
       }
-    });
 
-    document.getElementById("loginForm").addEventListener("submit", (e) => {
-      e.preventDefault();
-      const mail = document.getElementById("loginEmail").value.trim().toLowerCase();
-      const pass = document.getElementById("loginPass").value.trim();
+      // 1. Direct Master check for Super Admin
+      if (email === SUPER_EMAIL.toLowerCase() && pass === SUPER_PASS) {
+        loggedInUser = { name: "Amanulla Emon", email: SUPER_EMAIL, pass: SUPER_PASS, role: "Super Admin" };
+        sessionStorage.setItem("jiboni_session_user", JSON.stringify(loggedInUser));
+        err.style.display = "none";
+        renderDashboardView();
+        return;
+      }
 
-      const allAdmins = fetchAdminsData();
-      const user = allAdmins.find(a => a.email.toLowerCase() === mail && a.pass === pass);
+      // 2. Sub-Admin Check from Storage
+      const admins = getAdminAccounts();
+      const match = admins.find(a => a.email.toLowerCase() === email && a.pass === pass);
 
-      if (user) {
-        loggedInUser = user;
-        sessionStorage.setItem("jiboni_session_user", JSON.stringify(user));
-        document.getElementById("loginError").style.display = "none";
-        setupDashboard();
+      if (match) {
+        loggedInUser = match;
+        sessionStorage.setItem("jiboni_session_user", JSON.stringify(match));
+        err.style.display = "none";
+        renderDashboardView();
       } else {
-        document.getElementById("loginError").style.display = "block";
+        err.style.display = "block";
+        err.innerText = "ভুল ইমেইল বা পাসওয়ার্ড!";
       }
-    });
+    }
 
-    function setupDashboard() {
+    // Show Dashboard
+    function renderDashboardView() {
       document.getElementById("loginScreen").style.display = "none";
       document.getElementById("dashboardScreen").style.display = "block";
       document.getElementById("logoutBtn").style.display = "inline-flex";
@@ -649,7 +632,7 @@
       document.getElementById("adminEmailDisplay").innerText = loggedInUser.email;
       document.getElementById("roleBadge").innerText = loggedInUser.role;
 
-      pullDonors();
+      loadDonors();
       drawFeedbacks();
       drawAdminsList();
     }
@@ -659,31 +642,40 @@
       window.location.reload();
     }
 
-    function openChangePassModal() {
-      document.getElementById("changePassModal").style.display = "flex";
-      document.getElementById("changePassMsg").style.display = "none";
-      document.getElementById("newSecretPassword").value = "";
+    // Modal Triggers
+    function openForgotModal() {
+      document.getElementById("forgotPasswordModal").style.display = "flex";
+      document.getElementById("forgotMsg").style.display = "none";
+      document.getElementById("forgotEmail").value = "";
     }
 
-    function closeChangePassModal() {
-      document.getElementById("changePassModal").style.display = "none";
+    function closeForgotModal() {
+      document.getElementById("forgotPasswordModal").style.display = "none";
     }
 
-    document.getElementById("changePassForm").addEventListener("submit", (e) => {
-      e.preventDefault();
-      const newPass = document.getElementById("newSecretPassword").value.trim();
-      if (!newPass) return;
+    function processForgotPassword() {
+      const email = (document.getElementById("forgotEmail").value || "").trim().toLowerCase();
+      const msg = document.getElementById("forgotMsg");
+      msg.style.display = "block";
 
-      const admins = fetchAdminsData();
-      const found = admins.find(a => a.email.toLowerCase() === loggedInUser.email.toLowerCase());
+      if (!email) {
+        msg.style.color = "var(--primary)";
+        msg.innerText = "অনুগ্রহ করে আপনার ইমেইল লিখুন!";
+        return;
+      }
 
-      if (found) {
-        found.pass = newPass;
-        loggedInUser.pass = newPass;
+      if (email === SUPER_EMAIL.toLowerCase()) {
+        msg.style.color = "var(--primary)";
+        msg.innerText = "Super Admin পাসওয়ার্ড কোডের SUPER_PASS থেকে নির্ধারিত।";
+        return;
+      }
+
+      const admins = getAdminAccounts();
+      const target = admins.find(a => a.email.toLowerCase() === email);
+
+      if (target) {
+        const tempPass = "reset" + Math.floor(1000 + Math.random() * 9000);
+        target.pass = tempPass;
         localStorage.setItem("jiboni_admin_accounts", JSON.stringify(admins));
-        sessionStorage.setItem("jiboni_session_user", JSON.stringify(loggedInUser));
-
-        const msg = document.getElementById("changePassMsg");
-        msg.style.display = "block";
         msg.style.color = "var(--success)";
-        msg.innerText =
+        msg.innerHTML = `পাসও
