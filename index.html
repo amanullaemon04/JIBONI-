@@ -224,7 +224,6 @@
       border-radius: 8px;
     }
 
-    /* STRICT 120px LABEL WIDTH FOR PERFECT COLON ALIGNMENT */
     .donor-meta {
       display: flex;
       flex-direction: column;
@@ -280,14 +279,21 @@
       color: var(--warning);
     }
 
+    .donor-actions-row {
+      display: flex;
+      gap: 8px;
+      border-top: 1px solid var(--slate-100);
+      padding-top: 12px;
+    }
+
     .call-btn {
-      width: 100%;
+      flex: 2;
       height: 38px;
       background: var(--primary);
       color: #ffffff;
       border: none;
       border-radius: 8px;
-      font-size: 0.88rem;
+      font-size: 0.86rem;
       font-weight: 700;
       display: inline-flex;
       align-items: center;
@@ -296,7 +302,70 @@
       text-decoration: none;
     }
 
-    /* CUSTOM KEYBOARD-SAFE BOTTOM-SHEET MODALS */
+    .report-btn {
+      flex: 1;
+      height: 38px;
+      background: #ffffff;
+      color: var(--warning);
+      border: 1px solid #fde68a;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+    }
+
+    /* JIBONI ICONIC RED & WHITE REPORT MODAL */
+    .custom-report-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(4px);
+      z-index: 5000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .custom-report-box {
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 22px 18px;
+      max-width: 360px;
+      width: 100%;
+      box-shadow: 0 14px 35px rgba(220, 38, 38, 0.15);
+      border-top: 4px solid var(--primary);
+      animation: scaleIn 0.2s ease-out;
+    }
+
+    @keyframes scaleIn {
+      from { transform: scale(0.92); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .report-title {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--slate-900);
+      margin-bottom: 10px;
+    }
+
+    .report-options-list {
+      font-size: 0.8rem;
+      color: var(--slate-700);
+      background: var(--slate-50);
+      border: 1px solid var(--slate-200);
+      border-radius: 10px;
+      padding: 10px 12px;
+      margin-bottom: 12px;
+      line-height: 1.6;
+    }
+
+    /* CUSTOM BOTTOM-SHEET MODALS */
     .custom-modal-backdrop {
       position: fixed;
       inset: 0;
@@ -449,10 +518,6 @@
       font-weight: 700;
       text-decoration: none;
     }
-
-    .footer-credit a:hover {
-      text-decoration: underline;
-    }
   </style>
 </head>
 <body>
@@ -550,6 +615,28 @@
     </div>
   </div>
 
+  <!-- JIBONI ICONIC REPORT MODAL POPUP -->
+  <div id="customReportModal" class="custom-report-overlay">
+    <div class="custom-report-box">
+      <h3 class="report-title" id="reportModalDonorName">রিপোর্ট করুন</h3>
+      <div class="report-options-list">
+        <b>রক্তদাতার বিষয়ে রিপোর্ট জানান:</b><br>
+        1. রক্ত দিয়ে ফেলেছেন (অপ্রাপ্য)<br>
+        2. ফোন বন্ধ / ধরছেন না<br>
+        3. ভুল নম্বর / অস্তিত্ব নেই<br>
+        4. অন্যান্য (বিস্তারিত লিখুন)
+      </div>
+      <div style="margin-bottom: 12px;">
+        <label style="font-size: 0.78rem; font-weight: 700; display: block; margin-bottom: 4px;">(কারণটি সংক্ষেপে লিখুন):</label>
+        <input type="text" id="reportReasonInput" class="text-input" placeholder="এখানে কারণ লিখুন..." style="height: 38px;" />
+      </div>
+      <div style="display: flex; gap: 8px;">
+        <button type="button" class="report-btn" style="background:#ffffff; color:var(--slate-600); border-color:var(--slate-200);" onclick="closeReportModal()">Cancel</button>
+        <button type="button" class="call-btn" style="height: 38px; font-size: 0.84rem; flex:1;" onclick="submitDonorReport()">OK</button>
+      </div>
+    </div>
+  </div>
+
   <footer class="site-footer">
     <div class="footer-nav">
       <a href="stats.html">📊 রক্তের পরিসংখ্যান</a>
@@ -562,6 +649,7 @@
 
   <script>
     var currentPickerMode = "";
+    var selectedReportingDonor = null;
     var bloodGroupsList = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
 
     var districtsList = [
@@ -675,7 +763,7 @@
       "Jashore": ["যশোর সদর (Sadar)", "ঝিকরগাছা (Jhikargachha)", "মণিরামপুর (Manirampur)", "কেশবপুর (Keshabpur)", "শার্শা (Sharsha)", "চৌগাছা (Chowgachha)", "বাঘারপাড়া (Bagherpara)", "অভয়নগর / নওয়াপাড়া (Abhaynagar / Noapara)"],
       "Kushtia": ["কুষ্টিয়া সদর (Sadar)", "কুমারখালী (Kumarkhali)", "মিরপুর (Mirpur)", "ভেড়ামারা (Bheramara)", "দৌলতপুর (Daulatpur)", "খোকসা (Khoksa)"],
       "Satkhira": ["সাতক্ষীরা সদর (Sadar)", "কলারোয়া (Kalaroa)", "তালা (Tala)", "কালীগঞ্জ (Kaliganj)", "শ্যামনগর (Shyamnagar)", "আশাশুনি (Assasuni)", "দেবহাটা (Debhata)"],
-      "Bagerhat": ["বাগেরহাট সদর (Sadar)", "মোংলা (Mongla)", "ফকিরহাট (Fakirhat)", "রামপাল (Rampal)", "কচুয়া (Kachua)", "মোল্লাহাট (Mollahat)", "চিতলমারী (Chitalmari)", "মোরেলগঞ্জ (Morrelganj)", "শরণখোলা (Sarankhola)"],
+      "Bagerhat": ["বাগেরহাট সদর (Sadar)", "মোংলা (Mongla)", "ফকিরহাট (Fakirহাট)", "রামপাল (Rampal)", "কচুয়া (Kachua)", "মোল্লাহাট (Mollahat)", "চিতলমারী (Chitalmari)", "মোরেলগঞ্জ (Morrelganj)", "শরণখোলা (Sarankhola)"],
       "Jhenaidah": ["ঝিনাইদহ সদর (Sadar)", "শৈলকুপা (Shailkupa)", "হরিণাকুণ্ডু (Harinakundu)", "কালীগঞ্জ (Kaliganj)", "কোটচাঁদপুর (Kotchandpur)", "মহেশপুর (Maheshpur)"],
       "Chuadanga": ["চুয়াডাঙ্গা সদর (Sadar)", "আলমডাঙ্গা (Alamdanga)", "দামুড়হুদা (Damurhuda)", "জীবননগর (Jibannagar)"],
       "Magura": ["মাগুরা সদর (Sadar)", "শ্রীপুর (Sreepur)", "শালিখা (Shalikha)", "মহম্মদপুর (Mohammadpur)"],
@@ -692,7 +780,7 @@
       "Habiganj": ["হবিগঞ্জ সদর (Sadar)", "মাধবপুর (Madhabpur)", "চুনারুঘাট (Chunarughat)", "বাহুবল (Bahubal)", "নবীগঞ্জ (Nabiganj)", "বানিয়াচং (Baniachong)", "লাখাই (Lakhai)", "আজমিরীগঞ্জ (Ajmiriganj)", "শায়স্তাগঞ্জ (Shayestaganj)"],
       "Sunamganj": ["সুনামগঞ্জ সদর (Sadar)", "জগন্নাথপুর (Jagannathpur)", "ছাতক (Chhatak)", "তাহিরপুর (Tahirpur)", "দেরাই (Derai)", "শাল্লা (Shalla)", "ধর্মপাশা (Dharmapasha)", "জামালগঞ্জ (Jamalganj)", "দোয়ারাবাজার (Dowarabazar)", "বিশ্বম্ভরপুর (Bishwamvarpur)", "শান্তিগঞ্জ (Shantiganj)"],
       "Rangpur": ["রংপুর সদর / কোতোয়ালী (Sadar)", "বদরগঞ্জ (Badarganj)", "পীরগঞ্জ (Pirganj)", "পীরগাছা (Pirgachha)", "মিঠাপুকুর (Mithapukur)", "গঙ্গাচড়া (Gangachhara)", "কাউনিয়া (Kaunia)", "তারাগঞ্জ (Taraganj)"],
-      "Dinajpur": ["দিনাজপুর সদর (Sadar)", "বিরামপুর (Birampur)", "ফুলবাড়ী (Fulbari)", "বীরগঞ্জ (Birganj)", "বোচাগঞ্জ (Bochaganj)", "কাহারোল (Kaharole)", "চিরিরবন্দর (Chirirbandar)", "পার্বতীপুর (Parbatipur)", "নবাবগঞ্জ (Nawabगंज)", "ঘোড়াঘাট (Ghoraghat)", "হাকিমপুর / হিলি (Hakimpur)", "খানসামা (Khansama)", "বিরল (Birol)"],
+      "Dinajpur": ["দিনাজপুর সদর (Sadar)", "বিরামপুর (Birampur)", "ফুলবাড়ী (Fulbari)", "বীরগঞ্জ (Birganj)", "বোচাগঞ্জ (Bochaganj)", "কাহারোল (Kaharole)", "চিরিরবন্দর (Chirirbandar)", "পার্বতীপুর (Parbatipur)", "নবাবগঞ্জ (Nawabganj)", "ঘোড়াঘাট (Ghoraghat)", "হাকিমপুর / হিলি (Hakimpur)", "খানসামা (Khansama)", "বিরল (Birol)"],
       "Nilphamari": ["নীলফামারী সদর (Nilphamari Sadar)", "সৈয়দপুর (Saidpur)", "জলঢাকা (Jaldhaka)", "ডোমার (Domar)", "ডিমলা (Dimla)", "কিশোরগঞ্জ (Kishoreganj)"],
       "Kurigram": ["কুড়িগ্রাম সদর (Sadar)", "উলিপুর (Ulipur)", "নাগেশ্বরী (Nageshwari)", "ভুরুঙ্গামারী (Bhurungamari)", "চিলমারী (Chilmari)", "ফুলবাড়ী (Fulbari)", "রৌমারী (Roumari)", "রাজিবপুর (Rajibpur)", "রাজারহাট (Rajarhat)"],
       "Gaibandha": ["গাইবান্ধা সদর (Sadar)", "গোবিন্দগঞ্জ (Gobindaganj)", "পলাশবাড়ী (Palashbari)", "সুন্দরগঞ্জ (Sundarganj)", "সাদুল্লাপুর (Sadullapur)", "সাঘাটা (Saghata)", "ফুলছড়ি (Fulchhari)"],
@@ -705,7 +793,6 @@
       "Sherpur": ["শেরপুর সদর (Sadar)", "নকলা (Nakla)", "নালিতাবাড়ী (Nalitabari)", "শ্রীবরদী (Sreebardi)", "ঝিনাইগাতী (Jhenaigati)"]
     };
 
-    // URL QUERY PARAMETER SYNC FUNCTION
     function updateURLQuery() {
       var blood = document.getElementById("filterBlood").value || "";
       var district = document.getElementById("filterDistrict").value || "";
@@ -724,7 +811,6 @@
       window.history.replaceState({}, "", newUrl);
     }
 
-    // RESTORE STATE FROM URL QUERY PARAMS ON PAGE LOAD
     function restoreFromURLQuery() {
       var params = new URLSearchParams(window.location.search);
 
@@ -806,7 +892,7 @@
       } else if (mode === "district") {
         title.innerText = "জেলা নির্বাচন করুন";
         searchWrap.style.display = "block";
-        searchInput.placeholder = "জেলা খুঁজুন (e.g. ঢাকা, Dhaka)...";
+        searchInput.placeholder = "জেলা খুঁজুন...";
         renderDistrictModalList("");
       } else if (mode === "upazila") {
         var curDist = document.getElementById("filterDistrict").value;
@@ -827,9 +913,7 @@
       }
 
       if (mode === "district" || mode === "upazila") {
-        setTimeout(function() {
-          searchInput.focus();
-        }, 80);
+        setTimeout(function() { searchInput.focus(); }, 80);
       }
     }
 
@@ -841,9 +925,7 @@
 
       var currentCat = "";
       districtsList.forEach(function(item) {
-        if (q && !item.name.toLowerCase().includes(q) && !item.label.toLowerCase().includes(q)) {
-          return;
-        }
+        if (q && !item.name.toLowerCase().includes(q) && !item.label.toLowerCase().includes(q)) return;
 
         if (!q && item.category !== currentCat) {
           currentCat = item.category;
@@ -860,10 +942,6 @@
         btn.onclick = function() { selectDistrict(item.name, item.label); };
         listContainer.appendChild(btn);
       });
-
-      if (listContainer.children.length === 0) {
-        listContainer.innerHTML = '<div style="text-align:center; padding:30px; color:var(--slate-400);">কোনো জেলা খুঁজে পাওয়া যায়নি</div>';
-      }
     }
 
     function renderUpazilaModalList(filterQuery) {
@@ -891,13 +969,6 @@
         btn.onclick = function() { selectUpazila(u, u); };
         listContainer.appendChild(btn);
       });
-
-      if (listContainer.children.length === 1 && q) {
-        var emptyNotice = document.createElement("div");
-        emptyNotice.style.cssText = "text-align:center; padding:20px; color:var(--slate-400);";
-        emptyNotice.innerText = "কোনো উপজেলা খুঁজে পাওয়া যায়নি";
-        listContainer.appendChild(emptyNotice);
-      }
     }
 
     function renderAvailModalList() {
@@ -997,6 +1068,40 @@
       }
     }
 
+    // --- REPORT MODAL FUNCTIONS ---
+    function openReportModal(donorName) {
+      selectedReportingDonor = donorName;
+      document.getElementById("reportModalDonorName").innerText = donorName + "-এর বিষয়ে রিপোর্ট:";
+      document.getElementById("reportReasonInput").value = "";
+      document.getElementById("customReportModal").style.display = "flex";
+      setTimeout(function() { document.getElementById("reportReasonInput").focus(); }, 80);
+    }
+
+    function closeReportModal() {
+      document.getElementById("customReportModal").style.display = "none";
+      selectedReportingDonor = null;
+    }
+
+    function submitDonorReport() {
+      var reason = document.getElementById("reportReasonInput").value.trim();
+      if (!reason) {
+        alert("দয়া করে কারণটি সংক্ষেপে লিখুন।");
+        return;
+      }
+
+      var reports = JSON.parse(localStorage.getItem("jiboni_donor_reports") || "[]");
+      reports.unshift({
+        id: Date.now(),
+        donor_name: selectedReportingDonor,
+        reason: reason,
+        date: new Date().toISOString()
+      });
+      localStorage.setItem("jiboni_donor_reports", JSON.stringify(reports));
+
+      alert("আপনার রিপোর্টটি সফলভাবে গ্রহণ করা হয়েছে। ধন্যবাদ!");
+      closeReportModal();
+    }
+
     function checkDonationEligibility(lastDonationDateStr) {
       if (!lastDonationDateStr || lastDonationDateStr === "তথ্য নেই") return true;
       var lastDate = new Date(lastDonationDateStr);
@@ -1019,9 +1124,7 @@
     function getDonorsData() {
       var stored = localStorage.getItem("jiboni_donors_cache") || localStorage.getItem("donors");
       if (stored) {
-        try {
-          return JSON.parse(stored);
-        } catch(e) {}
+        try { return JSON.parse(stored); } catch(e) {}
       }
       return [
         { id: 1, name: "Amanulla Emon", blood_group: "B+", phone: "01608575239", district: "Dhaka", hall: "Shahid Sergeant Zahurul Huq Hall", last_donation: "2026-09-02", is_available: false, is_verified: true },
@@ -1053,6 +1156,7 @@
       });
 
       var results = allDonors.filter(function(d) {
+        if (!d.is_verified) return false;
         var dBlood = (d.blood_group || d.bloodGroup || "").toUpperCase();
         var dDistrict = (d.district || "").toLowerCase();
         var dHall = (d.hall || "").toLowerCase();
@@ -1110,7 +1214,10 @@
               '<div class="meta-row"><div class="detail-label-wrap"><span>⚡ স্ট্যাটাস</span><span>:</span></div><span class="detail-val">' + statusChip + '</span></div>' +
               nextDateLine +
             '</div>' +
-            '<a href="tel:' + d.phone + '" class="call-btn">📞 কল করুন (' + d.phone + ')</a>' +
+            '<div class="donor-actions-row">' +
+              '<a href="tel:' + d.phone + '" class="call-btn">📞 কল করুন</a>' +
+              '<button type="button" class="report-btn" onclick="openReportModal(\'' + d.name + '\')">⚠️ রিপোর্ট</button>' +
+            '</div>' +
           '</div>';
       });
 
