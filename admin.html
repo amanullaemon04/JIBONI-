@@ -35,7 +35,7 @@
     }
 
     body {
-      background-color: var(--slate-50);
+      background: var(--slate-50);
       color: var(--slate-800);
       min-height: 100vh;
       display: flex;
@@ -110,7 +110,7 @@
       font-style: italic;
     }
 
-    .main-wrapper {
+    .app-main {
       flex: 1;
       max-width: 480px;
       width: 100%;
@@ -118,493 +118,108 @@
       padding: 16px 14px 40px;
     }
 
-    /* LOGIN CARD */
-    .login-card {
+    .admin-card {
       background: #ffffff;
       border: 1px solid var(--slate-200);
       border-radius: 16px;
-      padding: 24px 20px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
-      margin-top: 10px;
+      padding: 20px 16px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
     }
 
-    .login-title {
-      font-size: 1.35rem;
+    .card-title {
+      font-size: 1.25rem;
       font-weight: 800;
       color: var(--slate-900);
-      margin-bottom: 4px;
       text-align: center;
+      margin-bottom: 16px;
     }
 
-    .login-sub {
-      font-size: 0.82rem;
-      color: var(--slate-600);
-      margin-bottom: 18px;
-      text-align: center;
-    }
-
-    /* STYLISH EYE-CATCHING ADMIN BADGE HERO */
-    .admin-hero-card {
-      background: #ffffff;
-      border: 1px solid var(--slate-200);
-      border-radius: 16px;
-      padding: 16px;
-      margin-bottom: 14px;
-      box-shadow: 0 4px 18px rgba(15, 23, 42, 0.04);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .admin-hero-card.super-theme::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 3.5px;
-      background: linear-gradient(90deg, #dc2626, #f87171, #ef4444);
-    }
-
-    .admin-hero-card.sub-theme::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 3.5px;
-      background: linear-gradient(90deg, #0284c7, #38bdf8, #0ea5e9);
-    }
-
-    .admin-hero-top {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 12px;
-    }
-
-    .admin-avatar-icon {
-      width: 44px;
-      height: 44px;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.4rem;
-      flex-shrink: 0;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-    }
-
-    .avatar-super {
-      background: linear-gradient(135deg, #fee2e2, #fecaca);
-      color: #dc2626;
-      border: 1px solid #fca5a5;
-    }
-
-    .avatar-sub {
-      background: linear-gradient(135deg, #e0f2fe, #bae6fd);
-      color: #0284c7;
-      border: 1px solid #7dd3fc;
-    }
-
-    .admin-hero-info {
-      flex: 1;
-      min-width: 0;
-    }
-
-    .admin-pill-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      font-size: 0.72rem;
-      font-weight: 800;
-      padding: 2px 8px;
-      border-radius: 20px;
-      text-transform: uppercase;
-      letter-spacing: 0.4px;
-      margin-bottom: 2px;
-    }
-
-    .pill-super {
-      background: #fef2f2;
-      color: #b91c1c;
-      border: 1px solid #fecaca;
-    }
-
-    .pill-sub {
-      background: #f0f9ff;
-      color: #0369a1;
-      border: 1px solid #bae6fd;
-    }
-
-    .admin-main-name {
-      font-size: 0.96rem;
-      font-weight: 800;
-      color: var(--slate-900);
-      line-height: 1.25;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .admin-email-sub {
-      font-size: 0.78rem;
-      color: var(--slate-600);
-      font-weight: 600;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      margin-top: 1px;
-    }
-
-    .admin-hero-actions {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      border-top: 1px solid var(--slate-100);
-      padding-top: 10px;
-    }
-
-    .hero-btn {
-      flex: 1;
-      height: 34px;
-      border-radius: 8px;
-      font-size: 0.78rem;
-      font-weight: 700;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 5px;
-      transition: all 0.15s ease;
-      border: 1px solid var(--slate-200);
-    }
-
-    .hero-btn-pwd {
-      background: #ffffff;
-      color: var(--slate-700);
-    }
-
-    .hero-btn-pwd:hover {
-      background: var(--slate-50);
-      border-color: var(--slate-300);
-    }
-
-    .hero-btn-logout {
-      background: #fff1f2;
-      border-color: #fecdd3;
-      color: var(--primary);
-    }
-
-    .hero-btn-logout:hover {
-      background: #ffe4e6;
-    }
-
-    /* Tabs Row */
-    .admin-tabs-row {
-      display: flex;
-      gap: 8px;
-      overflow-x: auto;
-      padding-bottom: 6px;
-      margin-bottom: 12px;
-      scrollbar-width: none;
-    }
-
-    .admin-tabs-row::-webkit-scrollbar {
-      display: none;
-    }
-
-    .admin-tab {
-      flex-shrink: 0;
-      padding: 8px 14px;
-      border-radius: 25px;
-      font-size: 0.82rem;
-      font-weight: 700;
-      border: 1px solid var(--slate-200);
-      background: #ffffff;
-      color: var(--slate-600);
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      transition: all 0.15s ease;
-    }
-
-    .admin-tab.active {
-      background: var(--slate-900);
-      color: #ffffff;
-      border-color: var(--slate-900);
-    }
-
-    .tab-counter {
-      background: var(--primary);
-      color: #ffffff;
-      font-size: 0.72rem;
-      padding: 1px 7px;
-      border-radius: 12px;
-    }
-
-    .admin-tab:not(.active) .tab-counter {
-      background: var(--slate-200);
-      color: var(--slate-800);
-    }
-
-    /* Search Box */
-    .search-input-wrap {
-      margin-bottom: 14px;
-    }
-
-    .admin-search-input {
-      width: 100%;
-      height: 44px;
-      padding: 0 14px;
-      background: #ffffff;
-      border: 1px solid var(--slate-200);
-      border-radius: 12px;
-      font-size: 0.88rem;
-      color: var(--slate-800);
-      outline: none;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
-    }
-
-    .admin-search-input:focus {
-      border-color: var(--primary);
-      box-shadow: 0 0 0 2px rgba(220, 38, 38, 0.1);
-    }
-
-    /* Donor Card */
-    .donor-admin-card {
-      background: #ffffff;
-      border: 1px solid var(--slate-200);
-      border-radius: 14px;
-      padding: 16px;
-      margin-bottom: 14px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
-    }
-
-    .card-top-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 10px;
-    }
-
-    .donor-card-name {
-      font-size: 1.05rem;
-      font-weight: 800;
-      color: var(--slate-900);
-    }
-
-    .blood-chip {
-      background: #fff1f2;
-      color: var(--primary);
-      border: 1px solid #ffe4e6;
-      font-weight: 800;
-      font-size: 0.85rem;
-      padding: 2px 10px;
-      border-radius: 8px;
-    }
-
-    /* STRICT COMPACT COLON ALIGNMENT FOR DONORS (120px) */
-    .donor-detail-list {
-      display: flex;
-      flex-direction: column;
-      gap: 7px;
-      font-size: 0.84rem;
-      color: var(--slate-600);
-      margin-bottom: 14px;
-    }
-
-    .detail-item {
-      display: flex;
-      align-items: flex-start;
-      line-height: 1.45;
-    }
-
-    .detail-label-wrap {
-      width: 120px;
-      min-width: 120px;
-      max-width: 120px;
-      font-weight: 700;
-      color: var(--slate-800);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding-right: 6px;
-      flex-shrink: 0;
-      white-space: nowrap;
-    }
-
-    /* STRICT COMPACT COLON ALIGNMENT FOR SUB-ADMINS (135px) */
-    .subadmin-detail-list {
-      display: flex;
-      flex-direction: column;
-      gap: 7px;
-      font-size: 0.84rem;
-      color: var(--slate-600);
-      margin-bottom: 14px;
-    }
-
-    .sub-label-wrap {
-      width: 135px;
-      min-width: 135px;
-      max-width: 135px;
-      font-weight: 700;
-      color: var(--slate-800);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding-right: 6px;
-      flex-shrink: 0;
-      white-space: nowrap;
-    }
-
-    .detail-val {
-      flex: 1;
-      color: var(--slate-800);
-      word-break: break-word;
-    }
-
-    .status-badge {
-      display: inline-flex;
-      align-items: center;
-      padding: 2px 8px;
-      border-radius: 6px;
-      font-size: 0.74rem;
-      font-weight: 700;
-    }
-
-    .badge-avail {
-      background: var(--success-light);
-      color: var(--success);
-    }
-
-    .badge-rest {
-      background: var(--warning-light);
-      color: var(--warning);
-    }
-
-    .badge-next {
-      background: var(--info-light);
-      color: var(--info);
-      padding: 1px 6px;
-      border-radius: 4px;
-      font-weight: 700;
-    }
-
-    /* Action Buttons Row */
-    .admin-actions-grid {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      border-top: 1px solid var(--slate-100);
-      padding-top: 12px;
-    }
-
-    .btn-verify {
-      flex: 1;
-      height: 38px;
-      border-radius: 8px;
-      font-size: 0.82rem;
-      font-weight: 700;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 4px;
-      border: 1px solid #bbf7d0;
-      background: #f0fdf4;
-      color: var(--success);
-    }
-
-    .btn-toggle-avail {
-      flex: 1;
-      height: 38px;
-      border-radius: 8px;
-      font-size: 0.82rem;
-      font-weight: 700;
-      cursor: pointer;
-      border: 1px solid var(--slate-200);
-      background: #ffffff;
-      color: var(--slate-700);
-    }
-
-    .btn-delete {
-      width: 40px;
-      height: 38px;
-      border-radius: 8px;
-      border: 1px solid #fee2e2;
-      background: #fff5f5;
-      color: var(--primary);
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.95rem;
-    }
-
-    /* SUB-ADMIN FORM STYLES */
-    .subadmin-form-card {
-      background: #ffffff;
-      border: 1px solid var(--slate-200);
-      border-radius: 14px;
-      padding: 16px;
-      margin-bottom: 14px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
-    }
-
-    .form-heading {
-      font-size: 0.95rem;
-      font-weight: 800;
-      color: var(--slate-900);
-      margin-bottom: 10px;
-    }
-
-    .btn-submit-sub {
-      width: 100%;
-      height: 40px;
-      background: var(--primary);
-      color: #ffffff;
-      border: none;
-      border-radius: 10px;
-      font-size: 0.88rem;
-      font-weight: 700;
-      cursor: pointer;
-      margin-top: 6px;
-    }
-
-    .empty-state {
-      background: #ffffff;
-      border: 1px dashed var(--slate-200);
-      border-radius: 12px;
-      padding: 24px;
-      text-align: center;
-      color: var(--slate-400);
-      font-size: 0.86rem;
-    }
-
-    /* MODAL POPUPS */
-    .custom-modal-backdrop {
+    /* ICONIC RED & WHITE CUSTOM MODAL OVERLAYS */
+    .custom-alert-overlay,
+    .custom-confirm-overlay {
       position: fixed;
       inset: 0;
       background: rgba(15, 23, 42, 0.6);
       backdrop-filter: blur(4px);
-      z-index: 3000;
+      z-index: 4000;
       display: none;
       align-items: center;
       justify-content: center;
       padding: 16px;
     }
 
-    .modal-box {
+    .custom-alert-box {
       background: #ffffff;
-      border-radius: 16px;
-      padding: 22px 20px;
-      max-width: 380px;
+      border-radius: 20px;
+      padding: 24px 20px;
+      max-width: 340px;
       width: 100%;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+      box-shadow: 0 14px 35px rgba(220, 38, 38, 0.15);
+      text-align: center;
+      border-top: 4px solid var(--primary);
+      animation: scaleIn 0.2s ease-out;
+    }
+
+    @keyframes scaleIn {
+      from { transform: scale(0.92); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .custom-alert-title {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--slate-900);
+      margin-bottom: 8px;
+    }
+
+    .custom-alert-msg {
+      font-size: 0.88rem;
+      color: var(--slate-600);
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+
+    .custom-alert-btn {
+      width: 100%;
+      height: 42px;
+      background: var(--primary);
+      color: #ffffff;
+      border: none;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(220, 38, 38, 0.25);
+    }
+
+    .custom-confirm-btns {
+      display: flex;
+      gap: 10px;
+    }
+
+    .custom-confirm-cancel {
+      flex: 1;
+      height: 42px;
+      background: #ffffff;
+      color: var(--slate-600);
+      border: 1px solid var(--slate-200);
+      border-radius: 10px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .custom-confirm-ok {
+      flex: 1;
+      height: 42px;
+      background: var(--primary);
+      color: #ffffff;
+      border: none;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(220, 38, 38, 0.25);
     }
 
     .site-footer {
@@ -647,7 +262,6 @@
 
       <div class="nav-btn-row">
         <a href="index.html" class="btn-chip">← হোম পেজ</a>
-        <a href="register.html" class="btn-chip">+ ডোনার নিবন্ধন</a>
         <a href="developer.html" class="btn-chip">👨‍💻 ডেভেলপার</a>
       </div>
 
@@ -655,697 +269,79 @@
     </div>
   </header>
 
-  <main class="main-wrapper">
-
-    <!-- ADMIN LOGIN FORM -->
-    <div id="adminLoginSection" class="login-card" style="display: none;">
-      <h2 class="login-title">অ্যাডমিন প্রবেশ</h2>
-      <p class="login-sub">আপনার ইমেইল ও পাসওয়ার্ড দিয়ে প্যানেলে প্রবেশ করুন</p>
-      
-      <form onsubmit="handleAdminLogin(event)" style="display: flex; flex-direction: column; gap: 10px;">
-        <div>
-          <label style="font-size:0.8rem; font-weight:700; display:block; margin-bottom:4px;">ইমেইল অ্যাড্রেস:</label>
-          <input type="email" id="loginEmail" class="admin-search-input" placeholder="admin@jiboni.org" required />
-        </div>
-
-        <div>
-          <label style="font-size:0.8rem; font-weight:700; display:block; margin-bottom:4px;">পাসওয়ার্ড:</label>
-          <input type="password" id="loginPassword" class="admin-search-input" placeholder="পাসওয়ার্ড লিখুন" required />
-        </div>
-
-        <button type="submit" class="btn-submit-sub" style="height: 44px; margin-top: 6px;">লগইন করুন</button>
-      </form>
-      <div id="loginAlert" style="display:none; color:var(--primary); font-size:0.84rem; font-weight:700; text-align:center; margin-top:10px;"></div>
-    </div>
-
-    <!-- MAIN ADMIN DASHBOARD SECTION -->
-    <div id="adminDashboardSection" style="display: none;">
-      
-      <div class="admin-hero-card super-theme" id="adminHeroCard">
-        <div class="admin-hero-top">
-          <div class="admin-avatar-icon avatar-super" id="adminAvatarIcon">👑</div>
-          <div class="admin-hero-info">
-            <span class="admin-pill-badge pill-super" id="adminPillBadge">👑 Super Admin</span>
-            <h2 class="admin-main-name" id="adminMainName">Amanulla Emon</h2>
-            <div class="admin-email-sub">
-              <span>✉️</span>
-              <span id="adminEmailDisplay">amanullaemon04@gmail.com</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="admin-hero-actions">
-          <button type="button" class="hero-btn hero-btn-pwd" onclick="openChangePwdModal()">🔑 পাসওয়ার্ড পরিবর্তন</button>
-          <button type="button" class="hero-btn hero-btn-logout" onclick="handleLogout()">🚪 লগআউট</button>
-        </div>
+  <main class="app-main">
+    <div class="admin-card">
+      <h2 class="card-title">অ্যাডমিন প্যানেল</h2>
+      <!-- Admin Content Container -->
+      <div id="adminContent">
+        <p style="text-align: center; color: var(--slate-600); font-size: 0.9rem;">অ্যাডমিন কন্ট্রোল লোড হচ্ছে...</p>
       </div>
-
-      <!-- Tabs Navigation -->
-      <div class="admin-tabs-row">
-        <button type="button" class="admin-tab active" id="tabAll" onclick="switchTab('all')">
-          👥 সকল রক্তদাতা <span class="tab-counter" id="countAll">0</span>
-        </button>
-        <button type="button" class="admin-tab" id="tabPending" onclick="switchTab('pending')">
-          ⏳ পেন্ডিং ভেরিফিকেশন <span class="tab-counter" id="countPending">0</span>
-        </button>
-        <button type="button" class="admin-tab" id="tabAvailable" onclick="switchTab('available')">
-          ⚡ প্রস্তুত <span class="tab-counter" id="countAvailable">0</span>
-        </button>
-        <button type="button" class="admin-tab" id="tabFeedback" onclick="switchTab('feedback')">
-          💬 মতামত <span class="tab-counter" id="countFeedback">0</span>
-        </button>
-        <button type="button" class="admin-tab" id="tabSubAdmin" onclick="switchTab('subadmin')">
-          🛡️ সাব-অ্যাডমিন <span class="tab-counter" id="countSubAdmin">0</span>
-        </button>
-      </div>
-
-      <!-- Search Input -->
-      <div class="search-input-wrap" id="searchWrap">
-        <input type="text" id="adminSearchQuery" class="admin-search-input" placeholder="নাম, জেলা, উপজেলা, মোবাইল বা রক্তের গ্রুপ দিয়ে খুঁজুন..." onkeyup="renderCurrentView()" />
-      </div>
-
-      <!-- Sub-Admin Add Form -->
-      <div id="subAdminFormWrap" style="display: none;">
-        <div class="subadmin-form-card">
-          <h3 class="form-heading">+ নতুন সাব-অ্যাডমিন যুক্ত করুন</h3>
-          <form onsubmit="handleAddSubAdmin(event)" style="display: flex; flex-direction: column; gap: 8px;">
-            <input type="text" id="subName" class="admin-search-input" placeholder="সাব-অ্যাডমিনের নাম" style="height: 40px;" required />
-            <input type="email" id="subEmail" class="admin-search-input" placeholder="ইমেইল অ্যাড্রেস" style="height: 40px;" required />
-            <input type="text" id="subTempPwd" class="admin-search-input" placeholder="অস্থায়ী পাসওয়ার্ড (Temporary Password)" style="height: 40px;" required />
-            <p style="font-size: 0.72rem; color: var(--slate-400); margin-top: -2px;">* সাব-অ্যাডমিন এই পাসওয়ার্ড দিয়ে প্রথমবার লগইন করে পাসওয়ার্ড পরিবর্তন করে নেবে।</p>
-            <button type="submit" class="btn-submit-sub">সাব-অ্যাডমিন যুক্ত করুন</button>
-          </form>
-        </div>
-      </div>
-
-      <div id="adminContentContainer"></div>
     </div>
   </main>
 
-  <!-- PASSWORD CHANGE MODAL -->
-  <div id="changePwdModal" class="custom-modal-backdrop">
-    <div class="modal-box">
-      <h3 style="font-size: 1.1rem; font-weight: 800; color: var(--slate-900); margin-bottom: 4px;">পাসওয়ার্ড পরিবর্তন করুন</h3>
-      <p style="font-size: 0.8rem; color: var(--slate-600); margin-bottom: 14px;">আপনার বর্তমান ও নতুন পাসওয়ার্ড লিখুন।</p>
+  <!-- JIBONI ICONIC RED & WHITE ALERT MODAL -->
+  <div id="customAlertModal" class="custom-alert-overlay">
+    <div class="custom-alert-box">
+      <h3 class="custom-alert-title" id="customAlertTitle">সতর্কবার্তা</h3>
+      <p class="custom-alert-msg" id="customAlertMsg">বার্তা...</p>
+      <button type="button" class="custom-alert-btn" onclick="closeCustomAlert()">ঠিক আছে</button>
+    </div>
+  </div>
 
-      <form onsubmit="handleSavePassword(event)" style="display: flex; flex-direction: column; gap: 10px;">
-        <input type="password" id="curPwdInput" class="admin-search-input" placeholder="বর্তমান পাসওয়ার্ড" style="height: 40px;" required />
-        <input type="password" id="newPwdInput" class="admin-search-input" placeholder="নতুন পাসওয়ার্ড" style="height: 40px;" required />
-        
-        <button type="submit" class="btn-submit-sub" style="height: 40px;">সংরক্ষণ করুন</button>
-        <button type="button" onclick="closeChangePwdModal()" class="btn-chip" style="width: 100%; justify-content: center; height: 38px; cursor: pointer;">বাতিল</button>
-      </form>
-      <div id="pwdAlert" style="display:none; font-size:0.82rem; font-weight:700; margin-top:8px; text-align:center;"></div>
+  <!-- JIBONI ICONIC RED & WHITE CONFIRM MODAL -->
+  <div id="customConfirmModal" class="custom-confirm-overlay">
+    <div class="custom-alert-box">
+      <h3 class="custom-alert-title" id="customConfirmTitle">নিশ্চিতকরণ</h3>
+      <p class="custom-alert-msg" id="customConfirmMsg">আপনি কি নিশ্চিত?</p>
+      <div class="custom-confirm-btns">
+        <button type="button" class="custom-confirm-cancel" onclick="closeCustomConfirm(false)">বাতিল</button>
+        <button type="button" class="custom-confirm-ok" onclick="closeCustomConfirm(true)">নিশ্চিত করুন</button>
+      </div>
     </div>
   </div>
 
   <footer class="site-footer">
-    <p class="footer-disclaimer">Use donor information responsibly. Confirm availability before contacting.</p>
+    <p class="footer-disclaimer">JIBONI — রক্তদানে সচেতনতা আমাদের লক্ষ্য</p>
     <p class="footer-credit">Designed & Developed by <a href="developer.html">Amanulla Emon</a></p>
   </footer>
 
   <script>
-    let currentTab = "all";
-    const SUPER_ADMIN_EMAIL = "amanullaemon04@gmail.com";
-
-    // EXACT BANGLADESH LOCAL TIME WITH SECONDS (TIMEZONE FIX)
-    function formatFeedbackDateTime(rawDate) {
-      if (!rawDate) return "আজ";
-      var d = new Date(rawDate);
-      if (isNaN(d.getTime())) {
-        return rawDate;
-      }
-
-      // If stored string ends with 'Z' or doesn't have offset, parse it properly or adjust offset for BD (+6 hours)
-      if (typeof rawDate === 'string' && (rawDate.endsWith('Z') || rawDate.indexOf('+') === -1 && rawDate.indexOf('T') !== -1)) {
-        // Add 6 hours to correct UTC offset to Bangladesh Standard Time
-        d = new Date(d.getTime() + (6 * 60 * 60 * 1000));
-      }
-
-      var yyyy = d.getUTCFullYear();
-      var mm = String(d.getUTCMonth() + 1).padStart(2, '0');
-      var dd = String(d.getUTCDate()).padStart(2, '0');
-
-      var hours = d.getUTCHours();
-      var minutes = String(d.getUTCMinutes()).padStart(2, '0');
-      var seconds = String(d.getUTCSeconds()).padStart(2, '0');
-      var ampm = hours >= 12 ? 'PM' : 'AM';
-      hours = hours % 12;
-      hours = hours ? hours : 12;
-      var strTime = String(hours).padStart(2, '0') + ':' + minutes + ':' + seconds + ' ' + ampm;
-
-      return yyyy + '-' + mm + '-' + dd + ', ' + strTime;
+    // Custom Iconic JIBONI Popups replacing standard alert/confirm
+    function showJiboniAlert(title, msg, callback) {
+      document.getElementById("customAlertTitle").innerText = title;
+      document.getElementById("customAlertMsg").innerText = msg;
+      document.getElementById("customAlertModal").style.display = "flex";
+      window.jiboniAlertCallback = callback;
     }
 
-    function initAdminStorage() {
-      if (!localStorage.getItem("jiboni_admin_pwd")) {
-        localStorage.setItem("jiboni_admin_pwd", "admin123");
-      }
-      if (!localStorage.getItem("jiboni_sub_admins")) {
-        localStorage.setItem("jiboni_sub_admins", JSON.stringify([
-          { id: 101, name: "সাপোর্ট টিম", email: "support@jiboni.org", password: "sub123", added_date: "2026-09-01" }
-        ]));
+    function closeCustomAlert() {
+      document.getElementById("customAlertModal").style.display = "none";
+      if (typeof window.jiboniAlertCallback === "function") {
+        var cb = window.jiboniAlertCallback;
+        window.jiboniAlertCallback = null;
+        cb();
       }
     }
 
-    function getActiveSession() {
-      var sess = sessionStorage.getItem("jiboni_admin_session");
-      return sess ? JSON.parse(sess) : null;
+    function showJiboniConfirm(title, msg, callback) {
+      document.getElementById("customConfirmTitle").innerText = title;
+      document.getElementById("customConfirmMsg").innerText = msg;
+      document.getElementById("customConfirmModal").style.display = "flex";
+      window.jiboniConfirmCallback = callback;
     }
 
-    function checkEligibility(lastDonationDateStr) {
-      if (!lastDonationDateStr || lastDonationDateStr === "তথ্য নেই") return true;
-      var lastDate = new Date(lastDonationDateStr);
-      var today = new Date();
-      var diffDays = (today - lastDate) / (1000 * 60 * 60 * 24);
-      return diffDays >= 120;
-    }
-
-    function calculateNextEligibleDate(lastDonationDateStr) {
-      if (!lastDonationDateStr || lastDonationDateStr === "তথ্য নেই") return null;
-      var d = new Date(lastDonationDateStr);
-      if (isNaN(d.getTime())) return null;
-      d.setMonth(d.getMonth() + 4);
-      var yyyy = d.getFullYear();
-      var mm = String(d.getMonth() + 1).padStart(2, '0');
-      var dd = String(d.getDate()).padStart(2, '0');
-      return yyyy + "-" + mm + "-" + dd;
-    }
-
-    function getDonors() {
-      var stored = localStorage.getItem("jiboni_donors_cache") || localStorage.getItem("donors");
-      if (stored) {
-        try { return JSON.parse(stored); } catch(e) {}
-      }
-      return [
-        { id: 1, name: "Amanulla Emon", blood_group: "B+", phone: "01608575239", district: "Dhaka", upazila: "শাহবাগ / ঢাবি (Shahbagh / DU)", hall: "Shahid Sergeant Zahurul Huq Hall", last_donation: "2026-09-02", is_available: false, is_verified: true },
-        { id: 2, name: "Arafat", blood_group: "A+", phone: "01602689896", district: "Dhaka", upazila: "শাহবাগ / ঢাবি (Shahbagh / DU)", hall: "Shahid Sergeant Zahurul Huq Hall", last_donation: "2026-08-02", is_available: false, is_verified: true }
-      ];
-    }
-
-    function saveDonors(list) {
-      localStorage.setItem("jiboni_donors_cache", JSON.stringify(list));
-      localStorage.setItem("donors", JSON.stringify(list));
-      renderCurrentView();
-    }
-
-    function getFeedbacks() {
-      var stored = localStorage.getItem("jiboni_feedbacks");
-      return stored ? JSON.parse(stored) : [];
-    }
-
-    function saveFeedbacks(list) {
-      localStorage.setItem("jiboni_feedbacks", JSON.stringify(list));
-      renderCurrentView();
-    }
-
-    function getSubAdmins() {
-      var stored = localStorage.getItem("jiboni_sub_admins");
-      return stored ? JSON.parse(stored) : [];
-    }
-
-    function saveSubAdmins(list) {
-      localStorage.setItem("jiboni_sub_admins", JSON.stringify(list));
-      renderCurrentView();
-    }
-
-    function checkAuth() {
-      var session = getActiveSession();
-      var loginSec = document.getElementById("adminLoginSection");
-      var dashSec = document.getElementById("adminDashboardSection");
-
-      if (!session) {
-        session = { email: SUPER_ADMIN_EMAIL, role: "super", name: "Amanulla Emon" };
-        sessionStorage.setItem("jiboni_admin_session", JSON.stringify(session));
-      }
-
-      loginSec.style.display = "none";
-      dashSec.style.display = "block";
-
-      var heroCard = document.getElementById("adminHeroCard");
-      var avatarIcon = document.getElementById("adminAvatarIcon");
-      var pillBadge = document.getElementById("adminPillBadge");
-      var mainName = document.getElementById("adminMainName");
-      var emailDisplay = document.getElementById("adminEmailDisplay");
-
-      var tabFeedback = document.getElementById("tabFeedback");
-      var tabSubAdmin = document.getElementById("tabSubAdmin");
-
-      emailDisplay.innerText = session.email;
-
-      if (session.role === "super") {
-        heroCard.className = "admin-hero-card super-theme";
-        avatarIcon.className = "admin-avatar-icon avatar-super";
-        avatarIcon.innerText = "👑";
-        pillBadge.className = "admin-pill-badge pill-super";
-        pillBadge.innerText = "👑 Super Admin";
-        mainName.innerText = session.name || "Amanulla Emon";
-
-        tabFeedback.style.display = "inline-flex";
-        tabSubAdmin.style.display = "inline-flex";
-      } else {
-        heroCard.className = "admin-hero-card sub-theme";
-        avatarIcon.className = "admin-avatar-icon avatar-sub";
-        avatarIcon.innerText = "🛡️";
-        pillBadge.className = "admin-pill-badge pill-sub";
-        pillBadge.innerText = "🛡️ Sub Admin";
-        mainName.innerText = session.name || "Assistant Admin";
-        
-        tabFeedback.style.display = "none";
-        tabSubAdmin.style.display = "none";
-
-        if (currentTab === "feedback" || currentTab === "subadmin") {
-          currentTab = "all";
-        }
-      }
-
-      switchTab(currentTab);
-    }
-
-    function handleAdminLogin(e) {
-      e.preventDefault();
-      var email = document.getElementById("loginEmail").value.trim().toLowerCase();
-      var pwd = document.getElementById("loginPassword").value.trim();
-      var alertBox = document.getElementById("loginAlert");
-
-      if (email === SUPER_ADMIN_EMAIL.toLowerCase()) {
-        var masterPwd = localStorage.getItem("jiboni_admin_pwd") || "admin123";
-        if (pwd === masterPwd) {
-          sessionStorage.setItem("jiboni_admin_session", JSON.stringify({ email: SUPER_ADMIN_EMAIL, role: "super", name: "Amanulla Emon" }));
-          checkAuth();
-          return;
-        }
-      }
-
-      var subAdmins = getSubAdmins();
-      var matchedSub = subAdmins.find(function(s) { return s.email.toLowerCase() === email && s.password === pwd; });
-
-      if (matchedSub) {
-        sessionStorage.setItem("jiboni_admin_session", JSON.stringify({ email: matchedSub.email, role: "sub", name: matchedSub.name, id: matchedSub.id }));
-        checkAuth();
-        return;
-      }
-
-      alertBox.style.display = "block";
-      alertBox.innerText = "ভুল ইমেইল অথবা পাসওয়ার্ড!";
-    }
-
-    function handleLogout() {
-      sessionStorage.removeItem("jiboni_admin_session");
-      document.getElementById("adminDashboardSection").style.display = "none";
-      document.getElementById("adminLoginSection").style.display = "block";
-      document.getElementById("loginEmail").value = "";
-      document.getElementById("loginPassword").value = "";
-      document.getElementById("loginAlert").style.display = "none";
-    }
-
-    function openChangePwdModal() {
-      document.getElementById("changePwdModal").style.display = "flex";
-      document.getElementById("curPwdInput").value = "";
-      document.getElementById("newPwdInput").value = "";
-      document.getElementById("pwdAlert").style.display = "none";
-    }
-
-    function closeChangePwdModal() {
-      document.getElementById("changePwdModal").style.display = "none";
-    }
-
-    function handleSavePassword(e) {
-      e.preventDefault();
-      var curPwd = document.getElementById("curPwdInput").value.trim();
-      var newPwd = document.getElementById("newPwdInput").value.trim();
-      var alertBox = document.getElementById("pwdAlert");
-      var session = getActiveSession();
-
-      if (!session) return;
-
-      alertBox.style.display = "block";
-
-      if (session.role === "super") {
-        var masterPwd = localStorage.getItem("jiboni_admin_pwd") || "admin123";
-        if (curPwd !== masterPwd) {
-          alertBox.style.color = "var(--primary)";
-          alertBox.innerText = "বর্তমান পাসওয়ার্ড সঠিক নয়!";
-          return;
-        }
-        localStorage.setItem("jiboni_admin_pwd", newPwd);
-      } else {
-        var subAdmins = getSubAdmins();
-        var targetSub = subAdmins.find(function(s) { return s.email.toLowerCase() === session.email.toLowerCase(); });
-        if (!targetSub || targetSub.password !== curPwd) {
-          alertBox.style.color = "var(--primary)";
-          alertBox.innerText = "বর্তমান পাসওয়ার্ড সঠিক নয়!";
-          return;
-        }
-        targetSub.password = newPwd;
-        saveSubAdmins(subAdmins);
-      }
-
-      alertBox.style.color = "var(--success)";
-      alertBox.innerText = "পাসওয়ার্ড সফলভাবে পরিবর্তন করা হয়েছে!";
-      setTimeout(function() { closeChangePwdModal(); }, 1200);
-    }
-
-    function switchTab(tab) {
-      var session = getActiveSession();
-
-      if (session && session.role !== "super" && (tab === "feedback" || tab === "subadmin")) {
-        tab = "all";
-      }
-
-      currentTab = tab;
-      document.querySelectorAll(".admin-tab").forEach(function(btn) { btn.classList.remove("active"); });
-      
-      var tabBtnMap = {
-        'all': 'tabAll',
-        'pending': 'tabPending',
-        'available': 'tabAvailable',
-        'feedback': 'tabFeedback',
-        'subadmin': 'tabSubAdmin'
-      };
-      if (tabBtnMap[tab]) {
-        document.getElementById(tabBtnMap[tab]).classList.add("active");
-      }
-
-      var searchWrap = document.getElementById("searchWrap");
-      var searchInput = document.getElementById("adminSearchQuery");
-      var subFormWrap = document.getElementById("subAdminFormWrap");
-
-      if (tab === "subadmin") {
-        searchWrap.style.display = "none";
-        subFormWrap.style.display = "block";
-      } else {
-        searchWrap.style.display = "block";
-        subFormWrap.style.display = "none";
-        if (tab === "feedback") {
-          searchInput.placeholder = "ফিডব্যাক, নাম বা যোগাযোগ নম্বর দিয়ে খুঁজুন...";
-        } else {
-          searchInput.placeholder = "নাম, জেলা, উপজেলা, মোবাইল বা রক্তের গ্রুপ দিয়ে খুঁজুন...";
-        }
-      }
-
-      renderCurrentView();
-    }
-
-    function updateBadgeCounters() {
-      var allDonors = getDonors();
-      var feedbacks = getFeedbacks();
-      var subAdmins = getSubAdmins();
-
-      document.getElementById("countAll").innerText = allDonors.length;
-      document.getElementById("countPending").innerText = allDonors.filter(function(d) { return !d.is_verified; }).length;
-      document.getElementById("countAvailable").innerText = allDonors.filter(function(d) { return d.is_available; }).length;
-      document.getElementById("countFeedback").innerText = feedbacks.length;
-      document.getElementById("countSubAdmin").innerText = subAdmins.length;
-    }
-
-    function renderCurrentView() {
-      updateBadgeCounters();
-      if (currentTab === "feedback") {
-        renderFeedbacks();
-      } else if (currentTab === "subadmin") {
-        renderSubAdmins();
-      } else {
-        renderDonorsList();
+    function closeCustomConfirm(isConfirmed) {
+      document.getElementById("customConfirmModal").style.display = "none";
+      if (typeof window.jiboniConfirmCallback === "function") {
+        var cb = window.jiboniConfirmCallback;
+        window.jiboniConfirmCallback = null;
+        cb(isConfirmed);
       }
     }
 
-    function renderDonorsList() {
-      var allDonors = getDonors();
-      var q = (document.getElementById("adminSearchQuery").value || "").trim().toLowerCase();
-      var container = document.getElementById("adminContentContainer");
-
-      var filtered = allDonors.filter(function(d) {
-        if (currentTab === "pending") return !d.is_verified;
-        if (currentTab === "available") return d.is_available;
-        return true;
-      });
-
-      if (q) {
-        filtered = filtered.filter(function(d) {
-          var name = (d.name || "").toLowerCase();
-          var dist = (d.district || "").toLowerCase();
-          var upz = (d.upazila || "").toLowerCase();
-          var hall = (d.hall || "").toLowerCase();
-          var phone = (d.phone || "").toLowerCase();
-          var bg = (d.blood_group || d.bloodGroup || "").toLowerCase();
-          return name.includes(q) || dist.includes(q) || upz.includes(q) || hall.includes(q) || phone.includes(q) || bg.includes(q);
-        });
-      }
-
-      if (filtered.length === 0) {
-        container.innerHTML = '<div class="empty-state">কোনো রক্তদাতার তথ্য খুঁজে পাওয়া যায়নি।</div>';
-        return;
-      }
-
-      var html = "";
-      filtered.forEach(function(d) {
-        var isEligible = checkEligibility(d.last_donation);
-        var nextDate = calculateNextEligibleDate(d.last_donation);
-
-        var locParts = [];
-        if (d.district) locParts.push(d.district);
-        if (d.upazila) locParts.push(d.upazila);
-        var mainLoc = locParts.join(", ");
-        if (d.hall) mainLoc += mainLoc ? " (" + d.hall + ")" : d.hall;
-        if (!mainLoc) mainLoc = "তথ্য নেই";
-
-        var statusBadge = d.is_available
-          ? '<span class="status-badge badge-avail">● প্রস্তুত (Available)</span>'
-          : '<span class="status-badge badge-rest">⏳ বিরতি কালীন (4-Month Rest)</span>';
-
-        var nextDateHtml = "";
-        if (nextDate && !isEligible) {
-          nextDateHtml = 
-            '<div class="detail-item">' +
-              '<div class="detail-label-wrap"><span>🗓️ পরবর্তী রক্তদান</span><span>:</span></div>' +
-              '<span class="detail-val"><span class="badge-next">' + nextDate + ' (থেকে সম্ভাব্য)</span></span>' +
-            '</div>';
-        } else if (isEligible && d.last_donation && d.last_donation !== "তথ্য নেই") {
-          nextDateHtml = 
-            '<div class="detail-item">' +
-              '<div class="detail-label-wrap"><span>🗓️ পরবর্তী রক্তদান</span><span>:</span></div>' +
-              '<span class="detail-val" style="color:var(--success); font-weight:700;">✅ যেকোনো সময় সক্ষম</span>' +
-            '</div>';
-        }
-
-        var verifyBtnHtml = d.is_verified
-          ? '<button type="button" class="btn-verify" style="background:#f0fdf4; border-color:#bbf7d0; color:var(--success);" onclick="toggleVerify(' + d.id + ')">✓ অনুমোদিত</button>'
-          : '<button type="button" class="btn-verify" style="background:#fffbeb; border-color:#fde68a; color:var(--warning);" onclick="toggleVerify(' + d.id + ')">⏳ অনুমোদন করুন</button>';
-
-        var toggleAvailText = d.is_available ? "Make Unavailable" : "Make Available";
-
-        html += 
-          '<div class="donor-admin-card">' +
-            '<div class="card-top-row">' +
-              '<span class="donor-card-name">' + (d.name || "অজ্ঞাত ডোনার") + '</span>' +
-              '<span class="blood-chip">' + (d.blood_group || d.bloodGroup || "--") + '</span>' +
-            '</div>' +
-            '<div class="donor-detail-list">' +
-              '<div class="detail-item">' +
-                '<div class="detail-label-wrap"><span>📞 মোবাইল</span><span>:</span></div>' +
-                '<span class="detail-val">' + (d.phone || "--") + '</span>' +
-              '</div>' +
-              '<div class="detail-item">' +
-                '<div class="detail-label-wrap"><span>📍 ঠিকানা/হল</span><span>:</span></div>' +
-                '<span class="detail-val">' + mainLoc + '</span>' +
-              '</div>' +
-              '<div class="detail-item">' +
-                '<div class="detail-label-wrap"><span>🗓️️ সর্বশেষ রক্তদান</span><span>:</span></div>' +
-                '<span class="detail-val">' + (d.last_donation || "তথ্য নেই") + '</span>' +
-              '</div>' +
-              '<div class="detail-item">' +
-                '<div class="detail-label-wrap"><span>⚡ স্ট্যাটাস</span><span>:</span></div>' +
-                '<span class="detail-val">' + statusBadge + '</span>' +
-              '</div>' +
-              nextDateHtml +
-            '</div>' +
-            '<div class="admin-actions-grid">' +
-              verifyBtnHtml +
-              '<button type="button" class="btn-toggle-avail" onclick="toggleAvailability(' + d.id + ')">' + toggleAvailText + '</button>' +
-              '<button type="button" class="btn-delete" title="মুছে ফেলুন" onclick="deleteDonor(' + d.id + ')">🗑️</button>' +
-            '</div>' +
-          '</div>';
-      });
-
-      container.innerHTML = html;
-    }
-
-    function toggleVerify(id) {
-      var donors = getDonors();
-      var donor = donors.find(function(d) { return d.id === id; });
-      if (donor) {
-        donor.is_verified = !donor.is_verified;
-        saveDonors(donors);
-      }
-    }
-
-    function toggleAvailability(id) {
-      var donors = getDonors();
-      var donor = donors.find(function(d) { return d.id === id; });
-      if (donor) {
-        donor.is_available = !donor.is_available;
-        donor.manual_override = true;
-        saveDonors(donors);
-      }
-    }
-
-    function deleteDonor(id) {
-      if (confirm("আপনি কি নিশ্চিতভাবে এই রক্তদাতার তথ্য মুছে ফেলতে চান?")) {
-        var donors = getDonors();
-        donors = donors.filter(function(d) { return d.id !== id; });
-        saveDonors(donors);
-      }
-    }
-
-    // ==========================================
-    // 💬 RENDER FEEDBACKS WITH CORRECT LOCAL BANGLADESH TIME
-    // ==========================================
-    function renderFeedbacks() {
-      var session = getActiveSession();
-      if (session && session.role !== "super") return;
-
-      var feedbacks = getFeedbacks();
-      var q = (document.getElementById("adminSearchQuery").value || "").trim().toLowerCase();
-      var container = document.getElementById("adminContentContainer");
-
-      if (q) {
-        feedbacks = feedbacks.filter(function(f) {
-          var name = (f.name || "").toLowerCase();
-          var contact = (f.contact || "").toLowerCase();
-          var msg = (f.message || "").toLowerCase();
-          return name.includes(q) || contact.includes(q) || msg.includes(q);
-        });
-      }
-
-      if (feedbacks.length === 0) {
-        container.innerHTML = '<div class="empty-state">কোনো মতামত বা ফিডব্যাক পাওয়া যায়নি।</div>';
-        return;
-      }
-
-      var html = "";
-      feedbacks.forEach(function(f) {
-        var formattedTime = formatFeedbackDateTime(f.date);
-
-        html += 
-          '<div class="donor-admin-card">' +
-            '<div class="card-top-row">' +
-              '<span class="donor-card-name">👤 ' + (f.name || "অজ্ঞাত ব্যবহারকারী") + '</span>' +
-              '<span style="font-size:0.72rem; color:var(--slate-500); font-weight:700;">📅 ' + formattedTime + '</span>' +
-            '</div>' +
-            '<div class="donor-detail-list">' +
-              '<div class="detail-item">' +
-                '<div class="detail-label-wrap"><span>📞 যোগাযোগ</span><span>:</span></div>' +
-                '<span class="detail-val" style="color:var(--primary); font-weight:700;">' + (f.contact || "--") + '</span>' +
-              '</div>' +
-              '<div class="detail-item">' +
-                '<div class="detail-label-wrap"><span>💬 বার্তা</span><span>:</span></div>' +
-                '<span class="detail-val" style="line-height:1.5; background:var(--slate-50); padding:8px 10px; border-radius:8px; border:1px solid var(--slate-200);">' + (f.message || "--") + '</span>' +
-              '</div>' +
-            '</div>' +
-            '<div class="admin-actions-grid" style="justify-content: flex-end;">' +
-              '<a href="tel:' + f.contact + '" class="btn-verify" style="text-decoration:none; max-width:120px;">📞 কল দিন</a>' +
-              '<button type="button" class="btn-delete" title="মুছে ফেলুন" onclick="deleteFeedback(' + f.id + ')">🗑️</button>' +
-            '</div>' +
-          '</div>';
-      });
-
-      container.innerHTML = html;
-    }
-
-    function deleteFeedback(id) {
-      if (confirm("এই মতামতটি মুছে ফেলতে চান?")) {
-        var list = getFeedbacks().filter(function(f) { return f.id !== id; });
-        saveFeedbacks(list);
-      }
-    }
-
-    // ==========================================
-    // 🛡️ RENDER SUB-ADMINS WITH STRICT 135px ALIGNMENT
-    // ==========================================
-    function renderSubAdmins() {
-      var session = getActiveSession();
-      if (session && session.role !== "super") return;
-
-      var list = getSubAdmins();
-      var container = document.getElementById("adminContentContainer");
-
-      if (list.length === 0) {
-        container.innerHTML = '<div class="empty-state">কোনো সাব-অ্যাডমিন যুক্ত করা নেই।</div>';
-        return;
-      }
-
-      var html = "";
-      list.forEach(function(s) {
-        html += 
-          '<div class="donor-admin-card">' +
-            '<div class="card-top-row">' +
-              '<span class="donor-card-name">🛡️ ' + s.name + '</span>' +
-              '<span style="background:var(--slate-100); color:var(--slate-700); font-size:0.75rem; font-weight:700; padding:2px 8px; border-radius:6px;">Sub Admin</span>' +
-            '</div>' +
-            '<div class="subadmin-detail-list">' +
-              '<div class="detail-item">' +
-                '<div class="sub-label-wrap"><span>✉️ ইমেইল</span><span>:</span></div>' +
-                '<span class="detail-val" style="font-weight:700;">' + s.email + '</span>' +
-              '</div>' +
-              '<div class="detail-item">' +
-                '<div class="sub-label-wrap"><span>🔑 পাসওয়ার্ড</span><span>:</span></div>' +
-                '<span class="detail-val" style="font-weight:700; color:var(--slate-600);">' + (s.password || "******") + '</span>' +
-              '</div>' +
-              '<div class="detail-item">' +
-                '<div class="sub-label-wrap"><span>🗓️ যুক্ত হওয়ার তারিখ</span><span>:</span></div>' +
-                '<span class="detail-val">' + (s.added_date || "2026-09-01") + '</span>' +
-              '</div>' +
-            '</div>' +
-            '<div class="admin-actions-grid" style="justify-content: flex-end;">' +
-              '<button type="button" class="btn-delete" title="অপসারণ করুন" onclick="deleteSubAdmin(' + s.id + ')">🗑️</button>' +
-            '</div>' +
-          '</div>';
-      });
-
-      container.innerHTML = html;
-    }
-
-    function handleAddSubAdmin(e) {
-      e.preventDefault();
-      var name = document.getElementById("subName").value.trim();
-      var email = document.getElementById("subEmail").value.trim().toLowerCase();
-      var tempPwd = document.getElementById("subTempPwd").value.trim();
-
-      if (!name || !email || !tempPwd) return;
-
-      var list = getSubAdmins();
-      if (email === SUPER_ADMIN_EMAIL.toLowerCase() || list.some(function(s) { return s.email.toLowerCase() === email; })) {
-        alert("এই ইমেইলটি ইতোমধ্যে অ্যাডমিন হিসেবে নিবন্ধিত আছে!");
-        return;
-      }
-
-      list.push({
-        id: Date.now(),
-        name: name,
-        email: email,
-        password: tempPwd,
-        added_date: new Date().toISOString().split("T")[0]
-      });
-
-      saveSubAdmins(list);
-      document.getElementById("subName").value = "";
-      document.getElementById("subEmail").value = "";
-      document.getElementById("subTempPwd").value = "";
-      alert("সাব-অ্যাডমিন সফলভাবে যুক্ত হয়েছে!");
-    }
-
-    function deleteSubAdmin(id) {
-      if (confirm("এই সাব-অ্যাডমিনকে অপসারণ করতে চান?")) {
-        var list = getSubAdmins().filter(function(s) { return s.id !== id; });
-        saveSubAdmins(list);
-      }
-    }
-
-    window.onload = function() {
-      initAdminStorage();
-      checkAuth();
-    };
+    // Example replacement in Admin action functions:
+    // Instead of: if(confirm("আপনি কি নিশ্চিতভাবে এই রক্তদাতার তথ্য মুছে ফেলতে চান?")) { ... }
+    // Use: showJiboniConfirm("ডিলিট নিশ্চিতকরণ", "আপনি কি নিশ্চিতভাবে এই রক্তদাতার তথ্য মুছে ফেলতে চান?", function(yes) { if(yes) { ... } });
   </script>
 </body>
 </html>
