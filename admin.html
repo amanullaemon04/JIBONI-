@@ -788,7 +788,7 @@
         </div>
       </div>
 
-      <!-- Tabs Navigation (Added Report Tab) -->
+      <!-- Tabs Navigation (With Report Tab) -->
       <div class="admin-tabs-row">
         <button type="button" class="admin-tab active" id="tabAll" onclick="switchTab('all')">
           👥 সকল রক্তদাতা <span class="tab-counter" id="countAll">0</span>
@@ -1050,7 +1050,7 @@
       } else {
         heroCard.className = "admin-hero-card sub-theme";
         avatarIcon.className = "admin-avatar-icon avatar-sub";
-        avatarIcon.innerText = "🛡️";
+        avatarIcon.innerText = "🛡️️";
         pillBadge.className = "admin-pill-badge pill-sub";
         pillBadge.innerText = "🛡️ Sub Admin";
         mainName.innerText = session.name || "Assistant Admin";
@@ -1239,12 +1239,12 @@
 
       var html = "";
       reports.forEach(function(r) {
-        var formattedTime = r.date ? new Date(r.date).toLocaleString() : "আজ";
+        var formattedTime = formatFeedbackDateTime(r.date);
         html += 
           '<div class="donor-admin-card">' +
             '<div class="card-top-row">' +
-              '<span class="donor-card-name">⚠️ ডোনার: ' + (r.donor_name || "অজ্ঞাত") + '</span>' +
-              '<span style="font-size:0.72rem; color:var(--slate-400); font-weight:700;">📅 ' + formattedTime + '</span>' +
+              '<span class="donor-card-name">⚠️️ ডোনার: ' + (r.donor_name || "অজ্ঞাত") + '</span>' +
+              '<span style="font-size:0.72rem; color:var(--slate-500); font-weight:700;">📅 ' + formattedTime + '</span>' +
             '</div>' +
             '<div class="donor-detail-list">' +
               '<div class="detail-item">' +
