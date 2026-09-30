@@ -134,7 +134,47 @@
       margin-bottom: 16px;
     }
 
-    /* ICONIC RED & WHITE CUSTOM MODAL OVERLAYS */
+    .text-input {
+      width: 100%;
+      height: 44px;
+      padding: 0 12px;
+      background: #ffffff;
+      border: 1px solid var(--slate-200);
+      border-radius: 10px;
+      font-size: 0.88rem;
+      color: var(--slate-800);
+      outline: none;
+      transition: all 0.2s;
+    }
+
+    .text-input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(220, 38, 38, 0.1);
+    }
+
+    .submit-btn {
+      width: 100%;
+      height: 44px;
+      background: var(--primary);
+      color: #ffffff;
+      border: none;
+      border-radius: 10px;
+      font-size: 0.92rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      box-shadow: 0 4px 12px rgba(220, 38, 38, 0.25);
+      transition: all 0.15s;
+    }
+
+    .submit-btn:active {
+      transform: scale(0.98);
+    }
+
+    /* JIBONI ICONIC RED & WHITE MODALS */
     .custom-alert-overlay,
     .custom-confirm-overlay {
       position: fixed;
@@ -272,9 +312,8 @@
   <main class="app-main">
     <div class="admin-card">
       <h2 class="card-title">অ্যাডমিন প্যানেল</h2>
-      <!-- Admin Content Container -->
       <div id="adminContent">
-        <p style="text-align: center; color: var(--slate-600); font-size: 0.9rem;">অ্যাডমিন কন্ট্রোল লোড হচ্ছে...</p>
+        <!-- ADMIN LOGIN / DASHBOARD DYNAMIC CONTENT -->
       </div>
     </div>
   </main>
@@ -306,7 +345,7 @@
   </footer>
 
   <script>
-    // Custom Iconic JIBONI Popups replacing standard alert/confirm
+    // Custom Iconic JIBONI Popups
     function showJiboniAlert(title, msg, callback) {
       document.getElementById("customAlertTitle").innerText = title;
       document.getElementById("customAlertMsg").innerText = msg;
@@ -339,9 +378,126 @@
       }
     }
 
-    // Example replacement in Admin action functions:
-    // Instead of: if(confirm("আপনি কি নিশ্চিতভাবে এই রক্তদাতার তথ্য মুছে ফেলতে চান?")) { ... }
-    // Use: showJiboniConfirm("ডিলিট নিশ্চিতকরণ", "আপনি কি নিশ্চিতভাবে এই রক্তদাতার তথ্য মুছে ফেলতে চান?", function(yes) { if(yes) { ... } });
+    // Admin Panel Core Logic
+    var ADMIN_PIN_KEY = "jiboni_admin_pin";
+    var defaultAdminPin = "1234";
+
+    function checkAdminAuth() {
+      var isAuth = sessionStorage.getItem("jiboni_admin_logged") === "true";
+      var container = document.getElementById("adminContent");
+
+      if (!isAuth) {
+        container.innerHTML = `
+          <div style="text-align:center;">
+            <p style="font-size:0.86rem; color:var(--slate-600); margin-bottom:14px;">অ্যাডমিন প্যানেলে প্রবেশ করতে পিন দিন</p>
+            <form onsubmit="handleAdminLogin(event)">
+              <div style="margin-bottom:14px;">
+                <input type="password" id="adminPinInput" class="text-input" placeholder="অ্যাডমিন পিন (ডিফল্ট: 1234)" required autocomplete="current-password" />
+              </div>
+              <button type="submit" class="submit-btn">লগইন করুন</button>
+            </form>
+          </div>
+        `;
+      } else {
+        renderAdminDashboard();
+      }
+    }
+
+    function handleAdminLogin(e) {
+      e.preventDefault();
+      var pin = document.getElementById("adminPinInput").value.trim();
+      var savedPin = localStorage.getItem(ADMIN_PIN_KEY) || defaultAdminPin;
+
+      if (pin === savedPin) {
+        sessionStorage.setItem("jiboni_admin_logged", "true");
+        renderAdminDashboard();
+      } else {
+        showJiboniAlert("ত্রুটি", "ভুল অ্যাডমিন পিন দিয়েছেন!");
+      }
+    }
+
+    function handleAdminLogout() {
+      showJiboniConfirm("লগআউট", "আপনি কি অ্যাডমিন প্যানেল থেকে লগআউট করতে চান?", function(yes) {
+        if (yes) {
+          sessionStorage.removeItem("jiboni_admin_logged");
+          checkAdminAuth();
+        }
+      });
+    }
+
+    function renderAdminDashboard() {
+      var container = document.getElementById("adminContent");
+      var donors = JSON.parse(localStorage.getItem("jiboni_donors_cache") || localStorage.getItem("donors") || "[]");
+      var pending = donors.filter(function(d) { return !d.is_verified; });
+      var approved = donors.filter(function(d) { return d.is_verified; });
+
+      var html = `
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; border-bottom:1px solid var(--slate-100); padding-bottom:10px;">
+          <span style="font-weight:800; font-size:0.9rem; color:var(--slate-900);">👑 সুপার অ্যাডমিন</span>
+          <button type="button" class="btn-chip" onclick="handleAdminLogout()" style="color:var(--primary); border-color:var(--primary);">লগআউট</button>
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:16px;">
+          <div style="background:var(--slate-50); border:1px solid var(--slate-200); padding:12px; border-radius:12px; text-align:center;">
+            <div style="font-size:1.3rem; font-weight:800; color:var(--primary);">${approved.length}</div>
+            <div style="font-size:0.75rem; color:var(--slate-600); font-weight:700;">অনুমোদিত রক্তদাতা</div>
+          </div>
+          <div style="background:var(--slate-50); border:1px solid var(--slate-200); padding:12px; border-radius:12px; text-align:center;">
+            <div style="font-size:1.3rem; font-weight:800; color:var(--warning);">${pending.length}</div>
+            <div style="font-size:0.75rem; color:var(--slate-600); font-weight:700;">পেন্ডিং ভেরিফিকেশন</div>
+          </div>
+        </div>
+      `;
+
+      if (pending.length > 0) {
+        html += `<h3 style="font-size:0.92rem; font-weight:800; margin-bottom:10px; color:var(--warning);">পেন্ডিং তালিকা:</h3>`;
+        pending.forEach(function(d) {
+          html += `
+            <div style="background:var(--slate-50); border:1px solid var(--slate-200); padding:12px; border-radius:12px; margin-bottom:10px; font-size:0.85rem;">
+              <div style="font-weight:800; color:var(--slate-900);">${d.name} (${d.blood_group})</div>
+              <div style="color:var(--slate-600); margin:4px 0;">ফোন: ${d.phone} | জেলা: ${d.district}</div>
+              <div style="display:flex; gap:8px; margin-top:8px;">
+                <button type="button" class="submit-btn" style="height:32px; font-size:0.8rem;" onclick="approveDonor(${d.id})">অনুমোদন করুন</button>
+                <button type="button" class="btn-chip" style="height:32px; flex:1; justify-content:center; color:var(--primary); border-color:var(--primary);" onclick="deleteDonor(${d.id})">মুছে ফেলুন</button>
+              </div>
+            </div>
+          `;
+        });
+      } else {
+        html += `<p style="text-align:center; color:var(--slate-400); font-size:0.85rem; padding:20px 0;">কোনো পেন্ডিং ডোনার নেই</p>`;
+      }
+
+      container.innerHTML = html;
+    }
+
+    function approveDonor(id) {
+      var donors = JSON.parse(localStorage.getItem("jiboni_donors_cache") || localStorage.getItem("donors") || "[]");
+      var d = donors.find(function(item) { return item.id === id; });
+      if (d) {
+        d.is_verified = true;
+        localStorage.setItem("jiboni_donors_cache", JSON.stringify(donors));
+        localStorage.setItem("donors", JSON.stringify(donors));
+        showJiboniAlert("সফল", "ডোনার সফলভাবে অনুমোদিত হয়েছে!");
+        renderAdminDashboard();
+      }
+    }
+
+    function deleteDonor(id) {
+      showJiboniConfirm("ডিলিট নিশ্চিতকরণ", "আপনি কি নিশ্চিতভাবে এই রক্তদাতার তথ্য মুছে ফেলতে চান?", function(yes) {
+        if (yes) {
+          var donors = JSON.parse(localStorage.getItem("jiboni_donors_cache") || localStorage.getItem("donors") || "[]");
+          donors = donors.filter(function(item) { return item.id !== id; });
+          localStorage.setItem("jiboni_donors_cache", JSON.stringify(donors));
+          localStorage.setItem("donors", JSON.stringify(donors));
+          showJiboniAlert("সফল", "রক্তদাতার তথ্য সফলভাবে মুছে ফেলা হয়েছে।");
+          renderAdminDashboard();
+        }
+      });
+    }
+
+    // Run Auth check on load
+    window.onload = function() {
+      checkAdminAuth();
+    };
   </script>
 </body>
 </html>
