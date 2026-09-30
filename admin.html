@@ -788,7 +788,7 @@
         </div>
       </div>
 
-      <!-- Tabs Navigation -->
+      <!-- Tabs Navigation (Added Report Tab) -->
       <div class="admin-tabs-row">
         <button type="button" class="admin-tab active" id="tabAll" onclick="switchTab('all')">
           👥 সকল রক্তদাতা <span class="tab-counter" id="countAll">0</span>
@@ -798,6 +798,9 @@
         </button>
         <button type="button" class="admin-tab" id="tabAvailable" onclick="switchTab('available')">
           ⚡ প্রস্তুত <span class="tab-counter" id="countAvailable">0</span>
+        </button>
+        <button type="button" class="admin-tab" id="tabReports" onclick="switchTab('reports')">
+          ⚠️ রিপোর্ট <span class="tab-counter" id="countReports">0</span>
         </button>
         <button type="button" class="admin-tab" id="tabFeedback" onclick="switchTab('feedback')">
           💬 মতামত <span class="tab-counter" id="countFeedback">0</span>
@@ -999,6 +1002,16 @@
       renderCurrentView();
     }
 
+    function getReports() {
+      var stored = localStorage.getItem("jiboni_donor_reports");
+      return stored ? JSON.parse(stored) : [];
+    }
+
+    function saveReports(list) {
+      localStorage.setItem("jiboni_donor_reports", JSON.stringify(list));
+      renderCurrentView();
+    }
+
     function checkAuth() {
       var session = getActiveSession();
       var loginSec = document.getElementById("adminLoginSection");
@@ -1151,6 +1164,7 @@
         'all': 'tabAll',
         'pending': 'tabPending',
         'available': 'tabAvailable',
+        'reports': 'tabReports',
         'feedback': 'tabFeedback',
         'subadmin': 'tabSubAdmin'
       };
@@ -1170,6 +1184,8 @@
         subFormWrap.style.display = "none";
         if (tab === "feedback") {
           searchInput.placeholder = "ফিডব্যাক, নাম বা যোগাযোগ নম্বর দিয়ে খুঁজুন...";
+        } else if (tab === "reports") {
+          searchInput.placeholder = "রিপোর্টের কারণ বা ডোনারের নাম দিয়ে খুঁজুন...";
         } else {
           searchInput.placeholder = "নাম, জেলা, উপজেলা, মোবাইল বা রক্তের গ্রুপ দিয়ে খুঁজুন...";
         }
@@ -1182,10 +1198,12 @@
       var allDonors = getDonors();
       var feedbacks = getFeedbacks();
       var subAdmins = getSubAdmins();
+      var reports = getReports();
 
       document.getElementById("countAll").innerText = allDonors.length;
       document.getElementById("countPending").innerText = allDonors.filter(function(d) { return !d.is_verified; }).length;
       document.getElementById("countAvailable").innerText = allDonors.filter(function(d) { return d.is_available; }).length;
+      document.getElementById("countReports").innerText = reports.length;
       document.getElementById("countFeedback").innerText = feedbacks.length;
       document.getElementById("countSubAdmin").innerText = subAdmins.length;
     }
@@ -1194,11 +1212,62 @@
       updateBadgeCounters();
       if (currentTab === "feedback") {
         renderFeedbacks();
+      } else if (currentTab === "reports") {
+        renderReportsList();
       } else if (currentTab === "subadmin") {
         renderSubAdmins();
       } else {
         renderDonorsList();
       }
+    }
+
+    function renderReportsList() {
+      var reports = getReports();
+      var q = (document.getElementById("adminSearchQuery").value || "").trim().toLowerCase();
+      var container = document.getElementById("adminContentContainer");
+
+      if (q) {
+        reports = reports.filter(function(r) {
+          return (r.donor_name || "").toLowerCase().includes(q) || (r.reason || "").toLowerCase().includes(q);
+        });
+      }
+
+      if (reports.length === 0) {
+        container.innerHTML = '<div class="empty-state">কোনো রিপোর্ট পাওয়া যায়নি।</div>';
+        return;
+      }
+
+      var html = "";
+      reports.forEach(function(r) {
+        var formattedTime = r.date ? new Date(r.date).toLocaleString() : "আজ";
+        html += 
+          '<div class="donor-admin-card">' +
+            '<div class="card-top-row">' +
+              '<span class="donor-card-name">⚠️ ডোনার: ' + (r.donor_name || "অজ্ঞাত") + '</span>' +
+              '<span style="font-size:0.72rem; color:var(--slate-400); font-weight:700;">📅 ' + formattedTime + '</span>' +
+            '</div>' +
+            '<div class="donor-detail-list">' +
+              '<div class="detail-item">' +
+                '<div class="detail-label-wrap"><span>রিপোর্টের কারণ</span><span>:</span></div>' +
+                '<span class="detail-val" style="font-weight:700; color:var(--primary);">' + (r.reason || "--") + '</span>' +
+              '</div>' +
+            '</div>' +
+            '<div class="admin-actions-grid" style="justify-content: flex-end;">' +
+              '<button type="button" class="btn-delete" title="মুছে ফেলুন" onclick="deleteReport(' + r.id + ')">🗑️</button>' +
+            '</div>' +
+          '</div>';
+      });
+      container.innerHTML = html;
+    }
+
+    function deleteReport(id) {
+      showJiboniConfirm("নিশ্চিতকরণ", "এই রিপোর্টটি মুছে ফেলতে চান?", function(yes) {
+        if (yes) {
+          var reports = getReports().filter(function(r) { return r.id !== id; });
+          saveReports(reports);
+          showJiboniAlert("সফল", "রিপোর্টটি সফলভাবে মুছে ফেলা হয়েছে।");
+        }
+      });
     }
 
     function renderDonorsList() {
