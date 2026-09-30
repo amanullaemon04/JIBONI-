@@ -34,13 +34,6 @@
       -webkit-tap-highlight-color: transparent;
     }
 
-    /* RED AND WHITE ACCENT THEME FOR CALENDAR PICKER */
-    input[type="date"] {
-      accent-color: var(--primary);
-      color-scheme: light only;
-      background-color: #ffffff;
-    }
-
     body {
       background: var(--slate-50);
       color: var(--slate-800);
@@ -163,7 +156,8 @@
     }
 
     .text-input,
-    .custom-select-trigger {
+    .custom-select-trigger,
+    .custom-date-trigger {
       width: 100%;
       height: 44px;
       padding: 0 12px;
@@ -343,6 +337,163 @@
       letter-spacing: 0.5px;
     }
 
+    /* CUSTOM BANGLA CALENDAR MODAL STYLES */
+    .cal-modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(4px);
+      z-index: 3000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .cal-modal-box {
+      background: #ffffff;
+      border-radius: 20px;
+      width: 100%;
+      max-width: 360px;
+      padding: 20px;
+      box-shadow: 0 12px 32px rgba(0,0,0,0.18);
+      animation: scaleIn 0.2s ease-out;
+    }
+
+    @keyframes scaleIn {
+      from { transform: scale(0.92); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .cal-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .cal-title {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: var(--slate-900);
+    }
+
+    .cal-month-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+      background: var(--slate-50);
+      padding: 6px 12px;
+      border-radius: 12px;
+      border: 1px solid var(--slate-200);
+    }
+
+    .cal-nav-btn {
+      background: #ffffff;
+      border: 1px solid var(--slate-200);
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--slate-800);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px;
+    }
+
+    .cal-nav-btn:hover {
+      background: var(--primary-light);
+      color: var(--primary);
+      border-color: var(--primary);
+    }
+
+    .cal-month-label {
+      font-size: 0.92rem;
+      font-weight: 800;
+      color: var(--slate-900);
+    }
+
+    .cal-weekdays {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      text-align: center;
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: var(--slate-400);
+      margin-bottom: 8px;
+    }
+
+    .cal-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 3px;
+      min-height: 252px; /* Fixed 6 rows height to prevent vertical jumping */
+      align-content: start;
+      margin-bottom: 16px;
+    }
+
+    .cal-day-cell {
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.86rem;
+      font-weight: 700;
+      color: var(--slate-800);
+      border-radius: 50%;
+      cursor: pointer;
+      transition: all 0.1s;
+    }
+
+    .cal-day-cell:hover:not(.empty) {
+      background: var(--slate-100);
+    }
+
+    .cal-day-cell.selected {
+      background: var(--primary);
+      color: #ffffff;
+      box-shadow: 0 4px 10px rgba(220, 38, 38, 0.3);
+    }
+
+    .cal-day-cell.empty {
+      cursor: default;
+    }
+
+    .cal-footer-btns {
+      display: flex;
+      gap: 10px;
+      border-top: 1px solid var(--slate-100);
+      padding-top: 14px;
+    }
+
+    .cal-btn-clear, .cal-btn-submit {
+      flex: 1;
+      height: 40px;
+      border-radius: 10px;
+      font-size: 0.86rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--slate-200);
+    }
+
+    .cal-btn-clear {
+      background: #ffffff;
+      color: var(--slate-600);
+    }
+
+    .cal-btn-submit {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+    }
+
     /* CUSTOM PIN RESET MODAL */
     .custom-alert-box {
       background: #ffffff;
@@ -353,11 +504,6 @@
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
       text-align: center;
       animation: scaleIn 0.2s ease-out;
-    }
-
-    @keyframes scaleIn {
-      from { transform: scale(0.9); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
     }
 
     .site-footer {
@@ -469,10 +615,14 @@
             <input type="text" id="editHall" class="text-input" />
           </div>
 
-          <!-- সর্বশেষ রক্তদানের তারিখ (Fixed with standard date input style as requested) -->
+          <!-- সর্বশেষ রক্তদানের তারিখ (Custom Bangla Calendar Trigger) -->
           <div class="input-group">
-            <label class="field-label" for="editLastDonation">সর্বশেষ রক্তদানের তারিখ</label>
-            <input type="date" id="editLastDonation" class="text-input" />
+            <label class="field-label">সর্বশেষ রক্তদানের তারিখ</label>
+            <div class="custom-date-trigger" onclick="openCustomCalendar('editLastDonation')">
+              <span id="editLastDonationDisplay" style="color: var(--slate-400);">তারিখ নির্বাচন করুন</span>
+              <span>📅</span>
+            </div>
+            <input type="hidden" id="editLastDonation" value="" />
           </div>
 
           <div class="input-group">
@@ -495,7 +645,7 @@
     </div>
   </main>
 
-  <!-- CUSTOM BOTTOM-SHEET MODAL -->
+  <!-- CUSTOM BOTTOM-SHEET MODAL FOR SELECTS -->
   <div id="customPickerModal" class="custom-modal-backdrop" onclick="closePickerOnBackdrop(event)">
     <div class="custom-modal-sheet" id="modalSheetContent">
       <div class="modal-fixed-top">
@@ -508,6 +658,29 @@
         </div>
       </div>
       <div class="modal-sheet-list" id="modalListContainer"></div>
+    </div>
+  </div>
+
+  <!-- CUSTOM BANGLA CALENDAR MODAL -->
+  <div id="customCalendarModal" class="cal-modal-backdrop" onclick="closeCalOnBackdrop(event)">
+    <div class="cal-modal-box">
+      <div class="cal-header-row">
+        <span class="cal-title" id="calModalTitle">তারিখ নির্বাচন</span>
+        <button type="button" class="modal-sheet-close" onclick="closeCustomCalendar()" style="width:28px;height:28px;font-size:0.9rem;">✕</button>
+      </div>
+      <div class="cal-month-nav">
+        <button type="button" class="cal-nav-btn" onclick="changeMonth(-1)">‹</button>
+        <span class="cal-month-label" id="calMonthYearLabel">জানুয়ারি ২০২৫</span>
+        <button type="button" class="cal-nav-btn" onclick="changeMonth(1)">›</button>
+      </div>
+      <div class="cal-weekdays">
+        <span>রবি</span><span>সোম</span><span>মঙ্গল</span><span>বুধ</span><span>বৃহ</span><span>শুক্র</span><span>শনি</span>
+      </div>
+      <div class="cal-grid" id="calDaysGrid"></div>
+      <div class="cal-footer-btns">
+        <button type="button" class="cal-btn-clear" onclick="clearSelectedDate()">মুছে ফেলুন</button>
+        <button type="button" class="cal-btn-submit" onclick="confirmSelectedDate()">নিশ্চিত করুন</button>
+      </div>
     </div>
   </div>
 
@@ -534,6 +707,131 @@
     var currentAuthenticatedDonorId = null;
     var currentPickerMode = "";
     var pendingResetDonor = null;
+
+    // Calendar state variables
+    var activeDateTargetId = null;
+    var calSelectedDateStr = "";
+    var calViewYear = 2025;
+    var calViewMonth = 0; // 0 = Jan
+    var banglaDigits = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
+    var banglaMonths = ['জানুয়ারি', 'ফেব্রুয়ারি', 'মার্চ', 'এপ্রিল', 'মে', 'জুন', 'জুলাই', 'আগস্ট', 'সেপ্টেম্বর', 'অক্টোবর', 'নভেম্বর', 'ডিসেম্বর'];
+
+    function toBanglaNum(num) {
+      return String(num).split('').map(function(c) {
+        return (c >= '0' && c <= '9') ? banglaDigits[parseInt(c)] : c;
+      }).join('');
+    }
+
+    function openCustomCalendar(targetId) {
+      activeDateTargetId = targetId;
+      var hiddenVal = document.getElementById(targetId).value;
+      var d = hiddenVal ? new Date(hiddenVal) : new Date();
+      if (isNaN(d.getTime())) d = new Date();
+      calViewYear = d.getFullYear();
+      calViewMonth = d.getMonth();
+      calSelectedDateStr = hiddenVal || "";
+      
+      document.getElementById("calModalTitle").innerText = targetId === 'loginDob' ? 'জন্ম তারিখ নির্বাচন' : 'সর্বশেষ রক্তদানের তারিখ নির্বাচন';
+      document.getElementById("customCalendarModal").style.display = "flex";
+      renderCalendarGrid();
+    }
+
+    function closeCustomCalendar() {
+      document.getElementById("customCalendarModal").style.display = "none";
+      activeDateTargetId = null;
+    }
+
+    function closeCalOnBackdrop(e) {
+      if (e.target.id === "customCalendarModal") closeCustomCalendar();
+    }
+
+    function changeMonth(direction) {
+      calViewMonth += direction;
+      if (calViewMonth > 11) {
+        calViewMonth = 0;
+        calViewYear++;
+      } else if (calViewMonth < 0) {
+        calViewMonth = 11;
+        calViewYear--;
+      }
+      renderCalendarGrid();
+    }
+
+    function renderCalendarGrid() {
+      var grid = document.getElementById("calDaysGrid");
+      grid.innerHTML = "";
+      document.getElementById("calMonthYearLabel").innerText = banglaMonths[calViewMonth] + " " + toBanglaNum(calViewYear);
+
+      var firstDayIndex = new Date(calViewYear, calViewMonth, 1).getDay();
+      var totalDays = new Date(calViewYear, calViewMonth + 1, 0).getDate();
+
+      // Empty cells for alignment
+      for (var i = 0; i < firstDayIndex; i++) {
+        var cell = document.createElement("div");
+        cell.className = "cal-day-cell empty";
+        grid.appendChild(cell);
+      }
+
+      for (var day = 1; day <= totalDays; day++) {
+        var cell = document.createElement("div");
+        cell.className = "cal-day-cell";
+        cell.innerText = toBanglaNum(day);
+
+        var mm = String(calViewMonth + 1).padStart(2, '0');
+        var dd = String(day).padStart(2, '0');
+        var dateStr = calViewYear + "-" + mm + "-" + dd;
+
+        if (calSelectedDateStr === dateStr) {
+          cell.classList.add("selected");
+        }
+
+        (function(dStr, cellEl) {
+          cellEl.onclick = function() {
+            calSelectedDateStr = dStr;
+            var allCells = grid.querySelectorAll(".cal-day-cell");
+            allCells.forEach(function(c) { c.classList.remove("selected"); });
+            cellEl.classList.add("selected");
+          };
+        })(dateStr, cell);
+
+        grid.appendChild(cell);
+      }
+
+      // Fill remaining cells to ensure fixed 6 rows (42 cells total)
+      var totalCellsRendered = firstDayIndex + totalDays;
+      var remainingCells = totalCellsRendered <= 35 ? (35 - totalCellsRendered) : (42 - totalCellsRendered);
+      for (var j = 0; j < remainingCells; j++) {
+        var emptyCell = document.createElement("div");
+        emptyCell.className = "cal-day-cell empty";
+        grid.appendChild(emptyCell);
+      }
+    }
+
+    function clearSelectedDate() {
+      calSelectedDateStr = "";
+      if (activeDateTargetId) {
+        document.getElementById(activeDateTargetId).value = "";
+        var disp = document.getElementById(activeDateTargetId + "Display");
+        if (disp) {
+          disp.innerText = "তারিখ নির্বাচন করুন";
+          disp.style.color = "var(--slate-400)";
+        }
+      }
+      closeCustomCalendar();
+    }
+
+    function confirmSelectedDate() {
+      if (activeDateTargetId && calSelectedDateStr) {
+        document.getElementById(activeDateTargetId).value = calSelectedDateStr;
+        var disp = document.getElementById(activeDateTargetId + "Display");
+        if (disp) {
+          disp.innerText = calSelectedDateStr;
+          disp.style.color = "var(--slate-800)";
+          disp.style.fontWeight = "700";
+        }
+      }
+      closeCustomCalendar();
+    }
 
     var districtsList = [
       { category: "ঢাকা বিভাগ", name: "Dhaka", label: "ঢাকা (Dhaka)" },
@@ -654,7 +952,7 @@
       "Sylhet": ["সিলেট সদর / কোতোয়ালী (Sadar)", "দক্ষিণ সুরমা (South Surma)", "গোলাপগঞ্জ (Golapganj)", "বিয়ানীবাজার (Beanibazar)", "বিশ্বনাথ (Biswanath)", "জৈন্তাপুর (Jaintiapur)", "জকিগঞ্জ (Zakiganj)", "কানাইঘাট (Kanaighat)", "গোয়াইনঘাট (Gowainghat)", "কোম্পানীগঞ্জ (Companiganj)", "ফেঞ্চুগঞ্জ (Fenchuganj)", "বালাগঞ্জ (Balaganj)", "ওসমানীনগর (Osmani Nagar)"],
       "Moulvibazar": ["মৌলভীবাজার সদর (Sadar)", "শ্রীমঙ্গল (Sreemangal)", "কমলগঞ্জ (Kamalganj)", "কুলাউড়া (Kulaura)", "বড়লেখা (Barlekha)", "রাজনগর (Rajnagar)", "জুড়ী (Juri)"],
       "Habiganj": ["হবিগঞ্জ সদর (Sadar)", "মাধবপুর (Madhabpur)", "চুনারুঘাট (Chunarughat)", "বাহুবল (Bahubal)", "নবীগঞ্জ (Nabiganj)", "বানিয়াচং (Baniachong)", "লাখাই (Lakhai)", "আজমিরীগঞ্জ (Ajmiriganj)", "শায়স্তাগঞ্জ (Shayestaganj)"],
-      "Sunamganj": ["সুনামগঞ্জ সদর (Sadar)", "জগন্নাথপুর (Jagannathpur)", "ছাতক (Chhatak)", "তাহিরপুর (Tahirpur)", "দেরাই (Derai)", "শাল্লা (Shalla)", "ধর্মপাশা (Dharmapasha)", "জামালগঞ্জ (Jamalগঞ্জ)", "দোয়ারাবাজার (Dowarabazar)", "বিশ্বম্ভরপুর (Bishwamvarpur)", "শান্তিগঞ্জ (Shantiganj)"],
+      "Sunamganj": ["সুনামগঞ্জ সদর (Sadar)", "জগন্নাথপুর (Jagannathpur)", "ছাতক (Chhatak)", "তাহিরপুর (Tahirpur)", "দেরাই (Derai)", "শাল্লা (Shalla)", "ধর্মপাশা (Dharmapasha)", "জামালগঞ্জ (Jamalganj)", "দোয়ারাবাজার (Dowarabazar)", "বিশ্বম্ভরপুর (Bishwamvarpur)", "শান্তিগঞ্জ (Shantiganj)"],
       "Rangpur": ["রংপুর সদর / কোতোয়ালী (Sadar)", "বদরগঞ্জ (Badarganj)", "পীরগঞ্জ (Pirganj)", "পীরগাছা (Pirgachha)", "মিঠাপুকুর (Mithapukur)", "গঙ্গাচড়া (Gangachhara)", "কাউনিয়া (Kaunia)", "তারাগঞ্জ (Taraganj)"],
       "Dinajpur": ["দিনাজপুর সদর (Sadar)", "বিরামপুর (Birampur)", "ফুলবাড়ী (Fulbari)", "বীরগঞ্জ (Birganj)", "বোচাগঞ্জ (Bochaganj)", "কাহারোল (Kaharole)", "চিরিরবন্দর (Chirirbandar)", "পার্বতীপুর (Parbatipur)", "নবাবগঞ্জ (Nawabganj)", "ঘোড়াঘাট (Ghoraghat)", "হাকিমপুর / হিলি (Hakimpur)", "খানসামা (Khansama)", "বিরল (Birol)"],
       "Nilphamari": ["নীলফামারী সদর (Nilphamari Sadar)", "সৈয়দপুর (Saidpur)", "জলঢাকা (Jaldhaka)", "ডোমার (Domar)", "ডিমলা (Dimla)", "কিশোরগঞ্জ (Kishoreganj)"],
@@ -673,7 +971,7 @@
       isResetMode = true;
       document.getElementById("authCardSub").innerText = "নিবন্ধিত মোবাইল নম্বর ও আপনার জন্ম তারিখ দিয়ে পিন রিসেট করুন";
       var pinGroup = document.getElementById("passwordFieldGroup");
-      pinGroup.innerHTML = '<label class="field-label" for="loginDob">নিবন্ধিত জন্ম তারিখ (Date of Birth): *</label><input type="date" id="loginDob" class="text-input" required />';
+      pinGroup.innerHTML = '<label class="field-label" for="loginDob">নিবন্ধিত জন্ম তারিখ (Date of Birth): *</label><div class="custom-date-trigger" onclick="openCustomCalendar(\'loginDob\')"><span id="loginDobDisplay" style="color: var(--slate-400);">তারিখ নির্বাচন করুন</span><span>📅</span></div><input type="hidden" id="loginDob" required />';
       document.getElementById("resetLinkWrap").innerHTML = '<a class="reset-link" onclick="switchToLoginMode()">← পিন মনে আছে? লগইন করুন</a>';
       document.getElementById("authSubmitBtn").innerText = "নতুন পিন সেট করুন";
     }
@@ -899,7 +1197,14 @@
 
       document.getElementById("editName").value = donor.name || "";
       document.getElementById("editHall").value = donor.hall || "";
-      document.getElementById("editLastDonation").value = donor.last_donation !== "তথ্য নেই" ? donor.last_donation : "";
+      
+      var lastDonVal = donor.last_donation !== "তথ্য নেই" ? donor.last_donation : "";
+      document.getElementById("editLastDonation").value = lastDonVal;
+      if (lastDonVal) {
+        document.getElementById("editLastDonationDisplay").innerText = lastDonVal;
+        document.getElementById("editLastDonationDisplay").style.color = "var(--slate-800)";
+        document.getElementById("editLastDonationDisplay").style.fontWeight = "700";
+      }
       
       var distVal = donor.district || "Dhaka";
       var matchD = districtsList.find(function(item) { return item.name.toLowerCase() === distVal.toLowerCase(); });
@@ -908,7 +1213,7 @@
 
       var upzVal = donor.upazila || "";
       document.getElementById("editUpazila").value = upzVal;
-      document.getElementById("upazilaDisplay").innerText = upzVAL ? upzVal : "উপজেলা / থানা নির্বাচন করুন";
+      document.getElementById("upazilaDisplay").innerText = upzVal ? upzVal : "উপজেলা / থানা নির্বাচন করুন";
 
       var isAvail = donor.is_available !== false;
       document.getElementById("editAvail").value = isAvail ? "true" : "false";
@@ -936,7 +1241,7 @@
       var newPin = document.getElementById("editPin").value.trim();
       if (newPin) {
         if (newPin.length < 4 || newPin.length > 8) {
-          alert("নতুন পিন অবশ্যই ৪ থেকে ডিজিট বা অক্ষরের হতে হবে।");
+          alert("নতুন পিন অবশ্যই ৪ থেকে ৮ ডিজিট বা অক্ষরের হতে হবে।");
           return;
         }
         donor.pin = newPin;
