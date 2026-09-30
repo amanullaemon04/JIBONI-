@@ -585,7 +585,95 @@
       font-size: 0.86rem;
     }
 
-    /* MODAL POPUPS */
+    /* JIBONI ICONIC RED & WHITE CUSTOM MODAL POPUPS */
+    .custom-alert-overlay,
+    .custom-confirm-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(4px);
+      z-index: 4000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .custom-alert-box {
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 24px 20px;
+      max-width: 340px;
+      width: 100%;
+      box-shadow: 0 14px 35px rgba(220, 38, 38, 0.15);
+      text-align: center;
+      border-top: 4px solid var(--primary);
+      animation: scaleIn 0.2s ease-out;
+    }
+
+    @keyframes scaleIn {
+      from { transform: scale(0.92); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .custom-alert-title {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--slate-900);
+      margin-bottom: 8px;
+    }
+
+    .custom-alert-msg {
+      font-size: 0.88rem;
+      color: var(--slate-600);
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+
+    .custom-alert-btn {
+      width: 100%;
+      height: 42px;
+      background: var(--primary);
+      color: #ffffff;
+      border: none;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(220, 38, 38, 0.25);
+    }
+
+    .custom-confirm-btns {
+      display: flex;
+      gap: 10px;
+    }
+
+    .custom-confirm-cancel {
+      flex: 1;
+      height: 42px;
+      background: #ffffff;
+      color: var(--slate-600);
+      border: 1px solid var(--slate-200);
+      border-radius: 10px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .custom-confirm-ok {
+      flex: 1;
+      height: 42px;
+      background: var(--primary);
+      color: #ffffff;
+      border: none;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(220, 38, 38, 0.25);
+    }
+
+    /* PASSWORD CHANGE MODAL */
     .custom-modal-backdrop {
       position: fixed;
       inset: 0;
@@ -759,6 +847,27 @@
     </div>
   </div>
 
+  <!-- JIBONI ICONIC RED & WHITE ALERT MODAL -->
+  <div id="customAlertModal" class="custom-alert-overlay">
+    <div class="custom-alert-box">
+      <h3 class="custom-alert-title" id="customAlertTitle">সতর্কবার্তা</h3>
+      <p class="custom-alert-msg" id="customAlertMsg">বার্তা...</p>
+      <button type="button" class="custom-alert-btn" onclick="closeCustomAlert()">ঠিক আছে</button>
+    </div>
+  </div>
+
+  <!-- JIBONI ICONIC RED & WHITE CONFIRM MODAL -->
+  <div id="customConfirmModal" class="custom-confirm-overlay">
+    <div class="custom-alert-box">
+      <h3 class="custom-alert-title" id="customConfirmTitle">নিশ্চিতকরণ</h3>
+      <p class="custom-alert-msg" id="customConfirmMsg">আপনি কি নিশ্চিত?</p>
+      <div class="custom-confirm-btns">
+        <button type="button" class="custom-confirm-cancel" onclick="closeCustomConfirm(false)">বাতিল</button>
+        <button type="button" class="custom-confirm-ok" onclick="closeCustomConfirm(true)">নিশ্চিত করুন</button>
+      </div>
+    </div>
+  </div>
+
   <footer class="site-footer">
     <p class="footer-disclaimer">Use donor information responsibly. Confirm availability before contacting.</p>
     <p class="footer-credit">Designed & Developed by <a href="developer.html">Amanulla Emon</a></p>
@@ -768,25 +877,53 @@
     let currentTab = "all";
     const SUPER_ADMIN_EMAIL = "amanullaemon04@gmail.com";
 
-    // EXACT LOCAL TIME FORMATTER WITH SECONDS
+    // JIBONI ICONIC CUSTOM MODAL FUNCTIONS
+    function showJiboniAlert(title, msg, callback) {
+      document.getElementById("customAlertTitle").innerText = title;
+      document.getElementById("customAlertMsg").innerText = msg;
+      document.getElementById("customAlertModal").style.display = "flex";
+      window.jiboniAlertCallback = callback;
+    }
+
+    function closeCustomAlert() {
+      document.getElementById("customAlertModal").style.display = "none";
+      if (typeof window.jiboniAlertCallback === "function") {
+        var cb = window.jiboniAlertCallback;
+        window.jiboniAlertCallback = null;
+        cb();
+      }
+    }
+
+    function showJiboniConfirm(title, msg, callback) {
+      document.getElementById("customConfirmTitle").innerText = title;
+      document.getElementById("customConfirmMsg").innerText = msg;
+      document.getElementById("customConfirmModal").style.display = "flex";
+      window.jiboniConfirmCallback = callback;
+    }
+
+    function closeCustomConfirm(isConfirmed) {
+      document.getElementById("customConfirmModal").style.display = "none";
+      if (typeof window.jiboniConfirmCallback === "function") {
+        var cb = window.jiboniConfirmCallback;
+        window.jiboniConfirmCallback = null;
+        cb(isConfirmed);
+      }
+    }
+
     function formatFeedbackDateTime(rawDate) {
       if (!rawDate) return "আজ";
       var d = new Date(rawDate);
-      if (isNaN(d.getTime())) {
-        return rawDate;
-      }
+      if (isNaN(d.getTime())) return rawDate;
       var yyyy = d.getFullYear();
       var mm = String(d.getMonth() + 1).padStart(2, '0');
       var dd = String(d.getDate()).padStart(2, '0');
-
       var hours = d.getHours();
       var minutes = String(d.getMinutes()).padStart(2, '0');
       var seconds = String(d.getSeconds()).padStart(2, '0');
       var ampm = hours >= 12 ? 'PM' : 'AM';
       hours = hours % 12;
-      hours = hours ? hours : 12; // 0 hour is 12 AM
+      hours = hours ? hours : 12;
       var strTime = String(hours).padStart(2, '0') + ':' + minutes + ':' + seconds + ' ' + ampm;
-
       return yyyy + '-' + mm + '-' + dd + ', ' + strTime;
     }
 
@@ -868,8 +1005,9 @@
       var dashSec = document.getElementById("adminDashboardSection");
 
       if (!session) {
-        session = { email: SUPER_ADMIN_EMAIL, role: "super", name: "Amanulla Emon" };
-        sessionStorage.setItem("jiboni_admin_session", JSON.stringify(session));
+        loginSec.style.display = "block";
+        dashSec.style.display = "none";
+        return;
       }
 
       loginSec.style.display = "none";
@@ -944,12 +1082,12 @@
     }
 
     function handleLogout() {
-      sessionStorage.removeItem("jiboni_admin_session");
-      document.getElementById("adminDashboardSection").style.display = "none";
-      document.getElementById("adminLoginSection").style.display = "block";
-      document.getElementById("loginEmail").value = "";
-      document.getElementById("loginPassword").value = "";
-      document.getElementById("loginAlert").style.display = "none";
+      showJiboniConfirm("লগআউট", "আপনি কি অ্যাডমিন প্যানেল থেকে লগআউট করতে চান?", function(yes) {
+        if (yes) {
+          sessionStorage.removeItem("jiboni_admin_session");
+          checkAuth();
+        }
+      });
     }
 
     function openChangePwdModal() {
@@ -1184,16 +1322,16 @@
     }
 
     function deleteDonor(id) {
-      if (confirm("আপনি কি নিশ্চিতভাবে এই রক্তদাতার তথ্য মুছে ফেলতে চান?")) {
-        var donors = getDonors();
-        donors = donors.filter(function(d) { return d.id !== id; });
-        saveDonors(donors);
-      }
+      showJiboniConfirm("ডিলিট নিশ্চিতকরণ", "আপনি কি নিশ্চিতভাবে এই রক্তদাতার তথ্য মুছে ফেলতে চান?", function(yes) {
+        if (yes) {
+          var donors = getDonors();
+          donors = donors.filter(function(d) { return d.id !== id; });
+          saveDonors(donors);
+          showJiboniAlert("সফল", "রক্তদাতার তথ্য সফলভাবে মুছে ফেলা হয়েছে।");
+        }
+      });
     }
 
-    // ==========================================
-    // 💬 RENDER FEEDBACKS WITH EXACT SECONDS & TIMEZONE FIX
-    // ==========================================
     function renderFeedbacks() {
       var session = getActiveSession();
       if (session && session.role !== "super") return;
@@ -1247,15 +1385,15 @@
     }
 
     function deleteFeedback(id) {
-      if (confirm("এই মতামতটি মুছে ফেলতে চান?")) {
-        var list = getFeedbacks().filter(function(f) { return f.id !== id; });
-        saveFeedbacks(list);
-      }
+      showJiboniConfirm("ডিলিট নিশ্চিতকরণ", "এই মতামতটি মুছে ফেলতে চান?", function(yes) {
+        if (yes) {
+          var list = getFeedbacks().filter(function(f) { return f.id !== id; });
+          saveFeedbacks(list);
+          showJiboniAlert("সফল", "মতামতটি মুছে ফেলা হয়েছে।");
+        }
+      });
     }
 
-    // ==========================================
-    // 🛡️ RENDER SUB-ADMINS WITH STRICT 135px ALIGNMENT
-    // ==========================================
     function renderSubAdmins() {
       var session = getActiveSession();
       if (session && session.role !== "super") return;
@@ -1309,7 +1447,7 @@
 
       var list = getSubAdmins();
       if (email === SUPER_ADMIN_EMAIL.toLowerCase() || list.some(function(s) { return s.email.toLowerCase() === email; })) {
-        alert("এই ইমেইলটি ইতোমধ্যে অ্যাডমিন হিসেবে নিবন্ধিত আছে!");
+        showJiboniAlert("সতর্কবার্তা", "এই ইমেইলটি ইতোমধ্যে অ্যাডমিন হিসেবে নিবন্ধিত আছে!");
         return;
       }
 
@@ -1325,14 +1463,17 @@
       document.getElementById("subName").value = "";
       document.getElementById("subEmail").value = "";
       document.getElementById("subTempPwd").value = "";
-      alert("সাব-অ্যাডমিন সফলভাবে যুক্ত হয়েছে!");
+      showJiboniAlert("সফল", "সাব-অ্যাডমিন সফলভাবে যুক্ত হয়েছে!");
     }
 
     function deleteSubAdmin(id) {
-      if (confirm("এই সাব-অ্যাডমিনকে অপসারণ করতে চান?")) {
-        var list = getSubAdmins().filter(function(s) { return s.id !== id; });
-        saveSubAdmins(list);
-      }
+      showJiboniConfirm("নিশ্চিতকরণ", "এই সাব-অ্যাডমিনকে অপসারণ করতে চান?", function(yes) {
+        if (yes) {
+          var list = getSubAdmins().filter(function(s) { return s.id !== id; });
+          saveSubAdmins(list);
+          showJiboniAlert("সফল", "সাব-অ্যাডমিন অপসারণ করা হয়েছে।");
+        }
+      });
     }
 
     window.onload = function() {
