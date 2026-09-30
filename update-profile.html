@@ -337,7 +337,7 @@
       letter-spacing: 0.5px;
     }
 
-    /* CUSTOM BANGLA CALENDAR MODAL */
+    /* CUSTOM BANGLA CALENDAR MODAL (1970 - 2099) */
     .cal-modal-backdrop {
       position: fixed;
       inset: 0;
@@ -505,7 +505,7 @@
       border-color: var(--primary);
     }
 
-    /* QUICK JUMP SELECTOR OVERLAY (1970 - 2099) */
+    /* QUICK JUMP SELECTOR OVERLAY */
     .cal-quick-picker {
       position: absolute;
       inset: 10px;
@@ -551,7 +551,7 @@
       color: var(--primary);
     }
 
-    /* ICONIC RED & WHITE ALERT MODAL */
+    /* JIBONI ICONIC RED & WHITE ALERT MODAL */
     .custom-alert-overlay {
       position: fixed;
       inset: 0;
@@ -574,6 +574,11 @@
       text-align: center;
       border-top: 4px solid var(--primary);
       animation: scaleIn 0.2s ease-out;
+    }
+
+    @keyframes scaleIn {
+      from { transform: scale(0.92); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
     }
 
     .custom-alert-title {
@@ -1035,6 +1040,24 @@
       closeCustomCalendar();
     }
 
+    function switchToResetMode() {
+      isResetMode = true;
+      document.getElementById("authCardSub").innerText = "নিবন্ধিত মোবাইল নম্বর ও আপনার জন্ম তারিখ দিয়ে পিন রিসেট করুন";
+      var pinGroup = document.getElementById("passwordFieldGroup");
+      pinGroup.innerHTML = '<label class="field-label" for="loginDob">নিবন্ধিত জন্ম তারিখ (Date of Birth): *</label><div class="custom-date-trigger" onclick="openCustomCalendar(\'loginDob\')"><span id="loginDobDisplay" style="color: var(--slate-400);">তারিখ নির্বাচন করুন</span><span>📅</span></div><input type="hidden" id="loginDob" required />';
+      document.getElementById("resetLinkWrap").innerHTML = '<a class="reset-link" onclick="switchToLoginMode()">← পিন মনে আছে? লগইন করুন</a>';
+      document.getElementById("authSubmitBtn").innerText = "নতুন পিন সেট করুন";
+    }
+
+    function switchToLoginMode() {
+      isResetMode = false;
+      document.getElementById("authCardSub").innerText = "আপনার নিবন্ধিত মোবাইল নম্বর ও পিন দিয়ে প্রোফাইল হালনাগাদ করুন";
+      var pinGroup = document.getElementById("passwordFieldGroup");
+      pinGroup.innerHTML = '<label class="field-label" for="loginPin">সিক্রেট পিন (৪ থেকে ৮ ডিজিট): *</label><input type="password" id="loginPin" class="text-input" placeholder="••••" minlength="4" maxlength="8" required autocomplete="current-password" />';
+      document.getElementById("resetLinkWrap").innerHTML = '<a class="reset-link" onclick="switchToResetMode()">পিন ভুলে গেছেন? (Reset PIN)</a>';
+      document.getElementById("authSubmitBtn").innerText = "প্রোফাইল লোড করুন";
+    }
+
     function openPicker(mode) {
       currentPickerMode = mode;
       var modal = document.getElementById("customPickerModal");
@@ -1181,6 +1204,40 @@
       }
     }
 
+    function openPinModal(donor) {
+      pendingResetDonor = donor;
+      document.getElementById("newPinInput").value = "";
+      document.getElementById("customPinModal").style.display = "flex";
+      setTimeout(function() { document.getElementById("newPinInput").focus(); }, 80);
+    }
+
+    function closePinModal() {
+      document.getElementById("customPinModal").style.display = "none";
+      pendingResetDonor = null;
+    }
+
+    function confirmResetPin() {
+      var newPin = document.getElementById("newPinInput").value.trim();
+      if (!newPin || newPin.length < 4 || newPin.length > 8) {
+        showJiboniAlert("সতর্কবার্তা", "পিন অবশ্যই ৪ থেকে ৮ ডিজিট বা অক্ষরের হতে হবে।");
+        return;
+      }
+
+      if (pendingResetDonor) {
+        var donors = JSON.parse(localStorage.getItem("jiboni_donors_cache") || localStorage.getItem("donors") || "[]");
+        var d = donors.find(function(item) { return item.id === pendingResetDonor.id; });
+        if (d) {
+          d.pin = newPin;
+          localStorage.setItem("jiboni_donors_cache", JSON.stringify(donors));
+          localStorage.setItem("donors", JSON.stringify(donors));
+          showJiboniAlert("সফল!", "আপনার পিন সফলভাবে পরিবর্তন করা হয়েছে! এখন নতুন পিন দিয়ে লগইন করুন।", function() {
+            closePinModal();
+            switchToLoginMode();
+          });
+        }
+      }
+    }
+
     function handleLoadProfile(e) {
       e.preventDefault();
       var phone = document.getElementById("loginPhone").value.trim();
@@ -1195,7 +1252,7 @@
       if (isResetMode) {
         var inputDob = document.getElementById("loginDob").value;
         if (!inputDob || inputDob !== donor.dob) {
-          showJiboniAlert("সতর্কবার্তা", "জন্ম তারিখ সঠিক নয়! আপনার সঠিক জন্ম তারিখ দিয়ে পিন যাচাই করুন।");
+          showJiboniAlert("সতর্কবার্তা", "মোবাইল নম্বর অথবা জন্ম তারিখ সঠিক নয়! তথ্য না মিললে পিন রিসেট করা যাবে না।");
           return;
         }
         openPinModal(donor);
@@ -1232,7 +1289,6 @@
       document.getElementById("editUpazila").value = upzVal;
       document.getElementById("upazilaDisplay").innerText = upzVal ? upzVal : "উপজেলা / থানা নির্বাচন করুন";
 
-      // 120-Day Automatic Eligibility Check
       var isEligible = true;
       if (lastDonVal) {
         var lastDate = new Date(lastDonVal);
@@ -1414,14 +1470,14 @@
       "Moulvibazar": ["মৌলভীবাজার সদর (Sadar)", "শ্রীমঙ্গল (Sreemangal)", "কমলগঞ্জ (Kamalganj)", "কুলাউড়া (Kulaura)", "বড়লেখা (Barlekha)", "রাজনগর (Rajnagar)", "জুড়ী (Juri)"],
       "Habiganj": ["হবিগঞ্জ সদর (Sadar)", "মাধবপুর (Madhabpur)", "চুনারুঘাট (Chunarughat)", "বাহুবল (Bahubal)", "নবীগঞ্জ (Nabiganj)", "বানিয়াচং (Baniachong)", "লাখাই (Lakhai)", "আজমিরীগঞ্জ (Ajmiriganj)", "শায়স্তাগঞ্জ (Shayestaganj)"],
       "Sunamganj": ["সুনামগঞ্জ সদর (Sadar)", "জগন্নাথপুর (Jagannathpur)", "ছাতক (Chhatak)", "তাহিরপুর (Tahirpur)", "দেরাই (Derai)", "শাল্লা (Shalla)", "ধর্মপাশা (Dharmapasha)", "জামালগঞ্জ (Jamalganj)", "দোয়ারাবাজার (Dowarabazar)", "বিশ্বম্ভরপুর (Bishwamvarpur)", "শান্তিগঞ্জ (Shantiganj)"],
-      "Rangpur": ["রংপুর সদর / কোতোয়ালী (Sadar)", "বদরগঞ্জ (Badarganj)", "পীরগঞ্জ (Pirganj)", "পীরগাছা (Pirgachha)", "মিঠাপুকুর (Mithাপুকুর)", "গঙ্গাচড়া (Gangachhara)", "কাউনিয়া (Kaunia)", "তারাগঞ্জ (Taraganj)"],
+      "Rangpur": ["রংপুর সদর / কোতোয়ালী (Sadar)", "বদরগঞ্জ (Badarganj)", "পীরগঞ্জ (Pirganj)", "পীরগাছা (Pirgachha)", "মিঠাপুকুর (Mithapukur)", "গঙ্গাচড়া (Gangachhara)", "কাউনিয়া (Kaunia)", "তারাগঞ্জ (Taraganj)"],
       "Dinajpur": ["দিনাজপুর সদর (Sadar)", "বিরামপুর (Birampur)", "ফুলবাড়ী (Fulbari)", "বীরগঞ্জ (Birganj)", "বোচাগঞ্জ (Bochaganj)", "কাহারোল (Kaharole)", "চিরিরবন্দর (Chirirbandar)", "পার্বতীপুর (Parbatipur)", "নবাবগঞ্জ (Nawabganj)", "ঘোড়াঘাট (Ghoraghat)", "হাকিমপুর / হিলি (Hakimpur)", "খানসামা (Khansama)", "বিরল (Birol)"],
       "Nilphamari": ["নীলফামারী সদর (Nilphamari Sadar)", "সৈয়দপুর (Saidpur)", "জলঢাকা (Jaldhaka)", "ডোমার (Domar)", "ডিমলা (Dimla)", "কিশোরগঞ্জ (Kishoreganj)"],
-      "Kurigram": ["কুড়িগ্রাম সদর (Sadar)", "উলিপুর (Ulipur)", "নাগেশ্বরী (Nageshwari)", "ভুরুঙ্গামারী (Bhurungamari)", "চিলমারী (Chilmari)", "ফুলবাড়ী (Fulbari)", "রৌমারী (Roumari)", "রাজিবপুর (Rajibpur)", "রাজারহাট (Rajarhat)"],
+      "Kurigram": ["কুড়িগ্রাম সদর (Sadar)", "উলিপুর (Ulিপুর)", "নাগেশ্বরী (Nageshwari)", "ভুরুঙ্গামারী (Bhurungamari)", "চিলমারী (Chilmari)", "ফুলবাড়ী (Fulbari)", "রৌমারী (Roumari)", "রাজিবপুর (Rajibpur)", "রাজারহাট (Rajarhat)"],
       "Gaibandha": ["গাইবান্ধা সদর (Sadar)", "গোবিন্দগঞ্জ (Gobindaganj)", "পলাশবাড়ী (Palashbari)", "সুন্দরগঞ্জ (Sundarganj)", "সাদুল্লাপুর (Sadullapur)", "সাঘাটা (Saghata)", "ফুলছড়ি (Fulchhari)"],
       "Lalmonirhat": ["লালমনিরহাট সদর (Sadar)", "হাতীবান্ধা (Hatibandha)", "পাটগ্রাম (Patgram)", "কালীগঞ্জ (Kaliganj)", "আদিতমারী (Aditmari)"],
       "Panchagarh": ["পঞ্চগড় সদর (Sadar)", "তেঁতুলিয়া (Tetulia)", "বোদা (Boda)", "দেবীগঞ্জ (Debiganj)", "আটোয়ারী (Atwari)"],
-      "Thakurgaon": ["ঠাকুরগাঁও সদর (Sadar)", "পীরগঞ্জ (Pirganj)", "বালিয়াডাঙ্গী (Baliadangi)", "রানীশংকৈল (Ranisankail)", "হরিপুর (Haripur)"],
+      "Thakurgaon": ["ঠাকুরগাঁও সদর (Sadar)", "পীরগঞ্জ (Pirগঞ্জ)", "বালিয়াডাঙ্গী (Baliadangi)", "রানীশংকৈল (Ranisankail)", "হরিপুর (Haripur)"],
       "Mymensingh": ["ময়মনসিংহ সদর / কোতোয়ালী (Sadar)", "মুক্তাগাছা (Muktagachha)", "ত্রিশাল (Trishal)", "ভালুকা (Bhaluka)", "ফুলবাড়িয়া (Fulbaria)", "গফরগাঁও (Gafargaon)", "ঈশ্বরগঞ্জ (Ishwarganj)", "নান্দাইল (Nandail)", "হালুয়াঘাট (Haluaghat)", "ধোবাউড়া (Dhobaura)", "ফুলপুর (Fulpur)", "তারাকান্দা (Tarakanda)", "গৌরীপুর (Gouripur)"],
       "Jamalpur": ["জামালপুর সদর (Sadar)", "সরিষাবাড়ী (Sarishabari)", "মেলান্দহ (Melandaha)", "ইসলামপুর (Islampur)", "দেওয়ানগঞ্জ (Dewanganj)", "মাদারগঞ্জ (Madarganj)", "বকশীগঞ্জ (Bakshiganj)"],
       "Netrokona": ["নেত্রকোণা সদর (Sadar)", "কেন্দুয়া (Kendua)", "মদন (Madan)", "মোহনগঞ্জ (Mohanganj)", "খালিয়াজুড়ী (Khaliajuri)", "দুর্গাপুর (Durgapur)", "কলমাকান্দা (Kalmakanda)", "পূর্বধলা (Purbadhala)", "বারহাট্টা (Barhatta)", "আটপাড়া (Atpara)"],
